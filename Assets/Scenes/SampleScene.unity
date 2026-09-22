@@ -202,10 +202,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 211153471}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2046428478}
+        m_TargetAssemblyTypeName: EmailManager, Assembly-CSharp
+        m_MethodName: FecharPainelAvisosEAvancar
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 158858209}
   - component: {fileID: 158858208}
   m_Layer: 5
-  m_Name: TxtBtnSeguro (TMP)
+  m_Name: TxtBtnAprovar (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SEGURO
+  m_text: 'APROVAR
 
 '
   m_isRightToLeft: 0
@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 189334859}
   - component: {fileID: 189334858}
   m_Layer: 5
-  m_Name: BtnSeguro
+  m_Name: BtnAprovar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2541,6 +2541,7 @@ MonoBehaviour:
   txtFeedback: {fileID: 515334533}
   containerDaLista: {fileID: 250665802}
   prefabItemEmail: {fileID: 2346716948279312633, guid: 21cce4b32c7ee2f15a42ae7e256c92d1, type: 3}
+  advertenciasMaximas: 3
 --- !u!4 &2046428479
 Transform:
   m_ObjectHideFlags: 0
