@@ -15,7 +15,7 @@ MonoBehaviour:
   remetente: suporte@bancocentral-seguro.com
   assunto: "Sua conta precisa de verifica\xE7\xE3o urgente!"
   corpoEmail: "Prezado cliente, identifiquei uma tentativa de invas\xE3o..."
-  nomeAnexo: Carlinhos
+  nomeAnexo: virus.exe
   ehPhishing: 1
   explicacaoErro: "\"O Banco Central n\xE3o envia e-mails pedindo recadastramento
     por link direto.\""
