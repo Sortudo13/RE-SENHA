@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e844e87c868504e99db2d5896e7509, type: 3}
+  m_Name: Email2
+  m_EditorClassIdentifier: Assembly-CSharp::EmailData
+  remetente: infra@nacionaltech.com
+  assunto: Novas diretrizes.
+  corpoEmail: "Ol\xE1 Analista! Poderia liberar esse e-mail para toda a corpora\xE7\xE3o?
+    Gostar\xEDamos de informar que os servi\xE7os de rede estar\xE3o em manuten\xE7\xE3o
+    durante o dia 05/10. \n\n\nAtenciosamente,\nInfra - NacionaTech"
+  nomeAnexo: 
+  ehPhishing: 0
+  explicacaoErro: 
