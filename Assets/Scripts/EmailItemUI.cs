@@ -1,27 +1,36 @@
 using UnityEngine;
-using TMPro;
+using TMPro; // Ou UnityEngine.UI se usar Text tradicional
+using UnityEngine.UI;
 
 public class EmailItemUI : MonoBehaviour
 {
-    public TextMeshProUGUI txtAssunto;
-    public TextMeshProUGUI txtRemetente;
-
+    [SerializeField] private TextMeshProUGUI txtAssunto;
     private EmailData dadosDoEmail;
     private EmailManager manager;
 
-    // Configura os dados visuais deste item na lista
-    public void Configurar(EmailData dados, EmailManager managerRef)
+    // Esta função é chamada pelo EmailManager na hora do Instantiate
+    public void ConfigurarItem(EmailData email, EmailManager emailManager)
     {
-        dadosDoEmail = dados;
-        manager = managerRef;
+        dadosDoEmail = email;
+        manager = emailManager;
 
-        txtAssunto.text = dados.assunto;
-        txtRemetente.text = dados.remetente;
+        // Atualiza o texto do botão com o assunto do e-mail
+        if (txtAssunto != null)
+        {
+            txtAssunto.text = email.assunto; 
+        }
+
+        // Adiciona a escuta do clique via código (evita ter que configurar no Inspector)
+        GetComponent<Button>().onClick.RemoveAllListeners();
+        GetComponent<Button>().onClick.AddListener(AoClicar);
     }
 
-    // Método chamado quando o jogador clica neste e-mail da lista
-    public void AoClicarNoEmail()
+    private void AoClicar()
     {
-        manager.ExibirEmailCompleto(dadosDoEmail);
+        // Envia os dados deste e-mail para o painel de leitura
+        if (manager != null)
+        {
+            manager.ExibirEmailCompleto(dadosDoEmail);
+        }
     }
 }

@@ -1,7 +1,7 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
 
 public class EmailManager : MonoBehaviour
 {
@@ -13,7 +13,10 @@ public class EmailManager : MonoBehaviour
     public TextMeshProUGUI txtAssunto;
     public TextMeshProUGUI txtCorpo;
     public TextMeshProUGUI txtAnexo;
+
+    [Header("Painel de Avisos / Feedback")]
     public GameObject painelAvisos;
+    public TextMeshProUGUI txtTituloAviso;
     public TextMeshProUGUI txtFeedback;
 
     [Header("Configuração da Lista (Painel Esquerdo)")]
@@ -24,16 +27,34 @@ public class EmailManager : MonoBehaviour
 
     void Start()
     {
+        // Garante que o painel de avisos comece oculto
+        if (painelAvisos != null)
+        {
+            painelAvisos.SetActive(false);
+        }
+
         GerarListaDeEmails();
     }
 
-    void GerarListaDeEmails()
+    public void GerarListaDeEmails()
     {
+        // Limpa botões antigos se houver
+        foreach (Transform child in containerDaLista)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Instancia um botão para cada e-mail da lista
         foreach (EmailData email in caixaDeEntrada)
         {
-            // Cria um novo botão na lista da esquerda
             GameObject novoBotao = Instantiate(prefabItemEmail, containerDaLista);
-            novoBotao.GetComponent<EmailItemUI>().Configurar(email, this);
+
+            // Pega o script do botão e envia os dados
+            EmailItemUI itemUI = novoBotao.GetComponent<EmailItemUI>();
+            if (itemUI != null)
+            {
+                itemUI.ConfigurarItem(email, this);
+            }
         }
     }
 
@@ -41,45 +62,83 @@ public class EmailManager : MonoBehaviour
     {
         emailAbertoAtual = email;
 
-        txtRemetente.text = "<b>De:</b> " + email.remetente;
-        txtAssunto.text = "<b>Assunto:</b> " + email.assunto;
-        txtCorpo.text = email.corpoEmail;
-        txtAnexo.text = string.IsNullOrEmpty(email.nomeAnexo) ? "Sem anexos" : "Anexo: " + email.nomeAnexo;
+        if (txtRemetente != null)
+            txtRemetente.text = "<b>De:</b> " + email.remetente;
+        if (txtAssunto != null)
+            txtAssunto.text = "<b>Assunto:</b> " + email.assunto;
+        if (txtCorpo != null)
+            txtCorpo.text = email.corpoEmail;
+        if (txtAnexo != null)
+        {
+            txtAnexo.text = string.IsNullOrEmpty(email.nomeAnexo)
+                ? "Sem anexos"
+                : "Anexo: " + email.nomeAnexo;
+        }
     }
 
-    // Conectar ao botão "Marcar como Seguro"
+    // Chamado pelo botão "Marcar como Seguro"
     public void DecisaoMarcarSeguro()
     {
-        if (emailAbertoAtual == null) return;
-
-        if (!emailAbertoAtual.ehPhishing)
-        {
-            MostrarFeedback("<color=green>Correto! O e-mail era legítimo.</color>");
-        }
-        else
-        {
-            MostrarFeedback("<color=red>ALERTA DE SEGURANÇA! " + emailAbertoAtual.explicacaoErro + "</color>");
-        }
+        ProcessarDecisao(false); // false = o jogador acha que NÃO é phishing
     }
 
-    // Conectar ao botão "Reportar Phishing / Suspeito"
+    // Chamado pelo botão "Reportar Phishing"
     public void DecisaoReportarPhishing()
     {
-        if (emailAbertoAtual == null) return;
+        ProcessarDecisao(true); // true = o jogador acha que É phishing
+    }
 
-        if (emailAbertoAtual.ehPhishing)
+    private void ProcessarDecisao(bool jogadorMarcouPhishing)
+    {
+        if (emailAbertoAtual == null)
+            return;
+
+        // Compara a escolha do jogador com o atributo ehPhishing do EmailData
+        if (jogadorMarcouPhishing == emailAbertoAtual.ehPhishing)
         {
-            MostrarFeedback("<color=green>Excelente! Ameaça neutralizada com sucesso.</color>");
+            // Acertou!
+            string mensagemSucesso = jogadorMarcouPhishing
+                ? "Excelente! Ameaça de phishing neutralizada com sucesso."
+                : "Correto! O e-mail foi validado como comunicação legítima.";
+
+            ExibirFeedback(true, mensagemSucesso);
         }
         else
         {
-            MostrarFeedback("<color=orange>Falso Positivo! Você bloqueou uma comunicação legítima.</color>");
+            // Errou!
+            string mensagemErro = jogadorMarcouPhishing
+                ? "Falso Positivo! Você bloqueou uma comunicação legítima do sistema."
+                : "ALERTA DE SEGURANÇA! "
+                    + (
+                        string.IsNullOrEmpty(emailAbertoAtual.explicacaoErro)
+                            ? "Sua análise estava incorreta."
+                            : emailAbertoAtual.explicacaoErro
+                    );
+
+            ExibirFeedback(false, mensagemErro);
         }
     }
 
-    void MostrarFeedback(string mensagem)
+    private void ExibirFeedback(bool acertou, string mensagem)
     {
-        painelAvisos.SetActive(true);
-        txtFeedback.text = mensagem;
+        if (txtFeedback != null)
+            txtFeedback.text = mensagem;
+
+        if (txtTituloAviso != null)
+        {
+            if (acertou)
+            {
+                txtTituloAviso.text = "[ ANÁLISE CORRETA ]";
+                txtTituloAviso.color = new Color(0f, 1f, 0.4f); // Verde Neon
+            }
+            else
+            {
+                txtTituloAviso.text = "[ ALERTA DE SEGURANÇA ]";
+                txtTituloAviso.color = new Color(1f, 0.2f, 0.2f); // Vermelho Neon
+            }
+        }
+
+        if (painelAvisos != null)
+            painelAvisos.SetActive(true); // Exibe o popup centralizado
     }
 }
