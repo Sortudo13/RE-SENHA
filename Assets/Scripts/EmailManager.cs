@@ -23,6 +23,11 @@ public class EmailManager : MonoBehaviour
     public Transform containerDaLista; // Onde os botões de e-mail serão criados
     public GameObject prefabItemEmail; // O modelo do botão de e-mail
 
+    [Header("Progresso do Jogador")]
+    [SerializeField]
+    private int advertenciasMaximas = 3;
+    private int advertenciasAtuais = 0;
+
     private EmailData emailAbertoAtual;
 
     void Start()
@@ -93,29 +98,28 @@ public class EmailManager : MonoBehaviour
         if (emailAbertoAtual == null)
             return;
 
-        // Compara a escolha do jogador com o atributo ehPhishing do EmailData
         if (jogadorMarcouPhishing == emailAbertoAtual.ehPhishing)
         {
-            // Acertou!
-            string mensagemSucesso = jogadorMarcouPhishing
-                ? "Excelente! Ameaça de phishing neutralizada com sucesso."
-                : "Correto! O e-mail foi validado como comunicação legítima.";
-
-            ExibirFeedback(true, mensagemSucesso);
+            ExibirFeedback(true, "Decisão Correta! A ameaça foi neutralizada.");
         }
         else
         {
-            // Errou!
-            string mensagemErro = jogadorMarcouPhishing
-                ? "Falso Positivo! Você bloqueou uma comunicação legítima do sistema."
-                : "ALERTA DE SEGURANÇA! "
-                    + (
-                        string.IsNullOrEmpty(emailAbertoAtual.explicacaoErro)
-                            ? "Sua análise estava incorreta."
-                            : emailAbertoAtual.explicacaoErro
-                    );
+            advertenciasAtuais++;
 
-            ExibirFeedback(false, mensagemErro);
+            if (advertenciasAtuais >= advertenciasMaximas)
+            {
+                ExibirFeedback(
+                    false,
+                    $"ALERTA CRÍTICO: Você acumulou {advertenciasAtuais} advertências. VOCÊ FOI DEMITIDO!"
+                );
+            }
+            else
+            {
+                ExibirFeedback(
+                    false,
+                    $"Erro de Análise! Advertência {advertenciasAtuais}/{advertenciasMaximas} registrada."
+                );
+            }
         }
     }
 
@@ -140,5 +144,32 @@ public class EmailManager : MonoBehaviour
 
         if (painelAvisos != null)
             painelAvisos.SetActive(true); // Exibe o popup centralizado
+    }
+
+    public void FecharPainelAvisosEAvancar()
+    {
+        if (painelAvisos != null)
+            painelAvisos.SetActive(false);
+
+        // Remove o e-mail processado da lista
+        if (emailAbertoAtual != null && caixaDeEntrada.Contains(emailAbertoAtual))
+        {
+            caixaDeEntrada.Remove(emailAbertoAtual);
+        }
+
+        emailAbertoAtual = null;
+
+        // Regera a lista de botões à esquerda
+        GerarListaDeEmails();
+
+        // Limpa a tela de leitura
+        if (txtRemetente != null)
+            txtRemetente.text = "";
+        if (txtAssunto != null)
+            txtAssunto.text = "";
+        if (txtCorpo != null)
+            txtCorpo.text = "";
+        if (txtAnexo != null)
+            txtAnexo.text = "";
     }
 }
