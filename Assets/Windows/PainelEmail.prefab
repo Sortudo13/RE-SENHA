@@ -1969,9 +1969,9 @@ GameObject:
   - component: {fileID: 3445897920454840417}
   - component: {fileID: 3555850506972587467}
   - component: {fileID: 2250153538380510101}
-  - component: {fileID: 2562199148433064083}
-  - component: {fileID: 5471836888465120156}
   - component: {fileID: 6592145976787116446}
+  - component: {fileID: 5095748085408611749}
+  - component: {fileID: 1499107067522401138}
   m_Layer: 5
   m_Name: PainelEmail
   m_TagString: Untagged
@@ -2052,7 +2052,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4060d543d7344045a93ac39a380aa97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Draggable
---- !u!223 &2562199148433064083
+--- !u!114 &6592145976787116446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346845122898091600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2074b9848f3d5204d8e9d7527a3744e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Window
+  taskbarButtonPrefab: {fileID: 4422490942835456345, guid: e7b3c8c57ad6e904ea36a66e95b362f4, type: 3}
+--- !u!223 &5095748085408611749
 Canvas:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2066,7 +2079,7 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 1
+  m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
@@ -2074,9 +2087,9 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 10
   m_TargetDisplay: 0
---- !u!114 &5471836888465120156
+--- !u!114 &1499107067522401138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2093,16 +2106,3 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6592145976787116446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8346845122898091600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2074b9848f3d5204d8e9d7527a3744e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Window
-  taskbarButtonPrefab: {fileID: 4422490942835456345, guid: e7b3c8c57ad6e904ea36a66e95b362f4, type: 3}
