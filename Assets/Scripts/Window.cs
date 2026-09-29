@@ -23,7 +23,8 @@ public class Window : MonoBehaviour
     public void CloseWindow()
     {
         //Destroy(myTaskbarButton);
-        this.gameObject.SetActive(false); 
+        //this.gameObject.SetActive(false); 
+        Destroy(this.gameObject);
         Destroy(myTaskbarButton);
     }
 
