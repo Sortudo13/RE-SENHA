@@ -1972,6 +1972,7 @@ GameObject:
   - component: {fileID: 6592145976787116446}
   - component: {fileID: 5095748085408611749}
   - component: {fileID: 1499107067522401138}
+  - component: {fileID: 6258641142784536742}
   m_Layer: 5
   m_Name: PainelEmail
   m_TagString: Untagged
@@ -2106,3 +2107,29 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6258641142784536742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346845122898091600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef227fff4f94e1b22af42fb70d43b6ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EmailManager
+  caixaDeEntrada:
+  - {fileID: 11400000, guid: a374b0cbed8506737b106c4871af404d, type: 2}
+  - {fileID: 11400000, guid: 325588dcbce765ef48539ed423ba3c93, type: 2}
+  - {fileID: 11400000, guid: 22e680f3614b85f2199269b736a5675e, type: 2}
+  txtRemetente: {fileID: 7116985408669525198}
+  txtAssunto: {fileID: 8106870995439844141}
+  txtCorpo: {fileID: 6283195572790158430}
+  txtAnexo: {fileID: 5958894470077286165}
+  painelAvisos: {fileID: 0}
+  txtTituloAviso: {fileID: 0}
+  txtFeedback: {fileID: 0}
+  containerDaLista: {fileID: 6635313921489464714}
+  prefabItemEmail: {fileID: 2346716948279312633, guid: 21cce4b32c7ee2f15a42ae7e256c92d1, type: 3}
+  advertenciasMaximas: 3
