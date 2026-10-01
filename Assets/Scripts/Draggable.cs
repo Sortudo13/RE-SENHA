@@ -3,64 +3,54 @@ using UnityEngine.EventSystems;
 
 public class Draggable : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
-    // Componente que guarda o Transform (Propriedades e valores espaciais de elementos da UI)
     private RectTransform rectTransform; 
     private Canvas canvas;
-    public Vector2 tamanhoTela = new Vector2(Screen.width, Screen.height);
+    private RectTransform canvasRect;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
         
+        // Pega o Canvas principal que envolve o jogo todo, ignorando Canvases de janelas
+        canvas = transform.root.GetComponentInChildren<Canvas>();
+        canvasRect = canvas.GetComponent<RectTransform>();
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     public void OnPointerDown(PointerEventData eventData)
     {  
-        rectTransform.SetAsLastSibling(); // Trás o objeto pra frente
+        rectTransform.SetAsLastSibling(); // Traz a janela para a frente
     }
+
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor; // Adiciona na posição do nosso objeto o quanto o mouse se mover no último frame
+        // Move a janela usando o delta do rato e a escala do Canvas
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor; 
+        
+        // Trava a posiÃ§Ã£o
         LimitarNaTela();
     }
+
     void LimitarNaTela()
     {
-        // Obtém a resolução atual da tela ou do Canvas
-        Vector2 tamanhoTela = new Vector2(Screen.width, Screen.height);
+        // Usa o tamanho real do Canvas escalonado em vez do Screen.width
+        float metadeTelaX = canvasRect.rect.width / 2f;
+        float metadeTelaY = canvasRect.rect.height / 2f;
 
-        // Se o seu Canvas estiver no modo 'Scale With Screen Size', use o tamanho do Canvas:
-        // Vector2 tamanhoTela = canvas.GetComponent<RectTransform>().rect.size;
+        // Calcula a metade da janela, respeitando a escala maluca (0.25) que a Unity gerou
+        float metadeJanelaX = (rectTransform.rect.width * rectTransform.localScale.x) / 2f;
+        float metadeJanelaY = (rectTransform.rect.height * rectTransform.localScale.y) / 2f;
 
-        // Calcula a metade do tamanho do objeto para considerar as bordas
-        float metadeLargura = (rectTransform.rect.width * rectTransform.lossyScale.x) / 2f;
-        float metadeAltura = (rectTransform.rect.height * rectTransform.lossyScale.y) / 2f;
+        // O limite Ã© a borda da tela menos o pedaÃ§o da janela
+        float limiteX = metadeTelaX - metadeJanelaX;
+        float limiteY = metadeTelaY - metadeJanelaY;
 
-        // Define os limites mínimos e máximos permitidos na tela
-        float minX = metadeLargura;
-        float maxX = tamanhoTela.x - metadeLargura;
-        float minY = metadeAltura;
-        float maxY = tamanhoTela.y - metadeAltura;
+        // Pega a posiÃ§Ã£o ancorada (cujo centro Ã© 0,0)
+        Vector2 posicaoAtual = rectTransform.anchoredPosition;
 
-        // Obtém a posição atual do objeto em coordenadas de tela (Screen Space)
-        Vector3 posicaoNaTela = RectTransformUtility.WorldToScreenPoint(null, rectTransform.position);
+        // O Clamp vai perfeitamente de -limite (esquerda/baixo) atÃ© +limite (direita/cima)
+        posicaoAtual.x = Mathf.Clamp(posicaoAtual.x, -limiteX, limiteX);
+        posicaoAtual.y = Mathf.Clamp(posicaoAtual.y, -limiteY, limiteY);
 
-        // Limita as posições X e Y dentro das bordas da tela
-        posicaoNaTela.x = Mathf.Clamp(posicaoNaTela.x, minX, maxX);
-        posicaoNaTela.y = Mathf.Clamp(posicaoNaTela.y, minY, maxY);
-
-        // Converte de volta para a posição do mundo e aplica no objeto
-        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, posicaoNaTela, null, out Vector3 posicaoMundo))
-        {
-            rectTransform.position = posicaoMundo;
-        }
+        rectTransform.anchoredPosition = posicaoAtual;
     }
 }
