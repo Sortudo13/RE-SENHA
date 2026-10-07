@@ -18,7 +18,7 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {  
-        rectTransform.SetAsLastSibling(); // Traz a janela para a frente
+        rectTransform.SetAsLastSibling();
     }
 
     public void OnDrag(PointerEventData eventData)

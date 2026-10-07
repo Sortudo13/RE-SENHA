@@ -918,6 +918,7 @@ GameObject:
   - component: {fileID: 6249608681466754851}
   - component: {fileID: 1239056787457542016}
   - component: {fileID: 578911050612543741}
+  - component: {fileID: 2430372734065172442}
   m_Layer: 5
   m_Name: RG
   m_TagString: Untagged
@@ -997,8 +998,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4d89862c2a5324f888247fe22373ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorFrenteVerso
-  painelFrente: {fileID: 9143370183849110763}
-  painelVerso: {fileID: 8282553576136080339}
+--- !u!114 &2430372734065172442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438267766763992149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311af8c12b247064e9de3236ba582355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WindowMovementController
+  dragButton: 1
+  bringToFront: 1
+  targetTransform: {fileID: 0}
 --- !u!1 &3903325009955926057
 GameObject:
   m_ObjectHideFlags: 0
