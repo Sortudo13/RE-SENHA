@@ -484,7 +484,7 @@ MonoBehaviour:
   exitCursorType: 1
   upCursorType: 0
   downCursorType: 0
-  clickCursorType: 0
+  clickCursorType: 1
   moveCursorType: 0
 --- !u!1 &4981362215317446359
 GameObject:
@@ -867,7 +867,7 @@ MonoBehaviour:
   exitCursorType: 1
   upCursorType: 0
   downCursorType: 0
-  clickCursorType: 0
+  clickCursorType: 1
   moveCursorType: 0
 --- !u!1001 &4664550540819679385
 PrefabInstance:

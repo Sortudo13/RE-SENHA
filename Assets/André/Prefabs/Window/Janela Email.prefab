@@ -608,7 +608,7 @@ MonoBehaviour:
   exitCursorType: 1
   upCursorType: 0
   downCursorType: 0
-  clickCursorType: 0
+  clickCursorType: 1
   moveCursorType: 0
 --- !u!1 &8836336994569697778
 GameObject:
@@ -760,7 +760,7 @@ MonoBehaviour:
   exitCursorType: 1
   upCursorType: 0
   downCursorType: 0
-  clickCursorType: 0
+  clickCursorType: 1
   moveCursorType: 0
 --- !u!1 &9012546053120247714
 GameObject:
