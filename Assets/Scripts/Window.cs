@@ -9,7 +9,7 @@ public class Window : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Transform taskbarPanel = GameObject.Find("TaskbarPanel").transform;
+        Transform taskbarPanel = GameObject.Find("Taskbar").transform;
         myTaskbarButton = Instantiate(taskbarButtonPrefab, taskbarPanel);
         myTaskbarButton.GetComponent<TaskbarButton>().myWindow = this.gameObject;
     }

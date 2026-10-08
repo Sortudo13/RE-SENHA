@@ -3,16 +3,16 @@ using UnityEngine.EventSystems;
 
 public class ChangeCursor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] private ModeOfCursor modeOfCursor;
+        [SerializeField] private CursorStyle modeOfCursor;
 
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            CursorUI.Instance.SetToMode(modeOfCursor);
+            CursorController.Instance.SetToMode(modeOfCursor);
         }
 
         public void OnPointerExit(PointerEventData  eventData)
         {
-            CursorUI.Instance.SetToMode(ModeOfCursor.Default);
+            CursorController.Instance.SetToMode(CursorStyle.Default);
         }
     }

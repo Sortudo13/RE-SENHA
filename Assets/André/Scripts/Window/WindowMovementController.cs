@@ -1,15 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(RectTransform))]
-public class WindowMovementController : MonoBehaviour, IPointerDownHandler, IDragHandler
+public class WindowMovementController : MonoBehaviour,IPointerUpHandler, IPointerDownHandler, IDragHandler
 {
+
     [Header("Movement config")]
     [SerializeField] private RectTransform targetTransform;
     [SerializeField] private PointerEventData.InputButton dragButton = PointerEventData.InputButton.Left;
+    [SerializeField] private CursorStyle pressedCursorType = CursorStyle.Default;
+    [SerializeField] [Range(0f,1f)] private float dragSensitivity = 0.5f;
     private const bool bringToFront = true;
     private Canvas canvas;
     private RectTransform containerRect;
+    private Vector2 grabLocalOffset;
 
     private void Awake()
     {
@@ -25,15 +30,41 @@ public class WindowMovementController : MonoBehaviour, IPointerDownHandler, IDra
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button == dragButton && bringToFront)
+        {
             targetTransform.SetAsLastSibling();
+            CursorController.Instance.SetToMode(pressedCursorType);
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                targetTransform,
+                eventData.position,
+                eventData.pressEventCamera,
+                out grabLocalOffset
+            );
+            CursorController.Instance.ShowVirtualCursor(true);
+            SyncVirtualCursor(eventData.pressEventCamera);
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (eventData.button == dragButton)
+        {
+            Vector3 worldGrabPoint = targetTransform.TransformPoint(grabLocalOffset);
+            Vector2 finalScreenPos = RectTransformUtility.WorldToScreenPoint(eventData.pressEventCamera, worldGrabPoint);
+            Mouse.current?.WarpCursorPosition(finalScreenPos);
+            CursorController.Instance.ShowVirtualCursor(false);
+
+            CursorController.Instance.SetToMode(CursorStyle.Default);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (eventData.button == dragButton)
         {
-            targetTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+            targetTransform.anchoredPosition += (eventData.delta * dragSensitivity) / canvas.scaleFactor;
             LimitInContainer();
+            SyncVirtualCursor(eventData.pressEventCamera);
         }
         
     }
@@ -56,5 +87,13 @@ public class WindowMovementController : MonoBehaviour, IPointerDownHandler, IDra
         posicaoAtual.y = Mathf.Clamp(posicaoAtual.y, -limiteY, limiteY);
 
         targetTransform.anchoredPosition = posicaoAtual;
+    }
+
+    private void SyncVirtualCursor(Camera cam)
+    {
+        Vector3 worldGrabPoint = targetTransform.TransformPoint(grabLocalOffset);
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(cam, worldGrabPoint);
+
+        CursorController.Instance.UpdateVirtualCursorPosition(screenPoint);
     }
 }

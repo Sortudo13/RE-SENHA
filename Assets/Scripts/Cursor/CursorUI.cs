@@ -37,6 +37,7 @@ public class CursorUI : MonoBehaviour
                 case ModeOfCursor.Hand:
                     Cursor.SetCursor(cursorTextureHand, clickPosition, CursorMode.Auto);
                     break;
+                case ModeOfCursor.Keep:break;
                 default:
                     Cursor.SetCursor(cursorTextureDefault, clickPosition, CursorMode.Auto);
                     break;
@@ -44,9 +45,9 @@ public class CursorUI : MonoBehaviour
         }
     }
 
-
     public enum ModeOfCursor
     {
+        Keep,
         Default,
         Hand
     }

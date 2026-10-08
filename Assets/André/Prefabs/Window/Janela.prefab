@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2153758647618878597}
   - component: {fileID: 5813695402100660838}
   - component: {fileID: 8821256665245300335}
+  - component: {fileID: 5768892625288449626}
   m_Layer: 5
   m_Name: Botao Fechar
   m_TagString: Untagged
@@ -98,9 +99,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
+    m_HighlightedColor: {r: 0.5924529, g: 0.5924529, b: 0.5924529, a: 1}
+    m_PressedColor: {r: 0.4113207, g: 0.40588814, b: 0.40588814, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -133,6 +134,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5768892625288449626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216406753774169408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d271c5a20c912894594a4d55c7b8a5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorSwap
+  enterCursorType: 2
+  exitCursorType: 1
+  upCursorType: 0
+  downCursorType: 0
+  clickCursorType: 0
+  moveCursorType: 0
 --- !u!1 &1718830240290828616
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WindowMovementController
   targetTransform: {fileID: 7244335230691186804}
   dragButton: 0
+  pressedCursorType: 1
+  dragSensitivity: 0.5
 --- !u!1 &3031027678049364262
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +411,7 @@ RectTransform:
   m_GameObject: {fileID: 3031027678049364262}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8413247, y: 1.8413247, z: 1.8413247}
+  m_LocalScale: {x: 1.1121601, y: 1.1121601, z: 1.1121601}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9171579202527056470}
@@ -399,7 +420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: -2}
+  m_AnchoredPosition: {x: -0.95905, y: -2}
   m_SizeDelta: {x: 289.5061, y: 220.5867}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3708239545013683241
@@ -554,6 +575,7 @@ GameObject:
   - component: {fileID: 4046681626237173908}
   - component: {fileID: 8573376783053027427}
   - component: {fileID: 5925072145629039690}
+  - component: {fileID: 6979100845231087964}
   m_Layer: 5
   m_Name: "Bot\xE3o Minimizar"
   m_TagString: Untagged
@@ -641,8 +663,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.6075471, g: 0.6075471, b: 0.6075471, a: 1}
+    m_PressedColor: {r: 0.3886792, g: 0.38647914, b: 0.38647914, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -675,6 +697,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6979100845231087964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172235518593796383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d271c5a20c912894594a4d55c7b8a5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorSwap
+  enterCursorType: 2
+  exitCursorType: 1
+  upCursorType: 0
+  downCursorType: 0
+  clickCursorType: 0
+  moveCursorType: 0
 --- !u!1 &8943000696897450944
 GameObject:
   m_ObjectHideFlags: 0

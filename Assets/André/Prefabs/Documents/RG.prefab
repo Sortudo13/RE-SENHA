@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 1142572123860314585}
   - component: {fileID: 9078072481404531736}
   - component: {fileID: 406025772962796160}
+  - component: {fileID: 4819894356981459242}
   m_Layer: 5
   m_Name: Virar
   m_TagString: Untagged
@@ -197,8 +198,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 578911050612543741}
-        m_TargetAssemblyTypeName: ControladorFrenteVerso, Assembly-CSharp
-        m_MethodName: AlternarLado
+        m_TargetAssemblyTypeName: DocumentFlipController, Assembly-CSharp
+        m_MethodName: ToggleVisibility
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -208,6 +209,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4819894356981459242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402547625703567989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d271c5a20c912894594a4d55c7b8a5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorSwap
+  enterCursorType: 2
+  exitCursorType: 1
+  upCursorType: 0
+  downCursorType: 0
+  clickCursorType: 0
+  moveCursorType: 0
 --- !u!1 &429991408053372071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,9 +1029,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311af8c12b247064e9de3236ba582355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindowMovementController
-  dragButton: 1
-  bringToFront: 1
   targetTransform: {fileID: 0}
+  dragButton: 1
+  pressedCursorType: 2
+  dragSensitivity: 0.25
 --- !u!1 &3903325009955926057
 GameObject:
   m_ObjectHideFlags: 0

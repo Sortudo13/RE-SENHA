@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4730474180301807720}
   - component: {fileID: 712302297318537819}
   - component: {fileID: 3288642857505928765}
-  - component: {fileID: 4072272984252251772}
   m_Layer: 5
   m_Name: TaskbarButtonPrefab
   m_TagString: Untagged
@@ -121,9 +120,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4072272984252251772}
-        m_TargetAssemblyTypeName: TaskbarButton, Assembly-CSharp
-        m_MethodName: OnClickTaskbar
+      - m_Target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+        m_TargetAssemblyTypeName: WindowController, Assembly-CSharp
+        m_MethodName: SwapWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -133,16 +132,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4072272984252251772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4422490942835456345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61520ca85f485e0479164991bd3ee8cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TaskbarButton
-  myWindow: {fileID: 0}
