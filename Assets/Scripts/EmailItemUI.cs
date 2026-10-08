@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro; // Ou UnityEngine.UI se usar Text tradicional
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
 public class EmailItemUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI txtAssunto;

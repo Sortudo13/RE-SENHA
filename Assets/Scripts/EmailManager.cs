@@ -1,34 +1,34 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EmailManager : MonoBehaviour
 {
     [Header("Lista de E-mails do Dia")]
-    public List<EmailData> caixaDeEntrada;
+    [SerializeField] private List<EmailData> caixaDeEntrada;
 
     [Header("Referências da Interface (Painel Direito)")]
-    public TextMeshProUGUI txtRemetente;
-    public TextMeshProUGUI txtAssunto;
-    public TextMeshProUGUI txtCorpo;
-    public TextMeshProUGUI txtAnexo;
+    [SerializeField] private GameObject painelLeitura;
+    private TextMeshProUGUI txtRemetente;
+    private TextMeshProUGUI txtAssunto;
+    private TextMeshProUGUI txtCorpo;
+    private TextMeshProUGUI txtAnexo;
 
     [Header("Painel de Avisos / Feedback")]
-    public GameObject painelAvisos;
-    public TextMeshProUGUI txtTituloAviso;
-    public TextMeshProUGUI txtFeedback;
+    [SerializeField] private GameObject painelAvisos;
+    private TextMeshProUGUI txtTituloAviso;
+    private TextMeshProUGUI txtFeedback;
 
     [Header("Configuração da Lista (Painel Esquerdo)")]
-    public Transform containerDaLista; // Onde os botões de e-mail serão criados
-    public GameObject prefabItemEmail; // O modelo do botão de e-mail
+    [SerializeField] private Transform containerDaLista;
+    [SerializeField] private GameObject prefabItemEmail;
+    private EmailData emailAbertoAtual;
 
     [Header("Progresso do Jogador")]
-    [SerializeField]
-    private int advertenciasMaximas = 3;
+    [SerializeField] private int advertenciasMaximas = 3;
     private int advertenciasAtuais = 0;
-
-    private EmailData emailAbertoAtual;
 
     void Start()
     {
@@ -36,6 +36,17 @@ public class EmailManager : MonoBehaviour
         if (painelAvisos != null)
         {
             painelAvisos.SetActive(false);
+            txtTituloAviso = painelAvisos.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            txtFeedback = painelAvisos.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        }
+
+        if (painelLeitura != null)
+        {
+            painelLeitura.SetActive(true);
+            txtRemetente = painelLeitura.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            txtAssunto = painelLeitura.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            txtCorpo = painelLeitura.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            txtAnexo = painelLeitura.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         }
 
         GerarListaDeEmails();
