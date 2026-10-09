@@ -32,7 +32,6 @@ public class EmailManager : MonoBehaviour
 
     void Start()
     {
-        // Garante que o painel de avisos comece oculto
         if (painelAvisos != null)
         {
             painelAvisos.SetActive(false);
@@ -69,7 +68,7 @@ public class EmailManager : MonoBehaviour
             EmailItemUI itemUI = novoBotao.GetComponent<EmailItemUI>();
             if (itemUI != null)
             {
-                itemUI.ConfigurarItem(email, this);
+                itemUI.ConfigurarItem(email, this); //*****
             }
         }
     }
