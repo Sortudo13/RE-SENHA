@@ -34,10 +34,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5101298224541731304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 550, y: 980}
+  m_SizeDelta: {x: 550, y: -100}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &6891934139189740886
 CanvasRenderer:
@@ -94,13 +94,13 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
+  m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!114 &6378118269689709540
@@ -182,9 +182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Assunto
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -291,7 +289,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1280, y: 127.63}
+  m_SizeDelta: {x: 1280, y: 127.630005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &413613941763998029
 CanvasRenderer:
@@ -321,10 +319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Anexo
-
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -712,10 +707,10 @@ RectTransform:
   - {fileID: 4251691089253818157}
   m_Father: {fileID: 5101298224541731304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -20, y: 0}
-  m_SizeDelta: {x: 1300, y: 980}
+  m_SizeDelta: {x: -620, y: -100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &5505852157539790968
 CanvasRenderer:
@@ -772,7 +767,7 @@ MonoBehaviour:
     m_Right: 20
     m_Top: 20
     m_Bottom: 20
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
@@ -846,9 +841,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Remetente
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -985,9 +978,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Corpo da Mensagem
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1071,7 +1062,6 @@ GameObject:
   - component: {fileID: 7689913719021232507}
   - component: {fileID: 2780097383703243969}
   - component: {fileID: 727264230190346885}
-  - component: {fileID: 4994593235254168358}
   m_Layer: 5
   m_Name: BtnReportar
   m_TagString: Untagged
@@ -1181,31 +1171,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EmailManager, Assembly-CSharp
-        m_MethodName: DecisaoReportarPhishing
-        m_Mode: 1
+      - m_Target: {fileID: 4488395508425507612}
+        m_TargetAssemblyTypeName: EmailController, Assembly-CSharp
+        m_MethodName: ValidateAnswer
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: GeneralMismatch
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4994593235254168358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6196654288961052488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e07306e711452448bc43204ec9781e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChangeCursor
-  modeOfCursor: 1
 --- !u!1 &6275541873457459230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1195,6 @@ GameObject:
   - component: {fileID: 7371063839358678182}
   - component: {fileID: 6151209569474228611}
   - component: {fileID: 1680185274535497185}
-  - component: {fileID: 2444115443042463584}
   m_Layer: 5
   m_Name: BtnAprovar
   m_TagString: Untagged
@@ -1328,31 +1304,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EmailManager, Assembly-CSharp
-        m_MethodName: DecisaoMarcarSeguro
-        m_Mode: 1
+      - m_Target: {fileID: 4488395508425507612}
+        m_TargetAssemblyTypeName: EmailController, Assembly-CSharp
+        m_MethodName: ValidateAnswer
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: None
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2444115443042463584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6275541873457459230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e07306e711452448bc43204ec9781e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChangeCursor
-  modeOfCursor: 1
 --- !u!1 &7265826454647295335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,7 +1352,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1280, y: 83.7968}
+  m_SizeDelta: {x: 1280, y: 104.751}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &5107569228594406554
 MonoBehaviour:
@@ -1430,7 +1393,7 @@ GameObject:
   - component: {fileID: 3555850506972587467}
   - component: {fileID: 5095748085408611749}
   - component: {fileID: 1499107067522401138}
-  - component: {fileID: 6258641142784536742}
+  - component: {fileID: 4488395508425507612}
   m_Layer: 5
   m_Name: PainelEmail
   m_TagString: Untagged
@@ -1452,13 +1415,12 @@ RectTransform:
   m_Children:
   - {fileID: 7235996644049133420}
   - {fileID: 6635313921489464714}
-  - {fileID: 6386002405858326388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920.3999, y: 1079.8}
+  m_SizeDelta: {x: 1040.3999, y: 673.80005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3445897920454840417
 CanvasRenderer:
@@ -1539,7 +1501,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6258641142784536742
+--- !u!114 &4488395508425507612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1548,182 +1510,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8346845122898091600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef227fff4f94e1b22af42fb70d43b6ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 78cf2c6110056b440a02f56d94b580cf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EmailManager
-  caixaDeEntrada:
-  - {fileID: 11400000, guid: a374b0cbed8506737b106c4871af404d, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::EmailController
+  inbox:
+  - {fileID: 11400000, guid: 83f8f17ab3559e84f82ae06890bf4ddd, type: 2}
   - {fileID: 11400000, guid: 325588dcbce765ef48539ed423ba3c93, type: 2}
-  - {fileID: 11400000, guid: 22e680f3614b85f2199269b736a5675e, type: 2}
-  painelLeitura: {fileID: 4274465627416961848}
-  painelAvisos: {fileID: 8323019418674639412}
-  containerDaLista: {fileID: 6635313921489464714}
-  prefabItemEmail: {fileID: 2346716948279312633, guid: 21cce4b32c7ee2f15a42ae7e256c92d1, type: 3}
-  advertenciasMaximas: 3
---- !u!1001 &3740695662776162163
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5101298224541731304}
-    m_Modifications:
-    - target: {fileID: 1870055410083676788, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1870055410083676788, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1870055410083676788, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1870055410083676788, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3162052621906688590, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3162052621906688590, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3162052621906688590, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3162052621906688590, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_Name
-      value: PainelAvisos
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 700
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.9545
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.9545
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.9545
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332818516383206995, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332818516383206995, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332818516383206995, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332818516383206995, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
---- !u!224 &6386002405858326388 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-  m_PrefabInstance: {fileID: 3740695662776162163}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8323019418674639412 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-  m_PrefabInstance: {fileID: 3740695662776162163}
-  m_PrefabAsset: {fileID: 0}
+  listBar: {fileID: 6635313921489464714}
+  listButton: {fileID: 4422490942835456345, guid: 72e776875a68f09458d9f2f5b64ea285, type: 3}
+  emailInterface: {fileID: 4274465627416961848}
+  alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+  alertLayer: {fileID: 5101298224541731304}

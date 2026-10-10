@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70e844e87c868504e99db2d5896e7509, type: 3}
+  m_Script: {fileID: 11500000, guid: 74fea8e9c635e3b4d940475169e30b2a, type: 3}
   m_Name: Email2
   m_EditorClassIdentifier: Assembly-CSharp::EmailData
-  remetente: infra@nacionaltech.com
-  assunto: Novas diretrizes.
-  corpoEmail: "Ol\xE1 Analista! Poderia liberar esse e-mail para toda a corpora\xE7\xE3o?
-    Gostar\xEDamos de informar que os servi\xE7os de rede estar\xE3o em manuten\xE7\xE3o
-    durante o dia 05/10. \n\n\nAtenciosamente,\nInfra - NacionaTech"
-  nomeAnexo: 
-  ehPhishing: 0
-  explicacaoErro: 
+  sender: ro-reply@gov.br
+  subject: "Resultado Elei\xE7\xF5es"
+  body: "Prezado cidad\xE3o, segue os resultados das elei\xE7\xF5es presidenciais
+    2026:\n\n52.4% - Fl\xE1vio Bolsonaro\n43.12% - Lu\xEDs In\xE1cio Lula da Silva\n4.48%
+    - Brancos e Nulos\n\nAgradecemos sua participa\xE7\xE3o no servi\xE7o eleitoral
+    e aguardamos voc\xEA daqui a 4 anos de novo."
+  attachments: []
+  error: 0
+  reason: 

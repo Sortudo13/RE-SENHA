@@ -25,9 +25,9 @@ public class DesktopIconController : MonoBehaviour
             connectedButton = Instantiate(taskbarButton, taskbarLayer);
             if (connectedWindow.TryGetComponent(out WindowController windowController))
             {
-                if (connectedButton.TryGetComponent(out Button botao))
+                if (connectedButton.TryGetComponent(out Button button))
                 {
-                    botao.onClick.AddListener(windowController.SwapWindow);
+                    button.onClick.AddListener(windowController.SwapWindow);
                 }
                 windowController.OnDestroyedObject += DestroyButton;
             }

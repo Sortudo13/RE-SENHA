@@ -1,73 +1,84 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EmailController : MonoBehaviour
 {
-    [Header("Lista de E-mails do Dia")]
-    [SerializeField] private List<DataEmail> caixaDeEntrada;
+    private EmailData currentEmail = null;
 
-    [Header("Referências da Interface (Painel Direito)")]
-    [SerializeField] private GameObject painelLeitura;
-    private TextMeshProUGUI txtRemetente;
-    private TextMeshProUGUI txtAssunto;
-    private TextMeshProUGUI txtCorpo;
-    private TextMeshProUGUI txtAnexo;
+    [Header("Daily Emails")]
+    [SerializeField] private List<EmailData> inbox;
 
-    [Header("Painel de Avisos / Feedback")]
-    [SerializeField] private GameObject painelAvisos;
+    [Header("List Config")]
+    [SerializeField] private Transform listBar;
+    [SerializeField] private GameObject listButton;
+
+    [Header("Email's Reading Panel")]
+    [SerializeField] private GameObject emailInterface;
+    private TextMeshProUGUI emailSender;
+    private TextMeshProUGUI emailSubject;
+    private TextMeshProUGUI emailBody;
+    private TextMeshProUGUI emailAttachments;
+
+    [Header("Alert Window")]
+    [SerializeField] private GameObject alertWindow;
+    [SerializeField] private Transform alertLayer;
+    private GameObject connectedAlert;
     private TextMeshProUGUI txtTituloAviso;
     private TextMeshProUGUI txtFeedback;
 
-    [Header("Configuração da Lista (Painel Esquerdo)")]
-    [SerializeField] private Transform containerDaLista;
-    [SerializeField] private GameObject prefabItemEmail;
-    private DataEmail emailAbertoAtual;
-
-    [Header("Progresso do Jogador")]
-    [SerializeField] private int advertenciasMaximas = 3;
     private int advertenciasAtuais = 0;
+    private const int advertenciasMaximas = 3;
 
     void Start()
     {
-        if (painelAvisos != null)
+        connectedAlert = Instantiate(alertWindow, alertLayer);
+        txtTituloAviso = connectedAlert.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        txtFeedback = connectedAlert.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        connectedAlert.SetActive(false);
+
+        if (connectedAlert.transform.GetChild(2).TryGetComponent(out Button button))
         {
-            painelAvisos.SetActive(false);
-            txtTituloAviso = painelAvisos.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            txtFeedback = painelAvisos.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(HideFeedback);
         }
 
-        if (painelLeitura != null)
+        if (emailInterface != null)
         {
-            painelLeitura.SetActive(true);
-            txtRemetente = painelLeitura.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            txtAssunto = painelLeitura.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-            txtCorpo = painelLeitura.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-            txtAnexo = painelLeitura.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+            emailSender = emailInterface.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            emailSubject = emailInterface.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            emailBody = emailInterface.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            emailAttachments = emailInterface.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+            emailInterface.transform.GetChild(4).gameObject.SetActive(false);
         }
 
-        GerarListaDeEmails();
+        UpdateEmailPanel();
     }
 
-    public void GerarListaDeEmails()
+    public void UpdateEmailPanel()
     {
         // Limpa botões antigos se houver
-        foreach (Transform child in containerDaLista)
+        if (listBar.childCount > 0)
         {
-            Destroy(child.gameObject);
+            foreach (Transform child in listBar)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         // Instancia um botão para cada e-mail da lista
-        foreach (DataEmail email in caixaDeEntrada)
+        foreach (EmailData email in inbox)
         {
-            GameObject newButton = Instantiate(prefabItemEmail, containerDaLista);
+            GameObject newButton = Instantiate(listButton, listBar);
 
             GameObject newText = new("Texto");
             newText.transform.SetParent(newButton.transform, false);
 
             TextMeshProUGUI text = newText.AddComponent<TextMeshProUGUI>();
-            text.text = email.assunto;
+            text.text = email.subject;
             text.fontSize = 20;
             text.color = Color.black; // Altere para a cor desejada
             text.alignment = TextAlignmentOptions.Center;
@@ -81,118 +92,180 @@ public class EmailController : MonoBehaviour
             if (newButton.TryGetComponent(out Button botao))        
             {
                 botao.onClick.RemoveAllListeners();
-                botao.onClick.AddListener(() => ExibirEmailCompleto(email));
+                botao.onClick.AddListener(() => SwapEmail(email));
             }
         }
     }
 
-    public void ExibirEmailCompleto(DataEmail email)
+    public void SwapEmail(EmailData email)
     {
-        emailAbertoAtual = email;
+        if (currentEmail != email)
+            currentEmail = email;
+        else
+            currentEmail = null;
 
-        if (txtRemetente != null)
-            txtRemetente.text = "<b>De:</b> " + email.remetente;
-        if (txtAssunto != null)
-            txtAssunto.text = "<b>Assunto:</b> " + email.assunto;
-        if (txtCorpo != null)
-            txtCorpo.text = email.corpoEmail;
-        if (txtAnexo != null)
+        if (currentEmail != null)
         {
-            txtAnexo.text = string.IsNullOrEmpty(email.nomeAnexo)
-                ? "Sem anexos"
-                : "Anexo: " + email.nomeAnexo;
-        }
-    }
-
-    // Chamado pelo botão "Marcar como Seguro"
-    public void DecisaoMarcarSeguro()
-    {
-        ProcessarDecisao(false); // false = o jogador acha que NÃO é phishing
-    }
-
-    // Chamado pelo botão "Reportar Phishing"
-    public void DecisaoReportarPhishing()
-    {
-        ProcessarDecisao(true); // true = o jogador acha que É phishing
-    }
-
-    private void ProcessarDecisao(bool jogadorMarcouPhishing)
-    {
-        if (emailAbertoAtual == null)
-            return;
-
-        if (jogadorMarcouPhishing == emailAbertoAtual.ehPhishing)
-        {
-            ExibirFeedback(true, "Decisão Correta! A ameaça foi neutralizada.");
+            if (emailSender != null)
+                emailSender.text = "<b>De:</b> " + currentEmail.sender;
+            if (emailSubject != null)
+                emailSubject.text = "<b>Assunto:</b> " + currentEmail.subject;
+            if (emailBody != null)
+                emailBody.text = currentEmail.body;
+            if (emailAttachments != null)
+            {
+                if (currentEmail.attachments.Count > 0)
+                {
+                    emailAttachments.text = "Anexos: ";
+                    foreach (string attachment in currentEmail.attachments)
+                    {
+                        emailAttachments.text += attachment + ", ";
+                    }
+                    emailAttachments.text = emailAttachments.text.TrimEnd(',', ' ');
+                }
+                else
+                {
+                    emailAttachments.text = "Sem anexos";
+                }
+            }
+            emailInterface.transform.GetChild(4).gameObject.SetActive(true);
         }
         else
         {
+            if (emailSender != null)
+                emailSender.text = "";
+            if (emailSubject != null)
+                emailSubject.text = "";
+            if (emailBody != null)
+                emailBody.text = "";
+            if (emailAttachments != null)
+                emailAttachments.text = "";
+            emailInterface.transform.GetChild(4).gameObject.SetActive(false);
+        }
+    }
+
+    public void ValidateAnswer(string playerAnswer)
+    {
+        if (currentEmail == null)
+            return;
+        var playerIsPhishing = playerAnswer switch
+        {
+            "None" => EmailError.None,
+            "SenderMismatch" => EmailError.SenderMismatch,
+            "SubjectMismatch" => EmailError.SubjectMismatch,
+            "BodyMismatch" => EmailError.BodyMismatch,
+            "AttachmentMismatch" => EmailError.AttachmentMismatch,
+            "GeneralMismatch" => EmailError.GeneralMismatch,
+            _ => EmailError.None,
+        };
+        switch (currentEmail.error)
+        {
+            case EmailError.None:
+                if (playerIsPhishing == EmailError.None)
+                {
+                    ShowFeedback(true, "Decisão Correta! O e-mail é realmente seguro.");
+                }
+                else
+                {
+                    ShowFeedback(false, "Erro de Análise! Este e-mail, na verdade, é seguro. Pelo menos manteve a vigilância.");
+                }
+                break;
+            case EmailError.GeneralMismatch:
+                if (playerIsPhishing == EmailError.GeneralMismatch)
+                {
+                    ShowFeedback(true, "Decisão Correta! O e-mail realmente tinha uma discrepância. A ameaça foi neutralizada.");
+                }
+                else
+                {
+                    ShowFeedback(false, "Erro de Análise! Este e-mail, na verdade, tinha uma discrepância.");
+                }
+                break;
+            case EmailError.SenderMismatch:
+                if (playerIsPhishing == EmailError.SenderMismatch)
+                {
+                    ShowFeedback(true, "Decisão Correta! O e-mail realmente tinha o remetente duvidoso. A ameaça foi neutralizada.");
+                }
+                else
+                {
+                    ShowFeedback(false, "Erro de Análise! Este e-mail, na verdade, tinha um remetente duvidoso.");
+                }
+                break;
+            case EmailError.SubjectMismatch:
+                if (playerIsPhishing == EmailError.SubjectMismatch)
+                {
+                    ShowFeedback(true, "Decisão Correta! O e-mail realmente tinha o assunto duvidoso. A ameaça foi neutralizada.");
+                }
+                else
+                {
+                    ShowFeedback(false, "Erro de Análise! Este e-mail, na verdade, tinha um assunto duvidoso.");
+                }
+                break;
+            case EmailError.BodyMismatch:
+                if (playerIsPhishing == EmailError.BodyMismatch)
+                {
+                    ShowFeedback(true, "Decisão Correta! O e-mail realmente tinha o corpo duvidoso. A ameaça foi neutralizada.");
+                }
+                else
+                {
+                    ShowFeedback(false, "Erro de Análise! Este e-mail, na verdade, tinha um corpo duvidoso.");
+                }
+                break;
+            case EmailError.AttachmentMismatch:
+                if (playerIsPhishing == EmailError.AttachmentMismatch)
+                {
+                    ShowFeedback(true, "Decisão Correta! O e-mail realmente tinha o anexo duvidoso. A ameaça foi neutralizada.");
+                }
+                else
+                {
+                    ShowFeedback(false, "Erro de Análise! Este e-mail, na verdade, tinha um anexo duvidoso.");
+                }
+                break;
+        }
+    }
+
+    public void ShowFeedback(bool acertou, string mensagem)
+    {
+        txtFeedback.text = mensagem;
+
+        if (!acertou)
+        {
+            txtTituloAviso.text = "[ ALERTA DE SEGURANÇA ]";
+            txtTituloAviso.color = new Color(1f, 0.2f, 0.2f); // Vermelho Neon
             advertenciasAtuais++;
-
-            if (advertenciasAtuais >= advertenciasMaximas)
+            if (advertenciasAtuais < advertenciasMaximas)
             {
-                ExibirFeedback(
-                    false,
-                    $"ALERTA CRÍTICO: Você acumulou {advertenciasAtuais} advertências. VOCÊ FOI DEMITIDO!"
-                );
+                txtFeedback.text += "\n\nREGISTRO: Você possui " + advertenciasAtuais + "/" + advertenciasMaximas + " advertências.";
             }
             else
             {
-                ExibirFeedback(
-                    false,
-                    $"Erro de Análise! Advertência {advertenciasAtuais}/{advertenciasMaximas} registrada."
-                );
+                txtFeedback.text += "\n\nCRÍTICO: Você acumulou " + advertenciasAtuais + " advertências. VOCÊ FOI DEMITIDO!";
             }
+        } else
+        {
+            txtTituloAviso.text = "[ ANÁLISE CORRETA ]";
+            txtTituloAviso.color = new Color(0f, 1f, 0.4f); // Verde Neon
         }
+
+        if (connectedAlert != null)
+            connectedAlert.SetActive(true);
     }
 
-    private void ExibirFeedback(bool acertou, string mensagem)
+    public void HideFeedback()
     {
-        if (txtFeedback != null)
-            txtFeedback.text = mensagem;
+        if (connectedAlert != null)
+            connectedAlert.SetActive(false);
 
-        if (txtTituloAviso != null)
+        if (currentEmail != null && inbox.Contains(currentEmail))
         {
-            if (acertou)
-            {
-                txtTituloAviso.text = "[ ANÁLISE CORRETA ]";
-                txtTituloAviso.color = new Color(0f, 1f, 0.4f); // Verde Neon
-            }
-            else
-            {
-                txtTituloAviso.text = "[ ALERTA DE SEGURANÇA ]";
-                txtTituloAviso.color = new Color(1f, 0.2f, 0.2f); // Vermelho Neon
-            }
+            inbox.Remove(currentEmail);
+            SwapEmail(currentEmail);
         }
 
-        if (painelAvisos != null)
-            painelAvisos.SetActive(true); // Exibe o popup centralizado
+        UpdateEmailPanel();
     }
 
-    public void FecharPainelAvisosEAvancar()
+    private void OnDestroy()
     {
-        if (painelAvisos != null)
-            painelAvisos.SetActive(false);
-
-        // Remove o e-mail processado da lista
-        if (emailAbertoAtual != null && caixaDeEntrada.Contains(emailAbertoAtual))
-        {
-            caixaDeEntrada.Remove(emailAbertoAtual);
-        }
-
-        emailAbertoAtual = null;
-
-        // Regera a lista de botões à esquerda
-        GerarListaDeEmails();
-
-        // Limpa a tela de leitura
-        if (txtRemetente != null)
-            txtRemetente.text = "";
-        if (txtAssunto != null)
-            txtAssunto.text = "";
-        if (txtCorpo != null)
-            txtCorpo.text = "";
-        if (txtAnexo != null)
-            txtAnexo.text = "";
+        //TODO: Fazer envio de alerta para componente dos alertas
     }
 }

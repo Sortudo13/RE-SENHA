@@ -290,7 +290,6 @@ GameObject:
   - component: {fileID: 8283670995328852768}
   - component: {fileID: 4129142986195596993}
   - component: {fileID: 7514142133775574846}
-  - component: {fileID: 6280768906941263825}
   m_Layer: 5
   m_Name: PainelAvisos
   m_TagString: Untagged
@@ -307,7 +306,7 @@ RectTransform:
   m_GameObject: {fileID: 4641189156026426695}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7941757, y: 1.7941757, z: 1.7941757}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1870055410083676788}
@@ -399,18 +398,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6280768906941263825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641189156026426695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4060d543d7344045a93ac39a380aa97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Draggable
 --- !u!1 &5787559289884132143
 GameObject:
   m_ObjectHideFlags: 0
