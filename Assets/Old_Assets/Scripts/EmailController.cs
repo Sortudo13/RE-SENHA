@@ -60,7 +60,6 @@ public class EmailController : MonoBehaviour
 
     public void UpdateEmailPanel()
     {
-        // Limpa botões antigos se houver
         if (listBar.childCount > 0)
         {
             foreach (Transform child in listBar)
@@ -69,7 +68,6 @@ public class EmailController : MonoBehaviour
             }
         }
 
-        // Instancia um botão para cada e-mail da lista
         foreach (EmailData email in inbox)
         {
             GameObject newButton = Instantiate(listButton, listBar);
@@ -79,8 +77,10 @@ public class EmailController : MonoBehaviour
 
             TextMeshProUGUI text = newText.AddComponent<TextMeshProUGUI>();
             text.text = email.subject;
-            text.fontSize = 20;
-            text.color = Color.black; // Altere para a cor desejada
+            text.enableAutoSizing = true;
+            text.fontSizeMin = 30;
+            text.fontSizeMax = 50;
+            text.color = Color.black;
             text.alignment = TextAlignmentOptions.Center;
 
             RectTransform rect = newText.GetComponent<RectTransform>();
