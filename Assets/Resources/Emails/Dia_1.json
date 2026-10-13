@@ -1,0 +1,52 @@
+{
+  "current_day": 1,
+  "error_count": 0,
+  "emails": [
+    {
+      "sender": "rh@empresa.com.br",
+      "subject": "Bem-vindo à equipe - Orientações do Dia 1",
+      "body": "Olá! Seja bem-vindo à nossa equipe de segurança digital. Por favor, leia o manual anexado com os procedimentos do seu primeiro dia de trabalho.",
+      "attachments": [
+        "manual_de_conduta.pdf"
+      ],
+      "error": 0,
+      "reason": "E-mail legítimo vindo do departamento interno de Recursos Humanos."
+    },
+    {
+      "sender": "suporte-ti@gmai1-seguranca.com",
+      "subject": "Atualização de Senha Obrigatória",
+      "body": "Detectamos uma tentativa de login não autorizada na sua conta de rede. Clique no link abaixo e recadastre sua senha o quanto antes.",
+      "attachments": [],
+      "error": 2,
+      "reason": "O domínio do remetente 'gmai1-seguranca.com' utiliza a troca da letra 'l' pelo número '1' para simular um e-mail do Google (typosquatting)."
+    },
+    {
+      "sender": "financeiro@empresa.com.br",
+      "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
+      "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
+      "attachments": [],
+      "error": 3,
+      "reason": "Assunto alarmista com valor elevado, projetado para causar pânico e forçar uma ação impulsiva do jogador."
+    },
+    {
+      "sender": "fornecedor@graficaexpressa.com.br",
+      "subject": "Nota Fiscal do Serviço de Impressão",
+      "body": "Prezado, segue em anexo a nota fiscal e o comprovante referente aos serviços de impressão prestados nesta semana para a empresa.",
+      "attachments": [
+        "fatura_outubro_assinado.exe"
+      ],
+      "error": 5,
+      "reason": "O anexo possui extensão executável (.exe) disfarçada como um arquivo de documento/nota fiscal."
+    },
+    {
+      "sender": "diretoria@empresa.com.br",
+      "subject": "Aviso Importante sobre Reunião Geral",
+      "body": "Prezado colaborador, devido a problemas operacionais no nosso servidor local, acesse a página externa http://painel-verificacao-empresa.ru para confirmar sua presença.",
+      "attachments": [
+        "pauta_reuniao.pdf"
+      ],
+      "error": 4,
+      "reason": "O corpo do e-mail redireciona o usuário para um domínio externo totalmente suspeito com terminação (.ru)."
+    }
+  ]
+}
