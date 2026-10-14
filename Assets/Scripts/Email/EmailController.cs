@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EmailController : MonoBehaviour
@@ -230,11 +231,26 @@ public class EmailController : MonoBehaviour
                 }
                 break;
         }
+
         if (!playerIsPhishing.Equals(currentEmail.error))
             DataController.CurrentErrorCount++;
+
         ShowFeedback(playerIsPhishing.Equals(currentEmail.error), feedbackMessage);
         RemoveEmail(currentEmail);
 
+        if ((inbox.Count == 0 && DataController.CurrentDay >= DataController.MaxDay) || DataController.CurrentErrorCount >= DataController.MaxErrors)
+        {
+            transform.parent.GetComponentInParent<WindowController>().CloseWindow();
+            string endingScene = (inbox.Count == 0) ? "Win" : "Gameover";
+            SceneManager.LoadScene(endingScene);
+        }
+        if (inbox.Count == 0)
+        {
+            DataController.AdvanceDay();
+            currentSave = DataController.LoadEmails();
+            inbox = currentSave.emails;
+            UpdateEmailSidebar();
+        }
     }
 
     public void ShowFeedback(bool acertou, string mensagem)
