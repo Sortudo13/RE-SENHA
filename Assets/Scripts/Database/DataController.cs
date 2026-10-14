@@ -1,13 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public static class DataController
 {
+    public static event Action OnDayChanged;
     public static int CurrentDay
     {
         get => PlayerPrefs.GetInt("CurrentDay", 1);
         set => PlayerPrefs.SetInt("CurrentDay", value);
+    }
+
+    public static int MaxDay
+    {
+        get => PlayerPrefs.GetInt("MaxDay", 1);
+        set => PlayerPrefs.SetInt("MaxDay", value);
     }
 
     public static int CurrentErrorCount
@@ -30,12 +38,14 @@ public static class DataController
     public static void AdvanceDay()
     {
         CurrentDay++;
+        OnDayChanged?.Invoke();
         SaveEmails(LoadDailyJson(CurrentDay));
     }
 
     public static void ReduceDay()
     {
         CurrentDay--;
+        OnDayChanged?.Invoke();
         SaveEmails(LoadDailyJson(CurrentDay));
     }
 
@@ -48,6 +58,7 @@ public static class DataController
     {
         CurrentDay = 1;
         CurrentErrorCount = 0;
+        OnDayChanged?.Invoke();
         SaveEmails(LoadDailyJson(CurrentDay));
     }
 
