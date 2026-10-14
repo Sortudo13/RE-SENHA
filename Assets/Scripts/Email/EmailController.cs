@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ public class EmailController : MonoBehaviour
     private TextMeshProUGUI emailSubject;
     private TextMeshProUGUI emailBody;
     private TextMeshProUGUI emailAttachments;
-    private GameObject emailButtons;
+    private GameObject emailReport;
 
     void Start()
     {
@@ -32,12 +33,13 @@ public class EmailController : MonoBehaviour
         emailSubject = emailInterface.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         emailBody = emailInterface.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         emailAttachments = emailInterface.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        emailButtons = emailInterface.transform.GetChild(4).gameObject;
-        emailButtons.SetActive(false);
+        emailReport = emailInterface.transform.GetChild(4).gameObject;
+        emailReport.SetActive(false);
 
         currentSave = DataController.LoadEmails();
         inbox = currentSave.emails;
         UpdateEmailSidebar();
+        StartDropdown();
     }
 
     public void AddEmail(EmailData newEmail)
@@ -135,7 +137,7 @@ public class EmailController : MonoBehaviour
                     emailAttachments.text = "Sem anexos";
                 }
             }
-            emailButtons.SetActive(true);
+            emailReport.SetActive(true);
         }
         else
         {
@@ -147,23 +149,61 @@ public class EmailController : MonoBehaviour
                 emailBody.text = "";
             if (emailAttachments != null)
                 emailAttachments.text = "";
-            emailButtons.SetActive(false);
+            emailReport.SetActive(false);
         }
     }
 
-    public void ValidateAnswer(string playerAnswer)
+    public void StartDropdown()
+    {
+        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
+        dropdown.onValueChanged.AddListener(delegate { SwapReportButton(); });
+        SwapReportButton();
+    }
+
+    public void SwapReportButton()
+    {
+        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
+        Button submitButton = emailReport.transform.GetComponentInChildren<Button>();
+
+        if (dropdown.value == 0)
+        {
+            if (submitButton.gameObject.TryGetComponent(out Image image))
+                image.color = new Color(13/255f, 190/255f, 0/255f);
+            TextMeshProUGUI text = submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.color = new Color(255/255f, 255/255f, 255/255f);
+                text.text = "Aprovar";
+            }
+        }
+        else
+        {
+            if (submitButton.gameObject.TryGetComponent(out Image image))
+                image.color = new Color(124/255f, 41/255f, 41/255f);
+
+            TextMeshProUGUI text = submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.color = new Color(255/255f, 3/255f, 0/255f);
+                text.text = "Reportar";
+            }
+        }
+    }
+
+    public void ValidateAnswer()
     {
         if (currentEmail == null)
             return;
 
-        var playerIsPhishing = playerAnswer switch
+        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
+        var playerIsPhishing = dropdown.value switch
         {
-            "None" => EmailError.None,
-            "SenderMismatch" => EmailError.SenderMismatch,
-            "SubjectMismatch" => EmailError.SubjectMismatch,
-            "BodyMismatch" => EmailError.BodyMismatch,
-            "AttachmentMismatch" => EmailError.AttachmentMismatch,
-            "GeneralMismatch" => EmailError.GeneralMismatch,
+            0 => EmailError.None,
+            1 => EmailError.SenderMismatch,
+            2 => EmailError.SubjectMismatch,
+            3 => EmailError.BodyMismatch,
+            4 => EmailError.AttachmentMismatch,
+            5 => EmailError.GeneralMismatch,
             _ => EmailError.None,
         };
 
@@ -242,6 +282,7 @@ public class EmailController : MonoBehaviour
         {
             transform.parent.GetComponentInParent<WindowController>().CloseWindow();
             string endingScene = (inbox.Count == 0) ? "Win" : "Gameover";
+            DataController.ResetDay();
             SceneManager.LoadScene(endingScene);
         }
         if (inbox.Count == 0)
