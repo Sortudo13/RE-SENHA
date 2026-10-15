@@ -122,6 +122,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: windowIcon
+      value: 
+      objectReference: {fileID: 754352307031186287, guid: 9e4a21848ed475b45ba6a858d1285c5a, type: 3}
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: windowName
+      value: Email
+      objectReference: {fileID: 0}
     - target: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: m_Name
       value: Window Email

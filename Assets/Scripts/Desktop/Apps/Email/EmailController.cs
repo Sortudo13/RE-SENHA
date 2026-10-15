@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,7 +16,6 @@ public class EmailController : MonoBehaviour
 
     [Header("Alert Window")]
     [SerializeField] private GameObject alertWindow;
-    [SerializeField] private Transform alertLayer;
 
     [Header("Email's Reading Panel")]
     [SerializeField] private GameObject emailInterface;
@@ -169,6 +167,7 @@ public class EmailController : MonoBehaviour
         {
             if (submitButton.gameObject.TryGetComponent(out Image image))
                 image.color = new Color(13/255f, 190/255f, 0/255f);
+
             TextMeshProUGUI text = submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
             {
@@ -203,7 +202,6 @@ public class EmailController : MonoBehaviour
             2 => EmailError.SubjectMismatch,
             3 => EmailError.BodyMismatch,
             4 => EmailError.AttachmentMismatch,
-            5 => EmailError.GeneralMismatch,
             _ => EmailError.None,
         };
 
@@ -218,16 +216,6 @@ public class EmailController : MonoBehaviour
                 else
                 {
                     feedbackMessage = "Erro de Análise! Este e-mail, na verdade, é seguro. Pelo menos manteve a vigilância.";
-                }
-                break;
-            case EmailError.GeneralMismatch:
-                if (playerIsPhishing == EmailError.GeneralMismatch)
-                {
-                    feedbackMessage = "Decisão Correta! O e-mail realmente tinha uma discrepância. A ameaça foi neutralizada.";
-                }
-                else
-                {
-                    feedbackMessage = "Erro de Análise! Este e-mail, na verdade, tinha uma discrepância.";
                 }
                 break;
             case EmailError.SenderMismatch:
@@ -282,7 +270,7 @@ public class EmailController : MonoBehaviour
         {
             transform.parent.GetComponentInParent<WindowController>().CloseWindow();
             string endingScene = (inbox.Count == 0) ? "Win" : "Gameover";
-            DataController.ResetDay();
+            DataController.ResetDays();
             SceneManager.LoadScene(endingScene);
         }
         if (inbox.Count == 0)
@@ -296,7 +284,7 @@ public class EmailController : MonoBehaviour
 
     public void ShowFeedback(bool acertou, string mensagem)
     {
-        GameObject connectedAlert = Instantiate(alertWindow, alertLayer);
+        GameObject connectedAlert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
         GameObject content = connectedAlert.transform.GetChild(0).gameObject;
         TextMeshProUGUI txtTituloAviso = content.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();

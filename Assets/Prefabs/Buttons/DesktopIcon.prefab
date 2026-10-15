@@ -118,12 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DesktopIconController
   onDesktop: 1
-  appIcon: {fileID: 4515868832658927780, guid: f8550b0662e4f0e4f90566e4f5d10e4e, type: 3}
-  appName: "Gen\xE9rico"
-  window: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
-  layer: {fileID: 0}
-  taskbarButton: {fileID: 4422490942835456345, guid: 72e776875a68f09458d9f2f5b64ea285, type: 3}
-  taskbarLayer: {fileID: 0}
+  windowPrefab: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
 --- !u!114 &3247603458650349038
 MonoBehaviour:
   m_ObjectHideFlags: 0

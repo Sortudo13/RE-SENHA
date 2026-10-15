@@ -473,6 +473,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d5e5dde05445f448d1e376eea36bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorJanela
+  windowIcon: {fileID: 4515868832658927780, guid: f8550b0662e4f0e4f90566e4f5d10e4e, type: 3}
+  windowName: "Gen\xE9rico"
 --- !u!1 &6044872297503187655
 GameObject:
   m_ObjectHideFlags: 0
