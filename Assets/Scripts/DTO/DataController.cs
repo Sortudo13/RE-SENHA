@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -115,6 +114,20 @@ public static class DataController
         {
             File.Delete(SavePath);
         }
+    }
+}
+
+public class WindowData
+{
+    public string ID { get; }
+    public Sprite Icon { get; }
+    public string Name { get; }
+
+    public WindowData(string id, Sprite icon, string name)
+    {
+        ID = id;
+        Icon = icon;
+        Name = name;
     }
 }
 

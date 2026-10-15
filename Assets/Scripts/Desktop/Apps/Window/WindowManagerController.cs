@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class DesktopWindowController : MonoBehaviour
+public class WindowManagerController : MonoBehaviour
 {
     private int activeWindowCount = 0;
+    public static Transform WindowsLayer { get; private set; }
 
     private void Awake()
     {
+        WindowsLayer = transform;
         ActionController.SyncSignal("AddActiveWindow", AddWindowCount);
         ActionController.SyncSignal("SubActiveWindow", SubWindowCount);
     }

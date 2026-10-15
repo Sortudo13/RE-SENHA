@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(RectTransform))]
-public class WindowMovementController : MonoBehaviour,IPointerUpHandler, IPointerDownHandler, IDragHandler
+public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownHandler, IDragHandler
 {
 
     [Header("Movement config")]

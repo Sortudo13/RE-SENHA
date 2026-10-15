@@ -16,7 +16,6 @@ public class EmailController : MonoBehaviour
 
     [Header("Alert Window")]
     [SerializeField] private GameObject alertWindow;
-    [SerializeField] private Transform alertLayer;
 
     [Header("Email's Reading Panel")]
     [SerializeField] private GameObject emailInterface;
@@ -285,7 +284,7 @@ public class EmailController : MonoBehaviour
 
     public void ShowFeedback(bool acertou, string mensagem)
     {
-        GameObject connectedAlert = Instantiate(alertWindow, alertLayer);
+        GameObject connectedAlert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
         GameObject content = connectedAlert.transform.GetChild(0).gameObject;
         TextMeshProUGUI txtTituloAviso = content.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class DesktopCalendarController : MonoBehaviour
+public class CalendarController : MonoBehaviour
 {
     private TextMeshProUGUI textTMPro;
 
@@ -11,6 +11,7 @@ public class DesktopCalendarController : MonoBehaviour
             textTMPro = component;
 
         AtualizarTexto();
+        ActionController.SyncSignal("Resetar Jogo", ResetGame);
     }
 
     private void OnEnable()
@@ -23,9 +24,14 @@ public class DesktopCalendarController : MonoBehaviour
         ActionController.UnsyncSignal("DayChanged", AtualizarTexto);
     }
 
-    public void AtualizarTexto()
+    private void AtualizarTexto()
     {
         if (textTMPro != null)
             textTMPro.text = $"Dia {DataController.CurrentDay:D2}";
+    }
+
+    private void ResetGame()
+    {
+        DataController.ResetDays();
     }
 }

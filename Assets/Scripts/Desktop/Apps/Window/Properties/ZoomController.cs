@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class WindowZoomController : MonoBehaviour, IScrollHandler
+public class ZoomController : MonoBehaviour, IScrollHandler
 {
     [Header("Zoom config")]
     public float zoomSpeed = 0.01f;

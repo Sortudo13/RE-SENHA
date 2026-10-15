@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3745053}
   - component: {fileID: 3745054}
+  - component: {fileID: 3745055}
   m_Layer: 5
   m_Name: Taskbar
   m_TagString: Untagged
@@ -179,6 +180,19 @@ MonoBehaviour:
   m_Spacing: {x: 16, y: 16}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &3745055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995423bc93b4ca34a9a8fec1270f2d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskbarManagerController
+  taskbarButtonPrefab: {fileID: 1724257873130449215, guid: 72e776875a68f09458d9f2f5b64ea285, type: 3}
 --- !u!1 &32592504
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +560,7 @@ GameObject:
   - component: {fileID: 347541439}
   - component: {fileID: 347541442}
   - component: {fileID: 347541441}
+  - component: {fileID: 347541443}
   m_Layer: 5
   m_Name: CanvasAlerts
   m_TagString: Untagged
@@ -613,6 +628,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &347541443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347541438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a610db39e62614c975199e1c9500a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertManagerController
 --- !u!1 &487173559
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,6 +1094,10 @@ PrefabInstance:
       propertyPath: taskbarLayer
       value: 
       objectReference: {fileID: 3745053}
+    - target: {fileID: 7555980889623089530, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: windowPrefab
+      value: 
+      objectReference: {fileID: 9096935942626009820, guid: 76797d72c5aeeb643a27c71ce23a009d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1396,7 +1427,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1302115840}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1302115844}
+        m_TargetAssemblyTypeName: ActionButtonController, Assembly-CSharp
+        m_MethodName: SendAction
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Resetar Jogo
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1302115840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1462,9 +1505,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1302115837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75bf80832cff0014a8c89a27e32fb587, type: 3}
+  m_Script: {fileID: 11500000, guid: b977a4bef3bc82047befd6d5e7011405, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResetSave
+  m_EditorClassIdentifier: Assembly-CSharp::ActionButtonController
 --- !u!1 &1520624390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,6 +1995,10 @@ PrefabInstance:
       propertyPath: taskbarLayer
       value: 
       objectReference: {fileID: 3745053}
+    - target: {fileID: 7555980889623089530, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: windowPrefab
+      value: 
+      objectReference: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2292,6 +2339,10 @@ PrefabInstance:
       propertyPath: taskbarLayer
       value: 
       objectReference: {fileID: 3745053}
+    - target: {fileID: 7555980889623089530, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: windowPrefab
+      value: 
+      objectReference: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

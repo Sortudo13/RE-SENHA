@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DocumentFlipController : MonoBehaviour
+public class FlipController : MonoBehaviour
 {
     private GameObject front;
     private GameObject back;

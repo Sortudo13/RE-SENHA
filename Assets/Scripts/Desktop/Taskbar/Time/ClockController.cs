@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class DesktopClockController : MonoBehaviour
+public class ClockController : MonoBehaviour
 {
     [Header("Work Settings")]
     [SerializeField][Range(0, 23)] private int startHour = 8;
@@ -50,7 +50,7 @@ public class DesktopClockController : MonoBehaviour
         // Finds how many real seconds equal 1 game hour
         realSecondsPerGameHour = realDurationInSeconds / totalWorkHours;
 
-        StartShift();
+        StartWork();
     }
 
     void Update()
@@ -66,7 +66,7 @@ public class DesktopClockController : MonoBehaviour
         // If time runs out, end the shift
         if (gameHoursElapsed >= totalWorkHours)
         {
-            EndShift();
+            EndWork();
             return;
         }
 
@@ -80,7 +80,7 @@ public class DesktopClockController : MonoBehaviour
         ActionController.SendAction("TimeUpdated");
     }
 
-    private void StartShift()
+    private void StartWork()
     {
         IsStillWorking = true;
         realTimeElapsed = 0f;
@@ -97,7 +97,7 @@ public class DesktopClockController : MonoBehaviour
             textTMPro.text = $"{CurrentHour:D2}:{CurrentMinute:D2}";
     }
 
-    private void EndShift() //Fazer alerta de fim de expediente
+    private void EndWork() //Fazer alerta de fim de expediente
     {
         IsStillWorking = false;
         CurrentHour = endHour;

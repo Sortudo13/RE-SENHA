@@ -306,7 +306,6 @@ GameObject:
   - component: {fileID: 7743444471528267783}
   - component: {fileID: 6993530954961973666}
   - component: {fileID: 8283670995328852768}
-  - component: {fileID: 8760250637837627999}
   - component: {fileID: 3254167699406685527}
   m_Layer: 5
   m_Name: Alert
@@ -323,8 +322,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4641189156026426695}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1091775, y: 1.1091775, z: 1.1091775}
+  m_LocalPosition: {x: 0, y: 0, z: -2.5246}
+  m_LocalScale: {x: 0.42685586, y: 0.42685586, z: 0.42685586}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1256152356195560740}
@@ -373,18 +372,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8760250637837627999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641189156026426695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d5e5dde05445f448d1e376eea36bde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WindowController
 --- !u!114 &3254167699406685527
 MonoBehaviour:
   m_ObjectHideFlags: 0
