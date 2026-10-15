@@ -4,55 +4,49 @@ using System;
 public class WindowController : MonoBehaviour
 {
     public event Action OnDestroyedObject;
-    private DesktopWindowController manager;
 
     private void Awake()
     {
-        manager = GetComponentInParent<DesktopWindowController>(true);
+        ActionController.SyncSignal("MinimizeAllWindow", MinimizeWindow);
     }
 
     public void OpenWindow()
     {
-        manager.gameObject.SetActive(true);
+        if (!this.gameObject.activeInHierarchy)
+        {
+            ActionController.SendAction("AddActiveWindow");
+            this.gameObject.SetActive(true);
+        }
         this.transform.SetAsLastSibling();
-        this.gameObject.SetActive(true);
     }
 
     public void MinimizeWindow()
     {
-        this.gameObject.SetActive(false);
+        if (this.gameObject.activeSelf)
+        {
+            ActionController.SendAction("SubActiveWindow");
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void SwapWindow()
     {
-        if (!(manager.gameObject.activeSelf && this.gameObject.activeSelf))
-        {
-            this.OpenWindow();
-        } else
-        {
+        if (this.gameObject.activeInHierarchy)
             this.MinimizeWindow();
-        }
+        else
+            this.OpenWindow();
     }
 
     public void CloseWindow()
     {
-        this.gameObject.SetActive(false);
+        this.MinimizeWindow();
         Destroy(this.gameObject);
     }
 
     private void OnDestroy()
     {
+        ActionController.UnsyncSignal("MinimizeAllWindow", MinimizeWindow);
         OnDestroyedObject?.Invoke();
         OnDestroyedObject = null;
-    }
-    private void OnEnable()
-    {
-        manager.gameObject.SetActive(true);
-        manager.OnWindowStatusChanged(true);
-    }
-
-    private void OnDisable()
-    {
-        manager.OnWindowStatusChanged(false);
     }
 }

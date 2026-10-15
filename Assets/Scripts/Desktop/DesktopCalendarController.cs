@@ -10,12 +10,22 @@ public class DesktopCalendarController : MonoBehaviour
         if (TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI component))
             textTMPro = component;
 
-        DataController.OnDayChanged += AtualizarTexto;
         AtualizarTexto();
+    }
+
+    private void OnEnable()
+    {
+        ActionController.SyncSignal("DayChanged", AtualizarTexto);
+    }
+
+    private void OnDisable()
+    {
+        ActionController.UnsyncSignal("DayChanged", AtualizarTexto);
     }
 
     public void AtualizarTexto()
     {
-        textTMPro.text = $"Dia {DataController.CurrentDay:D2}";
+        if (textTMPro != null)
+            textTMPro.text = $"Dia {DataController.CurrentDay:D2}";
     }
 }

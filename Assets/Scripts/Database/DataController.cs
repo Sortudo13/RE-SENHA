@@ -5,7 +5,6 @@ using UnityEngine;
 
 public static class DataController
 {
-    public static event Action OnDayChanged;
     public static int CurrentDay
     {
         get => PlayerPrefs.GetInt("CurrentDay", 1);
@@ -38,14 +37,14 @@ public static class DataController
     public static void AdvanceDay()
     {
         CurrentDay++;
-        OnDayChanged?.Invoke();
+        ActionController.SendAction("DayChanged");
         SaveEmails(LoadDailyJson(CurrentDay));
     }
 
     public static void ReduceDay()
     {
         CurrentDay--;
-        OnDayChanged?.Invoke();
+        ActionController.SendAction("DayChanged");
         SaveEmails(LoadDailyJson(CurrentDay));
     }
 
@@ -58,7 +57,7 @@ public static class DataController
     {
         CurrentDay = 1;
         CurrentErrorCount = 0;
-        OnDayChanged?.Invoke();
+        ActionController.SendAction("DayChanged");
         SaveEmails(LoadDailyJson(CurrentDay));
     }
 
@@ -140,7 +139,6 @@ public class EmailData
 public enum EmailError
 {
     None,
-    GeneralMismatch,
     SenderMismatch,
     SubjectMismatch,
     BodyMismatch,

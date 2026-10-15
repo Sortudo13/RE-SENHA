@@ -17,15 +17,24 @@ public class DesktopClockController : MonoBehaviour
     public static int CurrentMinute { get; private set; }
     public static bool IsStillWorking { get; private set; }
 
-    // Static Alert Events (Invokes)
-    public static event Action OnWorkStarted;
-    public static event Action OnWorkEnded;
-    public static event Action OnTimeUpdated;
-
     private float realTimeElapsed;
     private float totalWorkHours;
     private float realSecondsPerGameHour;
     private TextMeshProUGUI textTMPro;
+
+    private void OnEnable()
+    {
+        if (TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI component))
+        {
+            textTMPro = component;
+        }
+        ActionController.SyncSignal("TimeUpdated", UpdateText);
+    }
+
+    private void OnDisable()
+    {
+         ActionController.UnsyncSignal("TimeUpdated", UpdateText);
+    }
 
     void Start()
     {
@@ -42,12 +51,6 @@ public class DesktopClockController : MonoBehaviour
         realSecondsPerGameHour = realDurationInSeconds / totalWorkHours;
 
         StartShift();
-
-        if (TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI component))
-        {
-            textTMPro = component;
-            OnTimeUpdated += UpdateText;
-        }
     }
 
     void Update()
@@ -74,7 +77,7 @@ public class DesktopClockController : MonoBehaviour
         CurrentMinute = Mathf.FloorToInt((exactGameHour - CurrentHour) * 60f);
 
         // Notifies texts to update themselves
-        OnTimeUpdated?.Invoke();
+        ActionController.SendAction("TimeUpdated");
     }
 
     private void StartShift()
@@ -84,13 +87,14 @@ public class DesktopClockController : MonoBehaviour
         CurrentHour = startHour;
         CurrentMinute = 0;
 
-        OnTimeUpdated?.Invoke();
-        OnWorkStarted?.Invoke();
+        ActionController.SendAction("TimeUpdated");
+        ActionController.SendAction("WorkStarted");
     }
 
     private void UpdateText()
     {
-        textTMPro.text = $"{CurrentHour:D2}:{CurrentMinute:D2}";
+        if (textTMPro != null)
+            textTMPro.text = $"{CurrentHour:D2}:{CurrentMinute:D2}";
     }
 
     private void EndShift() //Fazer alerta de fim de expediente
@@ -99,7 +103,7 @@ public class DesktopClockController : MonoBehaviour
         CurrentHour = endHour;
         CurrentMinute = 0;
 
-        OnTimeUpdated?.Invoke();
-        OnWorkEnded?.Invoke();
+        ActionController.SendAction("TimeUpdated");
+        ActionController.SendAction("WorkEnded");
     }
 }
