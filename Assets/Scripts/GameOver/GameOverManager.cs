@@ -28,7 +28,7 @@ public class GameOverManager : MonoBehaviour
     // Conectado ao botão "Reiniciar"
     public void ReiniciarJogo()
     {
-        // Recarrega a cena principal do jogo (ajuste o nome exato da sua cena)
+        // Alterar para recarregar a cena principal
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
