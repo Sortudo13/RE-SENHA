@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac9addc6c164b5ec8b17a38e70e5377, type: 3}
   m_Name: Regra 1
   m_EditorClassIdentifier: Assembly-CSharp::RegraData
-  idRegra: 
-  titulo: 
-  descricao: 
-  nivelIntroducao: 0
+  idRegra: 1
+  titulo: Primeira Regra
+  descricao: Aceite apenas e-mails @nationaltech.com
+  nivelIntroducao: 1

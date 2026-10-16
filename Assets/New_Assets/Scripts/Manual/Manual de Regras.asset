@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87dac6c8f9ea47e02b6466778650ae89, type: 3}
   m_Name: Manual de Regras
   m_EditorClassIdentifier: Assembly-CSharp::ManualData
-  todasAsRegras: []
+  todasAsRegras:
+  - {fileID: 11400000, guid: eba9d292ad6b3dc66861f28362a49f97, type: 2}
