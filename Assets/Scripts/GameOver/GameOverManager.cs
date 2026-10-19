@@ -11,7 +11,7 @@ public class GameOverManager : MonoBehaviour
     [Header("Textos de Estatísticas")]
     public TextMeshProUGUI txtMotivoDerrota;
     public TextMeshProUGUI txtDiasSobrevividos;
-    public TextMeshProUGUI txtAcertosErros;
+    public TextMeshProUGUI txtEmailsAnalisados;
 
     // Função chamada pelo GameManager quando o jogo acaba
     public void ExibirGameOver(string motivo, int dias, int acertos, int erros)
@@ -22,7 +22,7 @@ public class GameOverManager : MonoBehaviour
         // Preenche os dados baseados no progresso do jogador
         txtMotivoDerrota.text = "Motivo da Demissão: " + motivo;
         txtDiasSobrevividos.text = "Dias no Cargo: " + dias;
-        txtAcertosErros.text = $"Decisões Corretas: {acertos} | Erros: {erros}";
+        txtEmailsAnalisados.text = $"Emails Analisados: {acertos + erros}";
     }
 
     // Conectado ao botão "Reiniciar"
@@ -35,12 +35,20 @@ public class GameOverManager : MonoBehaviour
     // Conectado ao botão "Estatísticas"
     public void MostrarEstatisticas()
     {
+        // Esconde a tela principal de Game Over
+        painelGameOverPrincipal.SetActive(false); 
+        
+        // Mostra a tela de Estatísticas no lugar
         painelEstatisticas.SetActive(true);
     }
 
-    // Opcional: Botão de "Voltar" dentro do painel de estatísticas
+    // Conectado ao botão "Voltar" dentro do painel de estatísticas
     public void EsconderEstatisticas()
     {
+        // Esconde a tela de Estatísticas
         painelEstatisticas.SetActive(false);
+        
+        // Traz a tela principal de Game Over de volta
+        painelGameOverPrincipal.SetActive(true);
     }
 }

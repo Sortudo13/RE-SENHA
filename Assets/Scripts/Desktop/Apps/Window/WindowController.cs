@@ -63,6 +63,10 @@ public class WindowController : MonoBehaviour
 
     public void CloseWindow()
     {
+
+        // Dispara a ação global sem precisar saber quem vai tocar o som
+        ActionController.SendAction(ActionCommands.ON_WINDOW_CLOSED);
+        
         MinimizeWindow();
         Destroy(gameObject);
     }

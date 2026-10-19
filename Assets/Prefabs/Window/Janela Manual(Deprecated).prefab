@@ -844,7 +844,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8405311952849426985}
   m_HandleRect: {fileID: 8336732059918866250}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1590,7 +1590,7 @@ GameObject:
   - component: {fileID: 9200281318898540831}
   - component: {fileID: 2882665274728855460}
   m_Layer: 5
-  m_Name: Janela Manual
+  m_Name: Janela Manual(Deprecated)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1686,6 +1686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d5e5dde05445f448d1e376eea36bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindowController
+  windowIcon: {fileID: -7221242228998745771, guid: 5608ff520f9e51f62afbecd49c9b82b7, type: 3}
+  windowName: Manual
 --- !u!1 &3782470590719148743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,7 +2140,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1892333117770250488}
   m_HandleRect: {fileID: 4521376719366643694}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
