@@ -36,8 +36,9 @@ public class WindowController : MonoBehaviour
 
     public void OpenWindow()
     {
+        ActionController.SendAction("OnWindowOpened");
         if (!gameObject.activeInHierarchy)
-        {
+        {   
             ActionController.SendAction("AddActiveWindow");
             gameObject.SetActive(true);
         }
@@ -55,17 +56,22 @@ public class WindowController : MonoBehaviour
 
     public void SwapWindow()
     {
+        ActionController.SendAction("OnWindowOpened");
         if (gameObject.activeInHierarchy)
+        {
             MinimizeWindow();
+        }
         else
+        {
             OpenWindow();
+        }
     }
 
     public void CloseWindow()
     {
 
         // Dispara a ação global sem precisar saber quem vai tocar o som
-        ActionController.SendAction(ActionCommands.ON_WINDOW_CLOSED);
+        ActionController.SendAction("OnWindowClosed");
         
         MinimizeWindow();
         Destroy(gameObject);

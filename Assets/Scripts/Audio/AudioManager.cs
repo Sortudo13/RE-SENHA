@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AudioManager : MonoBehaviour
 {
@@ -36,14 +37,14 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        // Toca a música de fundo ao iniciar o jogo
+        // Toca música de fundo ao iniciar o jogo
         TocarMusicaDeFundo();
     }
 
     private void Update()
     {
-        // 0 representa o Botão Esquerdo do Mouse
-        if (Input.GetMouseButtonDown(0))
+        // Verifica clique com botão esquerdo do mouse usando vInput System
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             TocarSFX(cliqueBotaoPadrao);
         }
@@ -51,7 +52,6 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
-        // Sincroniza com os eventos do ActionController
         ActionController.SyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.SyncSignal("OnWindowOpened", TocarSomAbrirJanela);
         ActionController.SyncSignal("OnButtonClicked", TocarSomBotao);
@@ -59,7 +59,6 @@ public class AudioManager : MonoBehaviour
 
     private void OnDisable()
     {
-        // Desfaz a inscrição nos eventos do ActionController ao desativar
         ActionController.UnsyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.UnsyncSignal("OnWindowOpened", TocarSomAbrirJanela);
         ActionController.UnsyncSignal("OnButtonClicked", TocarSomBotao);
