@@ -25,6 +25,16 @@ public class EmailController : MonoBehaviour
     private GameObject emailAttachments;
     private GameObject emailReport;
 
+    void Awake()
+    {
+        ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
+    }
+
+    private void OnDestroy()
+    {
+        ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
+    }
+
     void Start()
     {
         emailInterface = transform.GetChild(0).gameObject;
@@ -155,6 +165,11 @@ public class EmailController : MonoBehaviour
                 child.gameObject.SetActive(false);
             }
         }
+    }
+
+    private void OpenAttachment(string position)
+    {
+        Debug.Log("Pede abertura de janela (pelo window manager) com os dados do arquivo anexo ao email");
     }
 
     public void StartDropdown()

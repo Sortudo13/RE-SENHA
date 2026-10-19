@@ -2602,6 +2602,7 @@ GameObject:
   - component: {fileID: 7416861954989855004}
   - component: {fileID: 6784660762721027071}
   - component: {fileID: 5910214633249695944}
+  - component: {fileID: 2532088451723781376}
   m_Layer: 5
   m_Name: Texto
   m_TagString: Untagged
@@ -2742,6 +2743,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &2532088451723781376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4849812384271288965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25eee0d4cf8b64e45bf7ebb39d05a63b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LinkController
 --- !u!1 &5447607922195405100
 GameObject:
   m_ObjectHideFlags: 0
@@ -3355,7 +3368,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.731, y: -9.420836}
+  m_AnchoredPosition: {x: 6.731, y: -9.420044}
   m_SizeDelta: {x: -14.894, y: 0}
   m_Pivot: {x: 0, y: 0.99}
 --- !u!222 &8350685770485164358

@@ -14,6 +14,8 @@ public class LinkController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        p_TextMeshPro.ForceMeshUpdate();
+
         // Verifica se o clique foi em cima de um link válido do TextMeshPro
         int linkIndex = TMP_TextUtilities.FindIntersectingLink(p_TextMeshPro, eventData.position, eventData.pressEventCamera);
 
@@ -23,9 +25,10 @@ public class LinkController : MonoBehaviour, IPointerClickHandler
 
             // Pega o ID que você definiu dentro das aspas da tag <link="id">
             string linkID = linkInfo.GetLinkID();
+            string[] command = linkID.Split('|',2);
 
             // Executa a ação baseada no ID clicado
-            ActionController.SendAction(linkID);
+            ActionController.SendAction(command[0], command[1]);
         }
     }
 }

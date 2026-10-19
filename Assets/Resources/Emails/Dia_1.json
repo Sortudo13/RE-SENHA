@@ -7,7 +7,7 @@
       "subject": "Bem-vindo à equipe - Orientações do Dia 1",
       "body": "Olá! Seja bem-vindo à nossa equipe de segurança digital. Por favor, leia o manual anexado com os procedimentos do seu primeiro dia de trabalho.",
       "attachments": [
-        "manual_de_conduta.pdf"
+        "<link=\"OpenAttachment|1\">manual_de_conduta.pdf</link>"
       ],
       "error": 0,
       "reason": "E-mail legítimo vindo do departamento interno de Recursos Humanos."
@@ -33,7 +33,7 @@
       "subject": "Nota Fiscal do Serviço de Impressão",
       "body": "Prezado, segue em anexo a nota fiscal e o comprovante referente aos serviços de impressão prestados nesta semana para a empresa.",
       "attachments": [
-        "fatura_outubro_assinado.exe"
+        "<link=\"OpenAttachment|1\">fatura_outubro_assinado.exe</link>"
       ],
       "error": 5,
       "reason": "O anexo possui extensão executável (.exe) disfarçada como um arquivo de documento/nota fiscal."
@@ -43,7 +43,7 @@
       "subject": "Aviso Importante sobre Reunião Geral",
       "body": "Prezado colaborador, devido a problemas operacionais no nosso servidor local, acesse a página externa http://painel-verificacao-empresa.ru para confirmar sua presença.",
       "attachments": [
-        "pauta_reuniao.pdf"
+        "<link=\"OpenAttachment|1\">pauta_reuniao.pdf</link>"
       ],
       "error": 4,
       "reason": "O corpo do e-mail redireciona o usuário para um domínio externo totalmente suspeito com terminação (.ru)."
