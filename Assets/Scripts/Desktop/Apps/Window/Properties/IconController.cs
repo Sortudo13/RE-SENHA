@@ -39,12 +39,6 @@ public class IconController : MonoBehaviour
         {
             // Instancia o GameObject da janela na hierarquia
             connectedWindow = Instantiate(windowPrefab.gameObject, WindowManagerController.WindowsLayer);
-
-            // Executa a inicialização de abertura e som na primeira vez
-            if (connectedWindow.TryGetComponent(out WindowController windowController))
-            {
-                windowController.OpenWindow();
-            }
         }
         else
         {
