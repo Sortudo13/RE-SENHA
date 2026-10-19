@@ -8,6 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8043408951792088240}
     m_Modifications:
+    - target: {fileID: 964476903670345122, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4151801325594071281, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4151801325594071281, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -9.943298
+      objectReference: {fileID: 0}
+    - target: {fileID: 4479560292266759276, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4479560292266759276, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5101298224541731304, guid: 09f15d98261718243a318f6db0111e76, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -100,9 +120,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5410378649949010179, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410378649949010179, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037855070830146564, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223330165907370151, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223330165907370151, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8346845122898091600, guid: 09f15d98261718243a318f6db0111e76, type: 3}
       propertyPath: m_Name
       value: PainelEmail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662008913603847249, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662008913603847249, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065228462227463905, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065228462227463905, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

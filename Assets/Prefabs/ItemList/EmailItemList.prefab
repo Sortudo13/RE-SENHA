@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5462975341326254667}
   - component: {fileID: 7155295139012991897}
   m_Layer: 5
-  m_Name: EmailIcon
+  m_Name: EmailItemList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
