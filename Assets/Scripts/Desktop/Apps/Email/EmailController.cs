@@ -11,28 +11,35 @@ public class EmailController : MonoBehaviour
     private List<EmailData> inbox = null;
 
     [Header("List Config")]
-    [SerializeField] private Transform listBar;
+    private Transform listBar;
     [SerializeField] private GameObject listButton;
 
     [Header("Alert Window")]
     [SerializeField] private GameObject alertWindow;
 
     [Header("Email's Reading Panel")]
-    [SerializeField] private GameObject emailInterface;
-    private TextMeshProUGUI emailSender;
-    private TextMeshProUGUI emailSubject;
-    private TextMeshProUGUI emailBody;
-    private TextMeshProUGUI emailAttachments;
+    private GameObject emailInterface;
+    private GameObject emailSender;
+    private GameObject emailSubject;
+    private GameObject emailBody;
+    private GameObject emailAttachments;
     private GameObject emailReport;
 
     void Start()
     {
-        emailSender = emailInterface.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        emailSubject = emailInterface.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        emailBody = emailInterface.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        emailAttachments = emailInterface.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        emailReport = emailInterface.transform.GetChild(4).gameObject;
-        emailReport.SetActive(false);
+        emailInterface = transform.GetChild(0).gameObject;
+        listBar = transform.GetChild(1).GetChild(0);
+
+        emailSender = emailInterface.transform.GetChild(1).gameObject;
+        emailSubject = emailInterface.transform.GetChild(3).gameObject;
+        emailAttachments = emailInterface.transform.GetChild(5).gameObject;
+        emailBody = emailInterface.transform.GetChild(6).gameObject;
+        emailReport = emailInterface.transform.GetChild(7).gameObject;
+
+        foreach (Transform child in emailInterface.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
 
         currentSave = DataController.LoadEmails();
         inbox = currentSave.emails;
@@ -114,40 +121,39 @@ public class EmailController : MonoBehaviour
         if (currentEmail != null)
         {
             if (emailSender != null)
-                emailSender.text = "<b>De:</b> " + currentEmail.sender;
+                emailSender.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.sender;
             if (emailSubject != null)
-                emailSubject.text = "<b>Assunto:</b> " + currentEmail.subject;
+                emailSubject.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.subject;
             if (emailBody != null)
-                emailBody.text = currentEmail.body;
+                emailBody.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.body;
             if (emailAttachments != null)
             {
+                TextMeshProUGUI attach = emailAttachments.GetComponentInChildren<TextMeshProUGUI>();
+                attach.text = "";
                 if (currentEmail.attachments.Count > 0)
                 {
-                    emailAttachments.text = "Anexos: ";
                     foreach (string attachment in currentEmail.attachments)
                     {
-                        emailAttachments.text += attachment + ", ";
+                        attach.text += attachment + ", ";
                     }
-                    emailAttachments.text = emailAttachments.text.TrimEnd(',', ' ');
+                    attach.text = attach.text.TrimEnd(',', ' ');
                 }
                 else
                 {
-                    emailAttachments.text = "Sem anexos";
+                    attach.text = "Sem anexos";
                 }
             }
-            emailReport.SetActive(true);
+            foreach (Transform child in emailInterface.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
         }
         else
         {
-            if (emailSender != null)
-                emailSender.text = "";
-            if (emailSubject != null)
-                emailSubject.text = "";
-            if (emailBody != null)
-                emailBody.text = "";
-            if (emailAttachments != null)
-                emailAttachments.text = "";
-            emailReport.SetActive(false);
+            foreach (Transform child in emailInterface.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
     }
 
