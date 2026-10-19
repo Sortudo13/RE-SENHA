@@ -1719,6 +1719,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Manual
       objectReference: {fileID: 0}
+    - target: {fileID: 2954288805960146520, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7221242228998745771, guid: 5608ff520f9e51f62afbecd49c9b82b7, type: 3}
     - target: {fileID: 3582873135304529804, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Name
       value: DesktopIcon
@@ -1907,6 +1911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1728700982}
   - component: {fileID: 1728700981}
+  - component: {fileID: 1728700983}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -1925,7 +1930,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: e028cf35b15a4ba44a3034b844aa9fac, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.8
   m_Pitch: 1
@@ -2026,6 +2031,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1728700983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728700980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29241eeb528c33b44b52478679ce1bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  bgmAudioSource: {fileID: 0}
+  sfxAudioSource: {fileID: 0}
+  musicaDeFundo: {fileID: 8300000, guid: e028cf35b15a4ba44a3034b844aa9fac, type: 3}
+  cliqueFecharJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
+  cliqueAbrirJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
+  cliqueBotaoPadrao: {fileID: 0}
 --- !u!1 &1885617883
 GameObject:
   m_ObjectHideFlags: 0
