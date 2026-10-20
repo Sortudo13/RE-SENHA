@@ -227,7 +227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 56.299988, y: 25}
+  m_AnchoredPosition: {x: 56.30005, y: 25}
   m_SizeDelta: {x: 2.17, y: 35.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &32592506
@@ -396,8 +396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa60df6fcee1514bb2293853fd3efd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CursorController
-  cursorTextureDefault: {fileID: 2800000, guid: 879fc8c0e39fa7641a1949e17c8e6d68, type: 3}
-  cursorTextureHand: {fileID: 2800000, guid: 1a221da7a09e759479df3421765fd417, type: 3}
+  cursorTextureDefault: {fileID: 2800000, guid: 4cca5ead48de7a64ebd390e3444cd779, type: 3}
+  cursorTextureHand: {fileID: 2800000, guid: 8ce47278e0810fd419f0078f7c678fd9, type: 3}
 --- !u!1001 &259583731
 PrefabInstance:
   m_ObjectHideFlags: 0
