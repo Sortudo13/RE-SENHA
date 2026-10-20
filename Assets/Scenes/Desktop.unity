@@ -1405,6 +1405,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e37175bc2276941b90716a2e9aad71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DesktopWindowController
+  windowEmail: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+  windowManual: {fileID: 8361798000228143058, guid: 1addb118b00af524ab70d7e607e9ea1d, type: 3}
+  windowRG: {fileID: 9096935942626009820, guid: 76797d72c5aeeb643a27c71ce23a009d, type: 3}
 --- !u!1 &1302115837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1842,7 +1845,7 @@ GameObject:
   - component: {fileID: 1728700981}
   - component: {fileID: 1728700983}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2303,7 +2306,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2102608593}
+  - {fileID: 1728700982}
   - {fileID: 112339862}
   - {fileID: 1885617887}
   - {fileID: 107381171}
-  - {fileID: 1728700982}

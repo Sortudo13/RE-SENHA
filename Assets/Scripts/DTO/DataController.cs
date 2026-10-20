@@ -33,6 +33,18 @@ public static class DataController
         get => Path.Combine(Application.persistentDataPath, "save.json");
     }
 
+    public static string ConvertExtension(string extension)
+    {
+        return extension switch
+        {
+            "mail" => "Email",
+            "manual" => "Manual",
+            "png" => "Image",
+            "exe" => "RG",
+            _ => "RG",
+        };
+    }
+
     public static void AdvanceDay()
     {
         CurrentDay++;
@@ -156,4 +168,12 @@ public enum EmailError
     SubjectMismatch,
     BodyMismatch,
     AttachmentMismatch
+}
+
+public enum DocumentType
+{
+    Executable,
+    Text,
+    Image,
+    Link,
 }

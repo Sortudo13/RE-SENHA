@@ -169,6 +169,12 @@ public class EmailController : MonoBehaviour
 
     private void OpenAttachment(string position)
     {
+        if (int.TryParse(position, out int numero))
+        {
+            string[] filename = currentEmail.attachments[numero - 1].Split('.', 2);
+            string command = $"Init{DataController.ConvertExtension(filename[1])}";
+            ActionController.SendAction(command);
+        }
         Debug.Log("Pede abertura de janela (pelo window manager) com os dados do arquivo anexo ao email");
     }
 
