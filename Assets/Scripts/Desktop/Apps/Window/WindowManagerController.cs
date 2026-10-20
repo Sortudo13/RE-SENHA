@@ -62,20 +62,6 @@ public class WindowManagerController : MonoBehaviour
             DeactivateDesktop();
     }
 
-    private void OpenTemplateSignals()
-    {
-        ActionController.SyncSignal("InitEmail", InitEmail);
-        ActionController.SyncSignal("InitManual", InitManual);
-        ActionController.SyncSignal("InitRG", InitRG);
-    }
-
-    private void CloseTemplateSignals()
-    {
-        ActionController.UnsyncSignal("InitEmail", InitEmail);
-        ActionController.UnsyncSignal("InitManual", InitManual);
-        ActionController.UnsyncSignal("InitRG", InitRG);
-    }
-
     private void OnDestroy()
     {
         ActionController.UnsyncSignal("AddActiveWindow", AddWindowCount);
@@ -84,17 +70,39 @@ public class WindowManagerController : MonoBehaviour
         CloseTemplateSignals();
     }
 
-    private void InitEmail()
+    // Implantação dos templates para abrir demais documentos / prefabs de janela
+    private void OpenTemplateSignals()
+    {
+        ActionController.SyncSignal<string>("OpenURL", OpenURL);
+        ActionController.SyncSignal<AttachmentContent>("InitEmail", InitEmail);
+        ActionController.SyncSignal<AttachmentContent>("InitManual", InitManual);
+        ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
+    }
+
+    private void CloseTemplateSignals()
+    {
+        ActionController.UnsyncSignal<string>("OpenURL", OpenURL);
+        ActionController.UnsyncSignal<AttachmentContent>("InitEmail", InitEmail);
+        ActionController.UnsyncSignal<AttachmentContent>("InitManual", InitManual);
+        ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
+    }
+
+    private void OpenURL(string url)
+    {
+        Debug.Log("Abertura de url na janela do app Navegador.");
+    }
+
+    private void InitEmail(AttachmentContent data)
     {
         Instantiate(windowEmail.gameObject, transform);
     }
 
-    private void InitManual()
+    private void InitManual(AttachmentContent data)
     {
         Instantiate(windowManual.gameObject, transform);
     }
 
-    private void InitRG() //Passar dados para preencher o RG
+    private void InitRG(AttachmentContent data)
     {
         Instantiate(windowRG.gameObject, transform);
     }

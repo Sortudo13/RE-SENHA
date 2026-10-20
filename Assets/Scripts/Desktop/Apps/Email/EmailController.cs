@@ -16,8 +16,6 @@ public class EmailController : MonoBehaviour
 
     [Header("Alert Window")]
     [SerializeField] private GameObject alertWindow;
-
-    [Header("Email's Reading Panel")]
     private GameObject emailInterface;
     private GameObject emailSender;
     private GameObject emailSubject;
@@ -142,9 +140,9 @@ public class EmailController : MonoBehaviour
                 attach.text = "";
                 if (currentEmail.attachments.Count > 0)
                 {
-                    foreach (string attachment in currentEmail.attachments)
+                    foreach (AttachmentData attachment in currentEmail.attachments)
                     {
-                        attach.text += attachment + ", ";
+                        attach.text += attachment.linkedName + ", ";
                     }
                     attach.text = attach.text.TrimEnd(',', ' ');
                 }
@@ -171,11 +169,13 @@ public class EmailController : MonoBehaviour
     {
         if (int.TryParse(position, out int numero))
         {
-            string[] filename = currentEmail.attachments[numero - 1].Split('.', 2);
-            string command = $"Init{DataController.ConvertExtension(filename[1])}";
-            ActionController.SendAction(command);
+            string command = $"Init{currentEmail.attachments[numero - 1].documentType}";
+            ActionController.SendAction(command, currentEmail.attachments[numero - 1].data);
         }
-        Debug.Log("Pede abertura de janela (pelo window manager) com os dados do arquivo anexo ao email");
+        else
+        {
+            Debug.Log("Linked attachment's position not a number.");
+        }
     }
 
     public void StartDropdown()
