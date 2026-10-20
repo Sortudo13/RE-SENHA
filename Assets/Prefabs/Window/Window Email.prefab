@@ -181,7 +181,7 @@ PrefabInstance:
     - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: windowIcon
       value: 
-      objectReference: {fileID: 754352307031186287, guid: 9e4a21848ed475b45ba6a858d1285c5a, type: 3}
+      objectReference: {fileID: -5739248805895703791, guid: 11661dc963ff171459f80f133264f1b0, type: 3}
     - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: windowName
       value: Email
