@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4463384203517173997}
   - component: {fileID: 870349646321556957}
   - component: {fileID: 6976506905092357411}
-  - component: {fileID: 7555980889623089530}
   - component: {fileID: 3247603458650349038}
   m_Layer: 5
   m_Name: DesktopIcon
@@ -93,7 +92,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7555980889623089530}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DesktopIconController, Assembly-CSharp
         m_MethodName: OpenApp
         m_Mode: 1
@@ -105,20 +104,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7555980889623089530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3582873135304529804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23576f6e1c4e5454993a4fec483142aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DesktopIconController
-  onDesktop: 1
-  windowPrefab: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
 --- !u!114 &3247603458650349038
 MonoBehaviour:
   m_ObjectHideFlags: 0

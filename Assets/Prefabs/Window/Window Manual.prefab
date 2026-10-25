@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manual
       objectReference: {fileID: 0}
+    - target: {fileID: 2308236242632921535, guid: 309ead7ce84e9be47917fba8185dc79f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 34.9972
+      objectReference: {fileID: 0}
     - target: {fileID: 6296709498972477076, guid: 309ead7ce84e9be47917fba8185dc79f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -104,6 +108,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7145416031981974906, guid: 309ead7ce84e9be47917fba8185dc79f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -37.805
+      objectReference: {fileID: 0}
+    - target: {fileID: 7145416031981974906, guid: 309ead7ce84e9be47917fba8185dc79f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -6.59
+      objectReference: {fileID: 0}
     - target: {fileID: 8112436056016921772, guid: 309ead7ce84e9be47917fba8185dc79f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -133,7 +145,7 @@ PrefabInstance:
     - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: windowIcon
       value: 
-      objectReference: {fileID: -7221242228998745771, guid: 5608ff520f9e51f62afbecd49c9b82b7, type: 3}
+      objectReference: {fileID: 5450120972812081554, guid: 89be26fe32aff9f40ad0b19b4280c381, type: 3}
     - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: windowName
       value: Manual
