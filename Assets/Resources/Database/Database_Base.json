@@ -9,7 +9,7 @@
       "cargo": "Gerente de RH",
       "status": "Ativo",
       "rg": {
-        "numero": "44.912.384-1",
+        "numero": "XX.912.384-1",
         "dataExpedicao": "14/05/2016",
         "dataNascimento": "22/09/1988",
         "naturalidade": "São Paulo",
@@ -26,7 +26,7 @@
       "cargo": "Analista de Suporte e Infraestrutura",
       "status": "Ativo",
       "rg": {
-        "numero": "38.221.905-8",
+        "numero": "XX.221.905-8",
         "dataExpedicao": "03/11/2019",
         "dataNascimento": "10/04/1995",
         "naturalidade": "Campinas",
@@ -43,7 +43,7 @@
       "cargo": "Coordenador Financeiro",
       "status": "Ativo",
       "rg": {
-        "numero": "29.743.112-4",
+        "numero": "XX.743.112-4",
         "dataExpedicao": "19/08/2012",
         "dataNascimento": "05/12/1982",
         "naturalidade": "Ribeirão Preto",
@@ -60,7 +60,7 @@
       "cargo": "Diretora Executiva (CEO)",
       "status": "Ativo",
       "rg": {
-        "numero": "18.330.491-0",
+        "numero": "XX.18.330.491-0",
         "dataExpedicao": "09/02/2010",
         "dataNascimento": "30/01/1975",
         "naturalidade": "Santos",
@@ -77,7 +77,7 @@
       "cargo": "Supervisor de Logística",
       "status": "Férias",
       "rg": {
-        "numero": "50.119.823-7",
+        "numero": "XX.50.119.823-7",
         "dataExpedicao": "27/07/2021",
         "dataNascimento": "18/06/1998",
         "naturalidade": "Sorocaba",
@@ -94,7 +94,7 @@
       "cargo": "Designer Gráfica",
       "status": "Demitido",
       "rg": {
-        "numero": "42.880.315-9",
+        "numero": "XX.880.315-9",
         "dataExpedicao": "11/10/2017",
         "dataNascimento": "14/03/1993",
         "naturalidade": "Bauru",
@@ -111,7 +111,7 @@
       "cargo": "Consultor Jurídico",
       "status": "Ativo",
       "rg": {
-        "numero": "31.902.441-3",
+        "numero": "XX.902.441-3",
         "dataExpedicao": "04/04/2014",
         "dataNascimento": "07/11/1985",
         "naturalidade": "Piracicaba",

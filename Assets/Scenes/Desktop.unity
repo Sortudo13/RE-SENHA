@@ -414,6 +414,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 13.6
       objectReference: {fileID: 0}
+    - target: {fileID: 2954288805960146520, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5450120972812081554, guid: 89be26fe32aff9f40ad0b19b4280c381, type: 3}
     - target: {fileID: 3582873135304529804, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Name
       value: IconeManual
@@ -545,7 +549,7 @@ PrefabInstance:
     - target: {fileID: 2954288805960146520, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 754352307031186287, guid: 9e4a21848ed475b45ba6a858d1285c5a, type: 3}
+      objectReference: {fileID: -5739248805895703791, guid: 11661dc963ff171459f80f133264f1b0, type: 3}
     - target: {fileID: 3582873135304529804, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Name
       value: IconeEmail
@@ -1086,7 +1090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3582873135304529804, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Name
-      value: DesktopIcon Database
+      value: IconDatabase
       objectReference: {fileID: 0}
     - target: {fileID: 4463384203517173997, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Pivot.x
@@ -1364,7 +1368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IconController
   onDesktop: 1
-  windowPrefab: {fileID: 1417079691467779055, guid: 9f7d8c6b5a4e3210fedcba9876543210, type: 3}
+  windowPrefab: {fileID: 8466762498628429193, guid: 9f7d8c6b5a4e3210fedcba9876543210, type: 3}
 --- !u!1 &1131723592 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3582873135304529804, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}

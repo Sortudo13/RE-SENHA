@@ -32,7 +32,6 @@ public class DatabaseWindowController : MonoBehaviour
     private List<EmployeeData> allEmployees = new();
     private List<EmployeeData> filteredEmployees = new();
     private EmployeeData selectedEmployee;
-    private readonly List<DatabaseItemListController> instantiatedItems = new();
     private bool initialized;
 
     private void Awake()
@@ -130,7 +129,7 @@ public class DatabaseWindowController : MonoBehaviour
 
         if (filteredEmployees.Count > 0)
         {
-            // Mantém selecionado se ainda estiver na lista filtrada, senão seleciona o primeiro
+            // Mantem selecionado se ainda estiver na lista filtrada, senao seleciona o primeiro
             if (selectedEmployee == null || !filteredEmployees.Contains(selectedEmployee))
             {
                 SelecionarFuncionario(filteredEmployees[0]);
@@ -154,8 +153,6 @@ public class DatabaseWindowController : MonoBehaviour
 
     private void RenderizarLista()
     {
-        instantiatedItems.Clear();
-
         if (containerLista != null)
         {
             for (int i = containerLista.childCount - 1; i >= 0; i--)
@@ -184,9 +181,7 @@ public class DatabaseWindowController : MonoBehaviour
             itemObj.SetActive(true);
             if (itemObj.TryGetComponent(out DatabaseItemListController itemCtrl))
             {
-                bool isSelected = emp == selectedEmployee;
-                itemCtrl.Setup(emp, SelecionarFuncionario, isSelected);
-                instantiatedItems.Add(itemCtrl);
+                itemCtrl.Setup(emp, SelecionarFuncionario);
             }
         }
 
@@ -223,12 +218,12 @@ public class DatabaseWindowController : MonoBehaviour
         {
             string corHex = emp.status switch
             {
-                "Ativo" => "#00FF66",     // Verde
-                "Férias" => "#FFCC00",    // Amarelo
+                "Ativo" => "#6BBE31",     // Verde
+                "Férias" => "#FFBF4C",    // Amarelo
                 "Demitido" => "#FF3333",  // Vermelho
                 _ => "#FFFFFF"
             };
-            txtStatus.text = $"Status: <color={corHex}>{emp.status.ToUpper()}</color>";
+            txtStatus.text = $"<color={corHex}>Status: {emp.status.ToUpper()}</color>";
         }
 
         // Preenche dados do RG
@@ -252,7 +247,6 @@ public class DatabaseWindowController : MonoBehaviour
             LayoutRebuilder.ForceRebuildLayoutImmediate(pRt);
         }
 
-        AtualizarDestaquesLista();
     }
 
     private void ExibirVazio()
@@ -265,12 +259,4 @@ public class DatabaseWindowController : MonoBehaviour
             painelVazio.SetActive(true);
     }
 
-    private void AtualizarDestaquesLista()
-    {
-        // Notifica visualmente cada item
-        for (int i = 0; i < filteredEmployees.Count && i < instantiatedItems.Count; i++)
-        {
-            instantiatedItems[i].SetSelected(filteredEmployees[i] == selectedEmployee);
-        }
-    }
 }
