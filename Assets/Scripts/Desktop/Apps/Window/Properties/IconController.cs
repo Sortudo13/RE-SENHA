@@ -14,6 +14,7 @@ public class IconController : MonoBehaviour
 
     private void Start() => ApplyDesktopSettings();
     private void OnValidate() => ApplyDesktopSettings();
+
     private void ApplyDesktopSettings()
     {
         if (!onDesktop)
@@ -36,12 +37,17 @@ public class IconController : MonoBehaviour
     {
         if (connectedWindow == null)
         {
+            // Instancia o GameObject da janela na hierarquia
             connectedWindow = Instantiate(windowPrefab.gameObject, WindowManagerController.WindowsLayer);
         }
         else
         {
-            connectedWindow.GetComponent<WindowController>().OpenWindow();
-            ActionController.SendAction($"ToFront_{connectedWindow.GetComponent<WindowController>().AppID}");
+            // Se existe anteriormente, ativa e foca
+            if (connectedWindow.TryGetComponent(out WindowController windowController))
+            {
+                windowController.OpenWindow();
+                ActionController.SendAction($"ToFront_{windowController.AppID}");
+            }
         }
     }
 }

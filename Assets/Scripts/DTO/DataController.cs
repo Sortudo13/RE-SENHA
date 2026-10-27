@@ -33,6 +33,18 @@ public static class DataController
         get => Path.Combine(Application.persistentDataPath, "save.json");
     }
 
+    public static string ConvertExtension(string extension)
+    {
+        return extension switch
+        {
+            "mail" => "Email",
+            "manual" => "Manual",
+            "png" => "Image",
+            "exe" => "RG",
+            _ => "RG",
+        };
+    }
+
     public static void AdvanceDay()
     {
         CurrentDay++;
@@ -117,6 +129,8 @@ public static class DataController
     }
 }
 
+// Estruturas de dados
+
 public class WindowData
 {
     public string ID { get; }
@@ -144,11 +158,44 @@ public class EmailData
 {
     public string sender;
     public string subject;
-    public string body; //TODO: Permitir a formatação do corpo do email, incluindo negrito, itálico, sublinhado, cores, links e imagens. (uso de tags HTML ou Markdown)
-    public List<string> attachments; //TODO: Permitir anexo de documentos, imagens ou links. Se não houver anexo, deixar em branco.
+    public string body;
+    public List<AttachmentData> attachments;
     public EmailError error;
     public string reason; //TODO: Adicionar opção para coletar o local da discrepância a fim de permitir a seleção durante a análise do email.
 }
+
+[System.Serializable]
+public class AttachmentData
+{
+    public DocumentType documentType;
+    public string name;
+    public string extension;
+    public string linkedName;
+    public AttachmentContent data;
+
+    public AttachmentData(DocumentType type, string fullname, AttachmentContent data)
+    {
+        documentType = type;
+        string[] temp = fullname.Split('.', 2);
+        name = temp[0];
+        extension = (temp.Length > 1) ? temp[1] : "exe";
+        linkedName = fullname;
+        this.data = data;
+    }
+}
+
+[System.Serializable]
+public class AttachmentContent { }
+
+// Fazer classes herdadas de AttachmentContent para cada tipo de documento que contém dados do usuário.
+// Exemplos abaixo:
+[System.Serializable]
+public class DadosTexto : AttachmentContent { public string texto; }
+
+[System.Serializable]
+public class DadosFoto : AttachmentContent { public string url; }
+
+// Enumerações
 public enum EmailError
 {
     None,
@@ -156,4 +203,11 @@ public enum EmailError
     SubjectMismatch,
     BodyMismatch,
     AttachmentMismatch
+}
+// Esses devem ser nomes equivalentes aos das funções no Window Manager
+public enum DocumentType
+{
+    Manual,
+    Email,
+    RG
 }

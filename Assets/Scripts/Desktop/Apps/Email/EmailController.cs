@@ -16,14 +16,22 @@ public class EmailController : MonoBehaviour
 
     [Header("Alert Window")]
     [SerializeField] private GameObject alertWindow;
-
-    [Header("Email's Reading Panel")]
     private GameObject emailInterface;
     private GameObject emailSender;
     private GameObject emailSubject;
     private GameObject emailBody;
     private GameObject emailAttachments;
     private GameObject emailReport;
+
+    void Awake()
+    {
+        ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
+    }
+
+    private void OnDestroy()
+    {
+        ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
+    }
 
     void Start()
     {
@@ -132,9 +140,9 @@ public class EmailController : MonoBehaviour
                 attach.text = "";
                 if (currentEmail.attachments.Count > 0)
                 {
-                    foreach (string attachment in currentEmail.attachments)
+                    foreach (AttachmentData attachment in currentEmail.attachments)
                     {
-                        attach.text += attachment + ", ";
+                        attach.text += attachment.linkedName + ", ";
                     }
                     attach.text = attach.text.TrimEnd(',', ' ');
                 }
@@ -154,6 +162,19 @@ public class EmailController : MonoBehaviour
             {
                 child.gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void OpenAttachment(string position)
+    {
+        if (int.TryParse(position, out int numero))
+        {
+            string command = $"Init{currentEmail.attachments[numero - 1].documentType}";
+            ActionController.SendAction(command, currentEmail.attachments[numero - 1].data);
+        }
+        else
+        {
+            Debug.Log("Linked attachment's position not a number.");
         }
     }
 
