@@ -881,6 +881,7 @@ GameObject:
   - component: {fileID: 483162120}
   - component: {fileID: 483162119}
   - component: {fileID: 483162118}
+  - component: {fileID: 483162122}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -973,6 +974,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &483162122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483162117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1de3ef5c0e4b7f9a7d2c8e1f4b6a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 1ba10aa0d1a4e4eabae1bb9db26efd86, type: 3}
+  sceneOpenSound: {fileID: 8300000, guid: 117cb9545958eae3fa325ef5ea4bb369, type: 3}
 --- !u!1 &692629127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,8 +1645,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00002193451, y: -0.0000076293945}
-  m_SizeDelta: {x: 1170.79, y: 677.24}
+  m_AnchoredPosition: {x: 0.3, y: -3.33}
+  m_SizeDelta: {x: 1170.79, y: 677}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1040900652
 MonoBehaviour:

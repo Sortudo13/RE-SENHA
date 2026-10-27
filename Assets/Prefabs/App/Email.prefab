@@ -4479,6 +4479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EmailController
   listButton: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
   alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+  approveClickSound: {fileID: 8300000, guid: 06d23339f5158d9b880d261763a94189, type: 3}
 --- !u!1 &8625671661670089948
 GameObject:
   m_ObjectHideFlags: 0

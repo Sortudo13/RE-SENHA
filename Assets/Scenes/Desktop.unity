@@ -412,8 +412,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1516779052410086316, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_fontSize
-      value: 13.6
+      value: 15.2
       objectReference: {fileID: 0}
+    - target: {fileID: 1516779052410086316, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
+    - target: {fileID: 1516779052410086316, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8858064809551631060, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
     - target: {fileID: 3582873135304529804, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Name
       value: IconeManual
@@ -540,8 +548,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1516779052410086316, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_fontSize
-      value: 13.6
+      value: 15.2
       objectReference: {fileID: 0}
+    - target: {fileID: 1516779052410086316, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
+    - target: {fileID: 1516779052410086316, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8858064809551631060, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
     - target: {fileID: 2954288805960146520, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -695,8 +711,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.8500977, y: 0.15249062}
-  m_SizeDelta: {x: 11.44, y: -0.30501}
+  m_AnchoredPosition: {x: -11.960022, y: 0.15249062}
+  m_SizeDelta: {x: 23.66, y: -0.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &307247208
 MonoBehaviour:
@@ -1128,8 +1144,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
+  m_sharedMaterial: {fileID: -8858064809551631060, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1153,7 +1169,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.35
+  m_fontSize: 24.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1300,8 +1316,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Dia 00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
+  m_sharedMaterial: {fileID: -8858064809551631060, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1325,7 +1341,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.5
+  m_fontSize: 22.35
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2057,6 +2073,8 @@ MonoBehaviour:
   cliqueFecharJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
   cliqueAbrirJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
   cliqueBotaoPadrao: {fileID: 0}
+  somGameOver: {fileID: 8300000, guid: 6eecd86b5e0ee0bc9811cddf94641cc2, type: 3}
+  somGameWin: {fileID: 8300000, guid: 117cb9545958eae3fa325ef5ea4bb369, type: 3}
 --- !u!1 &1885617883
 GameObject:
   m_ObjectHideFlags: 0

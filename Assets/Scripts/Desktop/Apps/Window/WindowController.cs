@@ -27,16 +27,7 @@ public class WindowController : MonoBehaviour
         ActionController.SyncSignal("MinimizeAllWindow", MinimizeWindow);
         ActionController.SyncSignal($"Swap_{myID}", SwapWindow);
         ActionController.SyncSignal($"ToFront_{myID}", ToFront);
-    }
-
-    private void OnEnable()
-    {
         ActionController.SendAction("OnWindowOpened");
-    }
-
-    private void OnDisable()
-    {
-        ActionController.SendAction("OnWindowClosed");
     }
 
     private void ToFront()
@@ -50,6 +41,7 @@ public class WindowController : MonoBehaviour
         {   
             ActionController.SendAction("AddActiveWindow");
             gameObject.SetActive(true);
+            ActionController.SendAction("OnWindowOpened");
         }
         ToFront();
     }
@@ -77,6 +69,7 @@ public class WindowController : MonoBehaviour
 
     public void CloseWindow()
     {
+        ActionController.SendAction("OnWindowClosed");
         MinimizeWindow();
         Destroy(gameObject);
     }
