@@ -1,0 +1,124 @@
+{
+  "employees": [
+    {
+      "id": "001",
+      "matricula": "RH-1001",
+      "nome": "Mariana Souza Costa",
+      "email": "rh@empresa.com.br",
+      "departamento": "Recursos Humanos",
+      "cargo": "Gerente de RH",
+      "status": "Ativo",
+      "rg": {
+        "numero": "XX.912.384-1",
+        "dataExpedicao": "14/05/2016",
+        "dataNascimento": "22/09/1988",
+        "naturalidade": "São Paulo",
+        "estadoEmissor": "SP"
+      },
+      "fotoUrl": ""
+    },
+    {
+      "id": "002",
+      "matricula": "TI-2045",
+      "nome": "Lucas Pereira Santos",
+      "email": "suporte@empresa.com.br",
+      "departamento": "Tecnologia da Informação",
+      "cargo": "Analista de Suporte e Infraestrutura",
+      "status": "Ativo",
+      "rg": {
+        "numero": "XX.221.905-8",
+        "dataExpedicao": "03/11/2019",
+        "dataNascimento": "10/04/1995",
+        "naturalidade": "Campinas",
+        "estadoEmissor": "SP"
+      },
+      "fotoUrl": ""
+    },
+    {
+      "id": "003",
+      "matricula": "FIN-3012",
+      "nome": "Roberto Almeida Ramos",
+      "email": "financeiro@empresa.com.br",
+      "departamento": "Financeiro",
+      "cargo": "Coordenador Financeiro",
+      "status": "Ativo",
+      "rg": {
+        "numero": "XX.743.112-4",
+        "dataExpedicao": "19/08/2012",
+        "dataNascimento": "05/12/1982",
+        "naturalidade": "Ribeirão Preto",
+        "estadoEmissor": "SP"
+      },
+      "fotoUrl": ""
+    },
+    {
+      "id": "004",
+      "matricula": "DIR-0001",
+      "nome": "Helena Vasconcelos Martins",
+      "email": "diretoria@empresa.com.br",
+      "departamento": "Diretoria Geral",
+      "cargo": "Diretora Executiva (CEO)",
+      "status": "Ativo",
+      "rg": {
+        "numero": "XX.18.330.491-0",
+        "dataExpedicao": "09/02/2010",
+        "dataNascimento": "30/01/1975",
+        "naturalidade": "Santos",
+        "estadoEmissor": "SP"
+      },
+      "fotoUrl": ""
+    },
+    {
+      "id": "005",
+      "matricula": "OP-4019",
+      "nome": "Carlos Eduardo Dias",
+      "email": "carlos.dias@empresa.com.br",
+      "departamento": "Operações",
+      "cargo": "Supervisor de Logística",
+      "status": "Férias",
+      "rg": {
+        "numero": "XX.50.119.823-7",
+        "dataExpedicao": "27/07/2021",
+        "dataNascimento": "18/06/1998",
+        "naturalidade": "Sorocaba",
+        "estadoEmissor": "SP"
+      },
+      "fotoUrl": ""
+    },
+    {
+      "id": "006",
+      "matricula": "MKT-5102",
+      "nome": "Beatriz Mendes Lima",
+      "email": "beatriz.mendes@empresa.com.br",
+      "departamento": "Comunicação e Marketing",
+      "cargo": "Designer Gráfica",
+      "status": "Demitido",
+      "rg": {
+        "numero": "XX.880.315-9",
+        "dataExpedicao": "11/10/2017",
+        "dataNascimento": "14/03/1993",
+        "naturalidade": "Bauru",
+        "estadoEmissor": "SP"
+      },
+      "fotoUrl": ""
+    },
+    {
+      "id": "007",
+      "matricula": "JUR-6020",
+      "nome": "Fernando Nogueira Gomes",
+      "email": "juridico@empresa.com.br",
+      "departamento": "Jurídico e Compliance",
+      "cargo": "Consultor Jurídico",
+      "status": "Ativo",
+      "rg": {
+        "numero": "XX.902.441-3",
+        "dataExpedicao": "04/04/2014",
+        "dataNascimento": "07/11/1985",
+        "naturalidade": "Piracicaba",
+        "estadoEmissor": "SP"
+      },
+      "fotoUrl": ""
+    }
+  ]
+}
+

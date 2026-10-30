@@ -114,7 +114,7 @@ public class EmailController : MonoBehaviour
             text.text = email.subject;
             text.enableAutoSizing = true;
             text.fontSizeMin = 30;
-            text.fontSizeMax = 50;
+            text.fontSizeMax = 90;
             text.color = Color.black;
             text.alignment = TextAlignmentOptions.Center;
 
