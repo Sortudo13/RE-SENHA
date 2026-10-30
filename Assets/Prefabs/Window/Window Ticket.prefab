@@ -16,6 +16,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PainelTicket
       objectReference: {fileID: 0}
+    - target: {fileID: 844473456139419388, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 922512755971236315, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064050396216659348, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2057943711942339170, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -140,6 +152,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8435063888364670222, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_Name
+      value: PainelTicket
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585281467540940513, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8868862832031911359, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -156,8 +176,31 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4076696023484862530, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8435063888364670222, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7290551573947195700}
   m_SourcePrefab: {fileID: 100100000, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+--- !u!1 &3035540976274268036 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8435063888364670222, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+  m_PrefabInstance: {fileID: 6858759603732861578}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7290551573947195700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3035540976274268036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d52c632a1c04d9f9e4f0e2fd9a0f4e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TicketController
+  listButton: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
+  alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
