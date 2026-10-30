@@ -2078,6 +2078,8 @@ MonoBehaviour:
   cliqueFecharJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
   cliqueAbrirJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
   cliqueBotaoPadrao: {fileID: 0}
+  somGameOver: {fileID: 8300000, guid: 6eecd86b5e0ee0bc9811cddf94641cc2, type: 3}
+  somGameWin: {fileID: 8300000, guid: 117cb9545958eae3fa325ef5ea4bb369, type: 3}
 --- !u!1 &1885617883
 GameObject:
   m_ObjectHideFlags: 0

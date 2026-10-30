@@ -1,21 +1,37 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
     [Header("Configuração de Áudio")]
-    [SerializeField] private AudioSource bgmAudioSource; // Áudio para música de fundo
-    [SerializeField] private AudioSource sfxAudioSource; // Áudio para efeitos sonoros (SFX)
+    [SerializeField]
+    private AudioSource bgmAudioSource; // Áudio para música de fundo
+
+    [SerializeField]
+    private AudioSource sfxAudioSource; // Áudio para efeitos sonoros (SFX)
 
     [Header("Música de Fundo (BGM)")]
-    [SerializeField] private AudioClip musicaDeFundo;
+    [SerializeField]
+    private AudioClip musicaDeFundo;
 
     [Header("Efeitos Sonoros - Cliques e UI")]
-    [SerializeField] private AudioClip cliqueFecharJanela;
-    [SerializeField] private AudioClip cliqueAbrirJanela;
-    [SerializeField] private AudioClip cliqueBotaoPadrao;
+    [SerializeField]
+    private AudioClip cliqueFecharJanela;
+
+    [SerializeField]
+    private AudioClip cliqueAbrirJanela;
+
+    [SerializeField]
+    private AudioClip cliqueBotaoPadrao;
+
+    [SerializeField]
+    private AudioClip somGameOver;
+
+    [SerializeField]
+    private AudioClip somGameWin;
 
     private void Awake()
     {
@@ -38,7 +54,8 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         // Toca música de fundo ao iniciar o jogo
-        TocarMusicaDeFundo();
+        if (!EhCenaDeEncerramento(SceneManager.GetActiveScene().name))
+            TocarMusicaDeFundo();
     }
 
     private void Update()
@@ -52,6 +69,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
+        SceneManager.sceneLoaded += AoCarregarCena;
         ActionController.SyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.SyncSignal("OnWindowOpened", TocarSomAbrirJanela);
         ActionController.SyncSignal("OnButtonClicked", TocarSomBotao);
@@ -59,23 +77,49 @@ public class AudioManager : MonoBehaviour
 
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= AoCarregarCena;
         ActionController.UnsyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.UnsyncSignal("OnWindowOpened", TocarSomAbrirJanela);
         ActionController.UnsyncSignal("OnButtonClicked", TocarSomBotao);
     }
 
+    private void AoCarregarCena(Scene scene, LoadSceneMode mode)
+    {
+        if (EhCenaDeEncerramento(scene.name))
+        {
+            PararMusicaDeFundo();
+
+            if (scene.name == "Gameover")
+                TocarSFX(somGameOver);
+            else if (scene.name == "GameWin")
+                TocarSFX(somGameWin);
+
+            return;
+        }
+
+        if (scene.name == "Desktop")
+            TocarMusicaDeFundo();
+    }
+
+    private bool EhCenaDeEncerramento(string nomeCena)
+    {
+        return nomeCena == "Gameover" || nomeCena == "GameWin";
+    }
+
     private void GarantirAudioSources()
     {
         AudioSource[] sources = GetComponents<AudioSource>();
-        
+
         if (bgmAudioSource == null)
         {
-            bgmAudioSource = sources.Length > 0 ? sources[0] : gameObject.AddComponent<AudioSource>();
+            bgmAudioSource =
+                sources.Length > 0 ? sources[0] : gameObject.AddComponent<AudioSource>();
         }
 
         if (sfxAudioSource == null)
         {
-            sfxAudioSource = sources.Length > 1 ? sources[1] : gameObject.AddComponent<AudioSource>();
+            sfxAudioSource =
+                sources.Length > 1 ? sources[1] : gameObject.AddComponent<AudioSource>();
         }
 
         // Configurações padrão para BGM
@@ -91,9 +135,18 @@ public class AudioManager : MonoBehaviour
     {
         if (musicaDeFundo != null && bgmAudioSource != null)
         {
+            if (bgmAudioSource.isPlaying && bgmAudioSource.clip == musicaDeFundo)
+                return;
+
             bgmAudioSource.clip = musicaDeFundo;
             bgmAudioSource.Play();
         }
+    }
+
+    public void PararMusicaDeFundo()
+    {
+        if (bgmAudioSource != null && bgmAudioSource.isPlaying)
+            bgmAudioSource.Stop();
     }
 
     public void TocarSFX(AudioClip clip)
@@ -107,6 +160,8 @@ public class AudioManager : MonoBehaviour
 
     // Handlers para os eventos acionados pelo ActionController
     private void TocarSomFecharJanela() => TocarSFX(cliqueFecharJanela);
+
     private void TocarSomAbrirJanela() => TocarSFX(cliqueAbrirJanela);
+
     private void TocarSomBotao() => TocarSFX(cliqueBotaoPadrao);
 }

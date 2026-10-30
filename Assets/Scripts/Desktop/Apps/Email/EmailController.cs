@@ -12,10 +12,16 @@ public class EmailController : MonoBehaviour
 
     [Header("List Config")]
     private Transform listBar;
-    [SerializeField] private GameObject listButton;
+
+    [SerializeField]
+    private GameObject listButton;
 
     [Header("Alert Window")]
-    [SerializeField] private GameObject alertWindow;
+    [SerializeField]
+    private GameObject alertWindow;
+
+    [SerializeField]
+    private AudioClip approveClickSound;
     private GameObject emailInterface;
     private GameObject emailSender;
     private GameObject emailSubject;
@@ -31,6 +37,13 @@ public class EmailController : MonoBehaviour
     private void OnDestroy()
     {
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
+
+        if (emailReport != null)
+        {
+            Button submitButton = emailReport.transform.GetComponentInChildren<Button>();
+            if (submitButton != null)
+                submitButton.onClick.RemoveListener(PlayApproveClickSound);
+        }
     }
 
     void Start()
@@ -111,7 +124,7 @@ public class EmailController : MonoBehaviour
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
 
-            if (newButton.TryGetComponent(out Button botao))        
+            if (newButton.TryGetComponent(out Button botao))
             {
                 botao.onClick.RemoveAllListeners();
                 botao.onClick.AddListener(() => LoadEmail(email));
@@ -181,8 +194,24 @@ public class EmailController : MonoBehaviour
     public void StartDropdown()
     {
         TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
-        dropdown.onValueChanged.AddListener(delegate { SwapReportButton(); });
+        Button submitButton = emailReport.transform.GetComponentInChildren<Button>();
+
+        dropdown.onValueChanged.AddListener(
+            delegate
+            {
+                SwapReportButton();
+            }
+        );
+        submitButton.onClick.AddListener(PlayApproveClickSound);
         SwapReportButton();
+    }
+
+    private void PlayApproveClickSound()
+    {
+        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
+
+        if (dropdown.value == 0 && approveClickSound != null && AudioManager.Instance != null)
+            AudioManager.Instance.TocarSFX(approveClickSound);
     }
 
     public void SwapReportButton()
@@ -193,24 +222,26 @@ public class EmailController : MonoBehaviour
         if (dropdown.value == 0)
         {
             if (submitButton.gameObject.TryGetComponent(out Image image))
-                image.color = new Color(13/255f, 190/255f, 0/255f);
+                image.color = new Color(13 / 255f, 190 / 255f, 0 / 255f);
 
-            TextMeshProUGUI text = submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI text =
+                submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
             {
-                text.color = new Color(255/255f, 255/255f, 255/255f);
+                text.color = new Color(255 / 255f, 255 / 255f, 255 / 255f);
                 text.text = "Aprovar";
             }
         }
         else
         {
             if (submitButton.gameObject.TryGetComponent(out Image image))
-                image.color = new Color(124/255f, 41/255f, 41/255f);
+                image.color = new Color(124 / 255f, 41 / 255f, 41 / 255f);
 
-            TextMeshProUGUI text = submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI text =
+                submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
             {
-                text.color = new Color(255/255f, 3/255f, 0/255f);
+                text.color = new Color(255 / 255f, 3 / 255f, 0 / 255f);
                 text.text = "Reportar";
             }
         }
@@ -242,47 +273,56 @@ public class EmailController : MonoBehaviour
                 }
                 else
                 {
-                    feedbackMessage = "Erro de Análise! Este e-mail, na verdade, é seguro. Pelo menos manteve a vigilância.";
+                    feedbackMessage =
+                        "Erro de Análise! Este e-mail, na verdade, é seguro. Pelo menos manteve a vigilância.";
                 }
                 break;
             case EmailError.SenderMismatch:
                 if (playerIsPhishing == EmailError.SenderMismatch)
                 {
-                    feedbackMessage = "Decisão Correta! O e-mail realmente tinha o remetente duvidoso. A ameaça foi neutralizada.";
+                    feedbackMessage =
+                        "Decisão Correta! O e-mail realmente tinha o remetente duvidoso. A ameaça foi neutralizada.";
                 }
                 else
                 {
-                    feedbackMessage = "Erro de Análise! Este e-mail, na verdade, tinha um remetente duvidoso.";
+                    feedbackMessage =
+                        "Erro de Análise! Este e-mail, na verdade, tinha um remetente duvidoso.";
                 }
                 break;
             case EmailError.SubjectMismatch:
                 if (playerIsPhishing == EmailError.SubjectMismatch)
                 {
-                    feedbackMessage = "Decisão Correta! O e-mail realmente tinha o assunto duvidoso. A ameaça foi neutralizada.";
+                    feedbackMessage =
+                        "Decisão Correta! O e-mail realmente tinha o assunto duvidoso. A ameaça foi neutralizada.";
                 }
                 else
                 {
-                    feedbackMessage = "Erro de Análise! Este e-mail, na verdade, tinha um assunto duvidoso.";
+                    feedbackMessage =
+                        "Erro de Análise! Este e-mail, na verdade, tinha um assunto duvidoso.";
                 }
                 break;
             case EmailError.BodyMismatch:
                 if (playerIsPhishing == EmailError.BodyMismatch)
                 {
-                    feedbackMessage = "Decisão Correta! O e-mail realmente tinha o corpo duvidoso. A ameaça foi neutralizada.";
+                    feedbackMessage =
+                        "Decisão Correta! O e-mail realmente tinha o corpo duvidoso. A ameaça foi neutralizada.";
                 }
                 else
                 {
-                    feedbackMessage = "Erro de Análise! Este e-mail, na verdade, tinha um corpo duvidoso.";
+                    feedbackMessage =
+                        "Erro de Análise! Este e-mail, na verdade, tinha um corpo duvidoso.";
                 }
                 break;
             case EmailError.AttachmentMismatch:
                 if (playerIsPhishing == EmailError.AttachmentMismatch)
                 {
-                    feedbackMessage = "Decisão Correta! O e-mail realmente tinha o anexo duvidoso. A ameaça foi neutralizada.";
+                    feedbackMessage =
+                        "Decisão Correta! O e-mail realmente tinha o anexo duvidoso. A ameaça foi neutralizada.";
                 }
                 else
                 {
-                    feedbackMessage = "Erro de Análise! Este e-mail, na verdade, tinha um anexo duvidoso.";
+                    feedbackMessage =
+                        "Erro de Análise! Este e-mail, na verdade, tinha um anexo duvidoso.";
                 }
                 break;
         }
@@ -293,10 +333,13 @@ public class EmailController : MonoBehaviour
         ShowFeedback(playerIsPhishing.Equals(currentEmail.error), feedbackMessage);
         RemoveEmail(currentEmail);
 
-        if ((inbox.Count == 0 && DataController.CurrentDay >= DataController.MaxDay) || DataController.CurrentErrorCount >= DataController.MaxErrors)
+        if (
+            (inbox.Count == 0 && DataController.CurrentDay >= DataController.MaxDay)
+            || DataController.CurrentErrorCount >= DataController.MaxErrors
+        )
         {
             transform.parent.GetComponentInParent<WindowController>().CloseWindow();
-            string endingScene = (inbox.Count == 0) ? "Win" : "Gameover";
+            string endingScene = (inbox.Count == 0) ? "GameWin" : "Gameover";
             DataController.ResetDays();
             SceneManager.LoadScene(endingScene);
         }
@@ -313,7 +356,9 @@ public class EmailController : MonoBehaviour
     {
         GameObject connectedAlert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
         GameObject content = connectedAlert.transform.GetChild(0).gameObject;
-        TextMeshProUGUI txtTituloAviso = content.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI txtTituloAviso = content
+            .transform.GetChild(0)
+            .GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         connectedAlert.SetActive(false);
 
@@ -332,11 +377,19 @@ public class EmailController : MonoBehaviour
 
             if (DataController.CurrentErrorCount < DataController.MaxErrors)
             {
-                txtFeedback.text += "\n\nREGISTRO: Você possui " + DataController.CurrentErrorCount + "/" + DataController.MaxErrors + " advertências.";
+                txtFeedback.text +=
+                    "\n\nREGISTRO: Você possui "
+                    + DataController.CurrentErrorCount
+                    + "/"
+                    + DataController.MaxErrors
+                    + " advertências.";
             }
             else
             {
-                txtFeedback.text += "\n\nCRÍTICO: Você acumulou " + DataController.CurrentErrorCount + " advertências. VOCÊ FOI DEMITIDO!";
+                txtFeedback.text +=
+                    "\n\nCRÍTICO: Você acumulou "
+                    + DataController.CurrentErrorCount
+                    + " advertências. VOCÊ FOI DEMITIDO!";
             }
         }
         else

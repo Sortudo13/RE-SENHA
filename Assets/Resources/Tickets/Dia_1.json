@@ -1,0 +1,20 @@
+{
+  "current_day": 1,
+  "error_count": 0,
+  "tickets": [
+    {
+      "requester": "Mariana Souza - Financeiro",
+      "subject": "Solicitação de acesso ao relatório financeiro",
+      "body": "Solicito acesso temporário ao relatório financeiro mensal para concluir a conferência das despesas do departamento.",
+      "reason": "A solicitação está relacionada à função do solicitante e possui finalidade de trabalho.",
+      "decision": 0
+    },
+    {
+      "requester": "Carlos Lima - Comercial",
+      "subject": "Instalar software não autorizado no computador",
+      "body": "Preciso instalar um programa baixado da internet para converter arquivos. Posso desativar o antivírus durante a instalação?",
+      "reason": "A requisição pede a desativação de uma proteção de segurança e o uso de software não autorizado.",
+      "decision": 1
+    }
+  ]
+}
