@@ -86,12 +86,19 @@ public class AudioManager : MonoBehaviour
     private void AoCarregarCena(Scene scene, LoadSceneMode mode)
     {
         if (EhCenaDeEncerramento(scene.name))
+        {
             PararMusicaDeFundo();
 
-        if (scene.name == "Gameover")
-            TocarSFX(somGameOver);
-        if (scene.name == "GameWin")
-            TocarSFX(somGameWin);
+            if (scene.name == "Gameover")
+                TocarSFX(somGameOver);
+            else if (scene.name == "GameWin")
+                TocarSFX(somGameWin);
+
+            return;
+        }
+
+        if (scene.name == "Desktop")
+            TocarMusicaDeFundo();
     }
 
     private bool EhCenaDeEncerramento(string nomeCena)
@@ -128,6 +135,9 @@ public class AudioManager : MonoBehaviour
     {
         if (musicaDeFundo != null && bgmAudioSource != null)
         {
+            if (bgmAudioSource.isPlaying && bgmAudioSource.clip == musicaDeFundo)
+                return;
+
             bgmAudioSource.clip = musicaDeFundo;
             bgmAudioSource.Play();
         }
