@@ -116,7 +116,22 @@ public static class DataController
         {
             save = JsonUtility.FromJson<SaveData>(jsonText.text);
         }
-        save ??= new SaveData { current_day = CurrentDay, error_count = 0, emails = new List<EmailData>() };
+        save ??= new SaveData
+        {
+            current_day = CurrentDay,
+            error_count = 0,
+            emails = new List<EmailData>(),
+            tickets = new List<TicketData>()
+        };
+
+        TextAsset ticketJson = Resources.Load<TextAsset>($"Tickets/Dia_{day}");
+        if (ticketJson != null)
+        {
+            SaveData ticketSave = JsonUtility.FromJson<SaveData>(ticketJson.text);
+            save.tickets = ticketSave?.tickets ?? new List<TicketData>();
+        }
+
+        save.tickets ??= new List<TicketData>();
         return save;
     }
 
@@ -151,6 +166,7 @@ public class SaveData
     public int current_day;
     public int error_count;
     public List<EmailData> emails;
+    public List<TicketData> tickets;
 }
 
 [System.Serializable]
@@ -162,6 +178,22 @@ public class EmailData
     public List<AttachmentData> attachments;
     public EmailError error;
     public string reason; //TODO: Adicionar opção para coletar o local da discrepância a fim de permitir a seleção durante a análise do email.
+}
+
+[System.Serializable]
+public class TicketData
+{
+    public string requester;
+    public string subject;
+    public string body;
+    public string reason;
+    public TicketDecision decision;
+}
+
+public enum TicketDecision
+{
+    Approve,
+    Reject
 }
 
 [System.Serializable]
