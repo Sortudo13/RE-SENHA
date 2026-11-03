@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NovaRegra", menuName = "Manual/Regra")]
@@ -10,4 +11,16 @@ public class RegraData : ScriptableObject
     public string descricao; // Ex: "E-mails corporativos válidos devem terminar estritamente em @corporacao.com."
 
     public int nivelIntroducao; // Em qual dia/nível essa regra entra em vigor
+    public InspectionField campo;
+    public List<SubregraData> subregras = new();
+}
+
+[System.Serializable]
+public class SubregraData
+{
+    public string idSubregra;
+
+    [TextArea(2, 5)]
+    public string descricao;
+
 }

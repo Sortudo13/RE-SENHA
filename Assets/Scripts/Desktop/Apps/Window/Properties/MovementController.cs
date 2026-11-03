@@ -29,6 +29,9 @@ public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownH
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (InspectionModeController.IsActive)
+            return;
+
         if (eventData.button == dragButton && bringToFront)
         {
             targetTransform.SetAsLastSibling();
@@ -47,6 +50,9 @@ public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownH
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (InspectionModeController.IsActive)
+            return;
+
         if (eventData.button == dragButton)
         {
             Vector3 worldGrabPoint = targetTransform.TransformPoint(grabLocalOffset);
@@ -60,6 +66,9 @@ public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownH
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (InspectionModeController.IsActive)
+            return;
+
         if (eventData.button == dragButton)
         {
             targetTransform.anchoredPosition += (eventData.delta * dragSensitivity) / canvas.scaleFactor;

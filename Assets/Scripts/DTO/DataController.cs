@@ -33,18 +33,6 @@ public static class DataController
         get => Path.Combine(Application.persistentDataPath, "save.json");
     }
 
-    public static string ConvertExtension(string extension)
-    {
-        return extension switch
-        {
-            "mail" => "Email",
-            "manual" => "Manual",
-            "png" => "Image",
-            "exe" => "RG",
-            _ => "RG",
-        };
-    }
-
     public static void AdvanceDay()
     {
         CurrentDay++;
@@ -74,13 +62,7 @@ public static class DataController
 
     public static void SaveEmails(SaveData save)
     {
-        string json = JsonUtility.ToJson(save, true);
-        File.WriteAllText(SavePath, json);
-    }
-
-    public static void SaveEmails(List<EmailData> inbox, int error_count, int current_day)
-    {
-        SaveData save = new() { emails = inbox, error_count = error_count, current_day = current_day };
+        save.dataVersion = SaveData.CurrentDataVersion;
         string json = JsonUtility.ToJson(save, true);
         File.WriteAllText(SavePath, json);
     }
@@ -101,6 +83,11 @@ public static class DataController
         if (save == null)
         {
             save = LoadDailyJson(CurrentDay);
+            SaveEmails(save);
+        }
+        else if (save.dataVersion < SaveData.CurrentDataVersion)
+        {
+            MigrateEmailErrorsToSingleValue(save);
             SaveEmails(save);
         }
         return save;
@@ -132,7 +119,56 @@ public static class DataController
         }
 
         save.tickets ??= new List<TicketData>();
+        save.dataVersion = SaveData.CurrentDataVersion;
         return save;
+    }
+
+    private static void MigrateEmailErrorsToSingleValue(SaveData save)
+    {
+        if (save.emails == null)
+            return;
+
+        foreach (EmailData email in save.emails)
+        {
+            if (save.dataVersion == 0)
+            {
+                email.error = email.error switch
+                {
+                    (EmailError)0 => EmailError.None,
+                    (EmailError)1 => EmailError.SenderMismatch,
+                    (EmailError)2 => EmailError.SubjectMismatch,
+                    (EmailError)3 => EmailError.BodyMismatch,
+                    (EmailError)4 or (EmailError)5 => EmailError.AttachmentMismatch,
+                    _ => EmailError.None
+                };
+                email.subregra = GetDefaultSubruleId(email.error);
+                continue;
+            }
+
+            email.error = email.error switch
+            {
+                (EmailError)0 => EmailError.None,
+                (EmailError)1 => EmailError.SenderMismatch,
+                (EmailError)2 => EmailError.SubjectMismatch,
+                (EmailError)3 or (EmailError)4 => EmailError.BodyMismatch,
+                (EmailError)5 or (EmailError)8 => EmailError.AttachmentMismatch,
+                (EmailError)6 => EmailError.SubjectMismatch,
+                _ => EmailError.None
+            };
+            email.subregra = GetDefaultSubruleId(email.error);
+        }
+    }
+
+    private static string GetDefaultSubruleId(EmailError error)
+    {
+        return error switch
+        {
+            EmailError.SenderMismatch => "1.1",
+            EmailError.SubjectMismatch => "2.1",
+            EmailError.BodyMismatch => "3.1",
+            EmailError.AttachmentMismatch => "4.1",
+            _ => string.Empty
+        };
     }
 
     public static void DeleteSaveFile()
@@ -163,6 +199,8 @@ public class WindowData
 [System.Serializable]
 public class SaveData
 {
+    public const int CurrentDataVersion = 2;
+    public int dataVersion;
     public int current_day;
     public int error_count;
     public List<EmailData> emails;
@@ -178,6 +216,7 @@ public class EmailData
     public List<AttachmentData> attachments;
     public EmailError error;
     public string reason; //TODO: Adicionar opção para coletar o local da discrepância a fim de permitir a seleção durante a análise do email.
+    public string subregra;
 }
 
 [System.Serializable]
@@ -230,11 +269,11 @@ public class DadosFoto : AttachmentContent { public string url; }
 // Enumerações
 public enum EmailError
 {
-    None,
-    SenderMismatch,
-    SubjectMismatch,
-    BodyMismatch,
-    AttachmentMismatch
+    None = 0,
+    SenderMismatch = 1,
+    SubjectMismatch = 2,
+    BodyMismatch = 3,
+    AttachmentMismatch = 4
 }
 // Esses devem ser nomes equivalentes aos das funções no Window Manager
 public enum DocumentType

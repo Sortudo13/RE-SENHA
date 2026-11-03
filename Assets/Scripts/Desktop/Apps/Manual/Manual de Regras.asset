@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ManualData
   todasAsRegras:
   - {fileID: 11400000, guid: eba9d292ad6b3dc66861f28362a49f97, type: 2}
+  - {fileID: 11400000, guid: a1111111111111111111111111111111, type: 2}
+  - {fileID: 11400000, guid: b2222222222222222222222222222222, type: 2}
+  - {fileID: 11400000, guid: c3333333333333333333333333333333, type: 2}

@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Regra 1
   m_EditorClassIdentifier: Assembly-CSharp::RegraData
   idRegra: 1
-  titulo: Primeira Regra
-  descricao: Aceite apenas e-mails @nationaltech.com
+  titulo: Verificação do remetente
+  descricao: Analise o endereço do remetente antes de confiar na mensagem.
   nivelIntroducao: 1
+  campo: 0
+  subregras:
+  - idSubregra: 1.1
+    descricao: Não aceite e-mails de domínios suspeitos ou que imitem empresas conhecidas. Verifique cuidadosamente a grafia do domínio do remetente antes de confiar na mensagem.

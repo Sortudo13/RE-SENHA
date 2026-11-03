@@ -289,12 +289,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d271c5a20c912894594a4d55c7b8a5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CursorSwap
-  enterCursorType: 2
+  enterCursorType: 1
   exitCursorType: 1
-  upCursorType: 0
-  downCursorType: 0
+  upCursorType: 1
+  downCursorType: 1
   clickCursorType: 1
-  moveCursorType: 0
+  moveCursorType: 1
 --- !u!1 &4641189156026426695
 GameObject:
   m_ObjectHideFlags: 0
