@@ -8,13 +8,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4488395508425507612, guid: 09f15d98261718243a318f6db0111e76, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8346845122898091600, guid: 09f15d98261718243a318f6db0111e76, type: 3}
-      propertyPath: m_Name
-      value: PainelTicket
+    - target: {fileID: 315425375803279673, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 844473456139419388, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Value
@@ -26,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1064050396216659348, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2057943711942339170, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Pivot.x
@@ -108,6 +104,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2242515037663753883, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4102839571282659122, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -119,6 +119,10 @@ PrefabInstance:
     - target: {fileID: 4558918045468099503, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558918045468099503, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -145.89006
       objectReference: {fileID: 0}
     - target: {fileID: 5606744279543720541, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -132,14 +136,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Window Ticket
       objectReference: {fileID: 0}
+    - target: {fileID: 6205145257367703038, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976707515326297691, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7453973492467918682, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: windowIcon
       value: 
-      objectReference: {fileID: -7486118329125595650, guid: a669c14344747a011a8c956e453b01cf, type: 3}
+      objectReference: {fileID: 21300000, guid: 8987ced64cf9d5b468d631252e258b63, type: 3}
     - target: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: windowName
       value: Ticket
@@ -151,6 +163,10 @@ PrefabInstance:
     - target: {fileID: 8414287298405917689, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433311505485903811, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8435063888364670222, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Name
@@ -175,6 +191,14 @@ PrefabInstance:
     - target: {fileID: 9146544446276810511, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488395508425507612, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346845122898091600, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_Name
+      value: PainelTicket
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4076696023484862530, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
