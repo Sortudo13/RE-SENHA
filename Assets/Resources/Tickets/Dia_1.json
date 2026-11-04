@@ -3,17 +3,31 @@
   "error_count": 0,
   "tickets": [
     {
+      "id": "TK-1042",
       "requester": "Mariana Souza - Financeiro",
-      "subject": "Solicitação de acesso ao relatório financeiro",
       "body": "Solicito acesso temporário ao relatório financeiro mensal para concluir a conferência das despesas do departamento.",
-      "reason": "A solicitação está relacionada à função do solicitante e possui finalidade de trabalho.",
+      "reason": "A solicitação está relacionada à função do solicitante e possui finalidade de trabalho compatível com suas atribuições. Acesso deve ser concedido pelo tempo necessário e revogado ao final da conferência.",
       "decision": 0
     },
     {
+      "id": "TK-1043",
       "requester": "Carlos Lima - Comercial",
-      "subject": "Instalar software não autorizado no computador",
       "body": "Preciso instalar um programa baixado da internet para converter arquivos. Posso desativar o antivírus durante a instalação?",
-      "reason": "A requisição pede a desativação de uma proteção de segurança e o uso de software não autorizado.",
+      "reason": "A requisição envolve software não autorizado (sem homologação do setor de TI) e solicita a desativação de um controle de segurança. Ambas as ações violam a política de segurança da informação. Oriente o solicitante a usar a ferramenta de conversão aprovada disponível no portal interno.",
+      "decision": 1
+    },
+    {
+      "id": "TK-1044",
+      "requester": "Rafael Torres - Diretoria",
+      "body": "Recebi um e-mail do nosso banco informando que minha conta será bloqueada se eu não confirmar meus dados em 24h. O link pede login e senha do internet banking. Como estou em reunião, preciso que o suporte clique no link e confirme os dados por mim. O e-mail parece legítimo, veio do contato do gerente.",
+      "reason": "Trata-se de tentativa de phishing/engenharia social: (1) senso de urgência artificial (24h), (2) solicitação de credenciais bancárias por e-mail, (3) pedido para que terceiros realizem a ação. Bancos não solicitam senhas por e-mail. A decisão correta é rejeitar e orientar o solicitante a contatar o banco por canal oficial, além de reportar o e-mail ao time de segurança.",
+      "decision": 1
+    },
+    {
+      "id": "TK-1045",
+      "requester": "Beatriz Almeida - RH",
+      "body": "Encontrei um pen drive no estacionamento com a etiqueta 'Currículos - Processo Seletivo 2024'. Como estamos em época de contratação, acredito que seja de um candidato. Preciso abrir os arquivos para identificar o dono e devolver. Posso conectar na minha máquina para ver o conteúdo?",
+      "reason": "Dispositivos USB encontrados em locais públicos são um vetor clássico de ataque (bad USB, autorun malicioso, ransomware). Mesmo que a intenção seja ajudar, conectar o dispositivo na estação de trabalho coloca toda a rede corporativa em risco. A decisão correta é rejeitar e encaminhar o dispositivo ao setor de TI/Segurança para análise em ambiente isolado (sandbox). O RH deve ser orientado a nunca conectar mídias desconhecidas.",
       "decision": 1
     }
   ]
