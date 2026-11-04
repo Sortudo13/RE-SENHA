@@ -11,10 +11,12 @@ public class TicketController : MonoBehaviour
     private List<TicketData> tickets;
 
     [Header("List Config")]
-    [SerializeField] private GameObject listButton;
+    [SerializeField]
+    private GameObject listButton;
 
     [Header("Feedback")]
-    [SerializeField] private GameObject alertWindow;
+    [SerializeField]
+    private GameObject alertWindow;
 
     private Transform listBar;
     private GameObject ticketInterface;
@@ -155,7 +157,8 @@ public class TicketController : MonoBehaviour
             return;
 
         TMP_Dropdown dropdown = decisionField.GetComponentInChildren<TMP_Dropdown>(true);
-        TicketDecision answer = dropdown.value == 0 ? TicketDecision.Approve : TicketDecision.Reject;
+        TicketDecision answer =
+            dropdown.value == 0 ? TicketDecision.Approve : TicketDecision.Reject;
         bool correct = answer == currentTicket.decision;
         string feedback = correct
             ? "Decisão correta! A requisição foi avaliada conforme as regras da empresa."
@@ -172,22 +175,6 @@ public class TicketController : MonoBehaviour
         currentTicket = null;
         HideTicketDetails();
         UpdateTicketSidebar();
-
-        if (tickets.Count == 0)
-        {
-            if (DataController.CurrentErrorCount >= DataController.MaxErrors)
-            {
-                transform.parent.GetComponentInParent<WindowController>().CloseWindow();
-                DataController.ResetDays();
-                SceneManager.LoadScene("Gameover");
-            }
-            else if (DataController.CurrentDay >= DataController.MaxDay)
-            {
-                transform.parent.GetComponentInParent<WindowController>().CloseWindow();
-                DataController.ResetDays();
-                SceneManager.LoadScene("GameWin");
-            }
-        }
     }
 
     private void ShowFeedback(bool correct, string message)
@@ -200,8 +187,9 @@ public class TicketController : MonoBehaviour
 
         GameObject alert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
         Transform content = alert.transform.GetChild(0);
-        content.GetChild(0).GetComponent<TextMeshProUGUI>().text =
-            correct ? "[ANÁLISE CORRETA]" : "[ALERTA DE SEGURANÇA]";
+        content.GetChild(0).GetComponent<TextMeshProUGUI>().text = correct
+            ? "[ANÁLISE CORRETA]"
+            : "[ALERTA DE SEGURANÇA]";
         content.GetChild(1).GetComponent<TextMeshProUGUI>().text = message;
 
         if (content.GetChild(2).TryGetComponent(out Button closeButton))
