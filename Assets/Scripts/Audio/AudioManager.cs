@@ -89,7 +89,7 @@ public class AudioManager : MonoBehaviour
         {
             PararMusicaDeFundo();
 
-            if (scene.name == "Gameover")
+            if (scene.name == "GameOver")
                 TocarSFX(somGameOver);
             else if (scene.name == "GameWin")
                 TocarSFX(somGameWin);
@@ -103,7 +103,7 @@ public class AudioManager : MonoBehaviour
 
     private bool EhCenaDeEncerramento(string nomeCena)
     {
-        return nomeCena == "Gameover" || nomeCena == "GameWin";
+        return nomeCena == "GameOver" || nomeCena == "GameWin";
     }
 
     private void GarantirAudioSources()

@@ -80,7 +80,12 @@ public static class DataController
 
     public static void SaveEmails(List<EmailData> inbox, int error_count, int current_day)
     {
-        SaveData save = new() { emails = inbox, error_count = error_count, current_day = current_day };
+        SaveData save = new()
+        {
+            emails = inbox,
+            error_count = error_count,
+            current_day = current_day,
+        };
         string json = JsonUtility.ToJson(save, true);
         File.WriteAllText(SavePath, json);
     }
@@ -121,7 +126,7 @@ public static class DataController
             current_day = CurrentDay,
             error_count = 0,
             emails = new List<EmailData>(),
-            tickets = new List<TicketData>()
+            tickets = new List<TicketData>(),
         };
 
         TextAsset ticketJson = Resources.Load<TextAsset>($"Tickets/Dia_{day}");
@@ -183,8 +188,8 @@ public class EmailData
 [System.Serializable]
 public class TicketData
 {
+    public string id; // novo — usado como label na lista lateral
     public string requester;
-    public string subject;
     public string body;
     public string reason;
     public TicketDecision decision;
@@ -193,7 +198,7 @@ public class TicketData
 public enum TicketDecision
 {
     Approve,
-    Reject
+    Reject,
 }
 
 [System.Serializable]
@@ -222,10 +227,16 @@ public class AttachmentContent { }
 // Fazer classes herdadas de AttachmentContent para cada tipo de documento que contém dados do usuário.
 // Exemplos abaixo:
 [System.Serializable]
-public class DadosTexto : AttachmentContent { public string texto; }
+public class DadosTexto : AttachmentContent
+{
+    public string texto;
+}
 
 [System.Serializable]
-public class DadosFoto : AttachmentContent { public string url; }
+public class DadosFoto : AttachmentContent
+{
+    public string url;
+}
 
 // Enumerações
 public enum EmailError
@@ -234,12 +245,13 @@ public enum EmailError
     SenderMismatch,
     SubjectMismatch,
     BodyMismatch,
-    AttachmentMismatch
+    AttachmentMismatch,
 }
+
 // Esses devem ser nomes equivalentes aos das funções no Window Manager
 public enum DocumentType
 {
     Manual,
     Email,
-    RG
+    RG,
 }

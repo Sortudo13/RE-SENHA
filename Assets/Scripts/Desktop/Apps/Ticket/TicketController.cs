@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TicketController : MonoBehaviour
@@ -14,28 +13,28 @@ public class TicketController : MonoBehaviour
     [SerializeField]
     private GameObject listButton;
 
+    [Header("Interface References")]
+    [SerializeField]
+    private GameObject ticketInterface;
+
+    [SerializeField]
+    private Transform listBar;
+
+    [SerializeField]
+    private GameObject requesterField;
+
+    [SerializeField]
+    private GameObject bodyField;
+
+    [SerializeField]
+    private GameObject decisionField;
+
     [Header("Feedback")]
     [SerializeField]
     private GameObject alertWindow;
 
-    private Transform listBar;
-    private GameObject ticketInterface;
-    private GameObject requesterField;
-    private GameObject subjectField;
-    private GameObject bodyField;
-    private GameObject decisionField;
-
     private void Start()
     {
-        ticketInterface = transform.GetChild(0).gameObject;
-        listBar = transform.GetChild(1).GetChild(0);
-
-        requesterField = ticketInterface.transform.GetChild(1).gameObject;
-        subjectField = ticketInterface.transform.GetChild(3).gameObject;
-        bodyField = ticketInterface.transform.GetChild(6).gameObject;
-        decisionField = ticketInterface.transform.GetChild(7).gameObject;
-        ticketInterface.transform.GetChild(5).gameObject.SetActive(false);
-
         HideTicketDetails();
 
         currentSave = DataController.LoadEmails();
@@ -69,7 +68,12 @@ public class TicketController : MonoBehaviour
         TMP_Dropdown dropdown = decisionField.GetComponentInChildren<TMP_Dropdown>(true);
         Button submitButton = decisionField.GetComponentInChildren<Button>(true);
         if (dropdown == null || submitButton == null)
+        {
+            Debug.LogError(
+                "TicketController: decisionField precisa conter um TMP_Dropdown e um Button."
+            );
             return;
+        }
 
         dropdown.ClearOptions();
         dropdown.AddOptions(new List<string> { "Aprovar", "Rejeitar" });
@@ -110,10 +114,13 @@ public class TicketController : MonoBehaviour
             GameObject buttonObject = Instantiate(listButton, listBar);
             TextMeshProUGUI label = new GameObject("Texto").AddComponent<TextMeshProUGUI>();
             label.transform.SetParent(buttonObject.transform, false);
-            label.text = ticket.subject;
+            label.font = TMP_Settings.defaultFontAsset;
+
+            label.text = ticket.requester;
+
             label.enableAutoSizing = true;
-            label.fontSizeMin = 30;
-            label.fontSizeMax = 50;
+            label.fontSizeMin = 50;
+            label.fontSizeMax = 100;
             label.color = Color.black;
             label.alignment = TextAlignmentOptions.Center;
 
@@ -142,8 +149,6 @@ public class TicketController : MonoBehaviour
 
         requesterField.GetComponentInChildren<TextMeshProUGUI>().text =
             $"Solicitante: {currentTicket.requester}";
-        subjectField.GetComponentInChildren<TextMeshProUGUI>().text =
-            $"Assunto: {currentTicket.subject}";
         bodyField.GetComponentInChildren<TextMeshProUGUI>().text =
             $"Descrição:\n{currentTicket.body}";
 
@@ -161,8 +166,8 @@ public class TicketController : MonoBehaviour
             dropdown.value == 0 ? TicketDecision.Approve : TicketDecision.Reject;
         bool correct = answer == currentTicket.decision;
         string feedback = correct
-            ? "Decisão correta! A requisição foi avaliada conforme as regras da empresa."
-            : "Decisão incorreta. Consulte o manual da empresa antes de avaliar requisições semelhantes.";
+            ? "Decisão correta! O chamado foi avaliado conforme as políticas de TI."
+            : "Decisão incorreta. Consulte o manual de TI antes de avaliar chamados semelhantes.";
         if (!string.IsNullOrWhiteSpace(currentTicket.reason))
             feedback += $"\n\nJustificativa: {currentTicket.reason}";
 

@@ -339,7 +339,7 @@ public class EmailController : MonoBehaviour
         )
         {
             transform.parent.GetComponentInParent<WindowController>().CloseWindow();
-            string endingScene = (inbox.Count == 0) ? "GameWin" : "Gameover";
+            string endingScene = (inbox.Count == 0) ? "GameWin" : "GameOver";
             DataController.ResetDays();
             SceneManager.LoadScene(endingScene);
         }
