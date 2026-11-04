@@ -1188,6 +1188,7 @@ GameObject:
   - component: {fileID: 483162120}
   - component: {fileID: 483162119}
   - component: {fileID: 483162118}
+  - component: {fileID: 483162122}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1259,6 +1260,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &483162122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483162117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1de3ef5c0e4b7f9a7d2c8e1f4b6a90, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  clickSound: {fileID: 8300000, guid: 1ba10aa0d1a4e4eabae1bb9db26efd86, type: 3}
+  sceneOpenSound: {fileID: 8300000, guid: 6eecd86b5e0ee0bc9811cddf94641cc2, type: 3}
 --- !u!224 &483162121
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2225,6 +2240,7 @@ GameObject:
   - component: {fileID: 1322067784}
   - component: {fileID: 1322067783}
   - component: {fileID: 1322067782}
+  - component: {fileID: 1322067785}
   m_Layer: 5
   m_Name: ResetButton
   m_TagString: Untagged
@@ -2296,9 +2312,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 456a2f8f049cdd433827b3490ba1dda1, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1322067785}
+        m_TargetAssemblyTypeName: GameRestartController, Assembly-CSharp
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2346,6 +2362,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322067780}
   m_CullTransparentMesh: 1
+--- !u!114 &1322067785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322067780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7c7d7f0f3f4a8f9b4e1b4e2c6d8a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameRestartController
 --- !u!1 &1493358464
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,8 +28,8 @@ public class GameOverManager : MonoBehaviour
     // Conectado ao botão "Reiniciar"
     public void ReiniciarJogo()
     {
-        // Alterar para recarregar a cena principal
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        DataController.ResetDays();
+        SceneManager.LoadScene("Desktop");
     }
 
     // Conectado ao botão "Estatísticas"

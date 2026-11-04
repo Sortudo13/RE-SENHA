@@ -11,20 +11,23 @@ public class CursorSwap : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private CursorStyle clickCursorType = CursorStyle.Keep;
     [SerializeField] private CursorStyle moveCursorType = CursorStyle.Keep;
 
+    private bool pointerIsOver;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        pointerIsOver = true;
         CursorController.Instance.SetToMode(enterCursorType);
     }
 
     public void OnPointerExit(PointerEventData  eventData)
     {
+        pointerIsOver = false;
         CursorController.Instance.SetToMode(exitCursorType);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        CursorController.Instance.SetToMode(upCursorType);
+        CursorController.Instance.SetToMode(pointerIsOver ? enterCursorType : upCursorType);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -34,7 +37,7 @@ public class CursorSwap : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        CursorController.Instance.SetToMode(clickCursorType);
+        CursorController.Instance.SetToMode(pointerIsOver ? enterCursorType : clickCursorType);
     }
 
     public void OnPointerMove(PointerEventData eventData)

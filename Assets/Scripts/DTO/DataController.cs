@@ -80,7 +80,12 @@ public static class DataController
 
     public static void SaveEmails(List<EmailData> inbox, int error_count, int current_day)
     {
-        SaveData save = new() { emails = inbox, error_count = error_count, current_day = current_day };
+        SaveData save = new()
+        {
+            emails = inbox,
+            error_count = error_count,
+            current_day = current_day,
+        };
         string json = JsonUtility.ToJson(save, true);
         File.WriteAllText(SavePath, json);
     }
@@ -116,7 +121,22 @@ public static class DataController
         {
             save = JsonUtility.FromJson<SaveData>(jsonText.text);
         }
-        save ??= new SaveData { current_day = CurrentDay, error_count = 0, emails = new List<EmailData>() };
+        save ??= new SaveData
+        {
+            current_day = CurrentDay,
+            error_count = 0,
+            emails = new List<EmailData>(),
+            tickets = new List<TicketData>(),
+        };
+
+        TextAsset ticketJson = Resources.Load<TextAsset>($"Tickets/Dia_{day}");
+        if (ticketJson != null)
+        {
+            SaveData ticketSave = JsonUtility.FromJson<SaveData>(ticketJson.text);
+            save.tickets = ticketSave?.tickets ?? new List<TicketData>();
+        }
+
+        save.tickets ??= new List<TicketData>();
         return save;
     }
 
@@ -151,6 +171,7 @@ public class SaveData
     public int current_day;
     public int error_count;
     public List<EmailData> emails;
+    public List<TicketData> tickets;
 }
 
 [System.Serializable]
@@ -162,6 +183,22 @@ public class EmailData
     public List<AttachmentData> attachments;
     public EmailError error;
     public string reason; //TODO: Adicionar opção para coletar o local da discrepância a fim de permitir a seleção durante a análise do email.
+}
+
+[System.Serializable]
+public class TicketData
+{
+    public string id; // novo — usado como label na lista lateral
+    public string requester;
+    public string body;
+    public string reason;
+    public TicketDecision decision;
+}
+
+public enum TicketDecision
+{
+    Approve,
+    Reject,
 }
 
 [System.Serializable]
@@ -190,10 +227,16 @@ public class AttachmentContent { }
 // Fazer classes herdadas de AttachmentContent para cada tipo de documento que contém dados do usuário.
 // Exemplos abaixo:
 [System.Serializable]
-public class DadosTexto : AttachmentContent { public string texto; }
+public class DadosTexto : AttachmentContent
+{
+    public string texto;
+}
 
 [System.Serializable]
-public class DadosFoto : AttachmentContent { public string url; }
+public class DadosFoto : AttachmentContent
+{
+    public string url;
+}
 
 // Enumerações
 public enum EmailError
@@ -202,12 +245,13 @@ public enum EmailError
     SenderMismatch,
     SubjectMismatch,
     BodyMismatch,
-    AttachmentMismatch
+    AttachmentMismatch,
 }
+
 // Esses devem ser nomes equivalentes aos das funções no Window Manager
 public enum DocumentType
 {
     Manual,
     Email,
-    RG
+    RG,
 }
