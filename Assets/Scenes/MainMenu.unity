@@ -211,7 +211,6 @@ GameObject:
   - component: {fileID: 106314758}
   - component: {fileID: 106314757}
   - component: {fileID: 106314761}
-  - component: {fileID: 106314762}
   - component: {fileID: 106314763}
   m_Layer: 5
   m_Name: Canvas
@@ -317,31 +316,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d1de3ef5c0e4b7f9a7d2c8e1f4b6a90, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneButtonAudioController
   clickSound: {fileID: 8300000, guid: 1ba10aa0d1a4e4eabae1bb9db26efd86, type: 3}
   sceneOpenSound: {fileID: 0}
---- !u!114 &106314762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106314756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29241eeb528c33b44b52478679ce1bb8, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  bgmAudioSource: {fileID: 0}
-  sfxAudioSource: {fileID: 0}
-  desktopMusic: {fileID: 8300000, guid: e028cf35b15a4ba44a3034b844aa9fac, type: 3}
-  mainMenuMusic: {fileID: 8300000, guid: 23236e605a34dadcbbc41c3f9987801a, type: 3}
-  cliqueFecharJanela: {fileID: 8300000, guid: 0046510254eb57f45bdf30efd0f12e3e, type: 3}
-  cliqueAbrirJanela: {fileID: 8300000, guid: 0046510254eb57f45bdf30efd0f12e3e, type: 3}
-  cliqueBotaoPadrao: {fileID: 0}
-  somGameOver: {fileID: 8300000, guid: 6eecd86b5e0ee0bc9811cddf94641cc2, type: 3}
-  somGameWin: {fileID: 8300000, guid: 117cb9545958eae3fa325ef5ea4bb369, type: 3}
 --- !u!114 &106314763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,7 +330,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f6b5d8a1c2e4f709b7d6a5c3e1f8a24, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
 --- !u!1 &134819959
 GameObject:
@@ -852,7 +830,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 106314756}
+      - m_Target: {fileID: 106314763}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: NovoJogo
         m_Mode: 1
@@ -861,7 +839,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1117983030
@@ -902,6 +880,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117983027}
   m_CullTransparentMesh: 1
+--- !u!1 &1142461476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1142461478}
+  - component: {fileID: 1142461477}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1142461477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142461476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29241eeb528c33b44b52478679ce1bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  bgmAudioSource: {fileID: 0}
+  sfxAudioSource: {fileID: 0}
+  desktopMusic: {fileID: 8300000, guid: e028cf35b15a4ba44a3034b844aa9fac, type: 3}
+  mainMenuMusic: {fileID: 8300000, guid: 23236e605a34dadcbbc41c3f9987801a, type: 3}
+  cliqueFecharJanela: {fileID: 8300000, guid: 0046510254eb57f45bdf30efd0f12e3e, type: 3}
+  cliqueAbrirJanela: {fileID: 8300000, guid: 0046510254eb57f45bdf30efd0f12e3e, type: 3}
+  cliqueBotaoPadrao: {fileID: 0}
+  somGameOver: {fileID: 8300000, guid: 6eecd86b5e0ee0bc9811cddf94641cc2, type: 3}
+  somGameWin: {fileID: 8300000, guid: 117cb9545958eae3fa325ef5ea4bb369, type: 3}
+--- !u!4 &1142461478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142461476}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.12344, y: -0.00722, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1441665738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,8 +1059,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 13}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: 0, y: 0.00000047684}
+  m_SizeDelta: {x: 1920, y: 1089.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1666079837
 MonoBehaviour:
@@ -1298,7 +1329,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1911632138
@@ -1421,7 +1452,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2078899182}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 106314763}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: Carregar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2078899182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1465,6 +1508,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1845435090}
+  - {fileID: 1142461478}
   - {fileID: 106314760}
   - {fileID: 10498555}
   - {fileID: 1441665740}
