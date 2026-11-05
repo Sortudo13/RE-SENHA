@@ -2309,7 +2309,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1728700982}
   - component: {fileID: 1728700981}
-  - component: {fileID: 1728700983}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged

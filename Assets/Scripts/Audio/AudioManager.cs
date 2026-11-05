@@ -13,9 +13,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioSource sfxAudioSource; // Áudio para efeitos sonoros (SFX)
 
-    [Header("Música de Fundo (BGM)")]
+    [Header("Música")]
     [SerializeField]
-    private AudioClip musicaDeFundo;
+    private AudioClip desktopMusic;
+
+    [SerializeField]
+    private AudioClip mainMenuMusic;
 
     [Header("Efeitos Sonoros - Cliques e UI")]
     [SerializeField]
@@ -56,8 +59,14 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        // Toca música de fundo ao iniciar o jogo
-        if (!EhCenaDeEncerramento(SceneManager.GetActiveScene().name))
+        string cenaAtual = SceneManager.GetActiveScene().name;
+
+        if (EhCenaDeEncerramento(cenaAtual))
+            return;
+
+        if (cenaAtual == "MainMenu")
+            TocarMusica(mainMenuMusic);
+        else
             TocarMusicaDeFundo();
     }
 
@@ -104,6 +113,8 @@ public class AudioManager : MonoBehaviour
 
         if (scene.name == "Desktop")
             TocarMusicaDeFundo();
+        else if (scene.name == "MainMenu")
+            TocarMusica(mainMenuMusic);
     }
 
     private bool EhCenaDeEncerramento(string nomeCena)
@@ -136,16 +147,22 @@ public class AudioManager : MonoBehaviour
         sfxAudioSource.playOnAwake = false;
     }
 
+    public void TocarMusica(AudioClip musica)
+    {
+        if (musica == null || bgmAudioSource == null)
+            return;
+
+        if (bgmAudioSource.isPlaying && bgmAudioSource.clip == musica)
+            return;
+
+        bgmAudioSource.clip = musica;
+        bgmAudioSource.loop = true;
+        bgmAudioSource.Play();
+    }
+
     public void TocarMusicaDeFundo()
     {
-        if (musicaDeFundo != null && bgmAudioSource != null)
-        {
-            if (bgmAudioSource.isPlaying && bgmAudioSource.clip == musicaDeFundo)
-                return;
-
-            bgmAudioSource.clip = musicaDeFundo;
-            bgmAudioSource.Play();
-        }
+        TocarMusica(desktopMusic);
     }
 
     public void PararMusicaDeFundo()
