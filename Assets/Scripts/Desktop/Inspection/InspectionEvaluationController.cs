@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class InspectionEvaluationController : MonoBehaviour
 {
-    public const string EmailSelectedAction = EmailContextPublisher.EmailContextChangedAction;
+    public const string EmailSelectedAction = "CurrentEmailChanged";
     public const string FindingsEvaluatedAction = "InspectionFindingsEvaluated";
 
     [SerializeField]

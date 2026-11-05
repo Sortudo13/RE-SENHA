@@ -2449,6 +2449,7 @@ MonoBehaviour:
   cliqueBotaoPadrao: {fileID: 0}
   somGameOver: {fileID: 8300000, guid: 6eecd86b5e0ee0bc9811cddf94641cc2, type: 3}
   somGameWin: {fileID: 0}
+  cliqueBotaoAprovacao: {fileID: 8300000, guid: 06d23339f5158d9b880d261763a94189, type: 3}
 --- !u!1 &1885617883
 GameObject:
   m_ObjectHideFlags: 0
