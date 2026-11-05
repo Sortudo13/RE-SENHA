@@ -9,6 +9,7 @@ public class EmailController : MonoBehaviour
     private EmailData currentEmail = null;
     private SaveData currentSave = null;
     private List<EmailData> inbox = null;
+    private InspectionEvaluationController inspectionEvaluation;
     private Transform listBar;
 
     [Header("List Config")]
@@ -28,6 +29,8 @@ public class EmailController : MonoBehaviour
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.SyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
+        inspectionEvaluation = GetComponent<InspectionEvaluationController>();
+        ListenSignals();
     }
 
     private void OnDestroy()
@@ -35,6 +38,7 @@ public class EmailController : MonoBehaviour
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.UnsyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.UnsyncSignal<EmailData>("RemoveEmail", RemoveEmail);
+        UnlistenSignals();
     }
 
     void Start()
@@ -281,19 +285,12 @@ public class EmailController : MonoBehaviour
     {
         ActionController.SyncSignal("ApproveCurrentEmail", ApproveCurrentEmail);
         ActionController.SyncSignal("BlockCurrentEmail", BlockCurrentEmail);
-        ActionController.SyncSignal("ShowInspectionFindings", ShowInspectionFindings);
     }
 
     private void UnlistenSignals()
     {
         ActionController.UnsyncSignal("ApproveCurrentEmail", ApproveCurrentEmail);
         ActionController.UnsyncSignal("BlockCurrentEmail", BlockCurrentEmail);
-        ActionController.UnsyncSignal("ShowInspectionFindings", ShowInspectionFindings);
-    }
-
-    private void ShowInspectionFindings()
-    {
-        // Codigo para mostrar os achados da inspeção.
     }
 
 
