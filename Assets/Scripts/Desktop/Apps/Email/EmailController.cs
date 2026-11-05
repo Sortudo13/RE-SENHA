@@ -6,9 +6,13 @@ using UnityEngine.UI;
 
 public class EmailController : MonoBehaviour
 {
+    public const string ApproveEmailAction = "ApproveCurrentEmail";
+    public const string BlockEmailAction = "BlockCurrentEmail";
+
     private EmailData currentEmail = null;
     private SaveData currentSave = null;
     private List<EmailData> inbox = null;
+    private InspectionEvaluationController inspectionEvaluation;
 
     [Header("List Config")]
     private Transform listBar;
@@ -22,28 +26,27 @@ public class EmailController : MonoBehaviour
 
     [SerializeField]
     private AudioClip approveClickSound;
+
     private GameObject emailInterface;
     private GameObject emailSender;
     private GameObject emailSubject;
     private GameObject emailBody;
     private GameObject emailAttachments;
-    private GameObject emailReport;
 
     void Awake()
     {
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
+        ActionController.SyncSignal(ApproveEmailAction, ApproveCurrentEmail);
+        ActionController.SyncSignal(BlockEmailAction, BlockCurrentEmail);
+        inspectionEvaluation = GetComponent<InspectionEvaluationController>();
     }
 
     private void OnDestroy()
     {
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
+        ActionController.UnsyncSignal(ApproveEmailAction, ApproveCurrentEmail);
+        ActionController.UnsyncSignal(BlockEmailAction, BlockCurrentEmail);
 
-        if (emailReport != null)
-        {
-            Button submitButton = emailReport.transform.GetComponentInChildren<Button>();
-            if (submitButton != null)
-                submitButton.onClick.RemoveListener(PlayApproveClickSound);
-        }
     }
 
     void Start()
@@ -55,17 +58,45 @@ public class EmailController : MonoBehaviour
         emailSubject = emailInterface.transform.GetChild(3).gameObject;
         emailAttachments = emailInterface.transform.GetChild(5).gameObject;
         emailBody = emailInterface.transform.GetChild(6).gameObject;
-        emailReport = emailInterface.transform.GetChild(7).gameObject;
 
         foreach (Transform child in emailInterface.transform)
         {
             child.gameObject.SetActive(false);
         }
 
+        BindActionButton("ApproveButton", ApproveEmailAction);
+        BindActionButton("BlockButton", BlockEmailAction);
+        BindActionButton(
+            "FindingsButton",
+            InspectionFindingsAlertController.ShowFindingsAction
+        );
+
         currentSave = DataController.LoadEmails();
         inbox = currentSave.emails;
         UpdateEmailSidebar();
-        StartDropdown();
+    }
+
+    private void BindActionButton(string buttonName, string command)
+    {
+        foreach (Button button in emailInterface.GetComponentsInChildren<Button>(true))
+        {
+            if (button.gameObject.name != buttonName)
+                continue;
+
+            if (!button.TryGetComponent(out ActionButtonController actionButton))
+            {
+                Debug.LogError(
+                    $"Email action button '{buttonName}' is missing ActionButtonController."
+                );
+                return;
+            }
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => actionButton.SendAction(command));
+            return;
+        }
+
+        Debug.LogError($"Email action button '{buttonName}' was not found.");
     }
 
     public void AddEmail(EmailData newEmail)
@@ -139,6 +170,8 @@ public class EmailController : MonoBehaviour
         else
             currentEmail = null;
 
+        EmailContextPublisher.Publish(currentSave, currentEmail);
+
         if (currentEmail != null)
         {
             if (emailSender != null)
@@ -191,146 +224,26 @@ public class EmailController : MonoBehaviour
         }
     }
 
-    public void StartDropdown()
-    {
-        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
-        Button submitButton = emailReport.transform.GetComponentInChildren<Button>();
-
-        dropdown.onValueChanged.AddListener(
-            delegate
-            {
-                SwapReportButton();
-            }
-        );
-        submitButton.onClick.AddListener(PlayApproveClickSound);
-        SwapReportButton();
-    }
-
-    private void PlayApproveClickSound()
-    {
-        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
-
-        if (dropdown.value == 0 && approveClickSound != null && AudioManager.Instance != null)
-            AudioManager.Instance.TocarSFX(approveClickSound);
-    }
-
-    public void SwapReportButton()
-    {
-        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
-        Button submitButton = emailReport.transform.GetComponentInChildren<Button>();
-
-        if (dropdown.value == 0)
-        {
-            if (submitButton.gameObject.TryGetComponent(out Image image))
-                image.color = new Color(13 / 255f, 190 / 255f, 0 / 255f);
-
-            TextMeshProUGUI text =
-                submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-            if (text != null)
-            {
-                text.color = new Color(255 / 255f, 255 / 255f, 255 / 255f);
-                text.text = "Aprovar";
-            }
-        }
-        else
-        {
-            if (submitButton.gameObject.TryGetComponent(out Image image))
-                image.color = new Color(124 / 255f, 41 / 255f, 41 / 255f);
-
-            TextMeshProUGUI text =
-                submitButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-            if (text != null)
-            {
-                text.color = new Color(255 / 255f, 3 / 255f, 0 / 255f);
-                text.text = "Reportar";
-            }
-        }
-    }
-
-    public void ValidateAnswer()
+    private void EvaluateDecision(bool blockEmail)
     {
         if (currentEmail == null)
             return;
 
-        TMP_Dropdown dropdown = emailReport.transform.GetComponentInChildren<TMP_Dropdown>();
-        var playerIsPhishing = dropdown.value switch
-        {
-            0 => EmailError.None,
-            1 => EmailError.SenderMismatch,
-            2 => EmailError.SubjectMismatch,
-            3 => EmailError.BodyMismatch,
-            4 => EmailError.AttachmentMismatch,
-            _ => EmailError.None,
-        };
+        bool emailHasFindings =
+            inspectionEvaluation != null && inspectionEvaluation.CurrentResults.Count > 0;
+        bool correctDecision = blockEmail == emailHasFindings;
+        string feedbackMessage = correctDecision
+            ? blockEmail
+                ? "Decisão correta! O e-mail possui achados de segurança."
+                : "Decisão correta! Nenhuma regra do Manual foi violada."
+            : blockEmail
+                ? "Erro de análise! O e-mail não possui achados aplicáveis."
+                : "Erro de análise! O e-mail possui achados de segurança.";
 
-        string feedbackMessage = "";
-        switch (currentEmail.error)
-        {
-            case EmailError.None:
-                if (playerIsPhishing == EmailError.None)
-                {
-                    feedbackMessage = "Decisão Correta! O e-mail é realmente seguro.";
-                }
-                else
-                {
-                    feedbackMessage =
-                        "Erro de Análise! Este e-mail, na verdade, é seguro. Pelo menos manteve a vigilância.";
-                }
-                break;
-            case EmailError.SenderMismatch:
-                if (playerIsPhishing == EmailError.SenderMismatch)
-                {
-                    feedbackMessage =
-                        "Decisão Correta! O e-mail realmente tinha o remetente duvidoso. A ameaça foi neutralizada.";
-                }
-                else
-                {
-                    feedbackMessage =
-                        "Erro de Análise! Este e-mail, na verdade, tinha um remetente duvidoso.";
-                }
-                break;
-            case EmailError.SubjectMismatch:
-                if (playerIsPhishing == EmailError.SubjectMismatch)
-                {
-                    feedbackMessage =
-                        "Decisão Correta! O e-mail realmente tinha o assunto duvidoso. A ameaça foi neutralizada.";
-                }
-                else
-                {
-                    feedbackMessage =
-                        "Erro de Análise! Este e-mail, na verdade, tinha um assunto duvidoso.";
-                }
-                break;
-            case EmailError.BodyMismatch:
-                if (playerIsPhishing == EmailError.BodyMismatch)
-                {
-                    feedbackMessage =
-                        "Decisão Correta! O e-mail realmente tinha o corpo duvidoso. A ameaça foi neutralizada.";
-                }
-                else
-                {
-                    feedbackMessage =
-                        "Erro de Análise! Este e-mail, na verdade, tinha um corpo duvidoso.";
-                }
-                break;
-            case EmailError.AttachmentMismatch:
-                if (playerIsPhishing == EmailError.AttachmentMismatch)
-                {
-                    feedbackMessage =
-                        "Decisão Correta! O e-mail realmente tinha o anexo duvidoso. A ameaça foi neutralizada.";
-                }
-                else
-                {
-                    feedbackMessage =
-                        "Erro de Análise! Este e-mail, na verdade, tinha um anexo duvidoso.";
-                }
-                break;
-        }
-
-        if (!playerIsPhishing.Equals(currentEmail.error))
+        if (!correctDecision)
             DataController.CurrentErrorCount++;
 
-        ShowFeedback(playerIsPhishing.Equals(currentEmail.error), feedbackMessage);
+        ShowFeedback(correctDecision, feedbackMessage);
         RemoveEmail(currentEmail);
 
         if (
@@ -351,6 +264,24 @@ public class EmailController : MonoBehaviour
             UpdateEmailSidebar();
         }
     }
+
+    public void ApproveCurrentEmail()
+    {
+        PlayApproveClickSound();
+        EvaluateDecision(false);
+    }
+
+    public void BlockCurrentEmail()
+    {
+        EvaluateDecision(true);
+    }
+
+    private void PlayApproveClickSound()
+    {
+        if (approveClickSound != null && AudioManager.Instance != null)
+            AudioManager.Instance.TocarSFX(approveClickSound);
+    }
+
 
     public void ShowFeedback(bool acertou, string mensagem)
     {

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "rule-sender-domain",
+      "title": "Verificacao do remetente",
+      "description": "Aceite apenas e-mails @nationaltech.com.",
+      "introductionDay": 1,
+      "field": "Sender",
+      "subrules": [
+        {
+          "id": "subrule-sender-domain-nationaltech",
+          "description": "O remetente deve pertencer ao dominio @nationaltech.com.",
+          "check": {
+            "type": "SenderDomain",
+            "allowedDomains": [
+              "nationaltech.com"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Verificacao do remetente",
+            "evidence": "O dominio do remetente nao esta na lista permitida.",
+            "explanation": "O remetente utiliza um dominio diferente do dominio corporativo.",
+            "reason": "O dominio informado nao corresponde ao dominio permitido."
+          }
+        }
+      ]
+    }
+  ]
+}

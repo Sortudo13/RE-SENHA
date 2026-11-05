@@ -164,7 +164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0.0002593994}
+  m_AnchoredPosition: {x: 0, y: 0.00024414062}
   m_SizeDelta: {x: -0.00012207, y: -0.00048828}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9222961459775040583
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe15abef5327223a9d143763e266da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ManualWindowController
+  manualResourcePath: Manual/ManualRules
   bancoDeRegras: {fileID: 11400000, guid: cfbf88f48d94e1cd3a71d1904e6136ce, type: 2}
   nivelAtual: 1
   containerRegras: {fileID: 3861936776935547496}
@@ -238,6 +239,7 @@ MonoBehaviour:
   txtTituloRegra: {fileID: 2889338705047007810}
   txtDescricaoRegra: {fileID: 4745943761547318406}
   txtStatusVigor: {fileID: 3144540473870347492}
+  selectableSubrule: {fileID: 8517729233484961291}
 --- !u!1 &2783476785606889429
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +273,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.05369997, y: -0.14901733}
+  m_AnchoredPosition: {x: 0.05369997, y: -0.14898682}
   m_SizeDelta: {x: -1.2509, y: -0.29813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4816944048977421168
@@ -308,7 +310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -4.700012, y: -0.19999695}
+  m_AnchoredPosition: {x: -4.700012, y: -0.2000122}
   m_SizeDelta: {x: -4.98999, y: 20.06}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &6159998178243943121
@@ -588,7 +590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0.001083374}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0.0010986328}
   m_SizeDelta: {x: -87.69, y: -6.5899963}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!223 &5806658786980367468
@@ -960,7 +962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.14805603}
+  m_AnchoredPosition: {x: 0, y: 0.14804077}
   m_SizeDelta: {x: 0, y: -0.29605}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &7854678293734845242
@@ -1241,6 +1243,7 @@ GameObject:
   - component: {fileID: 717108805861158606}
   - component: {fileID: 2061320061829342898}
   - component: {fileID: 4745943761547318406}
+  - component: {fileID: 8517729233484961291}
   m_Layer: 5
   m_Name: TxtDescricaoRegra
   m_TagString: Untagged
@@ -1264,7 +1267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.14007568, y: -13.020004}
+  m_AnchoredPosition: {x: -0.14007568, y: -13.02002}
   m_SizeDelta: {x: -5.0396, y: -65.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2061320061829342898
@@ -1367,3 +1370,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8517729233484961291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8814680547550378373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4e7c1d5f8b2e6c0d3a7f1b4e9c2a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InspectionRuleSelectable
+  subruleId: 
