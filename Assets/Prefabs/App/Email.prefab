@@ -257,7 +257,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8544334824267266493}
   m_HandleRect: {fileID: 8223330165907370151}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1363,8 +1363,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910000000000000001}
         m_TargetAssemblyTypeName: ActionButtonController, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: SendAction
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3031,7 +3031,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 21.198975, y: -112.87925}
+  m_AnchoredPosition: {x: 21.198975, y: -95.07996}
   m_SizeDelta: {x: -43.211, y: 0}
   m_Pivot: {x: 0, y: 0.9}
 --- !u!222 &8350685770485164358
@@ -3237,8 +3237,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910000000000000002}
         m_TargetAssemblyTypeName: ActionButtonController, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: SendAction
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3810,7 +3810,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2143876896905123368}
   m_HandleRect: {fileID: 8662008913603847249}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3911,7 +3911,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EmailController
   listButton: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
   alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-  approveClickSound: {fileID: 8300000, guid: 06d23339f5158d9b880d261763a94189, type: 3}
 --- !u!114 &1304560929059698951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4077,8 +4076,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910000000000000003}
         m_TargetAssemblyTypeName: ActionButtonController, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: SendAction
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

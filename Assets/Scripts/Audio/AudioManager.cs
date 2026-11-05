@@ -36,6 +36,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioClip somGameWin;
 
+    [SerializeField]
+    private AudioClip cliqueBotaoAprovacao;
+
     private void Awake()
     {
         // Padrão Singleton para ter apenas um AudioManager na cena
@@ -82,6 +85,7 @@ public class AudioManager : MonoBehaviour
         ActionController.SyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.SyncSignal("OnWindowOpened", TocarSomAbrirJanela);
         ActionController.SyncSignal("OnButtonClicked", TocarSomBotao);
+        ActionController.SyncSignal("OnApprovalButtonClicked", TocarSomAprovacao);
     }
 
     private void OnDisable()
@@ -90,6 +94,7 @@ public class AudioManager : MonoBehaviour
         ActionController.UnsyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.UnsyncSignal("OnWindowOpened", TocarSomAbrirJanela);
         ActionController.UnsyncSignal("OnButtonClicked", TocarSomBotao);
+        ActionController.UnsyncSignal("OnApprovalButtonClicked", TocarSomAprovacao);
     }
 
     private void AoCarregarCena(Scene scene, LoadSceneMode mode)
@@ -181,4 +186,6 @@ public class AudioManager : MonoBehaviour
     private void TocarSomAbrirJanela() => TocarSFX(cliqueAbrirJanela);
 
     private void TocarSomBotao() => TocarSFX(cliqueBotaoPadrao);
+
+    private void TocarSomAprovacao() => TocarSFX(cliqueBotaoAprovacao);
 }

@@ -6,26 +6,16 @@ using UnityEngine.UI;
 
 public class EmailController : MonoBehaviour
 {
-    public const string ApproveEmailAction = "ApproveCurrentEmail";
-    public const string BlockEmailAction = "BlockCurrentEmail";
-
     private EmailData currentEmail = null;
     private SaveData currentSave = null;
     private List<EmailData> inbox = null;
-    private InspectionEvaluationController inspectionEvaluation;
-
-    [Header("List Config")]
     private Transform listBar;
 
-    [SerializeField]
-    private GameObject listButton;
+    [Header("List Config")]
+    [SerializeField] private GameObject listButton;
 
     [Header("Alert Window")]
-    [SerializeField]
-    private GameObject alertWindow;
-
-    [SerializeField]
-    private AudioClip approveClickSound;
+    [SerializeField] private GameObject alertWindow;
 
     private GameObject emailInterface;
     private GameObject emailSender;
@@ -33,20 +23,18 @@ public class EmailController : MonoBehaviour
     private GameObject emailBody;
     private GameObject emailAttachments;
 
-    void Awake()
+    private void Awake()
     {
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
-        ActionController.SyncSignal(ApproveEmailAction, ApproveCurrentEmail);
-        ActionController.SyncSignal(BlockEmailAction, BlockCurrentEmail);
-        inspectionEvaluation = GetComponent<InspectionEvaluationController>();
+        ActionController.SyncSignal<EmailData>("AddEmail", AddEmail);
+        ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
     }
 
     private void OnDestroy()
     {
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
-        ActionController.UnsyncSignal(ApproveEmailAction, ApproveCurrentEmail);
-        ActionController.UnsyncSignal(BlockEmailAction, BlockCurrentEmail);
-
+        ActionController.UnsyncSignal<EmailData>("AddEmail", AddEmail);
+        ActionController.UnsyncSignal<EmailData>("RemoveEmail", RemoveEmail);
     }
 
     void Start()
@@ -64,42 +52,12 @@ public class EmailController : MonoBehaviour
             child.gameObject.SetActive(false);
         }
 
-        BindActionButton("ApproveButton", ApproveEmailAction);
-        BindActionButton("BlockButton", BlockEmailAction);
-        BindActionButton(
-            "FindingsButton",
-            InspectionFindingsAlertController.ShowFindingsAction
-        );
-
         currentSave = DataController.LoadEmails();
         inbox = currentSave.emails;
         UpdateEmailSidebar();
     }
 
-    private void BindActionButton(string buttonName, string command)
-    {
-        foreach (Button button in emailInterface.GetComponentsInChildren<Button>(true))
-        {
-            if (button.gameObject.name != buttonName)
-                continue;
-
-            if (!button.TryGetComponent(out ActionButtonController actionButton))
-            {
-                Debug.LogError(
-                    $"Email action button '{buttonName}' is missing ActionButtonController."
-                );
-                return;
-            }
-
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => actionButton.SendAction(command));
-            return;
-        }
-
-        Debug.LogError($"Email action button '{buttonName}' was not found.");
-    }
-
-    public void AddEmail(EmailData newEmail)
+    private void AddEmail(EmailData newEmail)
     {
         if (newEmail == null)
             return;
@@ -109,7 +67,7 @@ public class EmailController : MonoBehaviour
         UpdateEmailSidebar();
     }
 
-    public void RemoveEmail(EmailData email)
+    private void RemoveEmail(EmailData email)
     {
         if (email == null)
             return;
@@ -138,6 +96,13 @@ public class EmailController : MonoBehaviour
         {
             GameObject newButton = Instantiate(listButton, listBar);
 
+            if (newButton.TryGetComponent(out Button botao))
+            {
+                botao.onClick.RemoveAllListeners();
+                botao.onClick.AddListener(() => LoadEmail(email));
+            }
+
+            //Colocar trecho de configuração visual do botão nele próprio.
             GameObject newText = new("Texto");
             newText.transform.SetParent(newButton.transform, false);
 
@@ -154,12 +119,6 @@ public class EmailController : MonoBehaviour
             rect.anchorMax = new Vector2(1, 1);
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
-
-            if (newButton.TryGetComponent(out Button botao))
-            {
-                botao.onClick.RemoveAllListeners();
-                botao.onClick.AddListener(() => LoadEmail(email));
-            }
         }
     }
 
@@ -170,7 +129,7 @@ public class EmailController : MonoBehaviour
         else
             currentEmail = null;
 
-        EmailContextPublisher.Publish(currentSave, currentEmail);
+        ActionController.SendAction("CurrentEmailChanged", new InspectionEmailContext(currentSave, currentEmail));
 
         if (currentEmail != null)
         {
@@ -224,65 +183,7 @@ public class EmailController : MonoBehaviour
         }
     }
 
-    private void EvaluateDecision(bool blockEmail)
-    {
-        if (currentEmail == null)
-            return;
-
-        bool emailHasFindings =
-            inspectionEvaluation != null && inspectionEvaluation.CurrentResults.Count > 0;
-        bool correctDecision = blockEmail == emailHasFindings;
-        string feedbackMessage = correctDecision
-            ? blockEmail
-                ? "Decisão correta! O e-mail possui achados de segurança."
-                : "Decisão correta! Nenhuma regra do Manual foi violada."
-            : blockEmail
-                ? "Erro de análise! O e-mail não possui achados aplicáveis."
-                : "Erro de análise! O e-mail possui achados de segurança.";
-
-        if (!correctDecision)
-            DataController.CurrentErrorCount++;
-
-        ShowFeedback(correctDecision, feedbackMessage);
-        RemoveEmail(currentEmail);
-
-        if (
-            (inbox.Count == 0 && DataController.CurrentDay >= DataController.MaxDay)
-            || DataController.CurrentErrorCount >= DataController.MaxErrors
-        )
-        {
-            transform.parent.GetComponentInParent<WindowController>().CloseWindow();
-            string endingScene = (inbox.Count == 0) ? "GameWin" : "GameOver";
-            DataController.ResetDays();
-            SceneManager.LoadScene(endingScene);
-        }
-        if (inbox.Count == 0)
-        {
-            DataController.AdvanceDay();
-            currentSave = DataController.LoadEmails();
-            inbox = currentSave.emails;
-            UpdateEmailSidebar();
-        }
-    }
-
-    public void ApproveCurrentEmail()
-    {
-        PlayApproveClickSound();
-        EvaluateDecision(false);
-    }
-
-    public void BlockCurrentEmail()
-    {
-        EvaluateDecision(true);
-    }
-
-    private void PlayApproveClickSound()
-    {
-        if (approveClickSound != null && AudioManager.Instance != null)
-            AudioManager.Instance.TocarSFX(approveClickSound);
-    }
-
-
+    // Gerenciador de Avisos
     public void ShowFeedback(bool acertou, string mensagem)
     {
         GameObject connectedAlert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
@@ -330,5 +231,80 @@ public class EmailController : MonoBehaviour
         }
 
         connectedAlert.SetActive(true);
+    }
+
+
+    //Tirar daqui pra baixo e levar pro inspetor
+
+    private void EvaluateDecision(bool blockEmail)
+    {
+        if (currentEmail == null)
+            return;
+
+        bool emailHasFindings =
+            inspectionEvaluation != null && inspectionEvaluation.CurrentResults.Count > 0;
+        bool correctDecision = blockEmail == emailHasFindings;
+        string feedbackMessage = correctDecision
+            ? blockEmail
+                ? "Decisão correta! O e-mail possui achados de segurança."
+                : "Decisão correta! Nenhuma regra do Manual foi violada."
+            : blockEmail
+                ? "Erro de análise! O e-mail não possui achados aplicáveis."
+                : "Erro de análise! O e-mail possui achados de segurança.";
+
+        if (!correctDecision)
+            DataController.CurrentErrorCount++;
+
+        ShowFeedback(correctDecision, feedbackMessage);
+        RemoveEmail(currentEmail);
+
+        if (
+            (inbox.Count == 0 && DataController.CurrentDay >= DataController.MaxDay)
+            || DataController.CurrentErrorCount >= DataController.MaxErrors
+        )
+        {
+            transform.parent.GetComponentInParent<WindowController>().CloseWindow();
+            string endingScene = (inbox.Count == 0) ? "GameWin" : "GameOver";
+            DataController.ResetDays();
+            SceneManager.LoadScene(endingScene);
+        }
+        if (inbox.Count == 0)
+        {
+            DataController.AdvanceDay();
+            currentSave = DataController.LoadEmails();
+            inbox = currentSave.emails;
+            UpdateEmailSidebar();
+        }
+    }
+
+    private void ListenSignals()
+    {
+        ActionController.SyncSignal("ApproveCurrentEmail", ApproveCurrentEmail);
+        ActionController.SyncSignal("BlockCurrentEmail", BlockCurrentEmail);
+        ActionController.SyncSignal("ShowInspectionFindings", ShowInspectionFindings);
+    }
+
+    private void UnlistenSignals()
+    {
+        ActionController.UnsyncSignal("ApproveCurrentEmail", ApproveCurrentEmail);
+        ActionController.UnsyncSignal("BlockCurrentEmail", BlockCurrentEmail);
+        ActionController.UnsyncSignal("ShowInspectionFindings", ShowInspectionFindings);
+    }
+
+    private void ShowInspectionFindings()
+    {
+        // Codigo para mostrar os achados da inspeção.
+    }
+
+
+    private void ApproveCurrentEmail()
+    {
+        ActionController.SendAction("OnApprovalButtonClicked");
+        EvaluateDecision(false);
+    }
+
+    private void BlockCurrentEmail()
+    {
+        EvaluateDecision(true);
     }
 }
