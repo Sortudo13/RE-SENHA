@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -6,7 +5,13 @@ using TMPro;
 public class ManualWindowController : MonoBehaviour
 {
     [Header("Dados do Manual")]
+    [SerializeField]
+    private string manualResourcePath = ManualRulesLoader.DefaultResourcePath;
+
+    [SerializeField]
     public ManualData bancoDeRegras;
+
+    private ManualRuleBookData manual;
     public int nivelAtual = 1;
 
     [Header("Referências - Painel Esquerdo")]
@@ -18,6 +23,9 @@ public class ManualWindowController : MonoBehaviour
     public TextMeshProUGUI txtDescricaoRegra;
     public TextMeshProUGUI txtStatusVigor;
 
+    [SerializeField]
+    private InspectionRuleSelectable selectableSubrule;
+
     void Start()
     {
         CarregarRegras();
@@ -25,7 +33,15 @@ public class ManualWindowController : MonoBehaviour
 
     public void CarregarRegras()
     {
-        if (bancoDeRegras == null) return;
+        try
+        {
+            manual = ManualRulesLoader.Load(manualResourcePath);
+        }
+        catch (System.InvalidOperationException exception)
+        {
+            Debug.LogError($"ManualWindowController: {exception.Message}");
+            return;
+        }
 
         // Limpa instâncias anteriores do container
         foreach (Transform child in containerRegras)
@@ -33,20 +49,22 @@ public class ManualWindowController : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        List<RegraData> regrasAtivas = bancoDeRegras.ObterRegrasAtivas(nivelAtual);
+        var regrasAtivas = manual.rules.FindAll(regra =>
+            regra.introductionDay <= nivelAtual
+        );
 
-        foreach (RegraData regra in regrasAtivas)
+        foreach (ManualRuleData regra in regrasAtivas)
         {
             GameObject novoItem = Instantiate(prefabItemRegra, containerRegras);
-            
+
             TextMeshProUGUI txtItem = novoItem.GetComponentInChildren<TextMeshProUGUI>();
             if (txtItem != null)
-            {
-                txtItem.text = $"{regra.idRegra}: {regra.titulo}";
-            }
+                txtItem.text = $"{regra.id}: {regra.title}";
 
-            RegraData regraAtual = regra;
-            novoItem.GetComponent<Button>().onClick.AddListener(() => ExibirDetalhes(regraAtual));
+            ManualRuleData regraAtual = regra;
+            Button button = novoItem.GetComponent<Button>();
+            if (button != null)
+                button.onClick.AddListener(() => ExibirDetalhes(regraAtual));
         }
 
         // Exibe a primeira regra por padrão
@@ -56,15 +74,27 @@ public class ManualWindowController : MonoBehaviour
         }
     }
 
-    public void ExibirDetalhes(RegraData regra)
+    private void ExibirDetalhes(ManualRuleData regra)
     {
         if (txtTituloRegra != null) 
-            txtTituloRegra.text = regra.titulo;
+            txtTituloRegra.text = regra.title;
 
+        ManualSubruleData subrule = regra.subrules[0];
         if (txtDescricaoRegra != null) 
-            txtDescricaoRegra.text = regra.descricao;
+            txtDescricaoRegra.text = $"{regra.description}\n{subrule.description}";
 
         if (txtStatusVigor != null) 
-            txtStatusVigor.text = $"<color=#00FF66>● EM VIGOR (Nível {regra.nivelIntroducao})</color>";
+            txtStatusVigor.text = $"<color=#00FF66>● EM VIGOR (Nível {regra.introductionDay})</color>";
+
+        if (selectableSubrule == null)
+        {
+            Debug.LogError(
+                "ManualWindowController: configure selectableSubrule with "
+                + "InspectionRuleSelectable on the subrule field."
+            );
+            return;
+        }
+
+        selectableSubrule.Setup(subrule.id);
     }
 }

@@ -74,6 +74,7 @@ public static class DataController
 
     public static void SaveEmails(SaveData save)
     {
+        EnsureInspectionFindings(save);
         string json = JsonUtility.ToJson(save, true);
         File.WriteAllText(SavePath, json);
     }
@@ -108,6 +109,7 @@ public static class DataController
             save = LoadDailyJson(CurrentDay);
             SaveEmails(save);
         }
+        EnsureInspectionFindings(save);
         return save;
     }
 
@@ -137,7 +139,20 @@ public static class DataController
         }
 
         save.tickets ??= new List<TicketData>();
+        EnsureInspectionFindings(save);
         return save;
+    }
+
+    private static void EnsureInspectionFindings(SaveData save)
+    {
+        if (save?.emails == null)
+            return;
+
+        foreach (EmailData email in save.emails)
+        {
+            if (email != null)
+                email.inspectionFindings ??= new List<InspectionFindingData>();
+        }
     }
 
     public static void DeleteSaveFile()
@@ -181,8 +196,22 @@ public class EmailData
     public string subject;
     public string body;
     public List<AttachmentData> attachments;
+    public List<InspectionFindingData> inspectionFindings = new();
+
+    // Legacy fields kept while existing email data is migrated to rule evaluation.
     public EmailError error;
-    public string reason; //TODO: Adicionar opção para coletar o local da discrepância a fim de permitir a seleção durante a análise do email.
+    public string reason;
+}
+
+[System.Serializable]
+public class InspectionFindingData
+{
+    public string subruleId;
+    public string field;
+    public string rule;
+    public string evidence;
+    public string explanation;
+    public string reason;
 }
 
 [System.Serializable]
