@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class InspectionRuleSelectable : MonoBehaviour, IPointerClickHandler
+public sealed class InspectionRuleSelectable : ActionButtonController, IPointerClickHandler
 {
     [SerializeField]
     private string subruleId;
@@ -26,7 +26,7 @@ public sealed class InspectionRuleSelectable : MonoBehaviour, IPointerClickHandl
         if (graphic != null)
             originalColor = graphic.color;
 
-        ActionController.SyncSignal<InspectionRuleSelection>(
+        ActionController.SyncSignal<string>(
             InspectionSelectionController.RuleHighlightAction,
             OnRuleSelected
         );
@@ -43,7 +43,7 @@ public sealed class InspectionRuleSelectable : MonoBehaviour, IPointerClickHandl
     private void OnDestroy()
     {
         InspectionSelectableRegistry.Unregister(transform as RectTransform);
-        ActionController.UnsyncSignal<InspectionRuleSelection>(
+        ActionController.UnsyncSignal<string>(
             InspectionSelectionController.RuleHighlightAction,
             OnRuleSelected
         );
@@ -60,20 +60,14 @@ public sealed class InspectionRuleSelectable : MonoBehaviour, IPointerClickHandl
     public void OnPointerClick(PointerEventData eventData)
     {
         if (inspectionModeActive && !string.IsNullOrWhiteSpace(subruleId))
-        {
-            ActionController.SendAction(
-                InspectionSelectionController.RuleSelectedAction,
-                new InspectionRuleSelection(subruleId)
-            );
-        }
+            SendAction(InspectionSelectionController.RuleSelectedAction, subruleId);
     }
 
-    private void OnRuleSelected(InspectionRuleSelection selection)
+    private void OnRuleSelected(string selectedSubruleId)
     {
         SetSelected(
-            selection != null
-            && !string.IsNullOrWhiteSpace(selection.subruleId)
-            && string.Equals(subruleId, selection.subruleId)
+            !string.IsNullOrWhiteSpace(selectedSubruleId)
+            && string.Equals(subruleId, selectedSubruleId)
         );
     }
 

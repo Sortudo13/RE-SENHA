@@ -82,7 +82,11 @@ public sealed class InspectionEvaluationController : MonoBehaviour
                 "Inspection rules could not be loaded before evaluating the current email."
             );
 
-        currentResults = evaluator.Evaluate(currentEmail, manual, DataController.CurrentDay);
+        currentResults = evaluator.Evaluate(
+            new EmailInspectionSurface(currentEmail),
+            manual,
+            DataController.CurrentDay
+        );
         ActionController.SendAction(FindingsEvaluatedAction, currentResults);
     }
 
@@ -127,6 +131,12 @@ public sealed class InspectionEvaluationController : MonoBehaviour
         currentEmail.inspectionFindings.Add(
             new InspectionFindingData
             {
+                findingId = result.SubruleId,
+                sourceType = "email",
+                sourceItemId = string.Empty,
+                fieldId = result.Field,
+                evaluatorId = "manual-content",
+                ruleId = result.RuleId,
                 subruleId = result.SubruleId,
                 field = result.Field,
                 rule = result.Rule,

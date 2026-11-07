@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class InspectionFieldSelectable : MonoBehaviour, IPointerClickHandler
+public sealed class InspectionFieldSelectable : ActionButtonController, IPointerClickHandler
 {
     [SerializeField]
     private string field;
@@ -55,10 +55,7 @@ public sealed class InspectionFieldSelectable : MonoBehaviour, IPointerClickHand
     public void OnPointerClick(PointerEventData eventData)
     {
         if (inspectionModeActive && !string.IsNullOrWhiteSpace(field))
-            ActionController.SendAction(
-                InspectionSelectionController.FieldSelectedAction,
-                field
-            );
+            SendAction(InspectionSelectionController.FieldSelectedAction, field);
     }
 
     private void OnFieldSelected(string selectedField)

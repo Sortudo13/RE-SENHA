@@ -206,6 +206,15 @@ public class EmailData
 [System.Serializable]
 public class InspectionFindingData
 {
+    // Generic fields support email, chat and database-backed inspections.
+    public string findingId;
+    public string sourceType;
+    public string sourceItemId;
+    public string fieldId;
+    public string evaluatorId;
+    public string ruleId;
+
+    // Legacy fields remain while existing email saves are migrated.
     public string subruleId;
     public string field;
     public string rule;

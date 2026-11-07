@@ -37,7 +37,7 @@ public sealed class ManualRuleEvaluationResult
 
 public sealed class ManualRuleEvaluator
 {
-    private readonly Dictionary<string, Func<EmailData, ManualRuleCheckData, string>> checks =
+    private readonly Dictionary<string, Func<IInspectionFieldSource, ManualRuleCheckData, string>> checks =
         new()
         {
             ["SenderDomain"] = EvaluateSenderDomain,
@@ -47,13 +47,15 @@ public sealed class ManualRuleEvaluator
         };
 
     public IReadOnlyList<ManualRuleEvaluationResult> Evaluate(
-        EmailData email,
+        IInspectionSurface surface,
         ManualRuleBookData manual,
         int currentDay
     )
     {
-        if (email == null)
-            throw new ArgumentNullException(nameof(email));
+        if (surface == null)
+            throw new ArgumentNullException(nameof(surface));
+        if (surface.FieldSource == null)
+            throw new InvalidOperationException("Inspection surface field source is missing.");
         if (manual == null)
             throw new ArgumentNullException(nameof(manual));
         if (manual.rules == null)
@@ -72,12 +74,15 @@ public sealed class ManualRuleEvaluator
                         $"Rule '{rule.id}' contains an invalid subrule."
                     );
 
-                if (!checks.TryGetValue(subrule.check.type, out Func<EmailData, ManualRuleCheckData, string> check))
+                if (!checks.TryGetValue(
+                        subrule.check.type,
+                        out Func<IInspectionFieldSource, ManualRuleCheckData, string> check
+                    ))
                     throw new InvalidOperationException(
                         $"Unsupported check type '{subrule.check.type}' in subrule '{subrule.id}'."
                     );
 
-                string evidence = check(email, subrule.check);
+                string evidence = check(surface.FieldSource, subrule.check);
                 if (evidence == null)
                     continue;
 
@@ -100,14 +105,29 @@ public sealed class ManualRuleEvaluator
         return results;
     }
 
-    private static string EvaluateSenderDomain(EmailData email, ManualRuleCheckData check)
+    public IReadOnlyList<ManualRuleEvaluationResult> Evaluate(
+        EmailData email,
+        ManualRuleBookData manual,
+        int currentDay
+    )
+    {
+        return Evaluate(new EmailInspectionSurface(email), manual, currentDay);
+    }
+
+    private static string EvaluateSenderDomain(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check
+    )
     {
         RequireValues(check.allowedDomains, check.type, "allowedDomains");
-        int separator = email.sender?.LastIndexOf('@') ?? -1;
-        if (separator < 0 || separator == email.sender.Length - 1)
-            return email.sender ?? string.Empty;
+        if (!fields.TryGetText("sender", out string sender))
+            return string.Empty;
 
-        string domain = email.sender[(separator + 1)..].Trim().ToLowerInvariant();
+        int separator = sender?.LastIndexOf('@') ?? -1;
+        if (separator < 0 || separator == sender.Length - 1)
+            return sender ?? string.Empty;
+
+        string domain = sender[(separator + 1)..].Trim().ToLowerInvariant();
         bool allowed = check.allowedDomains.Any(
             allowedDomain =>
                 string.Equals(
@@ -119,39 +139,50 @@ public sealed class ManualRuleEvaluator
         return allowed ? null : domain;
     }
 
-    private static string EvaluateSubjectTerms(EmailData email, ManualRuleCheckData check)
+    private static string EvaluateSubjectTerms(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check
+    )
     {
         RequireValues(check.terms, check.type, "terms");
-        return FindTerm(email.subject, check.terms, check.caseSensitive);
+        return FindTerm(
+            fields.TryGetText("subject", out string subject) ? subject : null,
+            check.terms,
+            check.caseSensitive
+        );
     }
 
-    private static string EvaluateBodyTerms(EmailData email, ManualRuleCheckData check)
+    private static string EvaluateBodyTerms(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check
+    )
     {
         if (check.terms == null || check.terms.Length == 0)
             RequireValues(check.suspiciousDomains, check.type, "terms or suspiciousDomains");
 
-        string term = FindTerm(email.body, check.terms, check.caseSensitive);
+        string term = FindTerm(
+            fields.TryGetText("body", out string body) ? body : null,
+            check.terms,
+            check.caseSensitive
+        );
         if (term != null)
             return term;
 
-        return FindTerm(email.body, check.suspiciousDomains, check.caseSensitive);
+        return FindTerm(body, check.suspiciousDomains, check.caseSensitive);
     }
 
     private static string EvaluateAttachmentExtension(
-        EmailData email,
+        IInspectionFieldSource fields,
         ManualRuleCheckData check
     )
     {
         RequireValues(check.forbiddenExtensions, check.type, "forbiddenExtensions");
-        if (email.attachments == null)
-            return null;
-
-        foreach (AttachmentData attachment in email.attachments)
+        foreach (InspectionAttachmentDescriptor attachment in fields.GetAttachments())
         {
-            if (attachment == null || string.IsNullOrWhiteSpace(attachment.extension))
+            if (attachment == null || string.IsNullOrWhiteSpace(attachment.Extension))
                 continue;
 
-            string extension = attachment.extension.Trim().TrimStart('.');
+            string extension = attachment.Extension.Trim().TrimStart('.');
             bool forbidden = check.forbiddenExtensions.Any(
                 item => string.Equals(
                     extension,

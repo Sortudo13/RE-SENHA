@@ -18,10 +18,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
     private void Awake()
     {
         ActionController.SyncSignal<string>(FieldSelectedAction, SelectField);
-        ActionController.SyncSignal<InspectionRuleSelection>(
-            RuleSelectedAction,
-            SelectRule
-        );
+        ActionController.SyncSignal<string>(RuleSelectedAction, SelectRule);
         ActionController.SyncSignal<InspectionEmailContext>(
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
@@ -31,10 +28,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
     private void OnDestroy()
     {
         ActionController.UnsyncSignal<string>(FieldSelectedAction, SelectField);
-        ActionController.UnsyncSignal<InspectionRuleSelection>(
-            RuleSelectedAction,
-            SelectRule
-        );
+        ActionController.UnsyncSignal<string>(RuleSelectedAction, SelectRule);
         ActionController.UnsyncSignal<InspectionEmailContext>(
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
@@ -49,13 +43,12 @@ public sealed class InspectionSelectionController : MonoBehaviour
             ActionController.SendAction(FieldHighlightAction, field);
     }
 
-    public void SelectRule(InspectionRuleSelection selection)
+    public void SelectRule(string subruleId)
     {
-        selectedSubruleId = selection?.subruleId;
+        selectedSubruleId = subruleId;
         TryRegisterSelection();
-        if (selection != null
-            && string.Equals(selectedSubruleId, selection.subruleId, System.StringComparison.Ordinal))
-            ActionController.SendAction(RuleHighlightAction, selection);
+        if (string.Equals(selectedSubruleId, subruleId, System.StringComparison.Ordinal))
+            ActionController.SendAction(RuleHighlightAction, subruleId);
     }
 
     public void ClearSelection()
@@ -64,7 +57,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
         selectedSubruleId = null;
         ActionController.SendAction(SelectionClearedAction);
         ActionController.SendAction<string>(FieldHighlightAction, null);
-        ActionController.SendAction<InspectionRuleSelection>(RuleHighlightAction, null);
+        ActionController.SendAction<string>(RuleHighlightAction, null);
     }
 
     private void ClearSelectionForEmail(InspectionEmailContext context)

@@ -6,4 +6,9 @@ public class ActionButtonController : MonoBehaviour
     {
         ActionController.SendAction(command);
     }
+
+    public void SendAction(string command, string data)
+    {
+        ActionController.SendAction(command, data);
+    }
 }
