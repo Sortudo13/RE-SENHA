@@ -60,7 +60,7 @@ public sealed class InspectionSelection
     }
 }
 
-public sealed class InspectionEvaluationResult
+public class InspectionEvaluationResult
 {
     public string FindingId { get; }
     public string EvaluatorId { get; }

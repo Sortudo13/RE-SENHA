@@ -1,28 +1,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class InspectionSelectableRegistry
+public sealed class InspectionSelectableRegistry : MonoBehaviour
 {
-    private static readonly HashSet<RectTransform> selectables = new();
+    public const string RegistryAvailableAction = "InspectionRegistryAvailable";
+    public const string RegistryRequestedAction = "InspectionRegistryRequested";
 
-    public static void Register(RectTransform selectable)
+    private readonly HashSet<RectTransform> selectables = new();
+
+    private void Awake()
+    {
+        ActionController.SyncSignal(
+            RegistryRequestedAction,
+            PublishRegistry
+        );
+    }
+
+    private void Start()
+    {
+        PublishRegistry();
+    }
+
+    private void OnDestroy()
+    {
+        ActionController.UnsyncSignal(
+            RegistryRequestedAction,
+            PublishRegistry
+        );
+        selectables.Clear();
+    }
+
+    private void PublishRegistry()
+    {
+        ActionController.SendAction(RegistryAvailableAction, this);
+    }
+
+    public void Register(RectTransform selectable)
     {
         if (selectable != null)
             selectables.Add(selectable);
     }
 
-    public static void Unregister(RectTransform selectable)
+    public void Unregister(RectTransform selectable)
     {
         if (selectable != null)
             selectables.Remove(selectable);
     }
 
-    public static bool Contains(Vector2 screenPosition, Camera eventCamera)
+    public bool Contains(Vector2 screenPosition, Camera eventCamera)
     {
+        selectables.RemoveWhere(selectable => selectable == null);
         foreach (RectTransform selectable in selectables)
         {
-            if (selectable != null
-                && selectable.gameObject.activeInHierarchy
+            if (selectable.gameObject.activeInHierarchy
                 && RectTransformUtility.RectangleContainsScreenPoint(
                     selectable,
                     screenPosition,

@@ -5,13 +5,14 @@ public sealed class EmailInspectionSurface : IInspectionSurface, IInspectionFiel
     private static readonly IReadOnlyList<InspectionFieldDescriptor> FieldDescriptors =
         new List<InspectionFieldDescriptor>
         {
-            new("email.sender", "Remetente", "email.sender"),
-            new("email.subject", "Assunto", "email.subject"),
-            new("email.body", "Corpo", "email.body"),
-            new("email.attachments", "Anexos", "email.attachments"),
+            new("Sender", "Remetente", "Sender"),
+            new("Subject", "Assunto", "Subject"),
+            new("Body", "Corpo", "Body"),
+            new("Attachments", "Anexos", "Attachments"),
         };
 
     private readonly EmailData email;
+    private readonly IInspectionFindingStore findingStore;
 
     public string SourceType => "email";
     public string SourceItemId => string.Empty;
@@ -25,11 +26,15 @@ public sealed class EmailInspectionSurface : IInspectionSurface, IInspectionFiel
             "attachments",
         };
     public IInspectionFieldSource FieldSource => this;
-    public IInspectionFindingStore FindingStore => null;
+    public IInspectionFindingStore FindingStore => findingStore;
 
-    public EmailInspectionSurface(EmailData email)
+    public EmailInspectionSurface(
+        EmailData email,
+        IInspectionFindingStore findingStore = null
+    )
     {
         this.email = email;
+        this.findingStore = findingStore;
     }
 
     public bool TryGetText(string fieldId, out string value)

@@ -17,9 +17,6 @@ public class ManualWindowController : MonoBehaviour
     [SerializeField]
     private string manualResourcePath = ManualRulesLoader.DefaultResourcePath;
 
-    [SerializeField]
-    public ManualData bancoDeRegras;
-
     private ManualRuleBookData manual;
     public int nivelAtual = 1;
 
@@ -36,6 +33,8 @@ public class ManualWindowController : MonoBehaviour
     private InspectionRuleSelectable selectableSubrule;
 
     private bool inspectionModeActive;
+    private Transform subruleContainer;
+    private readonly List<GameObject> generatedSubrules = new();
 
     void Start()
     {
@@ -43,6 +42,7 @@ public class ManualWindowController : MonoBehaviour
             InspectionModeController.ModeChangedAction,
             SetInspectionMode
         );
+        CreateSubruleContainer();
         CarregarRegras();
     }
 
@@ -52,13 +52,14 @@ public class ManualWindowController : MonoBehaviour
             InspectionModeController.ModeChangedAction,
             SetInspectionMode
         );
+        ClearSubruleItems();
     }
 
     public void CarregarRegras()
     {
         try
         {
-            manual = ManualRulesLoader.Load(manualResourcePath);
+            manual = ManualRepository.Load(manualResourcePath);
         }
         catch (System.InvalidOperationException exception)
         {
@@ -72,8 +73,9 @@ public class ManualWindowController : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        var regrasAtivas = manual.rules.FindAll(regra =>
-            regra.introductionDay <= nivelAtual
+        IReadOnlyList<ManualRuleData> regrasAtivas = ManualRepository.GetActiveRules(
+            manual,
+            nivelAtual
         );
 
         foreach (ManualRuleData regra in regrasAtivas)
@@ -115,30 +117,96 @@ public class ManualWindowController : MonoBehaviour
         if (txtTituloRegra != null) 
             txtTituloRegra.text = regra.title;
 
-        ManualSubruleData subrule = regra.subrules[0];
-        if (txtDescricaoRegra != null)
-        {
-            string subrulesText = string.Join(
-                "\n",
-                regra.subrules.ConvertAll(item => item.description)
-            );
-            txtDescricaoRegra.text =
-                $"{regra.description}\n\nCampo do e-mail: {FieldLabel(regra.field)}\n\n{subrulesText}";
-        }
-
         if (txtStatusVigor != null) 
             txtStatusVigor.text = $"<color=#00FF66>● EM VIGOR (Nível {regra.introductionDay})</color>";
 
-        if (selectableSubrule == null)
+        if (selectableSubrule == null || subruleContainer == null)
         {
             Debug.LogError(
-                "ManualWindowController: configure selectableSubrule with "
-                + "InspectionRuleSelectable on the subrule field."
+                "ManualWindowController: subrule template and container are required."
             );
             return;
         }
 
-        selectableSubrule.Setup(subrule.id);
+        ClearSubruleItems();
+        for (int index = 0; index < regra.subrules.Count; index++)
+        {
+            ManualSubruleData subrule = regra.subrules[index];
+            InspectionRuleSelectable item = index == 0
+                ? selectableSubrule
+                : Instantiate(selectableSubrule, subruleContainer);
+
+            if (index > 0)
+                generatedSubrules.Add(item.gameObject);
+
+            item.Setup(subrule.id);
+            TextMeshProUGUI text = item.GetComponent<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.text = index == 0
+                    ? $"{regra.description}\n\n{subrule.description}"
+                    : subrule.description;
+            }
+
+            ConfigureSubruleLayout(item);
+        }
+    }
+
+    private void CreateSubruleContainer()
+    {
+        if (selectableSubrule == null || subruleContainer != null)
+            return;
+
+        RectTransform template = selectableSubrule.transform as RectTransform;
+        if (template == null || template.parent == null)
+            return;
+
+        GameObject containerObject = new("SubruleList");
+        RectTransform container = containerObject.AddComponent<RectTransform>();
+        container.SetParent(template.parent, false);
+        container.anchorMin = template.anchorMin;
+        container.anchorMax = template.anchorMax;
+        container.pivot = template.pivot;
+        container.anchoredPosition = template.anchoredPosition;
+        container.sizeDelta = template.sizeDelta;
+        container.localScale = Vector3.one;
+
+        VerticalLayoutGroup layout = containerObject.AddComponent<VerticalLayoutGroup>();
+        layout.spacing = 8f;
+        layout.childAlignment = TextAnchor.UpperLeft;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = true;
+        layout.childForceExpandHeight = false;
+
+        subruleContainer = container;
+        template.SetParent(subruleContainer, false);
+        template.anchorMin = new Vector2(0f, 1f);
+        template.anchorMax = new Vector2(1f, 1f);
+        template.pivot = new Vector2(0.5f, 1f);
+        template.anchoredPosition = Vector2.zero;
+        template.sizeDelta = new Vector2(0f, 0f);
+    }
+
+    private void ClearSubruleItems()
+    {
+        foreach (GameObject item in generatedSubrules)
+        {
+            if (item != null)
+                Destroy(item);
+        }
+
+        generatedSubrules.Clear();
+    }
+
+    private static void ConfigureSubruleLayout(InspectionRuleSelectable item)
+    {
+        ContentSizeFitter fitter = item.GetComponent<ContentSizeFitter>();
+        if (fitter == null)
+            fitter = item.gameObject.AddComponent<ContentSizeFitter>();
+
+        fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     private static string FieldLabel(string field)

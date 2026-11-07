@@ -2,16 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class ManualRuleEvaluationResult
+public sealed class ManualRuleEvaluationResult : InspectionEvaluationResult
 {
     public string SubruleId { get; }
     public string Field { get; }
-    public string RuleId { get; }
     public string Rule { get; }
     public string Subrule { get; }
-    public string Evidence { get; }
-    public string Explanation { get; }
-    public string Reason { get; }
 
     public ManualRuleEvaluationResult(
         string subruleId,
@@ -22,16 +18,21 @@ public sealed class ManualRuleEvaluationResult
         string evidence,
         string explanation,
         string reason
+    ) : base(
+        subruleId,
+        "manual-content",
+        field,
+        ruleId,
+        rule,
+        evidence,
+        explanation,
+        reason
     )
     {
         SubruleId = subruleId;
         Field = field;
-        RuleId = ruleId;
         Rule = rule;
         Subrule = subrule;
-        Evidence = evidence;
-        Explanation = explanation;
-        Reason = reason;
     }
 }
 
@@ -45,8 +46,16 @@ public sealed class ManualRuleEvaluator
             ["BodyTerms"] = EvaluateBodyTerms,
             ["AttachmentExtension"] = EvaluateAttachmentExtension,
         };
+    private readonly Dictionary<string, string> requiredCapabilities =
+        new()
+        {
+            ["SenderDomain"] = "sender",
+            ["SubjectTerms"] = "subject",
+            ["BodyTerms"] = "body",
+            ["AttachmentExtension"] = "attachments",
+        };
 
-    public IReadOnlyList<ManualRuleEvaluationResult> Evaluate(
+    public IReadOnlyList<InspectionEvaluationResult> Evaluate(
         IInspectionSurface surface,
         ManualRuleBookData manual,
         int currentDay
@@ -56,15 +65,17 @@ public sealed class ManualRuleEvaluator
             throw new ArgumentNullException(nameof(surface));
         if (surface.FieldSource == null)
             throw new InvalidOperationException("Inspection surface field source is missing.");
+        if (surface.Capabilities == null)
+            throw new InvalidOperationException("Inspection surface capabilities are missing.");
         if (manual == null)
             throw new ArgumentNullException(nameof(manual));
         if (manual.rules == null)
             throw new InvalidOperationException("Manual rules collection is missing.");
 
-        List<ManualRuleEvaluationResult> results = new();
-        foreach (ManualRuleData rule in manual.rules)
+        List<InspectionEvaluationResult> results = new();
+        foreach (ManualRuleData rule in ManualRepository.GetActiveRules(manual, currentDay))
         {
-            if (rule == null || rule.introductionDay > currentDay)
+            if (rule == null)
                 continue;
 
             foreach (ManualSubruleData subrule in rule.subrules)
@@ -72,6 +83,10 @@ public sealed class ManualRuleEvaluator
                 if (subrule == null || subrule.check == null)
                     throw new InvalidOperationException(
                         $"Rule '{rule.id}' contains an invalid subrule."
+                    );
+                if (subrule.finding == null)
+                    throw new InvalidOperationException(
+                        $"Subrule '{subrule.id}' contains no finding data."
                     );
 
                 if (!checks.TryGetValue(
@@ -81,6 +96,9 @@ public sealed class ManualRuleEvaluator
                     throw new InvalidOperationException(
                         $"Unsupported check type '{subrule.check.type}' in subrule '{subrule.id}'."
                     );
+
+                if (!surface.Capabilities.Contains(requiredCapabilities[subrule.check.type]))
+                    continue;
 
                 string evidence = check(surface.FieldSource, subrule.check);
                 if (evidence == null)
@@ -105,7 +123,7 @@ public sealed class ManualRuleEvaluator
         return results;
     }
 
-    public IReadOnlyList<ManualRuleEvaluationResult> Evaluate(
+    public IReadOnlyList<InspectionEvaluationResult> Evaluate(
         EmailData email,
         ManualRuleBookData manual,
         int currentDay
@@ -121,7 +139,7 @@ public sealed class ManualRuleEvaluator
     {
         RequireValues(check.allowedDomains, check.type, "allowedDomains");
         if (!fields.TryGetText("sender", out string sender))
-            return string.Empty;
+            return null;
 
         int separator = sender?.LastIndexOf('@') ?? -1;
         if (separator < 0 || separator == sender.Length - 1)

@@ -14,22 +14,19 @@ public sealed class InspectionEvaluationController : MonoBehaviour
     private ManualRuleBookData manual;
     private SaveData currentSave;
     private EmailData currentEmail;
-    private IReadOnlyList<ManualRuleEvaluationResult> currentResults =
-        Array.Empty<ManualRuleEvaluationResult>();
+    private IInspectionSurface currentSurface;
+    private IReadOnlyList<InspectionEvaluationResult> currentResults =
+        Array.Empty<InspectionEvaluationResult>();
 
     public EmailData CurrentEmail => currentEmail;
-    public IReadOnlyList<ManualRuleEvaluationResult> CurrentResults => currentResults;
+    public IInspectionSurface CurrentSurface => currentSurface;
+    public IReadOnlyList<InspectionEvaluationResult> CurrentResults => currentResults;
 
-    public bool HasCurrentSave => currentSave != null;
+    public bool HasFindingStore => currentSurface?.FindingStore != null;
 
-    public bool HasRegisteredFinding(string subruleId)
+    public bool HasRegisteredFinding(string findingId)
     {
-        if (currentEmail?.inspectionFindings == null)
-            return false;
-
-        return currentEmail.inspectionFindings.Exists(
-            finding => finding != null && finding.subruleId == subruleId
-        );
+        return currentSurface?.FindingStore?.HasFinding(findingId) ?? false;
     }
 
     private void Awake()
@@ -50,26 +47,51 @@ public sealed class InspectionEvaluationController : MonoBehaviour
     {
         currentSave = null;
         currentEmail = email;
-        EvaluateCurrentEmail();
+        currentSurface = currentEmail == null
+            ? null
+            : new EmailInspectionSurface(currentEmail);
+        EvaluateCurrentSurface();
     }
 
     public void SetEmailContext(InspectionEmailContext context)
     {
         currentSave = context?.Save;
         currentEmail = context?.Email;
-        EvaluateCurrentEmail();
+        currentSurface = currentEmail == null
+            ? null
+            : new EmailInspectionSurface(
+                currentEmail,
+                new EmailInspectionFindingStore(currentSave, currentEmail)
+            );
+        EvaluateCurrentSurface();
+    }
+
+    public void SetSurface(IInspectionSurface surface)
+    {
+        currentSave = null;
+        currentEmail = null;
+        currentSurface = surface;
+        EvaluateCurrentSurface();
     }
 
     public void ClearEmail()
     {
-        SetEmail(null);
+        ClearSurface();
     }
 
-    public void EvaluateCurrentEmail()
+    public void ClearSurface()
     {
-        if (currentEmail == null)
+        currentSave = null;
+        currentEmail = null;
+        currentSurface = null;
+        EvaluateCurrentSurface();
+    }
+
+    public void EvaluateCurrentSurface()
+    {
+        if (currentSurface == null)
         {
-            currentResults = Array.Empty<ManualRuleEvaluationResult>();
+            currentResults = Array.Empty<InspectionEvaluationResult>();
             ActionController.SendAction(FindingsEvaluatedAction, currentResults);
             return;
         }
@@ -79,31 +101,28 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
         if (manual == null)
             throw new InvalidOperationException(
-                "Inspection rules could not be loaded before evaluating the current email."
+                "Inspection rules could not be loaded before evaluating the current surface."
             );
 
         currentResults = evaluator.Evaluate(
-            new EmailInspectionSurface(currentEmail),
+            currentSurface,
             manual,
             DataController.CurrentDay
         );
         ActionController.SendAction(FindingsEvaluatedAction, currentResults);
     }
 
-    public bool TryGetFinding(
-        string subruleId,
-        out ManualRuleEvaluationResult finding
-    )
+    public bool TryGetFinding(string findingId, out InspectionEvaluationResult finding)
     {
-        if (string.IsNullOrWhiteSpace(subruleId))
+        if (string.IsNullOrWhiteSpace(findingId))
         {
             finding = null;
             return false;
         }
 
-        foreach (ManualRuleEvaluationResult result in currentResults)
+        foreach (InspectionEvaluationResult result in currentResults)
         {
-            if (string.Equals(result.SubruleId, subruleId, StringComparison.Ordinal))
+            if (string.Equals(result.FindingId, findingId, StringComparison.Ordinal))
             {
                 finding = result;
                 return true;
@@ -114,52 +133,28 @@ public sealed class InspectionEvaluationController : MonoBehaviour
         return false;
     }
 
-    public bool RegisterFinding(string subruleId)
+    public bool RegisterFinding(string findingId)
     {
-        if (currentEmail == null || currentSave == null)
+        if (currentSurface?.FindingStore == null)
             return false;
 
-        if (!TryGetFinding(subruleId, out ManualRuleEvaluationResult result))
+        if (!TryGetFinding(findingId, out InspectionEvaluationResult result))
             return false;
 
-        currentEmail.inspectionFindings ??= new List<InspectionFindingData>();
-        if (currentEmail.inspectionFindings.Exists(
-                finding => finding.subruleId == result.SubruleId
-            ))
-            return false;
-
-        currentEmail.inspectionFindings.Add(
-            new InspectionFindingData
-            {
-                findingId = result.SubruleId,
-                sourceType = "email",
-                sourceItemId = string.Empty,
-                fieldId = result.Field,
-                evaluatorId = "manual-content",
-                ruleId = result.RuleId,
-                subruleId = result.SubruleId,
-                field = result.Field,
-                rule = result.Rule,
-                evidence = result.Evidence,
-                explanation = result.Explanation,
-                reason = result.Reason,
-            }
-        );
-        DataController.SaveEmails(currentSave);
-        return true;
+        return currentSurface.FindingStore.TryRegisterFinding(result);
     }
 
     private void LoadManual()
     {
         try
         {
-            manual = ManualRulesLoader.Load(manualResourcePath);
+            manual = ManualRepository.Load(manualResourcePath);
         }
         catch (InvalidOperationException exception)
         {
             Debug.LogError($"InspectionEvaluationController: {exception.Message}");
             manual = null;
-            currentResults = Array.Empty<ManualRuleEvaluationResult>();
+            currentResults = Array.Empty<InspectionEvaluationResult>();
         }
     }
 }

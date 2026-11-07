@@ -42,10 +42,19 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
             return;
 
         GameObject alert = Instantiate(findingsAlert, AlertManagerController.AlertsLayer);
-        Transform content = alert.transform.GetChild(0);
-        TextMeshProUGUI title = content.GetChild(0).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI details = content.GetChild(1).GetComponent<TextMeshProUGUI>();
-        Button rulesButton = content.GetChild(2).GetComponent<Button>();
+        TextMeshProUGUI title = FindText(alert, "Título");
+        TextMeshProUGUI details = FindText(alert, "Conteúdo");
+        Button rulesButton = alert.GetComponentInChildren<Button>(true);
+
+        if (title == null || details == null || rulesButton == null)
+        {
+            Debug.LogError(
+                "InspectionFindingsAlertController: o prefab de achados precisa "
+                + "conter título, conteúdo e botão."
+            );
+            Destroy(alert);
+            return;
+        }
 
         title.text = "[ACHADOS DO INSPETOR]";
         details.text = BuildSummary();
@@ -56,6 +65,17 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
         );
 
         alert.SetActive(true);
+    }
+
+    private static TextMeshProUGUI FindText(GameObject alert, string objectName)
+    {
+        foreach (TextMeshProUGUI text in alert.GetComponentsInChildren<TextMeshProUGUI>(true))
+        {
+            if (text.gameObject.name == objectName)
+                return text;
+        }
+
+        return null;
     }
 
     private string BuildSummary()
