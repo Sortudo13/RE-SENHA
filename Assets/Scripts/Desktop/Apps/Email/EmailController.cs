@@ -24,8 +24,6 @@ public class EmailController : MonoBehaviour
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.SyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
-        ActionController.SyncSignal("ReloadInbox", ReloadInbox);
-        ActionController.SyncSignal("CloseEmailWindow", CloseEmailWindow);
     }
 
     private void OnDestroy()
@@ -33,8 +31,6 @@ public class EmailController : MonoBehaviour
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.UnsyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.UnsyncSignal<EmailData>("RemoveEmail", RemoveEmail);
-        ActionController.UnsyncSignal("ReloadInbox", ReloadInbox);
-        ActionController.UnsyncSignal("CloseEmailWindow", CloseEmailWindow);
         ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(null, null));
     }
 
@@ -167,17 +163,5 @@ public class EmailController : MonoBehaviour
         {
             Debug.Log("Linked attachment's position not a number.");
         }
-    }
-
-    private void ReloadInbox()
-    {
-        currentSave = DataController.LoadEmails();
-        inbox = currentSave.emails;
-        UpdateEmailSidebar();
-    }
-
-    private void CloseEmailWindow()
-    {
-        transform.parent.GetComponentInParent<WindowController>().CloseWindow();
     }
 }

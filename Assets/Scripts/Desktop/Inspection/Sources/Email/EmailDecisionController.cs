@@ -67,7 +67,7 @@ public sealed class EmailDecisionController : MonoBehaviour
             || DataController.CurrentErrorCount >= DataController.MaxErrors
         )
         {
-            ActionController.SendAction("CloseEmailWindow");
+            // A troca de cena destroi a janela do Email; antes ela era fechada aqui, tocando o som de fechar janela.
             string endingScene = (remainingEmails == 0) ? "GameWin" : "GameOver";
             DataController.ResetDays();
             SceneManager.LoadScene(endingScene);
@@ -75,7 +75,9 @@ public sealed class EmailDecisionController : MonoBehaviour
         if (remainingEmails == 0)
         {
             DataController.AdvanceDay();
-            ActionController.SendAction("ReloadInbox");
+            // PENDENTE (Andre): com mais de um dia (MaxDay > 1), o EmailController precisa recarregar a lista
+            // depois de AdvanceDay(), ou continua mostrando a inbox antiga ate a janela ser reaberta.
+            // Sugestao: no DataController, disparar "DayChanged" depois de SaveEmails e o Email escutar esse sinal.
         }
     }
 }
