@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -192,6 +193,7 @@ public class SaveData
 [System.Serializable]
 public class EmailData
 {
+    public string mailBox;
     public string sender;
     public string subject;
     public string body;
@@ -237,6 +239,18 @@ public enum TicketDecision
 {
     Approve,
     Reject,
+}
+
+[System.Serializable]
+public class FeedbackData
+{
+    public bool isPositive;
+    public string message;
+    public FeedbackData(bool isPositive, string message)
+    {
+        this.isPositive = isPositive;
+        this.message = message;
+    }
 }
 
 [System.Serializable]

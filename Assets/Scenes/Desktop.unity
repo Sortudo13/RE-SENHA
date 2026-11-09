@@ -1029,6 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a610db39e62614c975199e1c9500a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlertManagerController
+  alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
 --- !u!1 &487173559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,7 +2049,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db7f2365bd099ec43b6e3714f3789c78, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionSelectableRegistry
 --- !u!1 &1520624390
 GameObject:
@@ -2323,6 +2324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1728700982}
   - component: {fileID: 1728700981}
+  - component: {fileID: 1728700983}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -2456,7 +2458,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   bgmAudioSource: {fileID: 0}
   sfxAudioSource: {fileID: 0}
-  musicaDeFundo: {fileID: 8300000, guid: e028cf35b15a4ba44a3034b844aa9fac, type: 3}
+  desktopMusic: {fileID: 0}
+  mainMenuMusic: {fileID: 0}
   cliqueFecharJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
   cliqueAbrirJanela: {fileID: 8300000, guid: 0a4fbf0f57bfc6b4a837459153f5e6e9, type: 3}
   cliqueBotaoPadrao: {fileID: 0}

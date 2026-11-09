@@ -9,14 +9,10 @@ public class EmailController : MonoBehaviour
     private EmailData currentEmail = null;
     private SaveData currentSave = null;
     private List<EmailData> inbox = null;
-    private InspectionEvaluationController inspectionEvaluation;
     private Transform listBar;
 
     [Header("List Config")]
     [SerializeField] private GameObject listButton;
-
-    [Header("Alert Window")]
-    [SerializeField] private GameObject alertWindow;
 
     private GameObject emailInterface;
     private GameObject emailSender;
@@ -29,7 +25,6 @@ public class EmailController : MonoBehaviour
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.SyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
-        inspectionEvaluation = GetComponent<InspectionEvaluationController>();
         ListenSignals();
     }
 
@@ -106,23 +101,8 @@ public class EmailController : MonoBehaviour
                 botao.onClick.AddListener(() => LoadEmail(email));
             }
 
-            //Colocar trecho de configuração visual do botão nele próprio.
-            GameObject newText = new("Texto");
-            newText.transform.SetParent(newButton.transform, false);
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = email.subject;
 
-            TextMeshProUGUI text = newText.AddComponent<TextMeshProUGUI>();
-            text.text = email.subject;
-            text.enableAutoSizing = true;
-            text.fontSizeMin = 30;
-            text.fontSizeMax = 90;
-            text.color = Color.black;
-            text.alignment = TextAlignmentOptions.Center;
-
-            RectTransform rect = newText.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0, 0);
-            rect.anchorMax = new Vector2(1, 1);
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
         }
     }
 
@@ -187,63 +167,14 @@ public class EmailController : MonoBehaviour
         }
     }
 
-    // Gerenciador de Avisos
-    public void ShowFeedback(bool acertou, string mensagem)
-    {
-        GameObject connectedAlert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
-        GameObject content = connectedAlert.transform.GetChild(0).gameObject;
-        TextMeshProUGUI txtTituloAviso = content
-            .transform.GetChild(0)
-            .GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        connectedAlert.SetActive(false);
-
-        if (content.transform.GetChild(2).TryGetComponent(out Button button))
-        {
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => Destroy(connectedAlert));
-        }
-
-        txtFeedback.text = mensagem;
-
-        if (!acertou)
-        {
-            txtTituloAviso.text = "[ALERTA DE SEGURANÇA]";
-            txtTituloAviso.color = new Color(150 / 255f, 58 / 255f, 27 / 255f); // Vermelho
-
-            if (DataController.CurrentErrorCount < DataController.MaxErrors)
-            {
-                txtFeedback.text +=
-                    "\n\nREGISTRO: Você possui "
-                    + DataController.CurrentErrorCount
-                    + "/"
-                    + DataController.MaxErrors
-                    + " advertências.";
-            }
-            else
-            {
-                txtFeedback.text +=
-                    "\n\nCRÍTICO: Você acumulou "
-                    + DataController.CurrentErrorCount
-                    + " advertências. VOCÊ FOI DEMITIDO!";
-            }
-        }
-        else
-        {
-            txtTituloAviso.text = "[ANÁLISE CORRETA]";
-            txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f); // Verde
-        }
-
-        connectedAlert.SetActive(true);
-    }
-
-
     //Tirar daqui pra baixo e levar pro inspetor
 
     private void EvaluateDecision(bool blockEmail)
     {
         if (currentEmail == null)
             return;
+
+        InspectionEvaluationController inspectionEvaluation = GetComponent<InspectionEvaluationController>();
 
         bool emailHasFindings =
             inspectionEvaluation != null && inspectionEvaluation.CurrentResults.Count > 0;
@@ -259,7 +190,8 @@ public class EmailController : MonoBehaviour
         if (!correctDecision)
             DataController.CurrentErrorCount++;
 
-        ShowFeedback(correctDecision, feedbackMessage);
+        ActionController.SendAction("ShowFeedback", new FeedbackData(correctDecision, feedbackMessage));
+        
         RemoveEmail(currentEmail);
 
         if (

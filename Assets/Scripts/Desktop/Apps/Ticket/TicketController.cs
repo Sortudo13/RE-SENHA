@@ -174,35 +174,12 @@ public class TicketController : MonoBehaviour
         if (!correct)
             DataController.CurrentErrorCount++;
 
-        ShowFeedback(correct, feedback);
+        ActionController.SendAction("ShowFeedback", new FeedbackData(correct, feedback));
+
         tickets.Remove(currentTicket);
         DataController.SaveEmails(currentSave);
         currentTicket = null;
         HideTicketDetails();
         UpdateTicketSidebar();
-    }
-
-    private void ShowFeedback(bool correct, string message)
-    {
-        if (alertWindow == null)
-        {
-            Debug.LogWarning("TicketController: o prefab de feedback não foi configurado.");
-            return;
-        }
-
-        GameObject alert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
-        Transform content = alert.transform.GetChild(0);
-        content.GetChild(0).GetComponent<TextMeshProUGUI>().text = correct
-            ? "[ANÁLISE CORRETA]"
-            : "[ALERTA DE SEGURANÇA]";
-        content.GetChild(1).GetComponent<TextMeshProUGUI>().text = message;
-
-        if (content.GetChild(2).TryGetComponent(out Button closeButton))
-        {
-            closeButton.onClick.RemoveAllListeners();
-            closeButton.onClick.AddListener(() => Destroy(alert));
-        }
-
-        alert.SetActive(true);
     }
 }
