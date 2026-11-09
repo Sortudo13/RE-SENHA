@@ -19,6 +19,7 @@ public sealed class InspectionEvaluationController : MonoBehaviour
         Array.Empty<InspectionEvaluationResult>();
 
     public EmailData CurrentEmail => currentEmail;
+    public SaveData CurrentSave => currentSave;
     public IInspectionSurface CurrentSurface => currentSurface;
     public IReadOnlyList<InspectionEvaluationResult> CurrentResults => currentResults;
 
@@ -31,13 +32,13 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
     private void Awake()
     {
-        ActionController.SyncSignal<InspectionEmailContext>(EmailSelectedAction, SetEmailContext);
+        ActionController.SyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
         LoadManual();
     }
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<InspectionEmailContext>(
+        ActionController.UnsyncSignal<EmailSelectionContext>(
             EmailSelectedAction,
             SetEmailContext
         );
@@ -53,7 +54,7 @@ public sealed class InspectionEvaluationController : MonoBehaviour
         EvaluateCurrentSurface();
     }
 
-    public void SetEmailContext(InspectionEmailContext context)
+    public void SetEmailContext(EmailSelectionContext context)
     {
         currentSave = context?.Save;
         currentEmail = context?.Email;
@@ -156,17 +157,5 @@ public sealed class InspectionEvaluationController : MonoBehaviour
             manual = null;
             currentResults = Array.Empty<InspectionEvaluationResult>();
         }
-    }
-}
-
-public sealed class InspectionEmailContext
-{
-    public SaveData Save { get; }
-    public EmailData Email { get; }
-
-    public InspectionEmailContext(SaveData save, EmailData email)
-    {
-        Save = save;
-        Email = email;
     }
 }

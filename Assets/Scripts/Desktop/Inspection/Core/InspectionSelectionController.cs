@@ -19,7 +19,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
     {
         ActionController.SyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
         ActionController.SyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
-        ActionController.SyncSignal<InspectionEmailContext>(
+        ActionController.SyncSignal<EmailSelectionContext>(
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
         );
@@ -29,7 +29,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
     {
         ActionController.UnsyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
         ActionController.UnsyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
-        ActionController.UnsyncSignal<InspectionEmailContext>(
+        ActionController.UnsyncSignal<EmailSelectionContext>(
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
         );
@@ -66,7 +66,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
         ActionController.SendAction<string>(RuleHighlightAction, null);
     }
 
-    private void ClearSelectionForEmail(InspectionEmailContext context)
+    private void ClearSelectionForEmail(EmailSelectionContext context)
     {
         ClearSelection();
     }

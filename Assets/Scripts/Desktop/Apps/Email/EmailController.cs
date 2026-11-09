@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EmailController : MonoBehaviour
@@ -25,7 +24,8 @@ public class EmailController : MonoBehaviour
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.SyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
-        ListenSignals();
+        ActionController.SyncSignal("ReloadInbox", ReloadInbox);
+        ActionController.SyncSignal("CloseEmailWindow", CloseEmailWindow);
     }
 
     private void OnDestroy()
@@ -33,7 +33,9 @@ public class EmailController : MonoBehaviour
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.UnsyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.UnsyncSignal<EmailData>("RemoveEmail", RemoveEmail);
-        UnlistenSignals();
+        ActionController.UnsyncSignal("ReloadInbox", ReloadInbox);
+        ActionController.UnsyncSignal("CloseEmailWindow", CloseEmailWindow);
+        ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(null, null));
     }
 
     void Start()
@@ -113,7 +115,7 @@ public class EmailController : MonoBehaviour
         else
             currentEmail = null;
 
-        ActionController.SendAction("CurrentEmailChanged", new InspectionEmailContext(currentSave, currentEmail));
+        ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(currentSave, currentEmail));
 
         if (currentEmail != null)
         {
@@ -167,73 +169,15 @@ public class EmailController : MonoBehaviour
         }
     }
 
-    //Tirar daqui pra baixo e levar pro inspetor
-
-    private void EvaluateDecision(bool blockEmail)
+    private void ReloadInbox()
     {
-        if (currentEmail == null)
-            return;
-
-        InspectionEvaluationController inspectionEvaluation = GetComponent<InspectionEvaluationController>();
-
-        bool emailHasFindings =
-            inspectionEvaluation != null && inspectionEvaluation.CurrentResults.Count > 0;
-        bool correctDecision = blockEmail == emailHasFindings;
-        string feedbackMessage = correctDecision
-            ? blockEmail
-                ? "Decisão correta! O e-mail possui achados de segurança."
-                : "Decisão correta! Nenhuma regra do Manual foi violada."
-            : blockEmail
-                ? "Erro de análise! O e-mail não possui achados aplicáveis."
-                : "Erro de análise! O e-mail possui achados de segurança.";
-
-        if (!correctDecision)
-            DataController.CurrentErrorCount++;
-
-        ActionController.SendAction("ShowFeedback", new FeedbackData(correctDecision, feedbackMessage));
-        
-        RemoveEmail(currentEmail);
-
-        if (
-            (inbox.Count == 0 && DataController.CurrentDay >= DataController.MaxDay)
-            || DataController.CurrentErrorCount >= DataController.MaxErrors
-        )
-        {
-            transform.parent.GetComponentInParent<WindowController>().CloseWindow();
-            string endingScene = (inbox.Count == 0) ? "GameWin" : "GameOver";
-            DataController.ResetDays();
-            SceneManager.LoadScene(endingScene);
-        }
-        if (inbox.Count == 0)
-        {
-            DataController.AdvanceDay();
-            currentSave = DataController.LoadEmails();
-            inbox = currentSave.emails;
-            UpdateEmailSidebar();
-        }
+        currentSave = DataController.LoadEmails();
+        inbox = currentSave.emails;
+        UpdateEmailSidebar();
     }
 
-    private void ListenSignals()
+    private void CloseEmailWindow()
     {
-        ActionController.SyncSignal("ApproveCurrentEmail", ApproveCurrentEmail);
-        ActionController.SyncSignal("BlockCurrentEmail", BlockCurrentEmail);
-    }
-
-    private void UnlistenSignals()
-    {
-        ActionController.UnsyncSignal("ApproveCurrentEmail", ApproveCurrentEmail);
-        ActionController.UnsyncSignal("BlockCurrentEmail", BlockCurrentEmail);
-    }
-
-
-    private void ApproveCurrentEmail()
-    {
-        ActionController.SendAction("OnApprovalButtonClicked");
-        EvaluateDecision(false);
-    }
-
-    private void BlockCurrentEmail()
-    {
-        EvaluateDecision(true);
+        transform.parent.GetComponentInParent<WindowController>().CloseWindow();
     }
 }

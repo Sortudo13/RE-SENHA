@@ -14,25 +14,19 @@
           "linkedName" : "<link=\"OpenAttachment|1\">manual_de_conduta.pdf</link>",
           "data" : {}
         }
-      ],
-      "error": 0,
-      "reason": "E-mail legítimo vindo do departamento interno de Recursos Humanos."
+      ]
     },
     {
       "sender": "suporte-ti@gmai1-seguranca.com",
       "subject": "Atualização de Senha Obrigatória",
       "body": "Detectamos uma tentativa de login não autorizada na sua conta de rede. Clique no link abaixo e recadastre sua senha o quanto antes.",
-      "attachments": [],
-      "error": 2,
-      "reason": "O domínio do remetente 'gmai1-seguranca.com' utiliza a troca da letra 'l' pelo número '1' para simular um e-mail do Google (typosquatting)."
+      "attachments": []
     },
     {
       "sender": "financeiro@empresa.com.br",
       "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
       "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
-      "attachments": [],
-      "error": 3,
-      "reason": "Assunto alarmista com valor elevado, projetado para causar pânico e forçar uma ação impulsiva do jogador."
+      "attachments": []
     },
     {
       "sender": "fornecedor@graficaexpressa.com.br",
@@ -46,9 +40,7 @@
           "linkedName" : "<link=\"OpenAttachment|1\">fatura_outubro_assinado.exe</link>",
           "data" : {}
         }
-      ],
-      "error": 5,
-      "reason": "O anexo possui extensão executável (.exe) disfarçada como um arquivo de documento/nota fiscal."
+      ]
     },
     {
       "sender": "diretoria@empresa.com.br",
@@ -62,9 +54,7 @@
           "linkedName" : "<link=\"OpenAttachment|1\">pauta_reuniao.pdf</link>",
           "data" : {}
         }
-      ],
-      "error": 4,
-      "reason": "O corpo do e-mail redireciona o usuário para um domínio externo totalmente suspeito com terminação (.ru)."
+      ]
     }
   ]
 }

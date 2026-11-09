@@ -199,10 +199,6 @@ public class EmailData
     public string body;
     public List<AttachmentData> attachments;
     public List<InspectionFindingData> inspectionFindings = new();
-
-    // Legacy fields kept while existing email data is migrated to rule evaluation.
-    public EmailError error;
-    public string reason;
 }
 
 [System.Serializable]
@@ -291,15 +287,6 @@ public class DadosFoto : AttachmentContent
 }
 
 // Enumerações
-public enum EmailError
-{
-    None,
-    SenderMismatch,
-    SubjectMismatch,
-    BodyMismatch,
-    AttachmentMismatch,
-}
-
 // Esses devem ser nomes equivalentes aos das funções no Window Manager
 public enum DocumentType
 {
