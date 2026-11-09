@@ -17,12 +17,9 @@ public sealed class InspectionSelectionController : MonoBehaviour
 
     private void Awake()
     {
-        ActionController.SyncSignal<string>(FieldSelectedAction, SelectField);
-        ActionController.SyncSignal<InspectionRuleSelection>(
-            RuleSelectedAction,
-            SelectRule
-        );
-        ActionController.SyncSignal<InspectionEmailContext>(
+        ActionController.SyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
+        ActionController.SyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
+        ActionController.SyncSignal<EmailSelectionContext>(
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
         );
@@ -30,32 +27,34 @@ public sealed class InspectionSelectionController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<string>(FieldSelectedAction, SelectField);
-        ActionController.UnsyncSignal<InspectionRuleSelection>(
-            RuleSelectedAction,
-            SelectRule
-        );
-        ActionController.UnsyncSignal<InspectionEmailContext>(
+        ActionController.UnsyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
+        ActionController.UnsyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
+        ActionController.UnsyncSignal<EmailSelectionContext>(
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
         );
     }
 
-    public void SelectField(string field)
+    public void SelectField(InspectionSelection selection)
     {
-        selectedField = field;
+        if (selection == null)
+            return;
+
+        selectedField = selection.FieldId;
         TryRegisterSelection();
-        if (string.Equals(selectedField, field, System.StringComparison.Ordinal))
-            ActionController.SendAction(FieldHighlightAction, field);
+        if (string.Equals(selectedField, selection.FieldId, System.StringComparison.Ordinal))
+            ActionController.SendAction(FieldHighlightAction, selection.FieldId);
     }
 
-    public void SelectRule(InspectionRuleSelection selection)
+    public void SelectRule(InspectionSelection selection)
     {
-        selectedSubruleId = selection?.subruleId;
+        if (selection == null)
+            return;
+
+        selectedSubruleId = selection.SelectionId;
         TryRegisterSelection();
-        if (selection != null
-            && string.Equals(selectedSubruleId, selection.subruleId, System.StringComparison.Ordinal))
-            ActionController.SendAction(RuleHighlightAction, selection);
+        if (string.Equals(selectedSubruleId, selection.SelectionId, System.StringComparison.Ordinal))
+            ActionController.SendAction(RuleHighlightAction, selection.SelectionId);
     }
 
     public void ClearSelection()
@@ -64,10 +63,10 @@ public sealed class InspectionSelectionController : MonoBehaviour
         selectedSubruleId = null;
         ActionController.SendAction(SelectionClearedAction);
         ActionController.SendAction<string>(FieldHighlightAction, null);
-        ActionController.SendAction<InspectionRuleSelection>(RuleHighlightAction, null);
+        ActionController.SendAction<string>(RuleHighlightAction, null);
     }
 
-    private void ClearSelectionForEmail(InspectionEmailContext context)
+    private void ClearSelectionForEmail(EmailSelectionContext context)
     {
         ClearSelection();
     }
@@ -86,29 +85,29 @@ public sealed class InspectionSelectionController : MonoBehaviour
 
         if (!evaluation.TryGetFinding(
                 selectedSubruleId,
-                out ManualRuleEvaluationResult result
+                out InspectionEvaluationResult result
             ))
         {
-            RejectSelection("The selected rule does not apply to the current email.");
+            RejectSelection("The selected rule does not apply to the current surface.");
             return;
         }
 
-        if (!string.Equals(result.Field, selectedField, System.StringComparison.Ordinal))
+        if (!string.Equals(result.FieldId, selectedField, System.StringComparison.Ordinal))
         {
             RejectSelection("The selected field does not match the selected rule.");
             return;
         }
 
-        if (!evaluation.HasCurrentSave)
+        if (!evaluation.HasFindingStore)
         {
-            RejectSelection("The current email save context is unavailable.");
+            RejectSelection("The current inspection finding store is unavailable.");
             return;
         }
 
         if (evaluation.HasRegisteredFinding(selectedSubruleId))
         {
             RejectSelection(
-                $"The finding '{selectedSubruleId}' was already registered for this email."
+                $"The finding '{selectedSubruleId}' was already registered for this surface."
             );
             return;
         }

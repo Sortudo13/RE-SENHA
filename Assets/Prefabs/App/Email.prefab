@@ -257,7 +257,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8544334824267266493}
   m_HandleRect: {fileID: 8223330165907370151}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -695,8 +695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3c1a6e9b2d4f7c0e5a8d1b3c6f9e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
-  field: Body
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  field: Body
 --- !u!1 &1538102619723412868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7209528628800209140}
   m_HandleRect: {fileID: 5410378649949010179}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1539,8 +1539,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3c1a6e9b2d4f7c0e5a8d1b3c6f9e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
-  field: Attachments
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  field: Attachments
 --- !u!1 &3369663476892620735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,8 +1752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3c1a6e9b2d4f7c0e5a8d1b3c6f9e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
-  field: Sender
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  field: Sender
 --- !u!1 &3955984519030127197
 GameObject:
   m_ObjectHideFlags: 0
@@ -3031,7 +3031,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 21.198975, y: -201.37991}
+  m_AnchoredPosition: {x: 21.198975, y: -112.17975}
   m_SizeDelta: {x: -43.211, y: 0}
   m_Pivot: {x: 0, y: 0.9}
 --- !u!222 &8350685770485164358
@@ -3497,7 +3497,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 4479560292266759276}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9993775
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3810,7 +3810,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2143876896905123368}
   m_HandleRect: {fileID: 8662008913603847249}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3828,9 +3828,6 @@ GameObject:
   - component: {fileID: 3445897920454840417}
   - component: {fileID: 3555850506972587467}
   - component: {fileID: 4488395508425507612}
-  - component: {fileID: 1304560929059698951}
-  - component: {fileID: 5052877692923894904}
-  - component: {fileID: 7760469735841735289}
   m_Layer: 5
   m_Name: Email
   m_TagString: Untagged
@@ -3910,47 +3907,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmailController
   listButton: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
-  alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
---- !u!114 &1304560929059698951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8346845122898091600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b8e2c1f7a4d9e6b0c3f5a8d2e7b1c94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectionEvaluationController
-  manualResourcePath: Manual/ManualRules
---- !u!114 &5052877692923894904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8346845122898091600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2b9a4c7f1d5e8a0c3b6d9f2a4e7c15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectionSelectionController
-  evaluation: {fileID: 1304560929059698951}
---- !u!114 &7760469735841735289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8346845122898091600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3f72ad311131444da2c10a88e13541a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectionFindingsAlertController
-  findingsAlert: {fileID: 7103127874696851641, guid: 33015898b53f22c41906a8579bebe45f, type: 3}
-  evaluation: {fileID: 1304560929059698951}
 --- !u!1 &8486070817599507843
 GameObject:
   m_ObjectHideFlags: 0
@@ -4252,5 +4208,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3c1a6e9b2d4f7c0e5a8d1b3c6f9e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
-  field: Subject
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  field: Subject

@@ -3,14 +3,14 @@
   "rules": [
     {
       "id": "rule-sender-domain",
-      "title": "Verificacao do remetente",
-      "description": "Aceite apenas e-mails @nationaltech.com.",
+      "title": "Verificação do remetente",
+      "description": "Aceite apenas mensagens do domínio corporativo. Endereços parecidos, com letras trocadas ou de outras empresas, devem ser bloqueados.",
       "introductionDay": 1,
       "field": "Sender",
       "subrules": [
         {
           "id": "subrule-sender-domain-nationaltech",
-          "description": "O remetente deve pertencer ao dominio @nationaltech.com.",
+          "description": "O endereço do remetente deve terminar em @nationaltech.com.",
           "check": {
             "type": "SenderDomain",
             "allowedDomains": [
@@ -19,10 +19,90 @@
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Verificacao do remetente",
-            "evidence": "O dominio do remetente nao esta na lista permitida.",
-            "explanation": "O remetente utiliza um dominio diferente do dominio corporativo.",
-            "reason": "O dominio informado nao corresponde ao dominio permitido."
+            "rule": "Verificação do remetente",
+            "evidence": "O domínio do remetente não está na lista permitida.",
+            "explanation": "O remetente usa um domínio diferente de @nationaltech.com.",
+            "reason": "Somente o domínio corporativo nationaltech.com é aceito."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-subject-alert",
+      "title": "Verificação do assunto",
+      "description": "Desconfie de assuntos que pedem senha ou anunciam uma compra que ninguém solicitou.",
+      "introductionDay": 1,
+      "field": "Subject",
+      "subrules": [
+        {
+          "id": "subrule-subject-alert-terms",
+          "description": "O assunto não deve pedir atualização de senha nem confirmar uma compra.",
+          "check": {
+            "type": "SubjectTerms",
+            "terms": [
+              "Senha",
+              "IPHONE"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Verificação do assunto",
+            "evidence": "O assunto contém um pedido de senha ou uma confirmação de compra.",
+            "explanation": "Assuntos urgentes de senha ou compra empurram o leitor a agir sem conferir o remetente.",
+            "reason": "O assunto usa um termo de alerta previsto no Manual."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-body-external-domain",
+      "title": "Verificação do corpo",
+      "description": "Leia o texto antes de clicar. Links para domínios externos, fora da empresa, não devem ser seguidos.",
+      "introductionDay": 1,
+      "field": "Body",
+      "subrules": [
+        {
+          "id": "subrule-body-external-domain",
+          "description": "O corpo não deve apontar para domínios .ru nem para endereços .onion.",
+          "check": {
+            "type": "BodyTerms",
+            "suspiciousDomains": [
+              ".ru",
+              ".onion"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Verificação do corpo",
+            "evidence": "O corpo aponta para um domínio externo suspeito.",
+            "explanation": "O texto pede acesso a um endereço fora do domínio corporativo.",
+            "reason": "Domínios .ru e .onion não fazem parte dos canais da empresa."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-attachment-extension",
+      "title": "Verificação dos anexos",
+      "description": "Confira a extensão real do arquivo. Documento disfarçado de nota ou pauta não pode ser um executável.",
+      "introductionDay": 1,
+      "field": "Attachments",
+      "subrules": [
+        {
+          "id": "subrule-attachment-executable",
+          "description": "Anexos com extensão .exe devem ser bloqueados.",
+          "check": {
+            "type": "AttachmentExtension",
+            "forbiddenExtensions": [
+              "exe"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Verificação dos anexos",
+            "evidence": "O anexo usa uma extensão executável.",
+            "explanation": "Um arquivo .exe não é uma nota fiscal nem um documento de reunião.",
+            "reason": "Executáveis enviados por e-mail estão fora do permitido."
           }
         }
       ]

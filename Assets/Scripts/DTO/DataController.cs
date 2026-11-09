@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -192,20 +193,26 @@ public class SaveData
 [System.Serializable]
 public class EmailData
 {
+    public string mailBox;
     public string sender;
     public string subject;
     public string body;
     public List<AttachmentData> attachments;
     public List<InspectionFindingData> inspectionFindings = new();
-
-    // Legacy fields kept while existing email data is migrated to rule evaluation.
-    public EmailError error;
-    public string reason;
 }
 
 [System.Serializable]
 public class InspectionFindingData
 {
+    // Generic fields support email, chat and database-backed inspections.
+    public string findingId;
+    public string sourceType;
+    public string sourceItemId;
+    public string fieldId;
+    public string evaluatorId;
+    public string ruleId;
+
+    // Legacy fields remain while existing email saves are migrated.
     public string subruleId;
     public string field;
     public string rule;
@@ -228,6 +235,18 @@ public enum TicketDecision
 {
     Approve,
     Reject,
+}
+
+[System.Serializable]
+public class FeedbackData
+{
+    public bool isPositive;
+    public string message;
+    public FeedbackData(bool isPositive, string message)
+    {
+        this.isPositive = isPositive;
+        this.message = message;
+    }
 }
 
 [System.Serializable]
@@ -268,15 +287,6 @@ public class DadosFoto : AttachmentContent
 }
 
 // Enumerações
-public enum EmailError
-{
-    None,
-    SenderMismatch,
-    SubjectMismatch,
-    BodyMismatch,
-    AttachmentMismatch,
-}
-
 // Esses devem ser nomes equivalentes aos das funções no Window Manager
 public enum DocumentType
 {

@@ -232,7 +232,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ManualWindowController
   manualResourcePath: Manual/ManualRules
-  bancoDeRegras: {fileID: 11400000, guid: cfbf88f48d94e1cd3a71d1904e6136ce, type: 2}
   nivelAtual: 1
   containerRegras: {fileID: 3861936776935547496}
   prefabItemRegra: {fileID: 4422490942835456345, guid: 2fef71e1e1cf6d7628f3957296aab8c6, type: 3}
