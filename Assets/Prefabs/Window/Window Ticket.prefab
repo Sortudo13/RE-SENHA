@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3754580526858938494, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4102839571282659122, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -244,6 +248,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -197
       objectReference: {fileID: 0}
+    - target: {fileID: 6833445281338311906, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6976707515326297691, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -274,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 8987ced64cf9d5b468d631252e258b63, type: 3}
     - target: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: windowName
-      value: Ticket
+      value: "Requisi\xE7\xF5es"
       objectReference: {fileID: 0}
     - target: {fileID: 8287428829324347068, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -298,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8585281467540940513, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8868862832031911359, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.x
