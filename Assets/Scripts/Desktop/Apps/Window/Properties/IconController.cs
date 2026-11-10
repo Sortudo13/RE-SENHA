@@ -14,9 +14,21 @@ public class IconController : MonoBehaviour
 
     [Header("Icon Notification Badge")]
     [SerializeField] private Image notificationBadge;
+    private string appName;
 
     private void Start() => ApplyDesktopSettings();
     private void OnValidate() => ApplyDesktopSettings();
+
+    private void OnEnable()
+    {
+        ActionController.SyncSignal<string>("ShowNotificationBadge", ShowNotificationBadge);
+        ActionController.SyncSignal<string>("HideNotificationBadge", HideNotificationBadge);
+    }
+    private void OnDisable()
+    {
+        ActionController.UnsyncSignal<string>("ShowNotificationBadge", ShowNotificationBadge);
+        ActionController.UnsyncSignal<string>("HideNotificationBadge", HideNotificationBadge);
+    }
 
     private void ApplyDesktopSettings()
     {
@@ -32,7 +44,8 @@ public class IconController : MonoBehaviour
         TMP_Text iconText = GetComponentInChildren<TMP_Text>();
         if (iconText != null && windowPrefab.AppName != null)
         {
-            iconText.text = windowPrefab.AppName;
+            iconText.text = appName = windowPrefab.AppName;
+
         }
     }
 
@@ -52,10 +65,17 @@ public class IconController : MonoBehaviour
                 ActionController.SendAction($"ToFront_{windowController.AppID}");
             }
         }
+        ActionController.SendAction("HideNotificationBadge", appName);
+        
     }
 
-    public void showNotification()
+    public void ShowNotificationBadge(string app)
     {
-        Image iconImage = GetComponentInChildren<Image>();
+        if(app == appName) notificationBadge.gameObject.SetActive(true); 
+    }
+
+    public void HideNotificationBadge(string app)
+    {
+        if (app == appName) notificationBadge.gameObject.SetActive(false); 
     }
 }
