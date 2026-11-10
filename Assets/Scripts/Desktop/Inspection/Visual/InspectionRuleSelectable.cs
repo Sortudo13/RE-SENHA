@@ -15,16 +15,6 @@ public sealed class InspectionRuleSelectable : InspectionSelectable
         subruleId = id;
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
-
     public override void OnPointerClick(PointerEventData eventData)
     {
         if (InspectionModeActive && !string.IsNullOrWhiteSpace(subruleId))

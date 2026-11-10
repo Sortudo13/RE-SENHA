@@ -5,7 +5,6 @@ public sealed class InspectionSelectionController : MonoBehaviour
     public const string FieldSelectedAction = "InspectionFieldSelected";
     public const string RuleSelectedAction = "InspectionRuleSelected";
     public const string FindingRegisteredAction = "InspectionFindingRegistered";
-    public const string SelectionRejectedAction = "InspectionSelectionRejected";
     public const string SelectionClearedAction = "InspectionSelectionCleared";
     public const string FieldHighlightAction = "InspectionFieldHighlight";
     public const string RuleHighlightAction = "InspectionRuleHighlight";
@@ -161,6 +160,5 @@ public sealed class InspectionSelectionController : MonoBehaviour
     {
         ClearSelection();
         Debug.LogWarning($"InspectionSelectionController: {message}");
-        ActionController.SendAction(SelectionRejectedAction, message);
     }
 }

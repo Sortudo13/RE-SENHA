@@ -23,10 +23,6 @@ public class ManualWindowController : MonoBehaviour
         ["Attachments"] = "Anexos",
     };
 
-    [Header("Dados do Manual")]
-    [SerializeField]
-    private string manualResourcePath = ManualRulesLoader.DefaultResourcePath;
-
     [Header("Barra de aplicativos")]
     [SerializeField] private GameObject sidebar;
     [SerializeField] private List<AppTab> appTabs = new();
@@ -89,7 +85,7 @@ public class ManualWindowController : MonoBehaviour
     {
         try
         {
-            manual = ManualRepository.Load(manualResourcePath);
+            manual = ManualRepository.Load();
         }
         catch (InvalidOperationException exception)
         {

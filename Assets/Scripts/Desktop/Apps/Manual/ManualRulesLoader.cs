@@ -7,14 +7,6 @@ public static class ManualRulesLoader
     public const string DefaultResourcePath = "Manual/ManualRules";
     public const int SupportedVersion = 1;
 
-    private static readonly HashSet<string> SupportedCheckTypes = new()
-    {
-        "SenderDomain",
-        "SubjectTerms",
-        "BodyTerms",
-        "AttachmentExtension",
-    };
-
     private static readonly HashSet<string> SupportedApps = new()
     {
         "email",
@@ -94,7 +86,7 @@ public static class ManualRulesLoader
                     throw InvalidManual(resourcePath, $"Duplicate subrule id '{subrule.id}'.");
                 if (subrule.check == null)
                     throw InvalidManual(resourcePath, $"{subruleContext} has no check.");
-                if (!SupportedCheckTypes.Contains(subrule.check.type))
+                if (!ManualRuleEvaluator.SupportsCheck(subrule.check.type))
                     throw InvalidManual(
                         resourcePath,
                         $"{subruleContext} uses unsupported check type '{subrule.check.type}'."

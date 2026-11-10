@@ -1,161 +1,74 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public sealed class InspectionEvaluationController : MonoBehaviour
 {
     public const string EmailSelectedAction = "CurrentEmailChanged";
-    public const string FindingsEvaluatedAction = "InspectionFindingsEvaluated";
-
-    [SerializeField]
-    private string manualResourcePath = ManualRulesLoader.DefaultResourcePath;
 
     private readonly ManualRuleEvaluator evaluator = new();
     private ManualRuleBookData manual;
-    private SaveData currentSave;
-    private EmailData currentEmail;
     private IInspectionSurface currentSurface;
-    private IReadOnlyList<InspectionEvaluationResult> currentResults =
+
+    public EmailData CurrentEmail { get; private set; }
+    public SaveData CurrentSave { get; private set; }
+    public IReadOnlyList<InspectionEvaluationResult> CurrentResults { get; private set; } =
         Array.Empty<InspectionEvaluationResult>();
 
-    public EmailData CurrentEmail => currentEmail;
-    public SaveData CurrentSave => currentSave;
-    public IInspectionSurface CurrentSurface => currentSurface;
-    public IReadOnlyList<InspectionEvaluationResult> CurrentResults => currentResults;
-
     public bool HasFindingStore => currentSurface?.FindingStore != null;
+
+    private void Awake()
+    {
+        ActionController.SyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
+        try
+        {
+            manual = ManualRepository.Load();
+        }
+        catch (InvalidOperationException exception)
+        {
+            Debug.LogError($"InspectionEvaluationController: {exception.Message}");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        ActionController.UnsyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
+    }
+
+    private void SetEmailContext(EmailSelectionContext context)
+    {
+        CurrentSave = context?.Save;
+        CurrentEmail = context?.Email;
+        currentSurface = CurrentEmail == null
+            ? null
+            : new EmailInspectionSurface(
+                CurrentEmail,
+                new EmailInspectionFindingStore(CurrentSave, CurrentEmail)
+            );
+
+        CurrentResults = currentSurface == null || manual == null
+            ? Array.Empty<InspectionEvaluationResult>()
+            : evaluator.Evaluate(currentSurface, manual, DataController.CurrentDay);
+    }
 
     public bool HasRegisteredFinding(string findingId)
     {
         return currentSurface?.FindingStore?.HasFinding(findingId) ?? false;
     }
 
-    private void Awake()
-    {
-        ActionController.SyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
-        LoadManual();
-    }
-
-    private void OnDestroy()
-    {
-        ActionController.UnsyncSignal<EmailSelectionContext>(
-            EmailSelectedAction,
-            SetEmailContext
-        );
-    }
-
-    public void SetEmail(EmailData email)
-    {
-        currentSave = null;
-        currentEmail = email;
-        currentSurface = currentEmail == null
-            ? null
-            : new EmailInspectionSurface(currentEmail);
-        EvaluateCurrentSurface();
-    }
-
-    public void SetEmailContext(EmailSelectionContext context)
-    {
-        currentSave = context?.Save;
-        currentEmail = context?.Email;
-        currentSurface = currentEmail == null
-            ? null
-            : new EmailInspectionSurface(
-                currentEmail,
-                new EmailInspectionFindingStore(currentSave, currentEmail)
-            );
-        EvaluateCurrentSurface();
-    }
-
-    public void SetSurface(IInspectionSurface surface)
-    {
-        currentSave = null;
-        currentEmail = null;
-        currentSurface = surface;
-        EvaluateCurrentSurface();
-    }
-
-    public void ClearEmail()
-    {
-        ClearSurface();
-    }
-
-    public void ClearSurface()
-    {
-        currentSave = null;
-        currentEmail = null;
-        currentSurface = null;
-        EvaluateCurrentSurface();
-    }
-
-    public void EvaluateCurrentSurface()
-    {
-        if (currentSurface == null)
-        {
-            currentResults = Array.Empty<InspectionEvaluationResult>();
-            ActionController.SendAction(FindingsEvaluatedAction, currentResults);
-            return;
-        }
-
-        if (manual == null)
-            LoadManual();
-
-        if (manual == null)
-            throw new InvalidOperationException(
-                "Inspection rules could not be loaded before evaluating the current surface."
-            );
-
-        currentResults = evaluator.Evaluate(
-            currentSurface,
-            manual,
-            DataController.CurrentDay
-        );
-        ActionController.SendAction(FindingsEvaluatedAction, currentResults);
-    }
-
     public bool TryGetFinding(string findingId, out InspectionEvaluationResult finding)
     {
-        if (string.IsNullOrWhiteSpace(findingId))
-        {
-            finding = null;
-            return false;
-        }
-
-        foreach (InspectionEvaluationResult result in currentResults)
-        {
-            if (string.Equals(result.FindingId, findingId, StringComparison.Ordinal))
-            {
-                finding = result;
-                return true;
-            }
-        }
-
-        finding = null;
-        return false;
+        finding = CurrentResults.FirstOrDefault(
+            result => string.Equals(result.FindingId, findingId, StringComparison.Ordinal)
+        );
+        return finding != null;
     }
 
     public bool RegisterFinding(string findingId)
     {
-        if (currentSurface?.FindingStore == null)
-            return false;
-
-        if (!TryGetFinding(findingId, out InspectionEvaluationResult result))
-            return false;
-
-        return currentSurface.FindingStore.TryRegisterFinding(result);
-    }
-
-    private void LoadManual()
-    {
-        try
-        {
-            manual = ManualRepository.Load(manualResourcePath);
-        }
-        catch (InvalidOperationException exception)
-        {
-            Debug.LogError($"InspectionEvaluationController: {exception.Message}");
-            manual = null;
-            currentResults = Array.Empty<InspectionEvaluationResult>();
-        }
+        return currentSurface?.FindingStore != null
+            && TryGetFinding(findingId, out InspectionEvaluationResult result)
+            && currentSurface.FindingStore.TryRegisterFinding(result);
     }
 }
