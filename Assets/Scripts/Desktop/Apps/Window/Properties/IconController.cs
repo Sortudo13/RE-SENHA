@@ -12,6 +12,9 @@ public class IconController : MonoBehaviour
 
     private GameObject connectedWindow;
 
+    [Header("Icon Notification Badge")]
+    [SerializeField] private Image notificationBadge;
+
     private void Start() => ApplyDesktopSettings();
     private void OnValidate() => ApplyDesktopSettings();
 
@@ -49,5 +52,10 @@ public class IconController : MonoBehaviour
                 ActionController.SendAction($"ToFront_{windowController.AppID}");
             }
         }
+    }
+
+    public void showNotification()
+    {
+        Image iconImage = GetComponentInChildren<Image>();
     }
 }
