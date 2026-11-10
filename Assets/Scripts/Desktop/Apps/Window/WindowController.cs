@@ -51,6 +51,7 @@ public class WindowController : MonoBehaviour
         if (gameObject.activeSelf)
         {
             ActionController.SendAction("SubActiveWindow");
+            ActionController.SendAction("HideNotificationBadge", AppName);
             gameObject.SetActive(false);
         }
     }
@@ -70,6 +71,7 @@ public class WindowController : MonoBehaviour
     public void CloseWindow()
     {
         ActionController.SendAction("OnWindowClosed");
+        ActionController.SendAction("HideNotificationBadge", AppName);
         MinimizeWindow();
         Destroy(gameObject);
     }
