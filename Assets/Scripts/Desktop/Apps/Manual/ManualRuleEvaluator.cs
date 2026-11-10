@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public sealed class ManualRuleEvaluationResult : InspectionEvaluationResult
 {
@@ -187,7 +188,41 @@ public sealed class ManualRuleEvaluator
         if (term != null)
             return term;
 
-        return FindTerm(body, check.suspiciousDomains, check.caseSensitive);
+        return FindSuspiciousHost(body, check.suspiciousDomains);
+    }
+
+    // Hosts (com ou sem esquema) presentes no texto, inclusive dentro de tags <link="...">.
+    private static readonly Regex HostPattern = new(
+        @"(?<![A-Za-z0-9-])(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?![A-Za-z0-9-])",
+        RegexOptions.Compiled
+    );
+
+    // Compara dominios pelo final do host, e nao como substring: ".ru" acusa "site.ru",
+    // mas nao "www.rural.com"; "empresa.com" acusa "empresa.com" e "mail.empresa.com".
+    // Dominios nao diferenciam maiusculas, por isso caseSensitive nao se aplica aqui.
+    private static string FindSuspiciousHost(string value, string[] suspiciousDomains)
+    {
+        if (string.IsNullOrEmpty(value) || suspiciousDomains == null)
+            return null;
+
+        foreach (Match match in HostPattern.Matches(value))
+        {
+            string host = match.Value.ToLowerInvariant();
+            foreach (string domain in suspiciousDomains)
+            {
+                if (string.IsNullOrWhiteSpace(domain))
+                    continue;
+
+                string suffix = domain.Trim().ToLowerInvariant();
+                bool matches = suffix.StartsWith(".")
+                    ? host.EndsWith(suffix, StringComparison.Ordinal)
+                    : host == suffix || host.EndsWith("." + suffix, StringComparison.Ordinal);
+                if (matches)
+                    return host;
+            }
+        }
+
+        return null;
     }
 
     private static string EvaluateAttachmentExtension(

@@ -23,6 +23,14 @@ public sealed class InspectionSelectionController : MonoBehaviour
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
         );
+        ActionController.SyncSignal<bool>(
+            InspectionModeController.ModeChangedAction,
+            ClearSelectionWhenModeEnds
+        );
+        ActionController.SyncSignal(
+            InspectionModeController.StateRequestedAction,
+            PublishHighlights
+        );
     }
 
     private void OnDestroy()
@@ -32,6 +40,14 @@ public sealed class InspectionSelectionController : MonoBehaviour
         ActionController.UnsyncSignal<EmailSelectionContext>(
             InspectionEvaluationController.EmailSelectedAction,
             ClearSelectionForEmail
+        );
+        ActionController.UnsyncSignal<bool>(
+            InspectionModeController.ModeChangedAction,
+            ClearSelectionWhenModeEnds
+        );
+        ActionController.UnsyncSignal(
+            InspectionModeController.StateRequestedAction,
+            PublishHighlights
         );
     }
 
@@ -69,6 +85,24 @@ public sealed class InspectionSelectionController : MonoBehaviour
     private void ClearSelectionForEmail(EmailSelectionContext context)
     {
         ClearSelection();
+    }
+
+    // A selecao so existe enquanto o modo esta ativo; assim, republicar os highlights
+    // nunca destaca um seletor com o modo desligado.
+    private void ClearSelectionWhenModeEnds(bool isActive)
+    {
+        if (!isActive && (selectedField != null || selectedSubruleId != null))
+            ClearSelection();
+    }
+
+    // Seletores criados depois da selecao (ex.: subregras ao reabrir uma regra no Manual)
+    // recebem o destaque atual.
+    private void PublishHighlights()
+    {
+        if (!string.IsNullOrWhiteSpace(selectedField))
+            ActionController.SendAction(FieldHighlightAction, selectedField);
+        if (!string.IsNullOrWhiteSpace(selectedSubruleId))
+            ActionController.SendAction(RuleHighlightAction, selectedSubruleId);
     }
 
     private void TryRegisterSelection()
