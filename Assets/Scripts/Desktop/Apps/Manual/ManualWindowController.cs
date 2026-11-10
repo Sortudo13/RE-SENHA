@@ -1,10 +1,20 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ManualWindowController : MonoBehaviour
 {
+    [Serializable]
+    private sealed class AppTab
+    {
+        public string app;
+        public string label;
+        public Button button;
+        public Image background;
+    }
+
     private static readonly Dictionary<string, string> FieldLabels = new()
     {
         ["Sender"] = "Remetente",
@@ -17,196 +27,186 @@ public class ManualWindowController : MonoBehaviour
     [SerializeField]
     private string manualResourcePath = ManualRulesLoader.DefaultResourcePath;
 
+    [Header("Barra de aplicativos")]
+    [SerializeField] private GameObject sidebar;
+    [SerializeField] private List<AppTab> appTabs = new();
+    [SerializeField] private Color tabNormalColor = new(0.78f, 0.78f, 0.78f, 1f);
+    [SerializeField] private Color tabSelectedColor = new(0.63f, 0.73f, 0.88f, 1f);
+
+    [Header("Pagina de regras")]
+    [SerializeField] private GameObject rulesPage;
+    [SerializeField] private TextMeshProUGUI txtRulesTitle;
+    [SerializeField] private ScrollRect rulesScroll;
+    [SerializeField] private Transform rulesContainer;
+    [SerializeField] private GameObject emptyRulesMessage;
+    [SerializeField] private ManualRuleCardController ruleCardPrefab;
+
+    [Header("Pagina de subregras")]
+    [SerializeField] private GameObject subrulesPage;
+    [SerializeField] private Button backButton;
+    [SerializeField] private TextMeshProUGUI txtRuleTitle;
+    [SerializeField] private TextMeshProUGUI txtRuleField;
+    [SerializeField] private TextMeshProUGUI txtRuleDescription;
+    [SerializeField] private ScrollRect subrulesScroll;
+    [SerializeField] private Transform subrulesContainer;
+    [SerializeField] private ManualSubruleItemController subruleItemPrefab;
+
     private ManualRuleBookData manual;
-    public int nivelAtual = 1;
+    private string selectedApp;
 
-    [Header("Referências - Painel Esquerdo")]
-    public Transform containerRegras;
-    public GameObject prefabItemRegra;
-
-    [Header("Referências - Painel Direito")]
-    public TextMeshProUGUI txtTituloRegra;
-    public TextMeshProUGUI txtDescricaoRegra;
-    public TextMeshProUGUI txtStatusVigor;
-
-    [SerializeField]
-    private InspectionRuleSelectable selectableSubrule;
-
-    private bool inspectionModeActive;
-    private Transform subruleContainer;
-    private readonly List<GameObject> generatedSubrules = new();
-
-    void Start()
+    private void Awake()
     {
-        ActionController.SyncSignal<bool>(
-            InspectionModeController.ModeChangedAction,
-            SetInspectionMode
-        );
-        CreateSubruleContainer();
-        CarregarRegras();
+        foreach (AppTab tab in appTabs)
+        {
+            if (tab?.button == null)
+                continue;
+
+            string app = tab.app;
+            tab.button.onClick.AddListener(() => ShowApp(app));
+        }
+
+        if (backButton != null)
+            backButton.onClick.AddListener(ShowRulesPage);
+
+        ActionController.SyncSignal("DayChanged", RefreshRules);
     }
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<bool>(
-            InspectionModeController.ModeChangedAction,
-            SetInspectionMode
-        );
-        ClearSubruleItems();
+        foreach (AppTab tab in appTabs)
+        {
+            if (tab?.button != null)
+                tab.button.onClick.RemoveAllListeners();
+        }
+
+        if (backButton != null)
+            backButton.onClick.RemoveListener(ShowRulesPage);
+
+        ActionController.UnsyncSignal("DayChanged", RefreshRules);
     }
 
-    public void CarregarRegras()
+    private void Start()
     {
         try
         {
             manual = ManualRepository.Load(manualResourcePath);
         }
-        catch (System.InvalidOperationException exception)
+        catch (InvalidOperationException exception)
         {
             Debug.LogError($"ManualWindowController: {exception.Message}");
             return;
         }
 
-        // Limpa instâncias anteriores do container
-        foreach (Transform child in containerRegras)
+        ShowApp(appTabs.Count > 0 ? appTabs[0].app : null);
+    }
+
+    public void ShowApp(string app)
+    {
+        selectedApp = app;
+        foreach (AppTab tab in appTabs)
         {
-            Destroy(child.gameObject);
+            if (tab?.background != null)
+                tab.background.color = tab.app == app ? tabSelectedColor : tabNormalColor;
         }
 
-        IReadOnlyList<ManualRuleData> regrasAtivas = ManualRepository.GetActiveRules(
+        if (txtRulesTitle != null)
+            txtRulesTitle.text = $"Regras - {AppLabel(app)}";
+
+        ShowRulesPage();
+        RefreshRules();
+    }
+
+    private void RefreshRules()
+    {
+        if (manual == null || rulesContainer == null || ruleCardPrefab == null)
+            return;
+
+        ClearChildren(rulesContainer);
+        IReadOnlyList<ManualRuleData> rules = ManualRepository.GetActiveRules(
             manual,
-            nivelAtual
+            DataController.CurrentDay,
+            selectedApp
         );
 
-        foreach (ManualRuleData regra in regrasAtivas)
+        foreach (ManualRuleData rule in rules)
         {
-            GameObject novoItem = Instantiate(prefabItemRegra, containerRegras);
-
-            TextMeshProUGUI txtItem = novoItem.GetComponentInChildren<TextMeshProUGUI>();
-            if (txtItem != null)
-                txtItem.text = $"{FieldLabel(regra.field)}: {regra.title}";
-
-            ManualRuleData regraAtual = regra;
-            Button button = novoItem.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.AddListener(() => ExibirDetalhes(regraAtual));
-                button.interactable = !inspectionModeActive;
-            }
+            ManualRuleCardController card = Instantiate(ruleCardPrefab, rulesContainer);
+            card.Setup(rule, FieldLabel(rule.field), ShowRule);
         }
 
-        // Exibe a primeira regra por padrão
-        if (regrasAtivas.Count > 0)
-        {
-            ExibirDetalhes(regrasAtivas[0]);
-        }
+        if (emptyRulesMessage != null)
+            emptyRulesMessage.SetActive(rules.Count == 0);
+
+        ResetScroll(rulesScroll);
     }
 
-    private void SetInspectionMode(bool active)
+    private void ShowRule(ManualRuleData rule)
     {
-        inspectionModeActive = active;
-        if (containerRegras == null)
+        if (rule == null || subrulesContainer == null || subruleItemPrefab == null)
             return;
 
-        foreach (Button button in containerRegras.GetComponentsInChildren<Button>(true))
-            button.interactable = !active;
-    }
+        if (txtRuleTitle != null)
+            txtRuleTitle.text = rule.title;
+        if (txtRuleField != null)
+            txtRuleField.text = $"[{FieldLabel(rule.field)}]";
+        if (txtRuleDescription != null)
+            txtRuleDescription.text = rule.description;
 
-    private void ExibirDetalhes(ManualRuleData regra)
-    {
-        if (txtTituloRegra != null) 
-            txtTituloRegra.text = regra.title;
-
-        if (txtStatusVigor != null) 
-            txtStatusVigor.text = $"<color=#00FF66>● EM VIGOR (Nível {regra.introductionDay})</color>";
-
-        if (selectableSubrule == null || subruleContainer == null)
+        ClearChildren(subrulesContainer);
+        foreach (ManualSubruleData subrule in rule.subrules)
         {
-            Debug.LogError(
-                "ManualWindowController: subrule template and container are required."
-            );
-            return;
+            ManualSubruleItemController item = Instantiate(subruleItemPrefab, subrulesContainer);
+            item.Setup(subrule);
         }
 
-        ClearSubruleItems();
-        for (int index = 0; index < regra.subrules.Count; index++)
+        SetPage(showSubrules: true);
+        ResetScroll(subrulesScroll);
+    }
+
+    private void ShowRulesPage()
+    {
+        SetPage(showSubrules: false);
+    }
+
+    private void SetPage(bool showSubrules)
+    {
+        if (sidebar != null)
+            sidebar.SetActive(!showSubrules);
+        if (rulesPage != null)
+            rulesPage.SetActive(!showSubrules);
+        if (subrulesPage != null)
+            subrulesPage.SetActive(showSubrules);
+    }
+
+    private static void ClearChildren(Transform container)
+    {
+        for (int index = container.childCount - 1; index >= 0; index--)
         {
-            ManualSubruleData subrule = regra.subrules[index];
-            InspectionRuleSelectable item = index == 0
-                ? selectableSubrule
-                : Instantiate(selectableSubrule, subruleContainer);
-
-            if (index > 0)
-                generatedSubrules.Add(item.gameObject);
-
-            item.Setup(subrule.id);
-            TextMeshProUGUI text = item.GetComponent<TextMeshProUGUI>();
-            if (text != null)
-            {
-                text.text = index == 0
-                    ? $"{regra.description}\n\n{subrule.description}"
-                    : subrule.description;
-            }
-
-            ConfigureSubruleLayout(item);
+            GameObject child = container.GetChild(index).gameObject;
+            child.SetActive(false);
+            Destroy(child);
         }
     }
 
-    private void CreateSubruleContainer()
+    private static void ResetScroll(ScrollRect scroll)
     {
-        if (selectableSubrule == null || subruleContainer != null)
+        if (scroll == null || !scroll.gameObject.activeInHierarchy)
             return;
 
-        RectTransform template = selectableSubrule.transform as RectTransform;
-        if (template == null || template.parent == null)
-            return;
-
-        GameObject containerObject = new("SubruleList");
-        RectTransform container = containerObject.AddComponent<RectTransform>();
-        container.SetParent(template.parent, false);
-        container.anchorMin = template.anchorMin;
-        container.anchorMax = template.anchorMax;
-        container.pivot = template.pivot;
-        container.anchoredPosition = template.anchoredPosition;
-        container.sizeDelta = template.sizeDelta;
-        container.localScale = Vector3.one;
-
-        VerticalLayoutGroup layout = containerObject.AddComponent<VerticalLayoutGroup>();
-        layout.spacing = 8f;
-        layout.childAlignment = TextAnchor.UpperLeft;
-        layout.childControlWidth = true;
-        layout.childControlHeight = true;
-        layout.childForceExpandWidth = true;
-        layout.childForceExpandHeight = false;
-
-        subruleContainer = container;
-        template.SetParent(subruleContainer, false);
-        template.anchorMin = new Vector2(0f, 1f);
-        template.anchorMax = new Vector2(1f, 1f);
-        template.pivot = new Vector2(0.5f, 1f);
-        template.anchoredPosition = Vector2.zero;
-        template.sizeDelta = new Vector2(0f, 0f);
+        if (scroll.content != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scroll.content);
+        scroll.verticalNormalizedPosition = 1f;
     }
 
-    private void ClearSubruleItems()
+    private string AppLabel(string app)
     {
-        foreach (GameObject item in generatedSubrules)
+        foreach (AppTab tab in appTabs)
         {
-            if (item != null)
-                Destroy(item);
+            if (tab != null && tab.app == app && !string.IsNullOrWhiteSpace(tab.label))
+                return tab.label;
         }
 
-        generatedSubrules.Clear();
-    }
-
-    private static void ConfigureSubruleLayout(InspectionRuleSelectable item)
-    {
-        ContentSizeFitter fitter = item.GetComponent<ContentSizeFitter>();
-        if (fitter == null)
-            fitter = item.gameObject.AddComponent<ContentSizeFitter>();
-
-        fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
-        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        return app ?? string.Empty;
     }
 
     private static string FieldLabel(string field)

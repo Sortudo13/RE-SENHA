@@ -3,6 +3,7 @@
   "rules": [
     {
       "id": "rule-sender-domain",
+      "app": "email",
       "title": "Verificação do remetente",
       "description": "Aceite apenas mensagens do domínio corporativo. Endereços parecidos, com letras trocadas ou de outras empresas, devem ser bloqueados.",
       "introductionDay": 1,
@@ -29,6 +30,7 @@
     },
     {
       "id": "rule-subject-alert",
+      "app": "email",
       "title": "Verificação do assunto",
       "description": "Desconfie de assuntos que pedem senha ou anunciam uma compra que ninguém solicitou.",
       "introductionDay": 1,
@@ -56,6 +58,7 @@
     },
     {
       "id": "rule-body-external-domain",
+      "app": "email",
       "title": "Verificação do corpo",
       "description": "Leia o texto antes de clicar. Links para domínios externos, fora da empresa, não devem ser seguidos.",
       "introductionDay": 1,
@@ -83,6 +86,7 @@
     },
     {
       "id": "rule-attachment-extension",
+      "app": "email",
       "title": "Verificação dos anexos",
       "description": "Confira a extensão real do arquivo. Documento disfarçado de nota ou pauta não pode ser um executável.",
       "introductionDay": 1,

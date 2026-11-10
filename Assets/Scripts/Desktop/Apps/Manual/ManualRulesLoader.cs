@@ -15,6 +15,13 @@ public static class ManualRulesLoader
         "AttachmentExtension",
     };
 
+    private static readonly HashSet<string> SupportedApps = new()
+    {
+        "email",
+        "ticket",
+        "chat",
+    };
+
     public static ManualRuleBookData Load(
         string resourcePath = DefaultResourcePath
     )
@@ -62,6 +69,11 @@ public static class ManualRulesLoader
                 throw InvalidManual(resourcePath, $"{ruleContext} has no id.");
             if (!ruleIds.Add(rule.id))
                 throw InvalidManual(resourcePath, $"Duplicate rule id '{rule.id}'.");
+            if (string.IsNullOrWhiteSpace(rule.app) || !SupportedApps.Contains(rule.app))
+                throw InvalidManual(
+                    resourcePath,
+                    $"Rule '{rule.id}' has an unsupported app '{rule.app}'."
+                );
             if (rule.introductionDay < 1)
                 throw InvalidManual(resourcePath, $"Rule '{rule.id}' has an invalid introductionDay.");
             if (string.IsNullOrWhiteSpace(rule.field))

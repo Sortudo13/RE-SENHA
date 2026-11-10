@@ -50,6 +50,22 @@ public static class ManualRepository
         return activeRules;
     }
 
+    public static IReadOnlyList<ManualRuleData> GetActiveRules(
+        ManualRuleBookData manual,
+        int currentDay,
+        string app
+    )
+    {
+        List<ManualRuleData> appRules = new();
+        foreach (ManualRuleData rule in GetActiveRules(manual, currentDay))
+        {
+            if (string.Equals(rule.app, app, StringComparison.OrdinalIgnoreCase))
+                appRules.Add(rule);
+        }
+
+        return appRules;
+    }
+
     public static void Clear()
     {
         cache.Clear();
