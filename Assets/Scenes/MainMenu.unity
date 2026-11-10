@@ -624,7 +624,7 @@ MonoBehaviour:
     SONOROS</b></color></size>\nJo\xE3ozinho Pereira\n\n\n\n<size=90%><color=#FFD966><b>TESTES
     E QA</b></color></size>\nAna Beatriz\nCarlos Eduardo\nFernanda Lima\n\n\n\n<size=90%><color=#FFD966><b>AGRADECIMENTOS
     ESPECIAIS</b></color></size>\nA toda a comunidade que apoiou o projeto\nAos amigos
-    e familiares\nE a voc\xEA, que jogou at\xE9 o fim <3\n\n\n\n<size=150%><b>OBRIGADO
+    e familiares\nE a voc\xEA, que jogou at\xE9 o fim <3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<size=200%><b>OBRIGADO
     POR JOGAR!</b></size>\n\n\n<size=80%><i>Feito com Unity e muito caf\xE9 \u2615</i></size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
@@ -1644,7 +1644,7 @@ GameObject:
   - component: {fileID: 1456901840}
   - component: {fileID: 1456901841}
   m_Layer: 0
-  m_Name: inomeado_fundoazul_0
+  m_Name: logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1951,9 +1951,10 @@ MonoBehaviour:
   mainMenuCanvas: {fileID: 106314756}
   fadeController: {fileID: 1425709607}
   speed: 60
-  finalPause: 0
+  finalPause: 2
   fadeDuration: 2
-  startOffset: 300
+  startOffset: 350
+  centerOffset: 0
 --- !u!114 &1737003388
 MonoBehaviour:
   m_ObjectHideFlags: 0
