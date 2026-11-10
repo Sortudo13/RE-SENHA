@@ -14,7 +14,7 @@ public class SceneButtonAudioController : MonoBehaviour
         if (AudioManager.Instance == null)
             PlaySound(sceneOpenSound);
 
-        buttons = FindObjectsByType<Button>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        buttons = FindObjectsByType<Button>(FindObjectsInactive.Include);
 
         foreach (Button button in buttons)
             button.onClick.AddListener(PlayClickSound);

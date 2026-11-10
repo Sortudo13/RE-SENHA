@@ -5,25 +5,21 @@ using UnityEngine.UI;
 
 public class EmailController : MonoBehaviour
 {
-    private EmailData currentEmail = null;
-    private SaveData currentSave = null;
-    private List<EmailData> inbox = null;
-    private Transform listBar;
-
     [Header("List Config")]
     [SerializeField] private GameObject listButton;
 
-    private GameObject emailInterface;
-    private GameObject emailSender;
-    private GameObject emailSubject;
-    private GameObject emailBody;
-    private GameObject emailAttachments;
+    private EmailData currentEmail = null;
+    private SaveData currentSave = null;
+    private List<EmailData> inbox = null;
+    private GameObject listScreen;
+    private GameObject mailScreen;
 
     private void Awake()
     {
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.SyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
+        ActionController.SyncSignal("ShowList", ShowList);
     }
 
     private void OnDestroy()
@@ -31,27 +27,20 @@ public class EmailController : MonoBehaviour
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.UnsyncSignal<EmailData>("AddEmail", AddEmail);
         ActionController.UnsyncSignal<EmailData>("RemoveEmail", RemoveEmail);
-        ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(null, null));
+        ActionController.UnsyncSignal("ShowList", ShowList);
     }
 
     void Start()
     {
-        emailInterface = transform.GetChild(0).gameObject;
-        listBar = transform.GetChild(1).GetChild(0);
+        mailScreen = transform.Find("MailScreen").gameObject;
+        listScreen = transform.Find("ListScreen").gameObject;
 
-        emailSender = emailInterface.transform.GetChild(1).gameObject;
-        emailSubject = emailInterface.transform.GetChild(3).gameObject;
-        emailAttachments = emailInterface.transform.GetChild(5).gameObject;
-        emailBody = emailInterface.transform.GetChild(6).gameObject;
-
-        foreach (Transform child in emailInterface.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
+        ShowList();
 
         currentSave = DataController.LoadEmails();
         inbox = currentSave.emails;
-        UpdateEmailSidebar();
+
+        UpdateEmailListScreen();
     }
 
     private void AddEmail(EmailData newEmail)
@@ -61,7 +50,7 @@ public class EmailController : MonoBehaviour
 
         inbox.Add(newEmail);
         DataController.SaveEmails(currentSave);
-        UpdateEmailSidebar();
+        UpdateEmailListScreen();
     }
 
     private void RemoveEmail(EmailData email)
@@ -73,30 +62,27 @@ public class EmailController : MonoBehaviour
         {
             inbox.Remove(email);
             DataController.SaveEmails(currentSave);
-            UpdateEmailSidebar();
+            UpdateEmailListScreen();
             if (email == currentEmail)
-                LoadEmail(currentEmail);
+                OpenEmail(currentEmail);
         }
     }
 
-    public void UpdateEmailSidebar()
+    public void UpdateEmailListScreen()
     {
-        if (listBar.childCount > 0)
-        {
-            foreach (Transform child in listBar)
-            {
+        Transform listContainer = listScreen.transform.Find("ListContainer");
+        if (listContainer.childCount > 0)
+            foreach (Transform child in listContainer)
                 Destroy(child.gameObject);
-            }
-        }
 
         foreach (EmailData email in inbox)
         {
-            GameObject newButton = Instantiate(listButton, listBar);
+            GameObject newButton = Instantiate(listButton, listContainer);
 
             if (newButton.TryGetComponent(out Button botao))
             {
                 botao.onClick.RemoveAllListeners();
-                botao.onClick.AddListener(() => LoadEmail(email));
+                botao.onClick.AddListener(() => OpenEmail(email));
             }
 
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = email.subject;
@@ -104,52 +90,57 @@ public class EmailController : MonoBehaviour
         }
     }
 
-    public void LoadEmail(EmailData email)
+    public void OpenEmail(EmailData email)
     {
         if (currentEmail != email)
+        {
             currentEmail = email;
+            ShowMail(currentEmail);
+        }
         else
-            currentEmail = null;
+            ShowList();
 
         ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(currentSave, currentEmail));
+    }
 
-        if (currentEmail != null)
+    private void ShowMail(EmailData currentEmail)
+    {
+        Transform emailSender = mailScreen.transform.Find("SenderField");
+        Transform emailSubject = mailScreen.transform.Find("SubjectField");
+        Transform emailBody = mailScreen.transform.Find("BodyField");
+        Transform emailAttachments = mailScreen.transform.Find("AttachmentField");
+
+        if (emailSender != null)
+            emailSender.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.sender;
+        if (emailSubject != null)
+            emailSubject.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.subject;
+        if (emailBody != null)
+            emailBody.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.body;
+        if (emailAttachments != null)
         {
-            if (emailSender != null)
-                emailSender.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.sender;
-            if (emailSubject != null)
-                emailSubject.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.subject;
-            if (emailBody != null)
-                emailBody.GetComponentInChildren<TextMeshProUGUI>().text = currentEmail.body;
-            if (emailAttachments != null)
+            TextMeshProUGUI attach = emailAttachments.GetComponentInChildren<TextMeshProUGUI>();
+            attach.text = "";
+            if (currentEmail.attachments.Count > 0)
             {
-                TextMeshProUGUI attach = emailAttachments.GetComponentInChildren<TextMeshProUGUI>();
-                attach.text = "";
-                if (currentEmail.attachments.Count > 0)
-                {
-                    foreach (AttachmentData attachment in currentEmail.attachments)
-                    {
-                        attach.text += attachment.linkedName + ", ";
-                    }
-                    attach.text = attach.text.TrimEnd(',', ' ');
-                }
-                else
-                {
-                    attach.text = "Sem anexos";
-                }
+                foreach (AttachmentData attachment in currentEmail.attachments)
+                    attach.text += attachment.linkedName + ";\n";
+                attach.text = attach.text.TrimEnd(';', '\n');
             }
-            foreach (Transform child in emailInterface.transform)
-            {
-                child.gameObject.SetActive(true);
-            }
+            else
+                attach.text = "Sem anexos";
         }
-        else
-        {
-            foreach (Transform child in emailInterface.transform)
-            {
-                child.gameObject.SetActive(false);
-            }
-        }
+
+        transform.Find("Back").gameObject.SetActive(true);
+        listScreen.SetActive(false);
+        mailScreen.SetActive(true);
+    }
+
+    private void ShowList()
+    {
+        currentEmail = null;
+        transform.Find("Back").gameObject.SetActive(false);
+        mailScreen.SetActive(false);
+        listScreen.SetActive(true);
     }
 
     private void OpenAttachment(string position)
@@ -158,10 +149,6 @@ public class EmailController : MonoBehaviour
         {
             string command = $"Init{currentEmail.attachments[numero - 1].documentType}";
             ActionController.SendAction(command, currentEmail.attachments[numero - 1].data);
-        }
-        else
-        {
-            Debug.Log("Linked attachment's position not a number.");
         }
     }
 }

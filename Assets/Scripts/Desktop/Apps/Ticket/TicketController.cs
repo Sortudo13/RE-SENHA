@@ -112,23 +112,9 @@ public class TicketController : MonoBehaviour
         foreach (TicketData ticket in tickets)
         {
             GameObject buttonObject = Instantiate(listButton, listBar);
-            TextMeshProUGUI label = new GameObject("Texto").AddComponent<TextMeshProUGUI>();
-            label.transform.SetParent(buttonObject.transform, false);
-            label.font = TMP_Settings.defaultFontAsset;
-
-            label.text = ticket.requester;
-
-            label.enableAutoSizing = true;
-            label.fontSizeMin = 50;
-            label.fontSizeMax = 100;
-            label.color = Color.black;
-            label.alignment = TextAlignmentOptions.Center;
-
-            RectTransform rect = label.rectTransform;
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
+            TextMeshProUGUI label = buttonObject.GetComponentInChildren<TextMeshProUGUI>();
+            if (label != null)
+                label.text = ticket.requester;
 
             if (buttonObject.TryGetComponent(out Button button))
             {
