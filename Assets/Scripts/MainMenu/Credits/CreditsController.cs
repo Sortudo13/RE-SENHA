@@ -1,18 +1,17 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CreditosController : MonoBehaviour
 {
     [Header("Referências")]
     [SerializeField]
-    private GameObject painelCreditos; // Canvas_Creditos
+    private RectTransform textoCreditos; // RectTransform do TextMeshProUGUI
 
     [SerializeField]
-    private RectTransform textoCreditos; // o texto que rola
+    private GameObject canvasMainMenu; // Referência ao Canvas do Main Menu
 
-    [SerializeField]
-    private Button botaoVoltar;
+    private TextMeshProUGUI _textoTMP;
 
     [Header("Configuração do Scroll")]
     [SerializeField]
@@ -25,22 +24,36 @@ public class CreditosController : MonoBehaviour
 
     private void Awake()
     {
-        if (botaoVoltar != null)
-            botaoVoltar.onClick.AddListener(FecharCreditos);
-
-        if (painelCreditos != null)
-            painelCreditos.SetActive(false);
+        // Pega o componente TMP no mesmo objeto do RectTransform
+        _textoTMP = textoCreditos.GetComponent<TextMeshProUGUI>();
     }
 
-    public void AbrirCreditos()
+    private void OnEnable()
     {
-        if (painelCreditos == null || textoCreditos == null)
+        IniciarScroll();
+    }
+
+    private void OnDisable()
+    {
+        if (rotinaScroll != null)
+        {
+            StopCoroutine(rotinaScroll);
+            rotinaScroll = null;
+        }
+    }
+
+    private void IniciarScroll()
+    {
+        if (textoCreditos == null || _textoTMP == null)
             return;
 
-        painelCreditos.SetActive(true);
+        // Força o TMP a recalcular o layout para o preferredHeight ficar correto
+        _textoTMP.ForceMeshUpdate();
 
-        // Posiciona o texto logo abaixo da tela e começa a rolar
-        float alturaTela = ((RectTransform)painelCreditos.transform).rect.height;
+        // Altura visível da tela (o próprio Canvas de créditos)
+        float alturaTela = ((RectTransform)transform).rect.height;
+
+        // Posiciona o texto logo abaixo da tela
         textoCreditos.anchoredPosition = new Vector2(0f, -alturaTela);
 
         if (rotinaScroll != null)
@@ -49,36 +62,26 @@ public class CreditosController : MonoBehaviour
         rotinaScroll = StartCoroutine(RolarCreditos(alturaTela));
     }
 
-    public void FecharCreditos()
-    {
-        if (rotinaScroll != null)
-        {
-            StopCoroutine(rotinaScroll);
-            rotinaScroll = null;
-        }
-
-        if (painelCreditos != null)
-            painelCreditos.SetActive(false);
-    }
-
     private IEnumerator RolarCreditos(float alturaTela)
     {
-        // Sobe o texto até que ele saia inteiro pelo topo da tela
-        float alturaTexto = textoCreditos.rect.height;
+        // Altura real do texto (TMP)
+        float alturaTexto = _textoTMP.preferredHeight;
         float alvo = alturaTexto + alturaTela; // deslocamento total até sumir
 
         float percorrido = 0f;
 
         while (percorrido < alvo)
         {
-            float delta = velocidade * Time.unscaledDeltaTime; // unscaled: funciona mesmo com Time.timeScale = 0
+            float delta = velocidade * Time.unscaledDeltaTime;
             percorrido += delta;
             textoCreditos.anchoredPosition += Vector2.up * delta;
             yield return null;
         }
 
-        // Pausa no final e fecha automaticamente
         yield return new WaitForSecondsRealtime(pausaFinal);
-        FecharCreditos();
+
+        // Fecha o Canvas de créditos (este GameObject) e abre o Main Menu
+        gameObject.SetActive(false);
+        canvasMainMenu.SetActive(true);
     }
 }
