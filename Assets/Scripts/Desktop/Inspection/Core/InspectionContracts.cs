@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 
 public interface IInspectionSurface
 {
     string SourceType { get; }
-    string SourceItemId { get; }
-    IReadOnlyList<InspectionFieldDescriptor> Fields { get; }
     IReadOnlyCollection<string> Capabilities { get; }
     IInspectionFieldSource FieldSource { get; }
     IInspectionFindingStore FindingStore { get; }
@@ -27,27 +24,6 @@ public sealed class InspectionAttachmentDescriptor
     }
 }
 
-public sealed class InspectionFieldDescriptor
-{
-    public string FieldId { get; }
-    public string DisplayName { get; }
-    public string SelectionId { get; }
-    public bool IsSelectable { get; }
-
-    public InspectionFieldDescriptor(
-        string fieldId,
-        string displayName,
-        string selectionId,
-        bool isSelectable = true
-    )
-    {
-        FieldId = fieldId;
-        DisplayName = displayName;
-        SelectionId = selectionId;
-        IsSelectable = isSelectable;
-    }
-}
-
 public sealed class InspectionSelection
 {
     public string FieldId { get; }
@@ -60,7 +36,7 @@ public sealed class InspectionSelection
     }
 }
 
-public class InspectionEvaluationResult
+public sealed class InspectionEvaluationResult
 {
     public string FindingId { get; }
     public string EvaluatorId { get; }
@@ -91,14 +67,6 @@ public class InspectionEvaluationResult
         Explanation = explanation;
         Reason = reason;
     }
-}
-
-public interface IInspectionEvaluator
-{
-    string EvaluatorId { get; }
-    IReadOnlyCollection<string> RequiredCapabilities { get; }
-
-    IReadOnlyList<InspectionEvaluationResult> Evaluate(IInspectionSurface surface);
 }
 
 public interface IInspectionFindingStore

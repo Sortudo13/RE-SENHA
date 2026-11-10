@@ -9,11 +9,12 @@ public sealed class InspectionModeController : MonoBehaviour
     public const string ToggleAction = "ToggleInspectionMode";
     public const string DeactivateAction = "DeactivateInspectionMode";
     public const string ModeChangedAction = "InspectionModeChanged";
+    // Pedido de um seletor criado depois da ultima mudanca de modo (ex.: subregras do Manual);
+    // a resposta e republicar o estado atual em ModeChangedAction e nos highlights.
+    public const string StateRequestedAction = "InspectionStateRequested";
 
-    // O overlay apenas escurece a tela durante a inspecao; ele nao bloqueia cliques.
-    // A cena Desktop ainda guarda o overlay com raycast ligado (e os componentes legados de bloqueio),
-    // entao o Awake desliga o raycast por codigo. Quando a cena puder ser editada, configurar
-    // raycastTarget = false no proprio objeto e remover DisableOverlayRaycasts.
+    // O overlay apenas escurece a tela durante a inspecao; ele nao bloqueia cliques
+    // (raycastTarget desligado no proprio objeto, na cena Desktop).
     [SerializeField]
     private GameObject inspectionOverlay;
 
@@ -23,18 +24,17 @@ public sealed class InspectionModeController : MonoBehaviour
     {
         ActionController.SyncSignal(ToggleAction, ToggleMode);
         ActionController.SyncSignal(DeactivateAction, DeactivateMode);
+        ActionController.SyncSignal(StateRequestedAction, PublishState);
         IsActive = false;
         if (inspectionOverlay != null)
-        {
-            DisableOverlayRaycasts();
             inspectionOverlay.SetActive(false);
-        }
     }
 
     private void OnDestroy()
     {
         ActionController.UnsyncSignal(ToggleAction, ToggleMode);
         ActionController.UnsyncSignal(DeactivateAction, DeactivateMode);
+        ActionController.UnsyncSignal(StateRequestedAction, PublishState);
     }
 
     private void Update()
@@ -57,6 +57,11 @@ public sealed class InspectionModeController : MonoBehaviour
         ActionController.SendAction(ModeChangedAction, active);
     }
 
+    private void PublishState()
+    {
+        ActionController.SendAction(ModeChangedAction, IsActive);
+    }
+
     public void ToggleMode()
     {
         SetActive(!IsActive);
@@ -65,15 +70,6 @@ public sealed class InspectionModeController : MonoBehaviour
     public void DeactivateMode()
     {
         SetActive(false);
-    }
-
-    private void DisableOverlayRaycasts()
-    {
-        foreach (Graphic graphic in inspectionOverlay.GetComponentsInChildren<Graphic>(true))
-            graphic.raycastTarget = false;
-
-        foreach (CanvasGroup group in inspectionOverlay.GetComponentsInChildren<CanvasGroup>(true))
-            group.blocksRaycasts = false;
     }
 
     // Como a interface continua clicavel durante a inspecao, o Espaco digitado em um campo

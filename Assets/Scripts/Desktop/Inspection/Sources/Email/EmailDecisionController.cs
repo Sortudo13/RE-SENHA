@@ -61,23 +61,36 @@ public sealed class EmailDecisionController : MonoBehaviour
         ActionController.SendAction("ShowFeedback", new FeedbackData(correctDecision, feedbackMessage));
         ActionController.SendAction("RemoveEmail", email);
 
-        int remainingEmails = save.emails.Count;
-        if (
-            (remainingEmails == 0 && DataController.CurrentDay >= DataController.MaxDay)
-            || DataController.CurrentErrorCount >= DataController.MaxErrors
-        )
+        // Regra do dia: vence quem responde todos os itens do dia sem chegar a MaxErrors (3) erros.
+        // Hoje so os emails contam; tickets e mensagens de chat devem entrar nesta mesma conta
+        // quando tiverem fluxo de decisao (o ideal e um controlador de progresso do dia compartilhado).
+        // A derrota e verificada primeiro: errar o ultimo email com o 3o erro e derrota, nao vitoria.
+        if (DataController.CurrentErrorCount >= DataController.MaxErrors)
         {
-            // A troca de cena destroi a janela do Email; antes ela era fechada aqui, tocando o som de fechar janela.
-            string endingScene = (remainingEmails == 0) ? "GameWin" : "GameOver";
-            DataController.ResetDays();
-            SceneManager.LoadScene(endingScene);
+            EndGame("GameOver");
+            return;
         }
+
+        int remainingEmails = save.emails.Count;
         if (remainingEmails == 0)
         {
+            if (DataController.CurrentDay >= DataController.MaxDay)
+            {
+                EndGame("GameWin");
+                return;
+            }
+
             DataController.AdvanceDay();
             // PENDENTE (Andre): com mais de um dia (MaxDay > 1), o EmailController precisa recarregar a lista
             // depois de AdvanceDay(), ou continua mostrando a inbox antiga ate a janela ser reaberta.
             // Sugestao: no DataController, disparar "DayChanged" depois de SaveEmails e o Email escutar esse sinal.
         }
+    }
+
+    // A troca de cena destroi a janela do Email; antes ela era fechada aqui, tocando o som de fechar janela.
+    private static void EndGame(string endingScene)
+    {
+        DataController.ResetDays();
+        SceneManager.LoadScene(endingScene);
     }
 }
