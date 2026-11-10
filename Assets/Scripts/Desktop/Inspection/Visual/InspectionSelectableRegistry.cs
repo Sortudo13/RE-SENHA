@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Sem uso desde 2026-11-09: o Inspector nao bloqueia mais a interface.
+// Mantido apenas porque o componente ainda esta no objeto InspectionOverlay da cena Desktop;
+// remover este script junto com esse objeto quando a cena puder ser editada.
+
 public sealed class InspectionSelectableRegistry : MonoBehaviour
 {
     public const string RegistryAvailableAction = "InspectionRegistryAvailable";

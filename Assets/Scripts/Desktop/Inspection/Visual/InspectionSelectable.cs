@@ -9,7 +9,6 @@ public abstract class InspectionSelectable : ActionButtonController, IPointerCli
 
     private Graphic graphic;
     private Color originalColor;
-    private InspectionSelectableRegistry registry;
 
     protected bool InspectionModeActive { get; private set; }
     protected abstract string SelectionId { get; }
@@ -17,11 +16,6 @@ public abstract class InspectionSelectable : ActionButtonController, IPointerCli
 
     protected virtual void Awake()
     {
-        ActionController.SyncSignal<InspectionSelectableRegistry>(
-            InspectionSelectableRegistry.RegistryAvailableAction,
-            SetRegistry
-        );
-        ActionController.SendAction(InspectionSelectableRegistry.RegistryRequestedAction);
         graphic = GetComponent<Graphic>() ?? GetComponentInChildren<Graphic>();
         if (graphic != null)
             originalColor = graphic.color;
@@ -39,11 +33,6 @@ public abstract class InspectionSelectable : ActionButtonController, IPointerCli
 
     protected virtual void OnDestroy()
     {
-        registry?.Unregister(transform as RectTransform);
-        ActionController.UnsyncSignal<InspectionSelectableRegistry>(
-            InspectionSelectableRegistry.RegistryAvailableAction,
-            SetRegistry
-        );
         ActionController.UnsyncSignal<string>(HighlightAction, OnHighlight);
         ActionController.UnsyncSignal<bool>(
             InspectionModeController.ModeChangedAction,
@@ -83,15 +72,5 @@ public abstract class InspectionSelectable : ActionButtonController, IPointerCli
     private void ClearHighlight()
     {
         SetSelected(false);
-    }
-
-    private void SetRegistry(InspectionSelectableRegistry nextRegistry)
-    {
-        if (registry == nextRegistry)
-            return;
-
-        registry?.Unregister(transform as RectTransform);
-        registry = nextRegistry;
-        registry?.Register(transform as RectTransform);
     }
 }

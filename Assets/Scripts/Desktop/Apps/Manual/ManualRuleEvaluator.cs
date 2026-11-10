@@ -75,7 +75,8 @@ public sealed class ManualRuleEvaluator
         List<InspectionEvaluationResult> results = new();
         foreach (ManualRuleData rule in ManualRepository.GetActiveRules(manual, currentDay))
         {
-            if (rule == null)
+            if (rule == null
+                || !string.Equals(rule.app, surface.SourceType, StringComparison.OrdinalIgnoreCase))
                 continue;
 
             foreach (ManualSubruleData subrule in rule.subrules)

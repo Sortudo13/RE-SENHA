@@ -12,6 +12,7 @@ public sealed class ManualRuleBookData
 public sealed class ManualRuleData
 {
     public string id;
+    public string app;
     public string title;
     public string description;
     public int introductionDay;
