@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(WindowController))]
 public class WindowMenuController : MonoBehaviour
 {
     [Header("Referências")]
@@ -15,11 +16,12 @@ public class WindowMenuController : MonoBehaviour
     [SerializeField]
     private string mainMenuSceneName = "MainMenu";
 
-    [SerializeField]
-    private bool pauseGameWhileOpen = true;
+    private WindowController _window;
 
     private void Awake()
     {
+        _window = GetComponent<WindowController>();
+
         if (exitButton != null)
             exitButton.onClick.AddListener(OnExitClicked);
 
@@ -27,21 +29,8 @@ public class WindowMenuController : MonoBehaviour
             returnToMenuButton.onClick.AddListener(OnReturnToMenuClicked);
     }
 
-    private void OnEnable()
-    {
-        if (pauseGameWhileOpen)
-            Time.timeScale = 0f;
-    }
-
-    private void OnDisable()
-    {
-        if (pauseGameWhileOpen)
-            Time.timeScale = 1f;
-    }
-
     private void OnExitClicked()
     {
-        // Fecha o jogo (build) ou para o Play Mode (editor)
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -51,14 +40,12 @@ public class WindowMenuController : MonoBehaviour
 
     private void OnReturnToMenuClicked()
     {
-        // Garante que o tempo volte ao normal antes de trocar de cena
         Time.timeScale = 1f;
         SceneManager.LoadScene(mainMenuSceneName);
     }
 
     private void OnDestroy()
     {
-        // Remove listeners para evitar referências pendentes
         if (exitButton != null)
             exitButton.onClick.RemoveListener(OnExitClicked);
 

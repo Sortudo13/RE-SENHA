@@ -7,9 +7,17 @@ public class WindowManagerController : MonoBehaviour
     public static Transform WindowsLayer { get; private set; }
 
     [Header("Templates de Janela")]
-    [SerializeField] private WindowController windowEmail;
-    [SerializeField] private WindowController windowManual;
-    [SerializeField] private WindowController windowRG;
+    [SerializeField]
+    private WindowController windowEmail;
+
+    [SerializeField]
+    private WindowController windowManual;
+
+    [SerializeField]
+    private WindowController windowRG;
+
+    [SerializeField]
+    private WindowController windowMenu;
 
     private void Awake()
     {
@@ -19,7 +27,8 @@ public class WindowManagerController : MonoBehaviour
 
         OpenTemplateSignals();
     }
-    private void AddWindowCount ()
+
+    private void AddWindowCount()
     {
         if (!gameObject.activeSelf)
         {
@@ -33,10 +42,11 @@ public class WindowManagerController : MonoBehaviour
         activeWindowCount++;
     }
 
-    private void SubWindowCount ()
+    private void SubWindowCount()
     {
         activeWindowCount--;
-        if (activeWindowCount < 0) activeWindowCount = 0;
+        if (activeWindowCount < 0)
+            activeWindowCount = 0;
     }
 
     private void ActivateDesktop()
@@ -77,6 +87,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.SyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
+        ActionController.SyncSignal("OpenWindowMenu", OpenWindowMenu);
     }
 
     private void CloseTemplateSignals()
@@ -85,6 +96,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.UnsyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
+        ActionController.UnsyncSignal("OpenWindowMenu", OpenWindowMenu);
     }
 
     private void OpenURL(string url)
@@ -105,5 +117,10 @@ public class WindowManagerController : MonoBehaviour
     private void InitRG(AttachmentContent data)
     {
         Instantiate(windowRG.gameObject, transform);
+    }
+
+    private void OpenWindowMenu()
+    {
+        Instantiate(windowMenu.gameObject, transform);
     }
 }

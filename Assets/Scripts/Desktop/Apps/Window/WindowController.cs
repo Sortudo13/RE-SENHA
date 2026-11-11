@@ -9,6 +9,10 @@ public class WindowController : MonoBehaviour
 
     [SerializeField]
     private string windowName;
+
+    [SerializeField]
+    private bool showInTaskbar = true; //para casos como o Window Menu, que não deve aparecer na taskbar
+
     private string myID;
 
     public string AppID => myID;
@@ -24,8 +28,11 @@ public class WindowController : MonoBehaviour
     {
         ActionController.SendAction("AddActiveWindow");
 
-        WindowData data = new(myID, windowIcon, windowName);
-        ActionController.SendAction("WindowCreated", data);
+        if (showInTaskbar)
+        {
+            WindowData data = new(myID, windowIcon, windowName);
+            ActionController.SendAction("WindowCreated", data);
+        }
 
         ActionController.SyncSignal("MinimizeAllWindow", MinimizeWindow);
         ActionController.SyncSignal($"Swap_{myID}", SwapWindow);
