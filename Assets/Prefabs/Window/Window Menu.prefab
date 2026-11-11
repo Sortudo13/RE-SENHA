@@ -546,6 +546,10 @@ PrefabInstance:
       propertyPath: showInTaskbar
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: minimizeWithAll
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: m_Name
       value: Window Menu
@@ -647,9 +651,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6044872297503187655, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2139040426818163454}
-    - targetCorrespondingSourceObject: {fileID: 6044872297503187655, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2028067014643169324}
   m_SourcePrefab: {fileID: 100100000, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
 --- !u!1 &2121822493659138404 stripped
 GameObject:
@@ -671,21 +672,6 @@ MonoBehaviour:
   exitButton: {fileID: 5209309296840337269}
   returnToMenuButton: {fileID: 5166982453914057608}
   mainMenuSceneName: MainMenu
---- !u!114 &2028067014643169324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2121822493659138404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d5e5dde05445f448d1e376eea36bde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WindowController
-  windowIcon: {fileID: 0}
-  windowName: 
-  showInTaskbar: 0
 --- !u!224 &6415413634177543429 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}

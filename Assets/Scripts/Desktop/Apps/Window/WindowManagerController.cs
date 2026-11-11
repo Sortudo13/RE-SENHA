@@ -4,6 +4,7 @@ using UnityEngine;
 public class WindowManagerController : MonoBehaviour
 {
     private int activeWindowCount = 0;
+    private bool desktopWindowsHidden;
     public static Transform WindowsLayer { get; private set; }
 
     [Header("Templates de Janela")]
@@ -56,7 +57,14 @@ public class WindowManagerController : MonoBehaviour
 
     private void SwapDesktop()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        desktopWindowsHidden = !desktopWindowsHidden;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform window = transform.GetChild(i);
+            if (window.GetComponentInChildren<WindowMenuController>() == null)
+                window.gameObject.SetActive(!desktopWindowsHidden);
+        }
     }
 
     private void DeactivateDesktop()
@@ -66,10 +74,31 @@ public class WindowManagerController : MonoBehaviour
 
     public void SwapWorkspace()
     {
+        CloseOpenWindowMenu();
+
         if (activeWindowCount > 0)
             SwapDesktop();
         else
             DeactivateDesktop();
+    }
+
+    private void CloseOpenWindowMenu()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            WindowController window = transform
+                .GetChild(i)
+                .GetComponentInChildren<WindowController>();
+
+            if (
+                window != null
+                && window.GetComponentInChildren<WindowMenuController>() != null
+            )
+            {
+                window.CloseWindow();
+                return;
+            }
+        }
     }
 
     private void OnDestroy()
@@ -121,6 +150,7 @@ public class WindowManagerController : MonoBehaviour
 
     private void OpenWindowMenu()
     {
+        ActivateDesktop();
         Instantiate(windowMenu.gameObject, transform);
     }
 }
