@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class TaskbarButtonController : MonoBehaviour
 {
     private string targetWindowID;
+    private WindowController windowMenuInstance;
 
     public void Init(WindowData data)
     {
@@ -19,6 +20,22 @@ public class TaskbarButtonController : MonoBehaviour
 
         ActionController.SyncSignal($"WindowDestroyed_{targetWindowID}", DestroyTaskbarButton);
         ActionController.SyncSignal($"ToFront_{targetWindowID}", ToFront);
+    }
+
+    public void OpenWindowMenu()
+    {
+        ActionController.SendAction("OpenWindowMenu");
+    }
+
+    private void ClearWindowMenuReference()
+    {
+        if (windowMenuInstance != null)
+            ActionController.UnsyncSignal(
+                $"WindowDestroyed_{windowMenuInstance.AppID}",
+                ClearWindowMenuReference
+            );
+
+        windowMenuInstance = null;
     }
 
     private void ToFront()
