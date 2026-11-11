@@ -120,7 +120,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8544334824267266493}
   m_HandleRect: {fileID: 8223330165907370151}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7209528628800209140}
   m_HandleRect: {fileID: 5410378649949010179}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3368,7 +3368,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.731, y: -20.138062}
+  m_AnchoredPosition: {x: 6.731, y: -9.508664}
   m_SizeDelta: {x: -14.894, y: 0}
   m_Pivot: {x: 0, y: 0.99}
 --- !u!222 &8350685770485164358
@@ -4477,8 +4477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cf2c6110056b440a02f56d94b580cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmailController
-  listButton: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
-  alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+  listItem: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
 --- !u!1 &8625671661670089948
 GameObject:
   m_ObjectHideFlags: 0

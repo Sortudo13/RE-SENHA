@@ -4593,7 +4593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cf2c6110056b440a02f56d94b580cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmailController
-  listItem: {fileID: 0}
+  listItem: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
 --- !u!1 &8486070817599507843
 GameObject:
   m_ObjectHideFlags: 0

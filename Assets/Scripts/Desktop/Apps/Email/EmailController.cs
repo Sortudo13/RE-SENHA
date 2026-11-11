@@ -39,6 +39,17 @@ public class EmailController : MonoBehaviour
 
         ShowList();
         LoadEmails();
+        GenerateEmails();
+    }
+
+    private void GenerateEmails()
+    {
+        List<EmailData> generatedMails = currentSave.availableMails;
+
+        foreach (EmailData email in generatedMails)
+        {
+            currentBox.emails.Add(email);
+        }
     }
 
     private void LoadEmails()

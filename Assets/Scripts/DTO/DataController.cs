@@ -69,7 +69,7 @@ public static class DataController
             string json = File.ReadAllText(SavePath);
             if (!string.IsNullOrEmpty(json))
             {
-                currentSave = JsonUtility.FromJson<SaveData>(json);
+                currentSave = JsonConvert.DeserializeObject<SaveData>(json);
                 List<EmailData> oldMails = currentSave.currentMailBoxes.Find(box => box.mailBox == "User").emails ?? new List<EmailData>();
                 save.currentMailBoxes.Find(box => box.mailBox == "User").emails = oldMails;
             }
@@ -87,7 +87,7 @@ public static class DataController
     {
         save.current_day = CurrentDay;
         save.error_count = CurrentErrorCount;
-        string json = JsonUtility.ToJson(save, true);
+        string json = JsonConvert.SerializeObject(save, Formatting.Indented);
         File.WriteAllText(SavePath, json);
     }
 
@@ -98,7 +98,7 @@ public static class DataController
         {
             string json = File.ReadAllText(SavePath);
             if (!string.IsNullOrEmpty(json))
-                save = JsonUtility.FromJson<SaveData>(json);
+                save = JsonConvert.DeserializeObject<SaveData>(json);
         }
         if (save == null)
         {
