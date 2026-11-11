@@ -382,7 +382,7 @@ MonoBehaviour:
   targetTransform: {fileID: 7244335230691186804}
   dragButton: 0
   pressedCursorType: 1
-  dragSensitivity: 0.5
+  followSpeed: 30
 --- !u!1 &3031027678049364262
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControladorJanela
   windowIcon: {fileID: 4515868832658927780, guid: f8550b0662e4f0e4f90566e4f5d10e4e, type: 3}
   windowName: "Gen\xE9rico"
+  showInTaskbar: 1
+  minimizeWithAll: 1
 --- !u!1 &6044872297503187655
 GameObject:
   m_ObjectHideFlags: 0
