@@ -1,16 +1,23 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(RectTransform))]
-public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownHandler, IDragHandler
+public class MovementController
+    : MonoBehaviour,
+        IPointerUpHandler,
+        IPointerDownHandler,
+        IDragHandler
 {
-
     [Header("Movement config")]
-    [SerializeField] private RectTransform targetTransform;
-    [SerializeField] private PointerEventData.InputButton dragButton = PointerEventData.InputButton.Left;
-    [SerializeField] private CursorStyle pressedCursorType = CursorStyle.Default;
-    [SerializeField] [Range(0f,1f)] private float dragSensitivity = 0.5f;
+    [SerializeField]
+    private RectTransform targetTransform;
+
+    [SerializeField]
+    private PointerEventData.InputButton dragButton = PointerEventData.InputButton.Left;
+
+    [SerializeField]
+    private CursorStyle pressedCursorType = CursorStyle.Default;
+
     private const bool bringToFront = true;
     private Canvas canvas;
     private RectTransform containerRect;
@@ -20,7 +27,7 @@ public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownH
     {
         if (targetTransform == null)
             targetTransform = GetComponent<RectTransform>();
-        
+
         canvas = transform.root.GetComponentInChildren<Canvas>();
 
         if (targetTransform.parent != null)
@@ -29,47 +36,56 @@ public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownH
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == dragButton && bringToFront)
-        {
-            targetTransform.SetAsLastSibling();
-            CursorController.Instance.SetToMode(pressedCursorType);
+        if (eventData.button != dragButton)
+            return;
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                targetTransform,
-                eventData.position,
-                eventData.pressEventCamera,
-                out grabLocalOffset
-            );
-            CursorController.Instance.ShowVirtualCursor(true);
-            SyncVirtualCursor(eventData.pressEventCamera);
-        }
+        if (bringToFront)
+            targetTransform.SetAsLastSibling();
+
+        CursorController.Instance.SetToMode(pressedCursorType);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            targetTransform,
+            eventData.position,
+            eventData.pressEventCamera,
+            out grabLocalOffset
+        );
+
+        CursorController.Instance.ShowVirtualCursor(true);
+        SyncVirtualCursor(eventData.position);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (eventData.button == dragButton)
-        {
-            Vector3 worldGrabPoint = targetTransform.TransformPoint(grabLocalOffset);
-            Vector2 finalScreenPos = RectTransformUtility.WorldToScreenPoint(eventData.pressEventCamera, worldGrabPoint);
-            Mouse.current?.WarpCursorPosition(finalScreenPos);
-            CursorController.Instance.ShowVirtualCursor(false);
+        if (eventData.button != dragButton)
+            return;
 
-            CursorController.Instance.SetToMode(CursorStyle.Default);
-        }
+        CursorController.Instance.ShowVirtualCursor(false);
+        CursorController.Instance.SetToMode(CursorStyle.Default);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (eventData.button == dragButton)
+        if (eventData.button != dragButton || containerRect == null)
+            return;
+
+        Vector2 localPoint;
+        if (
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                containerRect,
+                eventData.position,
+                eventData.pressEventCamera,
+                out localPoint
+            )
+        )
         {
-            targetTransform.anchoredPosition += (eventData.delta * dragSensitivity) / canvas.scaleFactor;
+            targetTransform.anchoredPosition = localPoint - grabLocalOffset;
             LimitInContainer();
-            SyncVirtualCursor(eventData.pressEventCamera);
         }
-        
+
+        SyncVirtualCursor(eventData.position);
     }
 
-    // Use the object with Anchor Min = (0.5, 0.5), Anchor Max = (0.5, 0.5) and Pivot = (0.5, 0.5)
     public void LimitInContainer()
     {
         float metadeContainerX = containerRect.rect.width / 2f;
@@ -89,11 +105,9 @@ public class MovementController : MonoBehaviour,IPointerUpHandler, IPointerDownH
         targetTransform.anchoredPosition = posicaoAtual;
     }
 
-    private void SyncVirtualCursor(Camera cam)
+    //recebe a posição do mouse, não o ponto de grab da janela
+    private void SyncVirtualCursor(Vector2 screenPosition)
     {
-        Vector3 worldGrabPoint = targetTransform.TransformPoint(grabLocalOffset);
-        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(cam, worldGrabPoint);
-
-        CursorController.Instance.UpdateVirtualCursorPosition(screenPoint);
+        CursorController.Instance.UpdateVirtualCursorPosition(screenPosition);
     }
 }
