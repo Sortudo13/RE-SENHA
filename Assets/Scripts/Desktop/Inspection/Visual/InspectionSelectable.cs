@@ -31,6 +31,13 @@ public abstract class InspectionSelectable : ActionButtonController, IPointerCli
         );
     }
 
+    // Start roda depois do Setup feito logo apos o Instantiate, entao o seletor ja tem seu ID
+    // quando o estado atual (modo e highlights) chega.
+    protected virtual void Start()
+    {
+        ActionController.SendAction(InspectionModeController.StateRequestedAction);
+    }
+
     protected virtual void OnDestroy()
     {
         ActionController.UnsyncSignal<string>(HighlightAction, OnHighlight);

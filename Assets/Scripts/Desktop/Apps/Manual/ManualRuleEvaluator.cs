@@ -1,60 +1,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-public sealed class ManualRuleEvaluationResult : InspectionEvaluationResult
-{
-    public string SubruleId { get; }
-    public string Field { get; }
-    public string Rule { get; }
-    public string Subrule { get; }
-
-    public ManualRuleEvaluationResult(
-        string subruleId,
-        string field,
-        string ruleId,
-        string rule,
-        string subrule,
-        string evidence,
-        string explanation,
-        string reason
-    ) : base(
-        subruleId,
-        "manual-content",
-        field,
-        ruleId,
-        rule,
-        evidence,
-        explanation,
-        reason
-    )
-    {
-        SubruleId = subruleId;
-        Field = field;
-        Rule = rule;
-        Subrule = subrule;
-    }
-}
+using System.Text.RegularExpressions;
 
 public sealed class ManualRuleEvaluator
 {
-    private readonly Dictionary<string, Func<IInspectionFieldSource, ManualRuleCheckData, string>> checks =
-        new()
-        {
-            ["SenderDomain"] = EvaluateSenderDomain,
-            ["SubjectTerms"] = EvaluateSubjectTerms,
-            ["BodyTerms"] = EvaluateBodyTerms,
-            ["AttachmentExtension"] = EvaluateAttachmentExtension,
-        };
-    private readonly Dictionary<string, string> requiredCapabilities =
-        new()
-        {
-            ["SenderDomain"] = "sender",
-            ["SubjectTerms"] = "subject",
-            ["BodyTerms"] = "body",
-            ["AttachmentExtension"] = "attachments",
-        };
+    private sealed class CheckDefinition
+    {
+        public string Capability { get; }
+        public Func<IInspectionFieldSource, ManualRuleCheckData, string> Evaluate { get; }
 
+        public CheckDefinition(
+            string capability,
+            Func<IInspectionFieldSource, ManualRuleCheckData, string> evaluate
+        )
+        {
+            Capability = capability;
+            Evaluate = evaluate;
+        }
+    }
+
+    public const string EvaluatorId = "manual-content";
+
+    // Tipos de verificacao aceitos no ManualRules.json e a capacidade que cada um exige da superficie.
+    private static readonly Dictionary<string, CheckDefinition> Checks = new()
+    {
+        ["SenderDomain"] = new("sender", EvaluateSenderDomain),
+        ["SubjectTerms"] = new("subject", EvaluateSubjectTerms),
+        ["BodyTerms"] = new("body", EvaluateBodyTerms),
+        ["AttachmentExtension"] = new("attachments", EvaluateAttachmentExtension),
+    };
+
+    public static bool SupportsCheck(string type)
+    {
+        return type != null && Checks.ContainsKey(type);
+    }
+
+    // O ManualRulesLoader ja valida IDs, subregras, check, finding e tipos ao carregar o JSON.
     public IReadOnlyList<InspectionEvaluationResult> Evaluate(
         IInspectionSurface surface,
         ManualRuleBookData manual,
@@ -63,56 +45,28 @@ public sealed class ManualRuleEvaluator
     {
         if (surface == null)
             throw new ArgumentNullException(nameof(surface));
-        if (surface.FieldSource == null)
-            throw new InvalidOperationException("Inspection surface field source is missing.");
-        if (surface.Capabilities == null)
-            throw new InvalidOperationException("Inspection surface capabilities are missing.");
-        if (manual == null)
-            throw new ArgumentNullException(nameof(manual));
-        if (manual.rules == null)
-            throw new InvalidOperationException("Manual rules collection is missing.");
 
         List<InspectionEvaluationResult> results = new();
-        foreach (ManualRuleData rule in ManualRepository.GetActiveRules(manual, currentDay))
+        foreach (ManualRuleData rule in ManualRepository.GetActiveRules(manual, currentDay, surface.SourceType))
         {
-            if (rule == null
-                || !string.Equals(rule.app, surface.SourceType, StringComparison.OrdinalIgnoreCase))
-                continue;
-
             foreach (ManualSubruleData subrule in rule.subrules)
             {
-                if (subrule == null || subrule.check == null)
-                    throw new InvalidOperationException(
-                        $"Rule '{rule.id}' contains an invalid subrule."
-                    );
-                if (subrule.finding == null)
-                    throw new InvalidOperationException(
-                        $"Subrule '{subrule.id}' contains no finding data."
-                    );
-
-                if (!checks.TryGetValue(
-                        subrule.check.type,
-                        out Func<IInspectionFieldSource, ManualRuleCheckData, string> check
-                    ))
-                    throw new InvalidOperationException(
-                        $"Unsupported check type '{subrule.check.type}' in subrule '{subrule.id}'."
-                    );
-
-                if (!surface.Capabilities.Contains(requiredCapabilities[subrule.check.type]))
+                CheckDefinition check = Checks[subrule.check.type];
+                if (!surface.Capabilities.Contains(check.Capability))
                     continue;
 
-                string evidence = check(surface.FieldSource, subrule.check);
+                string evidence = check.Evaluate(surface.FieldSource, subrule.check);
                 if (evidence == null)
                     continue;
 
                 ManualFindingData finding = subrule.finding;
                 results.Add(
-                    new ManualRuleEvaluationResult(
+                    new InspectionEvaluationResult(
                         subrule.id,
+                        EvaluatorId,
                         rule.field,
                         rule.id,
                         finding.rule,
-                        subrule.description,
                         string.IsNullOrWhiteSpace(finding.evidence) ? evidence : finding.evidence,
                         finding.explanation,
                         finding.reason
@@ -122,15 +76,6 @@ public sealed class ManualRuleEvaluator
         }
 
         return results;
-    }
-
-    public IReadOnlyList<InspectionEvaluationResult> Evaluate(
-        EmailData email,
-        ManualRuleBookData manual,
-        int currentDay
-    )
-    {
-        return Evaluate(new EmailInspectionSurface(email), manual, currentDay);
     }
 
     private static string EvaluateSenderDomain(
@@ -187,7 +132,41 @@ public sealed class ManualRuleEvaluator
         if (term != null)
             return term;
 
-        return FindTerm(body, check.suspiciousDomains, check.caseSensitive);
+        return FindSuspiciousHost(body, check.suspiciousDomains);
+    }
+
+    // Hosts (com ou sem esquema) presentes no texto, inclusive dentro de tags <link="...">.
+    private static readonly Regex HostPattern = new(
+        @"(?<![A-Za-z0-9-])(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?![A-Za-z0-9-])",
+        RegexOptions.Compiled
+    );
+
+    // Compara dominios pelo final do host, e nao como substring: ".ru" acusa "site.ru",
+    // mas nao "www.rural.com"; "empresa.com" acusa "empresa.com" e "mail.empresa.com".
+    // Dominios nao diferenciam maiusculas, por isso caseSensitive nao se aplica aqui.
+    private static string FindSuspiciousHost(string value, string[] suspiciousDomains)
+    {
+        if (string.IsNullOrEmpty(value) || suspiciousDomains == null)
+            return null;
+
+        foreach (Match match in HostPattern.Matches(value))
+        {
+            string host = match.Value.ToLowerInvariant();
+            foreach (string domain in suspiciousDomains)
+            {
+                if (string.IsNullOrWhiteSpace(domain))
+                    continue;
+
+                string suffix = domain.Trim().ToLowerInvariant();
+                bool matches = suffix.StartsWith(".")
+                    ? host.EndsWith(suffix, StringComparison.Ordinal)
+                    : host == suffix || host.EndsWith("." + suffix, StringComparison.Ordinal);
+                if (matches)
+                    return host;
+            }
+        }
+
+        return null;
     }
 
     private static string EvaluateAttachmentExtension(

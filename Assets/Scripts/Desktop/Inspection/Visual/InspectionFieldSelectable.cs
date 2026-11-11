@@ -10,16 +10,6 @@ public sealed class InspectionFieldSelectable : InspectionSelectable
     protected override string HighlightAction =>
         InspectionSelectionController.FieldHighlightAction;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
-
     public override void OnPointerClick(PointerEventData eventData)
     {
         if (InspectionModeActive && !string.IsNullOrWhiteSpace(field))

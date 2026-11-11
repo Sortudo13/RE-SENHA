@@ -1,84 +1,155 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class CreditosController : MonoBehaviour
+public class CreditsController : MonoBehaviour
 {
     [Header("Referências")]
     [SerializeField]
-    private GameObject painelCreditos; // Canvas_Creditos
+    private RectTransform creditsText;
 
     [SerializeField]
-    private RectTransform textoCreditos; // o texto que rola
+    private GameObject mainMenuCanvas;
 
     [SerializeField]
-    private Button botaoVoltar;
+    private FadeController fadeController;
+
+    private TextMeshProUGUI _textTMP;
 
     [Header("Configuração do Scroll")]
     [SerializeField]
-    private float velocidade = 60f; // pixels por segundo
+    private float speed = 60f;
 
     [SerializeField]
-    private float pausaFinal = 2f; // segundos parado no fim antes de fechar
+    private float finalPause = 2f;
 
-    private Coroutine rotinaScroll;
+    [SerializeField]
+    private float fadeDuration = 0.8f;
+
+    [SerializeField]
+    private float startOffset = 150f;
+
+    [SerializeField]
+    private float centerOffset = 0f;
+
+    private Coroutine scrollRoutine;
+    private bool _isClosing;
 
     private void Awake()
     {
-        if (botaoVoltar != null)
-            botaoVoltar.onClick.AddListener(FecharCreditos);
-
-        if (painelCreditos != null)
-            painelCreditos.SetActive(false);
+        _textTMP = creditsText.GetComponent<TextMeshProUGUI>();
     }
 
-    public void AbrirCreditos()
+    private void OnEnable()
     {
-        if (painelCreditos == null || textoCreditos == null)
+        _isClosing = false;
+
+        if (fadeController != null)
+            StartCoroutine(fadeController.Fade(1f, 0f, fadeDuration));
+
+        StartScroll();
+    }
+
+    private void OnDisable()
+    {
+        if (scrollRoutine != null)
+        {
+            StopCoroutine(scrollRoutine);
+            scrollRoutine = null;
+        }
+    }
+
+    private void StartScroll()
+    {
+        if (creditsText == null || _textTMP == null)
             return;
 
-        painelCreditos.SetActive(true);
+        _textTMP.ForceMeshUpdate();
 
-        // Posiciona o texto logo abaixo da tela e começa a rolar
-        float alturaTela = ((RectTransform)painelCreditos.transform).rect.height;
-        textoCreditos.anchoredPosition = new Vector2(0f, -alturaTela);
+        creditsText.anchoredPosition = new Vector2(0f, -startOffset);
 
-        if (rotinaScroll != null)
-            StopCoroutine(rotinaScroll);
+        if (scrollRoutine != null)
+            StopCoroutine(scrollRoutine);
 
-        rotinaScroll = StartCoroutine(RolarCreditos(alturaTela));
+        scrollRoutine = StartCoroutine(ScrollCredits());
     }
 
-    public void FecharCreditos()
+    private IEnumerator ScrollCredits()
     {
-        if (rotinaScroll != null)
+        float textHeight = _textTMP.preferredHeight;
+        float target = startOffset + textHeight + centerOffset;
+        float traveled = 0f;
+
+        while (traveled < target)
         {
-            StopCoroutine(rotinaScroll);
-            rotinaScroll = null;
-        }
-
-        if (painelCreditos != null)
-            painelCreditos.SetActive(false);
-    }
-
-    private IEnumerator RolarCreditos(float alturaTela)
-    {
-        // Sobe o texto até que ele saia inteiro pelo topo da tela
-        float alturaTexto = textoCreditos.rect.height;
-        float alvo = alturaTexto + alturaTela; // deslocamento total até sumir
-
-        float percorrido = 0f;
-
-        while (percorrido < alvo)
-        {
-            float delta = velocidade * Time.unscaledDeltaTime; // unscaled: funciona mesmo com Time.timeScale = 0
-            percorrido += delta;
-            textoCreditos.anchoredPosition += Vector2.up * delta;
+            float delta = speed * Time.unscaledDeltaTime;
+            traveled = Mathf.Min(traveled + delta, target);
+            creditsText.anchoredPosition += Vector2.up * delta;
             yield return null;
         }
 
-        // Pausa no final e fecha automaticamente
-        yield return new WaitForSecondsRealtime(pausaFinal);
-        FecharCreditos();
+        creditsText.anchoredPosition = new Vector2(0f, target - startOffset);
+
+        yield return new WaitForSecondsRealtime(finalPause);
+
+        // Fim natural do scroll → usa o fade
+        CloseCreditsWithFade();
+    }
+
+    // Botão Voltar chama este método → volta instantaneamente
+    public void CloseCredits()
+    {
+        if (_isClosing)
+            return;
+
+        _isClosing = true;
+
+        // Para o scroll imediatamente
+        if (scrollRoutine != null)
+        {
+            StopCoroutine(scrollRoutine);
+            scrollRoutine = null;
+        }
+
+        // Garante que a tela não fique coberta por um fade residual
+        if (fadeController != null)
+            fadeController.ResetFade();
+
+        // Ativa o menu e desativa o Credits na hora
+        if (mainMenuCanvas != null && !mainMenuCanvas.activeSelf)
+            mainMenuCanvas.SetActive(true);
+
+        gameObject.SetActive(false);
+    }
+
+    // Fim do scroll → fade out → menu → fade in
+    private void CloseCreditsWithFade()
+    {
+        if (_isClosing)
+            return;
+
+        _isClosing = true;
+
+        StartCoroutine(FadeOutAndReturnToMenu());
+    }
+
+    private IEnumerator FadeOutAndReturnToMenu()
+    {
+        if (fadeController != null)
+            yield return fadeController.StartCoroutine(fadeController.Fade(0f, 1f, fadeDuration));
+
+        if (scrollRoutine != null)
+        {
+            StopCoroutine(scrollRoutine);
+            scrollRoutine = null;
+        }
+
+        if (mainMenuCanvas != null && !mainMenuCanvas.activeSelf)
+            mainMenuCanvas.SetActive(true);
+
+        if (fadeController != null)
+            yield return fadeController.StartCoroutine(fadeController.Fade(1f, 0f, fadeDuration));
+
+        gameObject.SetActive(false);
     }
 }
