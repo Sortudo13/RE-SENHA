@@ -1,11 +1,14 @@
-using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine;
 
 public class WindowController : MonoBehaviour
 {
-    [SerializeField] private Sprite windowIcon;
-    [SerializeField] private string windowName;
+    [SerializeField]
+    private Sprite windowIcon;
+
+    [SerializeField]
+    private string windowName;
     private string myID;
 
     public string AppID => myID;
@@ -38,7 +41,7 @@ public class WindowController : MonoBehaviour
     public void OpenWindow()
     {
         if (!gameObject.activeInHierarchy)
-        {   
+        {
             ActionController.SendAction("AddActiveWindow");
             gameObject.SetActive(true);
             ActionController.SendAction("OnWindowOpened");
