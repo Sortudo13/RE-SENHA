@@ -32,7 +32,7 @@ public class CalendarController : MonoBehaviour
 
     private void ResetGame()
     {
-        DataController.ResetDays();
+        DataController.ResetGame();
         // Debug show notification badge
         ActionController.SendAction("ShowNotificationBadge", "Email");
         ActionController.SendAction("ShowNotificationBadge", "Banco de Dados");

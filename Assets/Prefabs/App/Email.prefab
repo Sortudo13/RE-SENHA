@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 2810485478373802739}
   - component: {fileID: 9077272620326224554}
   m_Layer: 5
-  m_Name: Empresa
+  m_Name: Company
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3748,7 +3748,7 @@ GameObject:
   - component: {fileID: 1427669725117958043}
   - component: {fileID: 4480209825464486350}
   m_Layer: 5
-  m_Name: "Usu\xE1rio"
+  m_Name: User
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4534,8 +4534,8 @@ RectTransform:
   - {fileID: 7235996644049133420}
   - {fileID: 6635313921489464714}
   - {fileID: 2479897431924624870}
-  - {fileID: 5246070950607932728}
   - {fileID: 7057681154539775706}
+  - {fileID: 5246070950607932728}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4593,7 +4593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cf2c6110056b440a02f56d94b580cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmailController
-  listButton: {fileID: 6569661645334416687, guid: a038cca3c707b0a4ea0e11f27d8e22df, type: 3}
+  listItem: {fileID: 0}
 --- !u!1 &8486070817599507843
 GameObject:
   m_ObjectHideFlags: 0

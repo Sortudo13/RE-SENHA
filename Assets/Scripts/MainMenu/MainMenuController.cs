@@ -4,16 +4,13 @@ public class MainMenuController : UnityEngine.MonoBehaviour
 {
     public void NovoJogo()
     {
-        DataController.DeleteSaveFile();
-        DataController.ResetDays();
+        DataController.ResetGame();
         AbrirDesktop();
     }
 
     public void Carregar()
     {
-        SaveData save = DataController.LoadEmails();
-        DataController.CurrentDay = save.current_day;
-        DataController.CurrentErrorCount = save.error_count;
+        DataController.LoadingGame();
         AbrirDesktop();
     }
 

@@ -37,7 +37,7 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
         if (evaluation?.CurrentEmail == null)
             return;
 
-        List<InspectionFindingData> findings = evaluation.CurrentEmail.inspectionFindings;
+        List<EvidenceData> findings = evaluation.CurrentEmail.evidences;
         ActionController.SendAction(
             AlertManagerController.ShowFindingsAction,
             new FindingsAlertData(
@@ -48,20 +48,20 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
         );
     }
 
-    private static string BuildSummary(List<InspectionFindingData> findings)
+    private static string BuildSummary(List<EvidenceData> findings)
     {
         int count = findings?.Count ?? 0;
         return $"O Inspector registrou {count} achado(s).\n"
             + "Use \"Ver regras\" para consultar os detalhes.";
     }
 
-    private static string BuildDetails(List<InspectionFindingData> findings)
+    private static string BuildDetails(List<EvidenceData> findings)
     {
         StringBuilder text = new();
         if (findings == null)
             return string.Empty;
 
-        foreach (InspectionFindingData finding in findings)
+        foreach (EvidenceData finding in findings)
         {
             text.AppendLine($"[{finding.field}] {finding.rule}");
             text.AppendLine(finding.evidence);

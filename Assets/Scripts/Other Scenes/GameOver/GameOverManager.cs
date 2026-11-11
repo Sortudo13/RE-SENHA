@@ -28,7 +28,7 @@ public class GameOverManager : MonoBehaviour
     // Conectado ao botão "Reiniciar"
     public void ReiniciarJogo()
     {
-        DataController.ResetDays();
+        DataController.ResetGame();
         SceneManager.LoadScene("Desktop");
     }
 

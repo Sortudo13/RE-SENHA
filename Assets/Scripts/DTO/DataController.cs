@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,12 @@ public static class DataController
         get => Path.Combine(Application.persistentDataPath, "save.json");
     }
 
+    public static Boolean PersistMailBox
+    {
+        get => PlayerPrefs.GetInt("PersistMailBox", 0) == 1;
+        set => PlayerPrefs.SetInt("PersistMailBox", value ? 1 : 0);
+    }
+
     public static string ConvertExtension(string extension)
     {
         return extension switch
@@ -50,118 +57,91 @@ public static class DataController
     {
         CurrentDay++;
         ActionController.SendAction("DayChanged");
-        SaveEmails(LoadDailyJson(CurrentDay));
+        LoadDay();
     }
 
-    public static void ReduceDay()
+    public static void LoadDay()
     {
-        CurrentDay--;
-        ActionController.SendAction("DayChanged");
-        SaveEmails(LoadDailyJson(CurrentDay));
-    }
-
-    public static void ResetDay()
-    {
-        SaveEmails(LoadDailyJson(CurrentDay));
-    }
-
-    public static void ResetDays()
-    {
-        CurrentDay = 1;
-        CurrentErrorCount = 0;
-        ActionController.SendAction("DayChanged");
-        SaveEmails(LoadDailyJson(CurrentDay));
-    }
-
-    public static void SaveEmails(SaveData save)
-    {
-        EnsureInspectionFindings(save);
-        string json = JsonUtility.ToJson(save, true);
-        File.WriteAllText(SavePath, json);
-    }
-
-    public static void SaveEmails(List<EmailData> inbox, int error_count, int current_day)
-    {
-        SaveData save = new()
+        SaveData save = GetDailyDataJson(CurrentDay);
+        if (PersistMailBox && File.Exists(SavePath))
         {
-            emails = inbox,
-            error_count = error_count,
-            current_day = current_day,
-        };
+            SaveData currentSave = null;
+            string json = File.ReadAllText(SavePath);
+            if (!string.IsNullOrEmpty(json))
+            {
+                currentSave = JsonUtility.FromJson<SaveData>(json);
+                List<EmailData> oldMails = currentSave.currentMailBoxes.Find(box => box.mailBox == "User").emails ?? new List<EmailData>();
+                save.currentMailBoxes.Find(box => box.mailBox == "User").emails = oldMails;
+            }
+        }
+        SavingGame(save);
+    }
+
+    public static void ResetGame()
+    {
+        DeleteSaveFile();
+        LoadingGame();
+    }
+
+    public static void SavingGame(SaveData save)
+    {
+        save.current_day = CurrentDay;
+        save.error_count = CurrentErrorCount;
         string json = JsonUtility.ToJson(save, true);
         File.WriteAllText(SavePath, json);
     }
 
-    public static SaveData LoadEmails()
+    public static SaveData LoadingGame()
     {
         SaveData save = null;
-
         if (File.Exists(SavePath))
         {
             string json = File.ReadAllText(SavePath);
-
             if (!string.IsNullOrEmpty(json))
-            {
                 save = JsonUtility.FromJson<SaveData>(json);
-            }
         }
         if (save == null)
         {
-            save = LoadDailyJson(CurrentDay);
-            SaveEmails(save);
+            CurrentDay = 1;
+            CurrentErrorCount = 0;
+            save = GetDailyDataJson(CurrentDay);
+            SavingGame(save);
         }
-        EnsureInspectionFindings(save);
+        CurrentDay = save.current_day;
+        CurrentErrorCount = save.error_count;
+        ActionController.SendAction("DayChanged");
         return save;
     }
 
-    public static SaveData LoadDailyJson(int day)
+    public static SaveData GetDailyDataJson(int day)
     {
-        // Lê o arquivo "Dia_1.json", "Dia_2.json", etc. da pasta Assets/Resources/Emails/
-        TextAsset jsonText = Resources.Load<TextAsset>($"Emails/Dia_{day}");
-        SaveData save = null;
-
-        if (jsonText != null)
+        return new SaveData
         {
-            save = JsonUtility.FromJson<SaveData>(jsonText.text);
-        }
-        save ??= new SaveData
-        {
-            current_day = CurrentDay,
+            current_day = day,
             error_count = 0,
-            emails = new List<EmailData>(),
-            tickets = new List<TicketData>(),
+            availableMails = LoadJsonList<EmailData>($"Emails/Dia_{day}"),
+            currentMailBoxes = new()
+            {
+                new(){ mailBox = "User", emails = new () },
+                new(){ mailBox = "Company", emails = new () }
+            },
+            tickets = LoadJsonList<TicketData>($"Tickets/Dia_{day}")
         };
-
-        TextAsset ticketJson = Resources.Load<TextAsset>($"Tickets/Dia_{day}");
-        if (ticketJson != null)
-        {
-            SaveData ticketSave = JsonUtility.FromJson<SaveData>(ticketJson.text);
-            save.tickets = ticketSave?.tickets ?? new List<TicketData>();
-        }
-
-        save.tickets ??= new List<TicketData>();
-        EnsureInspectionFindings(save);
-        return save;
     }
 
-    private static void EnsureInspectionFindings(SaveData save)
+    private static List<T> LoadJsonList<T>(string resourcePath)
     {
-        if (save?.emails == null)
-            return;
+        TextAsset file = Resources.Load<TextAsset>(resourcePath);
+        if (file == null)
+            return new List<T>();
 
-        foreach (EmailData email in save.emails)
-        {
-            if (email != null)
-                email.inspectionFindings ??= new List<InspectionFindingData>();
-        }
+        return JsonConvert.DeserializeObject<List<T>>(file.text) ?? new List<T>();
     }
 
     public static void DeleteSaveFile()
     {
         if (File.Exists(SavePath))
-        {
             File.Delete(SavePath);
-        }
     }
 }
 
@@ -186,7 +166,8 @@ public class SaveData
 {
     public int current_day;
     public int error_count;
-    public List<EmailData> emails;
+    public List<EmailData> availableMails;
+    public List<MailBox> currentMailBoxes;
     public List<TicketData> tickets;
 }
 
@@ -194,15 +175,24 @@ public class SaveData
 public class EmailData
 {
     public string mailBox;
+    public Boolean isRead = false;
     public string sender;
     public string subject;
     public string body;
-    public List<AttachmentData> attachments;
-    public List<InspectionFindingData> inspectionFindings = new();
+    public List<AttachmentData> attachments = new();
+    public List<EvidenceData> evidences = new();
 }
 
 [System.Serializable]
-public class InspectionFindingData
+public class MailBox
+{
+    public int newEmails = 0;
+    public string mailBox;
+    public List<EmailData> emails;
+}
+
+[System.Serializable]
+public class EvidenceData
 {
     // Generic fields support email, chat and database-backed inspections.
     public string findingId;
@@ -257,16 +247,6 @@ public class AttachmentData
     public string extension;
     public string linkedName;
     public AttachmentContent data;
-
-    public AttachmentData(DocumentType type, string fullname, AttachmentContent data)
-    {
-        documentType = type;
-        string[] temp = fullname.Split('.', 2);
-        name = temp[0];
-        extension = (temp.Length > 1) ? temp[1] : "exe";
-        linkedName = fullname;
-        this.data = data;
-    }
 }
 
 [System.Serializable]

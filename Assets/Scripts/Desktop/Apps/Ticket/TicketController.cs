@@ -37,10 +37,9 @@ public class TicketController : MonoBehaviour
     {
         HideTicketDetails();
 
-        currentSave = DataController.LoadEmails();
+        currentSave = DataController.LoadingGame();
         tickets = currentSave.tickets;
-        if (tickets == null)
-            tickets = DataController.LoadDailyJson(DataController.CurrentDay).tickets;
+        tickets ??= DataController.GetDailyDataJson(DataController.CurrentDay).tickets;
         tickets ??= new List<TicketData>();
         currentSave.tickets = tickets;
         UpdateTicketSidebar();
@@ -163,7 +162,7 @@ public class TicketController : MonoBehaviour
         ActionController.SendAction("ShowFeedback", new FeedbackData(correct, feedback));
 
         tickets.Remove(currentTicket);
-        DataController.SaveEmails(currentSave);
+        DataController.SavingGame(currentSave);
         currentTicket = null;
         HideTicketDetails();
         UpdateTicketSidebar();

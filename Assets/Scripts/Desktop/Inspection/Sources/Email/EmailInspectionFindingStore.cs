@@ -13,10 +13,10 @@ public sealed class EmailInspectionFindingStore : IInspectionFindingStore
 
     public bool HasFinding(string findingId)
     {
-        if (email?.inspectionFindings == null)
+        if (email?.evidences == null)
             return false;
 
-        return email.inspectionFindings.Exists(
+        return email.evidences.Exists(
             finding =>
                 finding != null
                 && (finding.findingId == findingId || finding.subruleId == findingId)
@@ -31,9 +31,9 @@ public sealed class EmailInspectionFindingStore : IInspectionFindingStore
         if (HasFinding(result.FindingId))
             return false;
 
-        email.inspectionFindings ??= new List<InspectionFindingData>();
-        email.inspectionFindings.Add(
-            new InspectionFindingData
+        email.evidences ??= new List<EvidenceData>();
+        email.evidences.Add(
+            new EvidenceData
             {
                 findingId = result.FindingId,
                 sourceType = "email",
@@ -48,7 +48,7 @@ public sealed class EmailInspectionFindingStore : IInspectionFindingStore
                 reason = result.Reason,
             }
         );
-        DataController.SaveEmails(save);
+        DataController.SavingGame(save);
         return true;
     }
 
