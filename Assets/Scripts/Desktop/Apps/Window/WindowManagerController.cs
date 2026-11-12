@@ -18,6 +18,9 @@ public class WindowManagerController : MonoBehaviour
     private WindowController windowRG;
 
     [SerializeField]
+    private WindowController windowChat;
+
+    [SerializeField]
     private WindowController windowMenu;
 
     private void Awake()
@@ -90,10 +93,7 @@ public class WindowManagerController : MonoBehaviour
                 .GetChild(i)
                 .GetComponentInChildren<WindowController>();
 
-            if (
-                window != null
-                && window.GetComponentInChildren<WindowMenuController>() != null
-            )
+            if (window != null && window.GetComponentInChildren<WindowMenuController>() != null)
             {
                 window.CloseWindow();
                 return;
@@ -116,6 +116,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.SyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
+        ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
         ActionController.SyncSignal("OpenWindowMenu", OpenWindowMenu);
     }
 
@@ -125,6 +126,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.UnsyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
+        ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
         ActionController.UnsyncSignal("OpenWindowMenu", OpenWindowMenu);
     }
 
@@ -146,6 +148,11 @@ public class WindowManagerController : MonoBehaviour
     private void InitRG(AttachmentContent data)
     {
         Instantiate(windowRG.gameObject, transform);
+    }
+
+    private void InitChat(AttachmentContent data)
+    {
+        Instantiate(windowChat.gameObject, transform);
     }
 
     private void OpenWindowMenu()

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: ChatNode 0
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: pede_senha
+  npcName: Lulinha
+  npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
+  npcMessage: "\"Ol\xE1! Precisamos validar sua conta. Pode me confirmar sua senha
+    atual?\""
+  typingDelay: 1.5
+  options:
+  - optionText: "\"N\xE3o, n\xE3o vou fornecer minha senha.\""
+    nextNodeId: fim_negou
+    securityScoreDelta: 10
+    feedbackTag: recusou_senha
+  - optionText: "\"Por que voc\xEA precisa disso?\""
+    nextNodeId: pergunta_porque
+    securityScoreDelta: 5
+    feedbackTag: questionou
+  - optionText: "\"Claro, \xE9 123456.\""
+    nextNodeId: fim_entregou
+    securityScoreDelta: -20
+    feedbackTag: entregou_senha
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
