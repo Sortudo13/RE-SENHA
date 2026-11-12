@@ -62,19 +62,14 @@ public class WindowController : MonoBehaviour
     public void SwapWindow()
     {
         if (gameObject.activeInHierarchy)
-        {
             MinimizeWindow();
-        }
         else
-        {
             OpenWindow();
-        }
     }
 
     public void CloseWindow()
     {
         ActionController.SendAction("OnWindowClosed");
-        ActionController.SendAction("HideNotificationBadge", AppName);
         MinimizeWindow();
         Destroy(gameObject);
     }

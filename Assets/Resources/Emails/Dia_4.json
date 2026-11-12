@@ -1,0 +1,58 @@
+[
+  {
+    "timeToReceive": 2,
+    "mailBox": "User",
+    "sender": "rh@nationaltech.com",
+    "subject": "Orientações do Dia 4 - O Fator Humano",
+    "body": "Neste dia, vamos testar como você lida com chantagens, ameaças e pedidos de 'colegas'. Golpistas usam pânico e urgência para fazer você errar. Fique atento a e-mails alarmistas.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 10,
+    "mailBox": "Company",
+    "sender": "seguranca-trabalho@empresa.com.br",
+    "subject": "Aviso: Treinamento de Evacuação",
+    "body": "Amanhã teremos um teste de alarme de incêndio às 14h. Por favor, utilizem as escadas e sigam as instruções dos brigadistas.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 30,
+    "mailBox": "Company",
+    "sender": "cancelamentos@saude-convenio.com.br",
+    "subject": "CANCELAMENTO DE PLANO DE SAÚDE - AÇÃO REQUERIDA",
+    "body": "Seu plano de saúde empresarial será suspenso à meia-noite devido a débitos. Para emitir a guia de regularização, acesse a <link=\"OpenURL|http://boleto-saude-br.com\">Central do Segurado</link> imediatamente.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 65,
+    "mailBox": "Company",
+    "sender": "marcos.souza.empresa@gmail.com",
+    "subject": "Favor urgente - Marcos (Seu Colega)",
+    "body": "Cara, esqueci minha senha da rede e estou no 3G pessoal. Pode baixar a planilha de metas de ontem que tá nesse link e me mandar as fotos? <link=\"OpenURL|http://share-drive-files.net\">Planilha_Metas_Marcos</link> Valeu!",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 90,
+    "mailBox": "Company",
+    "sender": "processos@tribunal-justica-gov.com",
+    "subject": "Intimação Judicial Eletrônica - Proc. Nº 482910",
+    "body": "Você foi intimado a comparecer em audiência. O não comparecimento acarretará multa. Baixe o documento anexo e habilite as macros do Word para visualizar o processo.",
+    "attachments": [
+      {
+        "documentType": 2,
+        "name": "intimacao_judicial",
+        "extension": "docm",
+        "linkedName": "<link=\"OpenAttachment|1\">intimacao_judicial.docm</link>",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "timeToReceive": 120,
+    "mailBox": "Company",
+    "sender": "ti-helpdesk@empresa.com.br",
+    "subject": "Chamado #8821 Resolvido",
+    "body": "Seu ticket sobre falha no mouse foi encerrado. A nova peça já foi deixada na sua mesa. Por favor, avalie nosso atendimento no portal interno.",
+    "attachments": []
+  }
+]

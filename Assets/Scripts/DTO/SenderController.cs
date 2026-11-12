@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SenderController : MonoBehaviour
 {
     void Awake()
     {
-        ActionController.SyncSignal("DayChanged", CreateRoutines);
+        ActionController.SyncSignal("WorkStarted", CreateRoutines);
     }
 
     void OnDestroy()
     {
-        ActionController.UnsyncSignal("DayChanged", CreateRoutines);
+        ActionController.UnsyncSignal("WorkStarted", CreateRoutines);
     }
 
     private void CreateRoutines()
@@ -30,13 +31,15 @@ public class SenderController : MonoBehaviour
 
             EmailData email = availableMails[0];
 
+            yield return new WaitUntil(() => (ClockController.CurrentHour >= email.hourToReceive && ClockController.CurrentMinute >= email.minuteToReceive) || !ClockController.IsStillWorking);
             yield return new WaitForSeconds(availableMails[0].timeToReceive);
 
             availableMails = DataController.CurrentSave.availableMails;
-            if (availableMails.Count <= 0)
-                yield break;
 
-            if (availableMails[0] != email)
+            if (!ClockController.IsStillWorking)
+                availableMails.RemoveAll(email => email.mailBox == "Company");
+
+            if (availableMails.Count <= 0 || availableMails[0] != email)
                 continue;
 
             availableMails.RemoveAt(0);
@@ -48,9 +51,31 @@ public class SenderController : MonoBehaviour
                     box.emails.Insert(0, email);
                     box.newEmails++;
                     ActionController.SendAction("MailChanged", email.mailBox);
+                    ActionController.SendAction("ShowNotificationBadge", "Email");
                     break;
                 }
             DataController.SavingGame();
         }
+    }
+
+    //Caso precise ordenar algum dia
+    private List<EmailData> OrderList(List<EmailData> emails)
+    {
+        return emails.OrderBy(email => GetSortTimeInMinutes(email)).ToList();
+    }
+
+    private int GetSortTimeInMinutes(EmailData email)
+    {
+        // E-mails sem horário agendado (-1) ganham prioridade e ficam no topo da fila
+        if (email.hourToReceive < 0)
+            return -1;
+
+        // Normaliza horários após a meia-noite (ex: 01:00 passa a valer 25h, vindo depois das 23:00)
+        int startH = ClockController.StartHour;
+        int normalizedHour = email.hourToReceive < startH
+            ? email.hourToReceive + 24
+            : email.hourToReceive;
+
+        return (normalizedHour * 60) + email.minuteToReceive;
     }
 }

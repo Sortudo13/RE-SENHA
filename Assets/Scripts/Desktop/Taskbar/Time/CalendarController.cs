@@ -33,10 +33,5 @@ public class CalendarController : MonoBehaviour
     private void ResetGame()
     {
         DataController.ResetGame();
-        // Debug show notification badge
-        ActionController.SendAction("ShowNotificationBadge", "Email");
-        ActionController.SendAction("ShowNotificationBadge", "Banco de Dados");
-        ActionController.SendAction("ShowNotificationBadge", "Requisições");
-        ActionController.SendAction("ShowNotificationBadge", "Manual");
     }
 }

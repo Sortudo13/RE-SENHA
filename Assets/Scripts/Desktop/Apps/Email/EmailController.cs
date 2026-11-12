@@ -23,6 +23,16 @@ public class EmailController : MonoBehaviour
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
     }
 
+    private void OnEnable()
+    {
+        ActionController.SyncSignal<string>("ShowNotificationBadge", OcultBadge);
+    }
+
+    private void OnDisable()
+    {
+        ActionController.UnsyncSignal<string>("ShowNotificationBadge", OcultBadge);
+    }
+
     private void OnDestroy()
     {
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
@@ -60,6 +70,12 @@ public class EmailController : MonoBehaviour
         }
 
         UpdateEmailListScreen(currentBox);
+    }
+
+    private void OcultBadge (string appName)
+    {
+        if (appName == "Email")
+            ActionController.SendAction("HideNotificationBadge", "Email");
     }
 
     private void MailChanged(string mailBox)
@@ -135,6 +151,7 @@ public class EmailController : MonoBehaviour
         Transform emailSubject = mailScreen.transform.Find("SubjectField");
         Transform emailBody = mailScreen.transform.Find("BodyField");
         Transform emailAttachments = mailScreen.transform.Find("AttachmentField");
+        Transform emailButtons = mailScreen.transform.Find("ButtonField");
 
         if (emailSender != null)
             emailSender.GetComponentInChildren<TextMeshProUGUI>().text = email.sender;
@@ -155,6 +172,8 @@ public class EmailController : MonoBehaviour
             else
                 attach.text = "Sem anexos";
         }
+        if (emailButtons != null)
+            emailButtons.gameObject.SetActive(currentBox.mailBox == "Company");
 
         transform.Find("Back").gameObject.SetActive(true);
         listScreen.SetActive(false);

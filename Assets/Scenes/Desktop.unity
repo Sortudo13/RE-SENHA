@@ -407,9 +407,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 166439463}
+  - component: {fileID: 166439464}
   - component: {fileID: 166439466}
   - component: {fileID: 166439465}
-  - component: {fileID: 166439464}
   m_Layer: 5
   m_Name: SenderController
   m_TagString: Untagged
@@ -433,8 +433,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 502.99, y: 174.34}
-  m_SizeDelta: {x: 51.37, y: 52.22}
+  m_AnchoredPosition: {x: 570, y: 172}
+  m_SizeDelta: {x: 47.22, y: 48.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &166439464
 MonoBehaviour:
@@ -1511,7 +1511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DesktopClockController
   startHour: 8
   endHour: 18
-  workDurationInMinutes: 5
+  workDurationInMinutes: 7
 --- !u!1 &1246062729
 GameObject:
   m_ObjectHideFlags: 0

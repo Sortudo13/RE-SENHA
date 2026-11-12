@@ -13,6 +13,7 @@ public class ClockController : MonoBehaviour
     [SerializeField] private float workDurationInMinutes = 5f;
 
     // Static properties for other scripts to query
+    public static int StartHour { get; private set; }
     public static int CurrentHour { get; private set; }
     public static int CurrentMinute { get; private set; }
     public static bool IsStillWorking { get; private set; }
@@ -25,19 +26,21 @@ public class ClockController : MonoBehaviour
     private void OnEnable()
     {
         if (TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI component))
-        {
             textTMPro = component;
-        }
+
         ActionController.SyncSignal("TimeUpdated", UpdateText);
+        ActionController.SyncSignal("DayChanged", StartWork);
     }
 
     private void OnDisable()
     {
          ActionController.UnsyncSignal("TimeUpdated", UpdateText);
+        ActionController.UnsyncSignal("DayChanged", StartWork);
     }
 
     void Start()
     {
+        StartHour = startHour;
         // Calculates how many hours the shift lasts in the game (e.g., 16 - 8 = 8 hours)
         totalWorkHours = endHour - startHour;
 

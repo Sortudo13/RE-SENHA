@@ -16,12 +16,14 @@ public class AlertManagerController : MonoBehaviour
     {
         AlertsLayer = transform;
         ActionController.SyncSignal<FeedbackData>("ShowFeedback", ShowFeedback);
+        ActionController.SyncSignal("ShowNextDay", ShowNextDay);
         ActionController.SyncSignal<FindingsAlertData>(ShowFindingsAction, ShowFindings);
     }
 
     private void OnDestroy()
     {
         ActionController.UnsyncSignal<FeedbackData>("ShowFeedback", ShowFeedback);
+        ActionController.UnsyncSignal("ShowNextDay", ShowNextDay);
         ActionController.UnsyncSignal<FindingsAlertData>(ShowFindingsAction, ShowFindings);
     }
 
@@ -67,6 +69,28 @@ public class AlertManagerController : MonoBehaviour
         {
             txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f); // Verde
         }
+
+        connectedAlert.SetActive(true);
+    }
+
+    private void ShowNextDay()
+    {
+        GameObject connectedAlert = Instantiate(alertWindow, AlertsLayer);
+        GameObject content = connectedAlert.transform.GetChild(0).gameObject;
+        TextMeshProUGUI txtTituloAviso = content.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        connectedAlert.SetActive(false);
+
+        if (content.transform.GetChild(2).TryGetComponent(out Button button))
+        {
+            button.GetComponentInChildren<TextMeshProUGUI>().text = "Avançar Dia";
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => DataController.AdvanceDay());
+        }
+
+        txtTituloAviso.text = "[Gerência]";
+        txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f);
+        txtFeedback.text = "Você terminou o seu expediente. Clique abaixo para avançar ao próximo dia.";
 
         connectedAlert.SetActive(true);
     }

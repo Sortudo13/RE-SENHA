@@ -65,16 +65,16 @@ public class IconController : MonoBehaviour
                 ActionController.SendAction($"ToFront_{windowController.AppID}");
             }
         }
-        ActionController.SendAction("HideNotificationBadge", appName);
         
+        ActionController.SendAction("HideNotificationBadge", appName);
     }
 
-    public void ShowNotificationBadge(string app)
+    private void ShowNotificationBadge(string app)
     {
         if(app == appName) notificationBadge.gameObject.SetActive(true); 
     }
 
-    public void HideNotificationBadge(string app)
+    private void HideNotificationBadge(string app)
     {
         if (app == appName) notificationBadge.gameObject.SetActive(false); 
     }

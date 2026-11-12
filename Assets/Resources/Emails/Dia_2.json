@@ -1,0 +1,66 @@
+[
+  {
+    "timeToReceive": 2,
+    "mailBox": "User",
+    "sender": "rh@nationaltech.com",
+    "subject": "Orientações do Dia 2 - Cuidado com Links",
+    "body": "Bom dia! Hoje o foco do nosso treinamento é a identificação de links maliciosos. Lembre-se: nem todo remetente é quem diz ser. Verifique os domínios com atenção antes de clicar.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 15,
+    "mailBox": "Company",
+    "sender": "ti-interna@empresa.com.br",
+    "subject": "Manutenção dos Servidores (Aviso Legítimo)",
+    "body": "Informamos que hoje às 22h realizaremos uma manutenção preventiva nos servidores locais. Os sistemas poderão apresentar instabilidade. Nenhuma ação é necessária da sua parte.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 35,
+    "mailBox": "Company",
+    "sender": "recursoshumanos@empresa-portal.com",
+    "subject": "URGENTE: Atualização de Dados Bancários",
+    "body": "Prezado colaborador, não conseguimos processar seu adiantamento salarial. Por favor, acesse <link=\"OpenURL|http://portal-empresa-rh.net\">http://rh.empresa.com.br/atualizar</link> em até 2 horas para corrigir seus dados.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 55,
+    "mailBox": "Company",
+    "sender": "marketing@empresa.com.br",
+    "subject": "Newsletter Corporativa - Março",
+    "body": "Confira as novidades do mês na nossa newsletter oficial! Destaque para a nova campanha de sustentabilidade.",
+    "attachments": [
+      {
+        "documentType": 0,
+        "name": "newsletter_marco",
+        "extension": "pdf",
+        "linkedName": "<link=\"OpenAttachment|1\">newsletter_marco.pdf</link>",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "timeToReceive": 80,
+    "mailBox": "Company",
+    "sender": "roberto.ceo@empresa.com.br",
+    "subject": "Transferência Confidencial",
+    "body": "Estou em uma reunião o dia todo e preciso que você faça uma transferência de urgência para um novo fornecedor. Acesse as instruções de pagamento aqui: <link=\"OpenURL|http://pagamentos-secure-ceo.com\">Instruções_Fornecedor</link>.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 110,
+    "mailBox": "Company",
+    "sender": "contato@logisticaexpress.com.br",
+    "subject": "Falha na entrega da sua encomenda",
+    "body": "Não foi possível entregar o seu pacote corporativo. Para reagendar, execute o arquivo de rastreamento em anexo para gerar um novo código QR.",
+    "attachments": [
+      {
+        "documentType": 2,
+        "name": "etiqueta_rastreio",
+        "extension": "bat",
+        "linkedName": "<link=\"OpenAttachment|1\">etiqueta_rastreio.bat</link>",
+        "data": {}
+      }
+    ]
+  }
+]

@@ -48,6 +48,8 @@
     ]
   },
   {
+    "hourToReceive": 10,
+    "minuteToReceive": 55,
     "timeToReceive": 120,
     "mailBox": "Company",
     "sender": "diretoria@empresa.com.br",

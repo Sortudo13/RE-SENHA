@@ -1,0 +1,82 @@
+[
+  {
+    "timeToReceive": 2,
+    "mailBox": "User",
+    "sender": "rh@nationaltech.com",
+    "subject": "Orientações do Dia 5 - O Desafio Final",
+    "body": "Parabéns por chegar até aqui! Hoje será o seu teste definitivo. Você receberá diversas ameaças e e-mails normais simultaneamente. Mantenha a calma e lembre-se de tudo que aprendeu.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 15,
+    "mailBox": "Company",
+    "sender": "no-reply@microsoft-365-auth.com",
+    "subject": "Sua senha corporativa expirou",
+    "body": "Sua senha de acesso ao pacote Office 365 expirou hoje. Para manter o acesso aos seus e-mails, <link=\"OpenURL|http://m1crosoft-office-login.com\">clique aqui para validar suas credenciais</link>.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 40,
+    "mailBox": "Company",
+    "sender": "rh@empresa.com.br",
+    "subject": "Nova Política de Home Office",
+    "body": "Prezados, leiam o anexo contendo a nova política de trabalho remoto válida a partir da próxima segunda-feira.",
+    "attachments": [
+      {
+        "documentType": 0,
+        "name": "politica_homeoffice",
+        "extension": "pdf",
+        "linkedName": "<link=\"OpenAttachment|1\">politica_homeoffice.pdf</link>",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "timeToReceive": 65,
+    "mailBox": "Company",
+    "sender": "faturamento@banco-nacional.com.br",
+    "subject": "Fatura Cartão Corporativo - Vencimento Hoje",
+    "body": "Segue a fatura do seu cartão. O arquivo está protegido por senha (sua data de nascimento). Descompacte para visualizar o boleto.",
+    "attachments": [
+      {
+        "documentType": 2,
+        "name": "fatura_nacional_pdf",
+        "extension": "zip",
+        "linkedName": "<link=\"OpenAttachment|1\">fatura_nacional_pdf.zip</link>",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "timeToReceive": 85,
+    "mailBox": "Company",
+    "sender": "sistema@intranet-empresa.com.br",
+    "subject": "Rotina de Backup Concluída",
+    "body": "O backup automático das suas pastas locais foi finalizado com sucesso às 02:00h da manhã. 14GB transferidos para a nuvem.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 110,
+    "mailBox": "Company",
+    "sender": "recrutamento@headhunter-elite.com",
+    "subject": "Proposta de Vaga - Confidencial",
+    "body": "Olá! Vimos seu perfil no LinkedIn e temos uma proposta com salário 3x maior. Acesse o <link=\"OpenURL|http://vagas-tech-malware.ru\">descritivo da vaga aqui</link>.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 130,
+    "mailBox": "Company",
+    "sender": "ti-suporte@empresa.com.br",
+    "subject": "Alerta de Vírus na Rede",
+    "body": "Detectamos um ransomware espalhando-se na nossa rede! Baixe nossa ferramenta antivírus de emergência agora mesmo para não perder seus arquivos!",
+    "attachments": [
+      {
+        "documentType": 2,
+        "name": "antivirus_emergencia",
+        "extension": "vbs",
+        "linkedName": "<link=\"OpenAttachment|1\">antivirus_emergencia.vbs</link>",
+        "data": {}
+      }
+    ]
+  }
+]

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class DataController
 {
@@ -16,7 +17,7 @@ public static class DataController
 
     public static int MaxDay
     {
-        get => PlayerPrefs.GetInt("MaxDay", 1);
+        get => PlayerPrefs.GetInt("MaxDay", 5);
         set => PlayerPrefs.SetInt("MaxDay", value);
     }
 
@@ -58,6 +59,13 @@ public static class DataController
     public static void AdvanceDay()
     {
         CurrentDay++;
+
+        if (CurrentDay >= MaxDay)
+        {
+            ResetGame();
+            SceneManager.LoadScene("GameWin");
+        }
+
         LoadDay();
         ActionController.SendAction("DayChanged");
     }
@@ -180,6 +188,8 @@ public class EmailData
     public string mailBox;
     public Boolean isRead = false;
     public float timeToReceive = 0f;
+    public int hourToReceive = -1;
+    public int minuteToReceive = -1;
     public string sender;
     public string subject;
     public string body;
