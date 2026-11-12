@@ -538,6 +538,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: windowName
+      value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: showInTaskbar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: minimizeWithAll
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: m_Name
       value: Window Menu
@@ -623,7 +635,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8172235518593796383, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       insertIndex: -1
@@ -632,6 +645,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2133503591580528430}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3039954384743724497}
     - targetCorrespondingSourceObject: {fileID: 6044872297503187655, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2139040426818163454}
@@ -656,9 +672,28 @@ MonoBehaviour:
   exitButton: {fileID: 5209309296840337269}
   returnToMenuButton: {fileID: 5166982453914057608}
   mainMenuSceneName: MainMenu
-  pauseGameWhileOpen: 1
 --- !u!224 &6415413634177543429 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
   m_PrefabInstance: {fileID: 5661456853628513187}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7242305650036310661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+  m_PrefabInstance: {fileID: 5661456853628513187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3039954384743724497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242305650036310661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b4d12760fd21fd5be01e8ba88c0299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WindowMenuController
+  exitButton: {fileID: 5209309296840337269}
+  returnToMenuButton: {fileID: 5166982453914057608}
+  mainMenuSceneName: MainMenu

@@ -1756,6 +1756,7 @@ MonoBehaviour:
   windowEmail: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
   windowManual: {fileID: 8361798000228143058, guid: 1addb118b00af524ab70d7e607e9ea1d, type: 3}
   windowRG: {fileID: 9096935942626009820, guid: 76797d72c5aeeb643a27c71ce23a009d, type: 3}
+  windowMenu: {fileID: 6718230981240750156, guid: 6b4ce29ab0f34a0dea172e1a869be511, type: 3}
 --- !u!1 &1302115837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,6 +1771,7 @@ GameObject:
   - component: {fileID: 1302115839}
   - component: {fileID: 1302115843}
   - component: {fileID: 1302115844}
+  - component: {fileID: 1302115845}
   m_Layer: 5
   m_Name: Windows Button
   m_TagString: Untagged
@@ -1852,6 +1854,18 @@ MonoBehaviour:
           m_StringArgument: Resetar Jogo
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1302115845}
+        m_TargetAssemblyTypeName: TaskbarButtonController, Assembly-CSharp
+        m_MethodName: OpenWindowMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1302115840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,6 +1934,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b977a4bef3bc82047befd6d5e7011405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActionButtonController
+--- !u!114 &1302115845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302115837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de0dc67226ce8b4b9fcd32582d13bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskbarButtonController
 --- !u!1 &1520624390
 GameObject:
   m_ObjectHideFlags: 0
