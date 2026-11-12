@@ -2,12 +2,10 @@ using System.Collections.Generic;
 
 public sealed class EmailInspectionFindingStore : IInspectionFindingStore
 {
-    private readonly SaveData save;
     private readonly EmailData email;
 
-    public EmailInspectionFindingStore(SaveData save, EmailData email)
+    public EmailInspectionFindingStore(EmailData email)
     {
-        this.save = save;
         this.email = email;
     }
 
@@ -25,7 +23,7 @@ public sealed class EmailInspectionFindingStore : IInspectionFindingStore
 
     public bool TryRegisterFinding(InspectionEvaluationResult result)
     {
-        if (result == null || save == null || email == null)
+        if (result == null|| email == null)
             return false;
 
         if (HasFinding(result.FindingId))
@@ -48,7 +46,7 @@ public sealed class EmailInspectionFindingStore : IInspectionFindingStore
                 reason = result.Reason,
             }
         );
-        DataController.SavingGame(save);
+        DataController.SavingGame();
         return true;
     }
 

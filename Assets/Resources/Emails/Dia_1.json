@@ -1,6 +1,7 @@
 [
   {
-    "mailBox": "Company",
+    "timeToReceive": 2,
+    "mailBox": "User",
     "sender": "rh@nationaltech.com",
     "subject": "Bem-vindo à equipe - Orientações do Dia 1",
     "body": "Olá! Seja bem-vindo à nossa equipe de segurança digital. Por favor, leia o manual anexado com os procedimentos do seu primeiro dia de trabalho.",
@@ -15,6 +16,7 @@
     ]
   },
   {
+    "timeToReceive": 10,
     "mailBox": "Company",
     "sender": "suporte-ti@gmai1-seguranca.com",
     "subject": "Atualização de Senha Obrigatória",
@@ -22,6 +24,7 @@
     "attachments": []
   },
   {
+    "timeToReceive": 30,
     "mailBox": "Company",
     "sender": "financeiro@empresa.com.br",
     "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
@@ -29,6 +32,7 @@
     "attachments": []
   },
   {
+    "timeToReceive": 60,
     "mailBox": "Company",
     "sender": "fornecedor@graficaexpressa.com.br",
     "subject": "Nota Fiscal do Serviço de Impressão",
@@ -44,6 +48,7 @@
     ]
   },
   {
+    "timeToReceive": 120,
     "mailBox": "Company",
     "sender": "diretoria@empresa.com.br",
     "subject": "Aviso Importante sobre Reunião Geral",

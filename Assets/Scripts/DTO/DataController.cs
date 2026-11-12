@@ -6,6 +6,8 @@ using UnityEngine;
 
 public static class DataController
 {
+    private static SaveData currentSave;
+    public static SaveData CurrentSave => currentSave ??= LoadingGame();
     public static int CurrentDay
     {
         get => PlayerPrefs.GetInt("CurrentDay", 1);
@@ -56,35 +58,33 @@ public static class DataController
     public static void AdvanceDay()
     {
         CurrentDay++;
-        ActionController.SendAction("DayChanged");
         LoadDay();
+        ActionController.SendAction("DayChanged");
     }
 
     public static void LoadDay()
     {
         SaveData save = GetDailyDataJson(CurrentDay);
-        if (PersistMailBox && File.Exists(SavePath))
+        if (PersistMailBox && currentSave != null)
         {
-            SaveData currentSave = null;
-            string json = File.ReadAllText(SavePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                currentSave = JsonConvert.DeserializeObject<SaveData>(json);
-                List<EmailData> oldMails = currentSave.currentMailBoxes.Find(box => box.mailBox == "User").emails ?? new List<EmailData>();
-                save.currentMailBoxes.Find(box => box.mailBox == "User").emails = oldMails;
-            }
+            MailBox userBox = currentSave.currentMailBoxes.Find(box => box.mailBox == "User");
+            List<EmailData> oldMails = userBox?.emails ?? new List<EmailData>();
+            save.currentMailBoxes.Find(box => box.mailBox == "User").emails = oldMails;
         }
+        currentSave = save;
         SavingGame(save);
     }
 
     public static void ResetGame()
     {
         DeleteSaveFile();
+        currentSave = null;
         LoadingGame();
     }
 
-    public static void SavingGame(SaveData save)
+    public static void SavingGame(SaveData save = null)
     {
+        save ??= currentSave;
         save.current_day = CurrentDay;
         save.error_count = CurrentErrorCount;
         string json = JsonConvert.SerializeObject(save, Formatting.Indented);
@@ -105,10 +105,13 @@ public static class DataController
             CurrentDay = 1;
             CurrentErrorCount = 0;
             save = GetDailyDataJson(CurrentDay);
-            SavingGame(save);
         }
-        CurrentDay = save.current_day;
-        CurrentErrorCount = save.error_count;
+        currentSave = save;
+
+        CurrentDay = currentSave.current_day;
+        CurrentErrorCount = currentSave.error_count;
+        SavingGame();
+
         ActionController.SendAction("DayChanged");
         return save;
     }
@@ -176,6 +179,7 @@ public class EmailData
 {
     public string mailBox;
     public Boolean isRead = false;
+    public float timeToReceive = 0f;
     public string sender;
     public string subject;
     public string body;

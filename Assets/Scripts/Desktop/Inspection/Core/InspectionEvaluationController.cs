@@ -38,13 +38,12 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
     private void SetEmailContext(EmailSelectionContext context)
     {
-        CurrentSave = context?.Save;
         CurrentEmail = context?.Email;
         currentSurface = CurrentEmail == null
             ? null
             : new EmailInspectionSurface(
                 CurrentEmail,
-                new EmailInspectionFindingStore(CurrentSave, CurrentEmail)
+                new EmailInspectionFindingStore(CurrentEmail)
             );
 
         CurrentResults = currentSurface == null || manual == null
