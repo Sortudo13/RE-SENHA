@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Linq;
 
 public sealed class EmailDecisionController : MonoBehaviour
 {
@@ -41,6 +39,11 @@ public sealed class EmailDecisionController : MonoBehaviour
             return;
         }
 
+        // Os botoes so aparecem com um email aberto; a checagem evita contar uma decisao sem email.
+        EmailData email = evaluation.CurrentEmail;
+        if (email == null)
+            return;
+
         bool emailHasFindings = evaluation.CurrentResults.Count > 0;
         bool correctDecision = blockEmail == emailHasFindings;
         string feedbackMessage = correctDecision
@@ -51,34 +54,9 @@ public sealed class EmailDecisionController : MonoBehaviour
                 ? "Erro de análise! O e-mail não possui achados aplicáveis."
                 : "Erro de análise! O e-mail possui achados de segurança.";
 
-        if (!correctDecision)
-            DataController.CurrentErrorCount++;
-
+        DayProgressController.RegisterAnswer(correctDecision);
         ActionController.SendAction("ShowFeedback", new FeedbackData(correctDecision, feedbackMessage));
-        ActionController.SendAction("RemoveEmail", evaluation.CurrentEmail);
-
-        FinishedDay();
-    }
-
-    private void FinishedDay()
-    {
-        if (DataController.CurrentErrorCount >= DataController.MaxErrors)
-        {
-            DataController.ResetGame();
-            SceneManager.LoadScene("GameOver");
-        }
-
-        if (!ClockController.IsStillWorking)
-        {
-            int remainingCompanyEmails = DataController.CurrentSave.currentMailBoxes.Find(box => box.mailBox == "Company").emails.Count;
-            int availableCompanyEmails = DataController.CurrentSave.availableMails.Count(mail => mail.mailBox == "Company");
-            int remainingTickets = DataController.CurrentSave.tickets.Count;
-
-            bool hasPendingEmails = remainingCompanyEmails > 0 || availableCompanyEmails > 0;
-            bool hasPendingTickets = remainingTickets > 0 && false;
-
-            if (!hasPendingEmails && !hasPendingTickets)
-                ActionController.SendAction("ShowNextDay");
-        }
+        ActionController.SendAction("RemoveEmail", email);
+        DayProgressController.CheckDayEnd();
     }
 }

@@ -19,7 +19,7 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
     private void Awake()
     {
-        ActionController.SyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
+        ActionController.SyncSignal<EmailData>(EmailSelectedAction, SetEmail);
         try
         {
             manual = ManualRepository.Load();
@@ -32,12 +32,12 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
+        ActionController.UnsyncSignal<EmailData>(EmailSelectedAction, SetEmail);
     }
 
-    private void SetEmailContext(EmailSelectionContext context)
+    private void SetEmail(EmailData email)
     {
-        CurrentEmail = context?.Email;
+        CurrentEmail = email;
         currentSurface = CurrentEmail == null
             ? null
             : new EmailInspectionSurface(

@@ -39,6 +39,9 @@ public class EmailController : MonoBehaviour
         ActionController.UnsyncSignal("ShowList", ShowList);
         ActionController.UnsyncSignal<string>("MailChanged", MailChanged);
         ActionController.UnsyncSignal<EmailData>("RemoveEmail", RemoveEmail);
+
+        if (currentEmail != null)
+            PublishCurrentEmail(null);
     }
 
     void Start()
@@ -131,13 +134,17 @@ public class EmailController : MonoBehaviour
             ShowMail(email);
         else
             ShowList();
+    }
 
-        ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(email));
+    private static void PublishCurrentEmail(EmailData email)
+    {
+        ActionController.SendAction("CurrentEmailChanged", email);
     }
 
     private void ShowMail(EmailData email)
     {
         currentEmail = email;
+        PublishCurrentEmail(email);
 
         if (!currentEmail.isRead)
         {
@@ -182,6 +189,8 @@ public class EmailController : MonoBehaviour
 
     private void ShowList()
     {
+        if (currentEmail != null)
+            PublishCurrentEmail(null);
         currentEmail = null;
         transform.Find("Back").gameObject.SetActive(false);
         mailScreen.SetActive(false);
