@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -43.994995
       objectReference: {fileID: 0}
+    - target: {fileID: 1396022272196442468, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1431358582074098205, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Name
       value: BodyField
@@ -306,11 +310,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5439682610079401997, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5439682610079401997, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5439682610079401997, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMin.y
@@ -384,6 +388,10 @@ PrefabInstance:
       propertyPath: m_Value
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6883491098517309290, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_text
+      value: Ticket
+      objectReference: {fileID: 0}
     - target: {fileID: 6976707515326297691, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -414,6 +422,10 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 8987ced64cf9d5b468d631252e258b63, type: 3}
     - target: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: windowName
+      value: "Requisi\xE7\xF5es"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: windowHeaderName
       value: "Requisi\xE7\xF5es"
       objectReference: {fileID: 0}
     - target: {fileID: 8151440856020531306, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
@@ -470,7 +482,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8662032296862331331, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_Size
-      value: 0.999999
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860279041041187925, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
+      propertyPath: m_text
+      value: "Requisi\xE7\xF5es"
       objectReference: {fileID: 0}
     - target: {fileID: 8868862832031911359, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
       propertyPath: m_AnchorMax.x

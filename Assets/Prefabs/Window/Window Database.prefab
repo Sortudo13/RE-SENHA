@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: windowName
       value: Banco de Dados
       objectReference: {fileID: 0}
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: windowHeaderName
+      value: Database
+      objectReference: {fileID: 0}
     - target: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.64593506
@@ -241,6 +245,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1972768651503868288, guid: 3472bbc95ab927d409259b38c7f2b905, type: 3}
+      propertyPath: m_text
+      value: Database
+      objectReference: {fileID: 0}
     - target: {fileID: 1973056906224266996, guid: 3472bbc95ab927d409259b38c7f2b905, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -407,7 +415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5183782879520771881, guid: 3472bbc95ab927d409259b38c7f2b905, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5213351022818325310, guid: 3472bbc95ab927d409259b38c7f2b905, type: 3}
       propertyPath: m_AnchorMax.x
