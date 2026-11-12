@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3085010233355295499, guid: 09f15d98261718243a318f6db0111e76, type: 3}
+      propertyPath: m_text
+      value: Email
+      objectReference: {fileID: 0}
     - target: {fileID: 3579995640414209987, guid: 09f15d98261718243a318f6db0111e76, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -1
@@ -416,6 +420,10 @@ PrefabInstance:
       objectReference: {fileID: -5739248805895703791, guid: 11661dc963ff171459f80f133264f1b0, type: 3}
     - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: windowName
+      value: Email
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: windowHeaderName
       value: Email
       objectReference: {fileID: 0}
     - target: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
