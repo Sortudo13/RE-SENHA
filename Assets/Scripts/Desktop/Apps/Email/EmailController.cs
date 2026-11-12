@@ -11,7 +11,6 @@ public class EmailController : MonoBehaviour
 
     private EmailData currentEmail = null;
     private MailBox currentBox = null;
-    private SaveData currentSave = null;
     private List<MailBox> mailBoxes = null;
     private GameObject listScreen;
     private GameObject mailScreen;
@@ -20,7 +19,7 @@ public class EmailController : MonoBehaviour
     {
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.SyncSignal("ShowList", ShowList);
-        ActionController.SyncSignal<EmailData>("AddEmail", AddEmail);
+        ActionController.SyncSignal<string>("MailChanged", MailChanged);
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
     }
 
@@ -28,7 +27,7 @@ public class EmailController : MonoBehaviour
     {
         ActionController.UnsyncSignal<string>("OpenAttachment", OpenAttachment);
         ActionController.UnsyncSignal("ShowList", ShowList);
-        ActionController.UnsyncSignal<EmailData>("AddEmail", AddEmail);
+        ActionController.UnsyncSignal<string>("MailChanged", MailChanged);
         ActionController.UnsyncSignal<EmailData>("RemoveEmail", RemoveEmail);
     }
 
@@ -39,24 +38,12 @@ public class EmailController : MonoBehaviour
 
         ShowList();
         LoadEmails();
-        GenerateEmails();
-    }
-
-    private void GenerateEmails()
-    {
-        List<EmailData> generatedMails = currentSave.availableMails;
-
-        foreach (EmailData email in generatedMails)
-        {
-            currentBox.emails.Add(email);
-        }
     }
 
     private void LoadEmails()
     {
-        currentSave = DataController.LoadingGame();
-        mailBoxes = currentSave.currentMailBoxes;
-        currentBox = mailBoxes.Find(box => box.mailBox == "Company");
+        mailBoxes = DataController.CurrentSave.currentMailBoxes;
+        currentBox = mailBoxes.Find(box => box.mailBox == "User");
 
         Transform userTarget = transform.Find("User");
         if (userTarget != null && userTarget.TryGetComponent(out Button userButton))
@@ -75,21 +62,10 @@ public class EmailController : MonoBehaviour
         UpdateEmailListScreen(currentBox);
     }
 
-    private void AddEmail(EmailData newEmail)
+    private void MailChanged(string mailBox)
     {
-        if (newEmail == null)
-            return;
-
-        foreach (MailBox box in mailBoxes)
-            if (box.mailBox == newEmail.mailBox)
-            {
-                box.emails.Add(newEmail);
-                box.newEmails++;
-            }
-
-        if (currentBox != null && newEmail.mailBox == currentBox.mailBox)
+        if (currentBox != null && currentBox.mailBox == mailBox)
             UpdateEmailListScreen(currentBox);
-        DataController.SavingGame(currentSave);
     }
 
     private void RemoveEmail(EmailData email)
@@ -97,29 +73,23 @@ public class EmailController : MonoBehaviour
         if (email == null)
             return;
 
-        Boolean removed = false;
         foreach (MailBox box in mailBoxes)
             if (box.mailBox == email.mailBox && box.emails.Contains(email))
             {
+                if (!email.isRead)
+                    box.newEmails = Math.Max(0, box.newEmails - 1);
                 box.emails.Remove(email);
-                removed = true;
+                DataController.SavingGame();
+                ActionController.SendAction("MailChanged", email.mailBox);
+                if (email == currentEmail)
+                    ShowList();
+                break;
             }
-
-        if (removed)
-        {
-            if (currentBox != null && email.mailBox == currentBox.mailBox)
-                UpdateEmailListScreen(currentBox);
-            if (email == currentEmail)
-                OpenEmail(currentEmail);
-            DataController.SavingGame(currentSave);
-        }
     }
 
     private void UpdateEmailListScreen(MailBox box)
     {
         currentBox = box;
-        currentBox.newEmails = Math.Max(0, currentBox.newEmails - 1);
-        DataController.SavingGame(currentSave);
 
         Transform listContainer = listScreen.transform.Find("ListContainer");
         if (listContainer.childCount > 0)
@@ -146,14 +116,20 @@ public class EmailController : MonoBehaviour
         else
             ShowList();
 
-        ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(currentSave, email));
+        ActionController.SendAction("CurrentEmailChanged", new EmailSelectionContext(email));
     }
 
     private void ShowMail(EmailData email)
     {
         currentEmail = email;
-        currentEmail.isRead = true;
-        DataController.SavingGame(currentSave);
+
+        if (!currentEmail.isRead)
+        {
+            currentBox.newEmails = Math.Max(0, currentBox.newEmails - 1);
+            currentEmail.isRead = true;
+            DataController.SavingGame();
+        }
+
 
         Transform emailSender = mailScreen.transform.Find("SenderField");
         Transform emailSubject = mailScreen.transform.Find("SubjectField");

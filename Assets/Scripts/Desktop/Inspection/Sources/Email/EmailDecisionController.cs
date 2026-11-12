@@ -61,14 +61,15 @@ public sealed class EmailDecisionController : MonoBehaviour
         ActionController.SendAction("ShowFeedback", new FeedbackData(correctDecision, feedbackMessage));
         ActionController.SendAction("RemoveEmail", email);
 
-        int remainingEmails = save.currentMailBoxes.Find(box => box.mailBox == "Company").emails.Count;
+        int remainingEmails = DataController.CurrentSave.currentMailBoxes.Find(box => box.mailBox == "Company").emails.Count;
+        int availableEmails = DataController.CurrentSave.availableMails.Count;
         if (
-            (remainingEmails == 0 && DataController.CurrentDay >= DataController.MaxDay)
+            (remainingEmails == 0 && availableEmails == 0 && DataController.CurrentDay >= DataController.MaxDay)
             || DataController.CurrentErrorCount >= DataController.MaxErrors
         )
         {
             // A troca de cena destroi a janela do Email; antes ela era fechada aqui, tocando o som de fechar janela.
-            string endingScene = (remainingEmails == 0) ? "GameWin" : "GameOver";
+            string endingScene = (remainingEmails == 0 && availableEmails == 0) ? "GameWin" : "GameOver";
             DataController.ResetGame();
             SceneManager.LoadScene(endingScene);
         }
