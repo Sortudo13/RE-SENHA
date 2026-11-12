@@ -10,6 +10,14 @@ public class WindowController : MonoBehaviour
     [SerializeField]
     private string windowName;
 
+    [Header("Nome da Janela (para exibição no header)")]
+    [SerializeField]
+    [Tooltip(
+        "Nome que aparece no header da janela. Se não for fornecido, o nome do app será usado."
+    )]
+    private string windowHeaderName;
+    private TextMeshProUGUI headerText;
+
     [Header("Comportamento")]
     [SerializeField]
     private bool showInTaskbar = true; //para casos como o Window Menu, que não deve aparecer na taskbar
@@ -26,6 +34,35 @@ public class WindowController : MonoBehaviour
     private void Awake()
     {
         myID = $"Win_{gameObject.GetEntityId()}";
+
+        UpdateHeaderText();
+    }
+
+    private void OnValidate()
+    {
+        UpdateHeaderText();
+    }
+
+    private void UpdateHeaderText()
+    {
+        if (headerText == null)
+        {
+            foreach (Transform child in GetComponentsInChildren<Transform>(true))
+            {
+                if (child.name != "WindowHeaderName")
+                    continue;
+
+                headerText = child.GetComponent<TextMeshProUGUI>();
+                break;
+            }
+        }
+
+        if (headerText == null)
+            return;
+
+        headerText.text = string.IsNullOrWhiteSpace(windowHeaderName)
+            ? windowName
+            : windowHeaderName;
     }
 
     private void Start()
@@ -113,8 +150,7 @@ public class WindowController : MonoBehaviour
 
     private bool ShouldMinimizeWithAll()
     {
-        return minimizeWithAll
-            && !IsWindowMenu();
+        return minimizeWithAll && !IsWindowMenu();
     }
 
     private bool IsWindowMenu()
