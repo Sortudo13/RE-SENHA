@@ -12,7 +12,6 @@ public sealed class InspectionEvaluationController : MonoBehaviour
     private IInspectionSurface currentSurface;
 
     public EmailData CurrentEmail { get; private set; }
-    public SaveData CurrentSave { get; private set; }
     public IReadOnlyList<InspectionEvaluationResult> CurrentResults { get; private set; } =
         Array.Empty<InspectionEvaluationResult>();
 

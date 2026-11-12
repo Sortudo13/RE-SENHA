@@ -41,11 +41,6 @@ public sealed class EmailDecisionController : MonoBehaviour
             return;
         }
 
-        EmailData email = evaluation.CurrentEmail;
-        SaveData save = evaluation.CurrentSave;
-        if (email == null || save == null)
-            return;
-
         bool emailHasFindings = evaluation.CurrentResults.Count > 0;
         bool correctDecision = blockEmail == emailHasFindings;
         string feedbackMessage = correctDecision
@@ -60,7 +55,7 @@ public sealed class EmailDecisionController : MonoBehaviour
             DataController.CurrentErrorCount++;
 
         ActionController.SendAction("ShowFeedback", new FeedbackData(correctDecision, feedbackMessage));
-        ActionController.SendAction("RemoveEmail", email);
+        ActionController.SendAction("RemoveEmail", evaluation.CurrentEmail);
 
         FinishedDay();
     }
