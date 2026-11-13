@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3022613822819712078, guid: 09f15d98261718243a318f6db0111e76, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3085010233355295499, guid: 09f15d98261718243a318f6db0111e76, type: 3}
       propertyPath: m_text
@@ -406,6 +406,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 211753559286953539, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      propertyPath: m_text
+      value: Email
+      objectReference: {fileID: 0}
     - target: {fileID: 678021294492475835, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: m_Maskable
       value: 1

@@ -218,7 +218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &106314757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,15 +617,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<size=120%><b>CR\xC9DITOS</b></size>\n\n\n\n<size=90%><color=#FFD966><b>DIRE\xC7\xC3O</b></color></size>\nFulano
-    de Tal\n\n\n\n<size=90%><color=#FFD966><b>PROGRAMA\xC7\xC3O</b></color></size>\nCiclano
-    da Silva\nBeltrano Souza\n\n\n\n<size=90%><color=#FFD966><b>DESIGN E ARTE</b></color></size>\nSicrano
-    Oliveira\nMariazinha Costa\n\n\n\n<size=90%><color=#FFD966><b>M\xDASICA E EFEITOS
-    SONOROS</b></color></size>\nJo\xE3ozinho Pereira\n\n\n\n<size=90%><color=#FFD966><b>TESTES
-    E QA</b></color></size>\nAna Beatriz\nCarlos Eduardo\nFernanda Lima\n\n\n\n<size=90%><color=#FFD966><b>AGRADECIMENTOS
-    ESPECIAIS</b></color></size>\nA toda a comunidade que apoiou o projeto\nAos amigos
-    e familiares\nE a voc\xEA, que jogou at\xE9 o fim <3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<size=200%><b>OBRIGADO
-    POR JOGAR!</b></size>\n\n\n<size=80%><i>Feito com Unity e muito caf\xE9 \u2615</i></size>"
+  m_text: "<size=120%><b>CR\xC9DITOS</b></size>\n\n\n\n<size=90%><color=#FFD966><b>ORIENTA\xC7\xC3O</b></color></size>\nLeonardo
+    Tortoro Pereira\n\n\n\n<size=90%><color=#FFD966><b>DIRE\xC7\xC3O DE ARTE, UI/UX
+    E DESENVOLVIMENTO</b></color></size>\nRyan Hideki Tadeo Guimar\xE3es\n\n\n\n<size=90%><color=#FFD966><b>GAME
+    DESIGN E PRODU\xC7\xC3O VISUAL</b></color></size>\nRafael Daiki Kaneko\n\n\n\n<size=90%><color=#FFD966><b>PROGRAMA\xC7\xC3O
+    E LIDERAN\xC7A T\xC9CNICA</b></color></size>\nAndr\xE9 Luis Dias Nogueira\n\n\n\n<size=90%><color=#FFD966><b>ROTEIRIZA\xC7\xC3O
+    E CONTE\xDADO T\xC9CNICO</b></color></size>\nFelipe Melchior de Britto\n\n\n\n<size=90%><color=#FFD966><b>AGRADECIMENTOS
+    ESPECIAIS</b></color></size>\n\xC0 UNESP e ao DEMAC\nAos amigos e familiares\nE
+    a voc\xEA, que jogou at\xE9 o fim <3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<size=200%><b>OBRIGADO
+    POR JOGAR!</b></size>\n\n\n<size=80%><i>Feito com Unity e muita conscientiza\xE7\xE3o
+    digital \u2615\U0001F512</i></size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
   m_sharedMaterial: {fileID: -8858064809551631060, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
@@ -880,7 +881,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -770, y: -304}
+  m_AnchoredPosition: {x: -802, y: -405}
   m_SizeDelta: {x: 234.08, y: 99.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &498305917
@@ -1822,7 +1823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1737003381
 MonoBehaviour:
   m_ObjectHideFlags: 0
