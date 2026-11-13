@@ -397,7 +397,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CursorController
   cursorTextureDefault: {fileID: 2800000, guid: 4cca5ead48de7a64ebd390e3444cd779, type: 3}
-  cursorTextureHand: {fileID: 2800000, guid: 8ce47278e0810fd419f0078f7c678fd9, type: 3}
+  cursorTexturePoint: {fileID: 2800000, guid: 8ce47278e0810fd419f0078f7c678fd9, type: 3}
+  cursorTextureHand: {fileID: 2800000, guid: d71bba6d78aea5d4a97ea7e598f89be4, type: 3}
 --- !u!1 &166439462
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,10 +432,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 347541439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 570, y: 172}
-  m_SizeDelta: {x: 47.22, y: 48.29}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 81.00003, y: 69}
+  m_SizeDelta: {x: 47.21997, y: 48.29001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &166439464
 MonoBehaviour:
