@@ -61,7 +61,7 @@ public class EmailController : MonoBehaviour
         mailBoxes = DataController.CurrentSave.currentMailBoxes;
         currentBox = mailBoxes.Find(box => box.mailBox == "User");
 
-        Transform userTarget = transform.Find("User");
+        Transform userTarget = transform.Find("ListScreen/User");
         if (userTarget != null && userTarget.TryGetComponent(out Button userButton))
         {
             userButton.onClick.RemoveAllListeners();
@@ -69,7 +69,7 @@ public class EmailController : MonoBehaviour
             userButton.onClick.AddListener(() => ShowList());
         }
 
-        Transform companyTarget = transform.Find("Company");
+        Transform companyTarget = transform.Find("ListScreen/Company");
         if (companyTarget != null && companyTarget.TryGetComponent(out Button companyButton))
         {
             companyButton.onClick.RemoveAllListeners();
@@ -107,7 +107,7 @@ public class EmailController : MonoBehaviour
             return;
 
         foreach (MailBox box in mailBoxes)
-            SetUnreadBadge(transform.Find(box.mailBox), box.emails.Exists(email => !email.isRead));
+            SetUnreadBadge(transform.Find("ListScreen/"+box.mailBox), box.emails.Exists(email => !email.isRead));
     }
 
     private void RemoveEmail(EmailData email)
