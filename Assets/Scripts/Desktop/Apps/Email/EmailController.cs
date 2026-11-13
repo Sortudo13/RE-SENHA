@@ -15,6 +15,9 @@ public class EmailController : MonoBehaviour
     private GameObject listScreen;
     private GameObject mailScreen;
 
+    // Bolinha de nao lido: filho "UnreadBadge" do item da lista e dos botoes User/Company.
+    private const string UnreadBadgeName = "UnreadBadge";
+
     private void Awake()
     {
         ActionController.SyncSignal<string>("OpenAttachment", OpenAttachment);
@@ -85,6 +88,24 @@ public class EmailController : MonoBehaviour
     {
         if (currentBox != null && currentBox.mailBox == mailBox)
             UpdateEmailListScreen(currentBox);
+        else
+            UpdateBoxBadges();
+    }
+
+    private static void SetUnreadBadge(Transform target, bool visible)
+    {
+        Transform badge = target != null ? target.Find(UnreadBadgeName) : null;
+        if (badge != null)
+            badge.gameObject.SetActive(visible);
+    }
+
+    private void UpdateBoxBadges()
+    {
+        if (mailBoxes == null)
+            return;
+
+        foreach (MailBox box in mailBoxes)
+            SetUnreadBadge(transform.Find(box.mailBox), box.emails.Exists(email => !email.isRead));
     }
 
     private void RemoveEmail(EmailData email)
@@ -125,7 +146,10 @@ public class EmailController : MonoBehaviour
                 botao.onClick.AddListener(() => OpenEmail(email));
             }
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = email.subject;
+            SetUnreadBadge(newButton.transform, !email.isRead);
         }
+
+        UpdateBoxBadges();
     }
 
     public void OpenEmail(EmailData email)
@@ -151,6 +175,8 @@ public class EmailController : MonoBehaviour
             currentBox.newEmails = Math.Max(0, currentBox.newEmails - 1);
             currentEmail.isRead = true;
             DataController.SavingGame();
+            // Apaga a bolinha do item e, se for o ultimo nao lido, a da caixa.
+            UpdateEmailListScreen(currentBox);
         }
 
 

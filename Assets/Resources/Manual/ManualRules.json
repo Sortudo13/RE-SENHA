@@ -10,20 +10,20 @@
       "field": "Sender",
       "subrules": [
         {
-          "id": "subrule-sender-domain-nationaltech",
-          "description": "O endereço do remetente deve terminar em @nationaltech.com.",
+          "id": "subrule-sender-domain-corporate",
+          "description": "O endereço do remetente deve terminar exatamente em @empresa.com.br.",
           "check": {
             "type": "SenderDomain",
             "allowedDomains": [
-              "nationaltech.com"
+              "empresa.com.br"
             ],
             "caseSensitive": false
           },
           "finding": {
             "rule": "Verificação do remetente",
-            "evidence": "O domínio do remetente não está na lista permitida.",
-            "explanation": "O remetente usa um domínio diferente de @nationaltech.com.",
-            "reason": "Somente o domínio corporativo nationaltech.com é aceito."
+            "evidence": "O domínio do remetente não é o domínio corporativo.",
+            "explanation": "O remetente usa um domínio diferente de @empresa.com.br, mesmo que pareça com ele.",
+            "reason": "Somente o domínio corporativo empresa.com.br é aceito."
           }
         }
       ]
@@ -107,6 +107,152 @@
             "evidence": "O anexo usa uma extensão executável.",
             "explanation": "Um arquivo .exe não é uma nota fiscal nem um documento de reunião.",
             "reason": "Executáveis enviados por e-mail estão fora do permitido."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-body-links",
+      "app": "email",
+      "title": "Destino dos links",
+      "description": "O texto de um link pode mostrar um endereço da empresa e levar para outro lugar. Confira o destino real: todo link deve apontar para empresa.com.br.",
+      "introductionDay": 2,
+      "field": "Body",
+      "subrules": [
+        {
+          "id": "subrule-body-links-corporate",
+          "description": "Todo link do corpo deve levar a empresa.com.br ou a um subdomínio dela.",
+          "check": {
+            "type": "BodyLinkDomains",
+            "allowedDomains": [
+              "empresa.com.br"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Destino dos links",
+            "evidence": "O corpo tem um link que leva para fora de empresa.com.br.",
+            "explanation": "O destino do link não pertence à empresa, mesmo que o texto do e-mail pareça oficial.",
+            "reason": "Links só podem apontar para empresa.com.br."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-attachment-disguised",
+      "app": "email",
+      "title": "Extensões camufladas",
+      "description": "Criminosos escondem programas com nomes de catálogo, etiqueta ou antivírus. Scripts e executáveis disfarçados devem ser bloqueados.",
+      "introductionDay": 3,
+      "field": "Attachments",
+      "subrules": [
+        {
+          "id": "subrule-attachment-scripts",
+          "description": "Anexos .bat, .cmd, .scr, .vbs e .js devem ser bloqueados.",
+          "check": {
+            "type": "AttachmentExtension",
+            "forbiddenExtensions": [
+              "bat",
+              "cmd",
+              "scr",
+              "vbs",
+              "js"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Extensões camufladas",
+            "evidence": "O anexo é um script ou executável disfarçado.",
+            "explanation": "Arquivos .bat, .cmd, .scr, .vbs e .js executam comandos no computador ao serem abertos.",
+            "reason": "Scripts e executáveis enviados por e-mail estão fora do permitido."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-subject-pressure",
+      "app": "email",
+      "title": "Pressão e urgência",
+      "description": "Golpistas usam pânico, ameaças e prazos curtos para você agir sem pensar. Assuntos alarmistas devem ser bloqueados.",
+      "introductionDay": 4,
+      "field": "Subject",
+      "subrules": [
+        {
+          "id": "subrule-subject-pressure-terms",
+          "description": "O assunto não deve usar urgência, cancelamento, intimação ou exigir ação imediata.",
+          "check": {
+            "type": "SubjectTerms",
+            "terms": [
+              "urgente",
+              "ação requerida",
+              "cancelamento",
+              "intimação"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Pressão e urgência",
+            "evidence": "O assunto usa urgência ou ameaça para pressionar o leitor.",
+            "explanation": "Comunicados reais da empresa não ameaçam nem exigem resposta imediata pelo assunto.",
+            "reason": "O assunto usa um termo de pressão previsto no Manual."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-attachment-macro",
+      "app": "email",
+      "title": "Documentos com macro",
+      "description": "Documentos que pedem para habilitar macros podem executar código escondido.",
+      "introductionDay": 4,
+      "field": "Attachments",
+      "subrules": [
+        {
+          "id": "subrule-attachment-macro",
+          "description": "Anexos .docm, .xlsm e .pptm devem ser bloqueados.",
+          "check": {
+            "type": "AttachmentExtension",
+            "forbiddenExtensions": [
+              "docm",
+              "xlsm",
+              "pptm"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Documentos com macro",
+            "evidence": "O anexo é um documento com macros.",
+            "explanation": "Arquivos do Office terminados em \"m\" carregam macros que podem executar código.",
+            "reason": "Documentos com macro enviados por e-mail estão fora do permitido."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-attachment-archive",
+      "app": "email",
+      "title": "Arquivos compactados",
+      "description": "Arquivos compactados, principalmente com senha, escondem o conteúdo real da verificação.",
+      "introductionDay": 5,
+      "field": "Attachments",
+      "subrules": [
+        {
+          "id": "subrule-attachment-archive",
+          "description": "Anexos .zip, .rar e .7z devem ser bloqueados.",
+          "check": {
+            "type": "AttachmentExtension",
+            "forbiddenExtensions": [
+              "zip",
+              "rar",
+              "7z"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Arquivos compactados",
+            "evidence": "O anexo é um arquivo compactado.",
+            "explanation": "Um arquivo compactado impede ver o que realmente foi enviado antes de abri-lo.",
+            "reason": "Arquivos compactados enviados por e-mail estão fora do permitido."
           }
         }
       ]
