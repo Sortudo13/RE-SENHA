@@ -66,6 +66,7 @@ public class EmailController : MonoBehaviour
         {
             userButton.onClick.RemoveAllListeners();
             userButton.onClick.AddListener(() => UpdateEmailListScreen(mailBoxes.Find(box => box.mailBox == "User")));
+            userButton.onClick.AddListener(() => ShowList());
         }
 
         Transform companyTarget = transform.Find("Company");
@@ -73,6 +74,7 @@ public class EmailController : MonoBehaviour
         {
             companyButton.onClick.RemoveAllListeners();
             companyButton.onClick.AddListener(() => UpdateEmailListScreen(mailBoxes.Find(box => box.mailBox == "Company")));
+            companyButton.onClick.AddListener(() => ShowList());
         }
 
         UpdateEmailListScreen(currentBox);
