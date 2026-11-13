@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: ChatConversation_Test
   npcName: Lulinha
-  npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
+  npcAvatar: {fileID: 4395514471702073394, guid: b4f0caa61800b3b6c8a5bd1bed97e873, type: 3}
   nodes:
   - {fileID: 11400000, guid: c51b9257c868abb9d96edc39621d1cb9, type: 2}
   - {fileID: 11400000, guid: b69676e60e186bdd794443e28f66567a, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   nodeId: fim_negou
   npcName: Lulinha
   npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
-  npcMessage: 
+  npcMessage: "Sem problemas, era s\xF3 uma verifica\xE7\xE3o de rotina. Bom trabalho!"
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

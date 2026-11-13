@@ -15,7 +15,8 @@ MonoBehaviour:
   nodeId: pergunta_porque
   npcName: Lulinha
   npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
-  npcMessage: 
+  npcMessage: "Precisamos confirmar por quest\xF5es de seguran\xE7a. Pode mandar
+    a senha?"
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

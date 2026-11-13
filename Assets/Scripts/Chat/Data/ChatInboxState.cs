@@ -56,6 +56,13 @@ public class ChatInboxState
         {
             if (state.hasArrived)
                 continue;
+
+            if (
+                state.entry.ArrivalTotalMinutes < 8 * 60
+                || state.entry.ArrivalTotalMinutes > 16 * 60
+            )
+                continue;
+
             if (currentTotalMinutes < state.entry.ArrivalTotalMinutes)
                 continue;
 

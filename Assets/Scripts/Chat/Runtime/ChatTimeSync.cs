@@ -19,7 +19,7 @@ public class ChatTimeSync : MonoBehaviour
         ActionController.SyncSignal("Resetar Jogo", OnResetGame);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         ActionController.UnsyncSignal("TimeUpdated", OnTimeUpdated);
         ActionController.UnsyncSignal("Resetar Jogo", OnResetGame);

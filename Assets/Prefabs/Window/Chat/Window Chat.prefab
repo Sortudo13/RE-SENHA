@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 3926315684222403845}
   - component: {fileID: 78417512568866086}
   - component: {fileID: 7266247756018063943}
+  - component: {fileID: 9026355278748216548}
   m_Layer: 5
   m_Name: ChoiceContainer
   m_TagString: Untagged
@@ -391,7 +392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90.95003, y: -8}
+  m_AnchoredPosition: {x: 90.95003, y: -4}
   m_SizeDelta: {x: 173.90005, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78417512568866086
@@ -415,8 +416,8 @@ MonoBehaviour:
   m_Spacing: 4
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -434,6 +435,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &9026355278748216548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2295063343950399195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 0
+  m_PreferredWidth: -1
+  m_PreferredHeight: 0
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: 1
+  m_LayoutPriority: 1
 --- !u!1 &2411983495462973669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,7 +1536,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8340671869482145989}
   m_HandleRect: {fileID: 3061604664888115872}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2701,10 +2722,41 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6254646414311732725}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 351327996507827500}
   m_SourcePrefab: {fileID: 100100000, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
 --- !u!224 &1279527842546083530 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
   m_PrefabInstance: {fileID: 457223654825893996}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3190868372272171338 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3031027678049364262, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
+  m_PrefabInstance: {fileID: 457223654825893996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &351327996507827500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3190868372272171338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a469a84883c8751bf11ef803670b12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChatWindowView
+  conversationListContent: {fileID: 8310850466845319681}
+  conversationItemPrefab: {fileID: 7310161606652775928, guid: 6d2cbc5267672ae72835c5535d3ef5c2, type: 3}
+  emptyState: {fileID: 8818440171236792071}
+  npcAvatarImage: {fileID: 1915737793959842721}
+  npcNameText: {fileID: 6935814221752970438}
+  messageContent: {fileID: 3232885619854904797}
+  choiceContainer: {fileID: 3926315684222403845}
+  bubbleNPCPrefab: {fileID: 4494747491284465669, guid: e0149148788b2df1f9f06a5bcf2e37d0, type: 3}
+  bubblePlayerPrefab: {fileID: 203360703932556612, guid: 1b89bdbc6da29bee3b38c181f14b21f7, type: 3}
+  bubbleTypingPrefab: {fileID: 5122434116724839622, guid: 029f0bde789b119a0bedfe65732a9c18, type: 3}
+  choiceButtonPrefab: {fileID: 1414670109072084609, guid: 74fb347c858eee4deb72713614770e46, type: 3}

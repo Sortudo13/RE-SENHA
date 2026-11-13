@@ -15,19 +15,19 @@ MonoBehaviour:
   nodeId: pede_senha
   npcName: Lulinha
   npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
-  npcMessage: "\"Ol\xE1! Precisamos validar sua conta. Pode me confirmar sua senha
-    atual?\""
+  npcMessage: "Ol\xE1! Precisamos validar sua conta. Pode me confirmar sua senha
+    atual?"
   typingDelay: 1.5
   options:
-  - optionText: "\"N\xE3o, n\xE3o vou fornecer minha senha.\""
+  - optionText: "N\xE3o, n\xE3o vou fornecer minha senha."
     nextNodeId: fim_negou
     securityScoreDelta: 10
     feedbackTag: recusou_senha
-  - optionText: "\"Por que voc\xEA precisa disso?\""
+  - optionText: "Por que voc\xEA precisa disso?"
     nextNodeId: pergunta_porque
     securityScoreDelta: 5
     feedbackTag: questionou
-  - optionText: "\"Claro, \xE9 123456.\""
+  - optionText: "Claro, \xE9 123456."
     nextNodeId: fim_entregou
     securityScoreDelta: -20
     feedbackTag: entregou_senha

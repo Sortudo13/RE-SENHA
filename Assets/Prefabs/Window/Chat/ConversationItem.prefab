@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 4509480634550333066}
   - component: {fileID: 4721596223999464265}
   - component: {fileID: 4094953779148488276}
+  - component: {fileID: 7310161606652775928}
   m_Layer: 5
   m_Name: ConversationItem
   m_TagString: Untagged
@@ -488,6 +489,23 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7310161606652775928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854971351992810372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1be2d8458e6d62f9833c45f432d12d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConversationListItemView
+  avatarImage: {fileID: 5906605226077549431}
+  npcNameText: {fileID: 6983499468167300400}
+  previewText: {fileID: 6509578192300634303}
+  timeText: {fileID: 1250395237447336662}
+  unreadDot: {fileID: 2047989882138541979}
 --- !u!1 &2047989882138541979
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,8 +790,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1717832303133885712}
   - {fileID: 6619610413964548217}
+  - {fileID: 1717832303133885712}
   m_Father: {fileID: 6927926604684524572}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

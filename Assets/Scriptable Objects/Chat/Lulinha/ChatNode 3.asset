@@ -15,7 +15,7 @@ MonoBehaviour:
   nodeId: fim_entregou
   npcName: Lulinha
   npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
-  npcMessage: 
+  npcMessage: Obrigado! Aguarde um momento...
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
