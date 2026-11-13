@@ -5,25 +5,26 @@
       "id": "rule-sender-domain",
       "app": "email",
       "title": "Verificação do remetente",
-      "description": "Aceite apenas mensagens do domínio corporativo. Endereços parecidos, com letras trocadas ou de outras empresas, devem ser bloqueados.",
+      "description": "Aceite apenas mensagens do domínio corporativo ou do grupo National Tech (@nationaltech.com). Endereços parecidos, com letras trocadas ou de outras empresas, devem ser bloqueados.",
       "introductionDay": 1,
       "field": "Sender",
       "subrules": [
         {
           "id": "subrule-sender-domain-corporate",
-          "description": "O endereço do remetente deve terminar exatamente em @empresa.com.br.",
+          "description": "O endereço do remetente deve terminar exatamente em @empresa.com.br ou em @nationaltech.com.",
           "check": {
             "type": "SenderDomain",
             "allowedDomains": [
-              "empresa.com.br"
+              "empresa.com.br",
+              "nationaltech.com"
             ],
             "caseSensitive": false
           },
           "finding": {
             "rule": "Verificação do remetente",
             "evidence": "O domínio do remetente não é o domínio corporativo.",
-            "explanation": "O remetente usa um domínio diferente de @empresa.com.br, mesmo que pareça com ele.",
-            "reason": "Somente o domínio corporativo empresa.com.br é aceito."
+            "explanation": "O remetente usa um domínio diferente de @empresa.com.br e @nationaltech.com, mesmo que pareça com eles.",
+            "reason": "Somente os domínios empresa.com.br e nationaltech.com são aceitos."
           }
         }
       ]
@@ -43,7 +44,7 @@
             "type": "SubjectTerms",
             "terms": [
               "Senha",
-              "IPHONE"
+              "Compra"
             ],
             "caseSensitive": false
           },
@@ -60,7 +61,7 @@
       "id": "rule-body-external-domain",
       "app": "email",
       "title": "Verificação do corpo",
-      "description": "Leia o texto antes de clicar. Links para domínios externos, fora da empresa, não devem ser seguidos.",
+      "description": "Leia o texto antes de clicar. Endereços terminados em .ru ou .onion não pertencem à empresa e não devem ser seguidos.",
       "introductionDay": 1,
       "field": "Body",
       "subrules": [
@@ -88,7 +89,7 @@
       "id": "rule-attachment-extension",
       "app": "email",
       "title": "Verificação dos anexos",
-      "description": "Confira a extensão real do arquivo. Documento disfarçado de nota ou pauta não pode ser um executável.",
+      "description": "Confira a extensão real do arquivo. Uma nota fiscal ou fatura não pode ser um executável.",
       "introductionDay": 1,
       "field": "Attachments",
       "subrules": [
@@ -105,7 +106,7 @@
           "finding": {
             "rule": "Verificação dos anexos",
             "evidence": "O anexo usa uma extensão executável.",
-            "explanation": "Um arquivo .exe não é uma nota fiscal nem um documento de reunião.",
+            "explanation": "Um arquivo .exe não é uma nota fiscal nem uma fatura: ao ser aberto, ele executa um programa.",
             "reason": "Executáveis enviados por e-mail estão fora do permitido."
           }
         }

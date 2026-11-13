@@ -23,4 +23,9 @@ public sealed class InspectionFieldSelectable : InspectionSelectable
     {
         return string.Equals(field, selectionId);
     }
+
+    protected override bool MatchesSelection(InspectionSelection selection)
+    {
+        return !string.IsNullOrWhiteSpace(selection.FieldId) && MatchesHighlight(selection.FieldId);
+    }
 }
