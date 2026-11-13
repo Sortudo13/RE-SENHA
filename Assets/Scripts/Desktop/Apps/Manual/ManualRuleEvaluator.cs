@@ -28,6 +28,7 @@ public sealed class ManualRuleEvaluator
         ["SenderDomain"] = new("sender", EvaluateSenderDomain),
         ["SubjectTerms"] = new("subject", EvaluateSubjectTerms),
         ["BodyTerms"] = new("body", EvaluateBodyTerms),
+        ["BodyLinkDomains"] = new("body", EvaluateBodyLinkDomains),
         ["AttachmentExtension"] = new("attachments", EvaluateAttachmentExtension),
     };
 
@@ -164,6 +165,33 @@ public sealed class ManualRuleEvaluator
                 if (matches)
                     return host;
             }
+        }
+
+        return null;
+    }
+
+    // Lista branca de links
+    // Pega o destino real de <link="OpenURL|..."> mesmo quando o texto visivel do link mostra um endereco da empresa.
+    private static string EvaluateBodyLinkDomains(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check
+    )
+    {
+        RequireValues(check.allowedDomains, check.type, "allowedDomains");
+        if (!fields.TryGetText("body", out string body) || string.IsNullOrEmpty(body))
+            return null;
+
+        foreach (Match match in HostPattern.Matches(body))
+        {
+            string host = match.Value.ToLowerInvariant();
+            bool allowed = check.allowedDomains.Any(allowedDomain =>
+            {
+                string domain = NormalizeDomain(allowedDomain);
+                return domain.Length > 0
+                    && (host == domain || host.EndsWith("." + domain, StringComparison.Ordinal));
+            });
+            if (!allowed)
+                return host;
         }
 
         return null;
