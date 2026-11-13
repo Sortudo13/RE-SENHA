@@ -32,12 +32,12 @@ public class SenderController : MonoBehaviour
             EmailData email = availableMails[0];
 
             yield return new WaitUntil(() => (ClockController.CurrentHour >= email.hourToReceive && ClockController.CurrentMinute >= email.minuteToReceive) || !ClockController.IsStillWorking);
-            yield return new WaitForSeconds(availableMails[0].timeToReceive);
+            yield return new WaitForSeconds(email.timeToReceive);
 
             availableMails = DataController.CurrentSave.availableMails;
 
             if (!ClockController.IsStillWorking)
-                availableMails.RemoveAll(email => email.mailBox == "Company");
+                availableMails.RemoveAll(m => m.mailBox == "Company");
 
             if (availableMails.Count <= 0 || availableMails[0] != email)
                 continue;
