@@ -158,6 +158,25 @@ public class ChatWindowView : MonoBehaviour
     // ============================================================
     public void ShowChoices(IReadOnlyList<ChatOption> options, Action<ChatOption> onChosen)
     {
+        if (choiceContainer == null)
+        {
+            Debug.LogError("[ChatWindowView] ChoiceContainer não atribuído.", this);
+            return;
+        }
+
+        if (choiceButtonPrefab == null)
+        {
+            Debug.LogError("[ChatWindowView] ChoiceButton prefab não atribuído.", this);
+            return;
+        }
+
+        if (options == null || options.Count == 0)
+        {
+            Debug.LogWarning("[ChatWindowView] ShowChoices recebeu uma lista vazia.", this);
+            HideChoices();
+            return;
+        }
+
         HideChoices();
 
         foreach (var opt in options)
@@ -167,12 +186,38 @@ public class ChatWindowView : MonoBehaviour
             if (rt != null)
                 rt.localScale = Vector3.one;
             var tmp = btn.GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp != null)
-                tmp.text = opt.optionText;
+            if (tmp == null)
+            {
+                Debug.LogError("[ChatWindowView] ChoiceButton não possui TextMeshProUGUI.", btn);
+                continue;
+            }
+            tmp.text = opt.optionText;
 
             var b = btn.GetComponent<Button>();
+            if (b == null)
+            {
+                Debug.LogError("[ChatWindowView] ChoiceButton não possui Button.", btn);
+                continue;
+            }
+
             var captured = opt;
             b.onClick.AddListener(() => onChosen.Invoke(captured));
+        }
+
+        if (choiceContainer is RectTransform choiceRect)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(choiceRect);
+
+            var choicePanel = choiceRect.parent as RectTransform;
+            if (choicePanel != null)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(choicePanel);
+
+                if (choicePanel.parent is RectTransform chatArea)
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(chatArea);
+            }
+
+            Canvas.ForceUpdateCanvases();
         }
     }
 
