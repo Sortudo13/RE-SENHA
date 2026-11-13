@@ -327,7 +327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000015258789, y: -11.411003}
+  m_AnchoredPosition: {x: 0, y: -11.411003}
   m_SizeDelta: {x: 0.000061035, y: 22.6218}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3675821979952584808
@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 3708239545013683241}
   - component: {fileID: 4204452630596123107}
   - component: {fileID: 1417079691467779055}
+  - component: {fileID: 4342677667281544305}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -413,7 +414,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1121601, y: 1.1121601, z: 1.1121601}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1700576937751332518}
   - {fileID: 9171579202527056470}
@@ -421,7 +422,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23.0576, y: -2}
+  m_AnchoredPosition: {x: 75.8, y: -2}
   m_SizeDelta: {x: 249.7663, y: 220.5867}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3708239545013683241
@@ -479,6 +480,29 @@ MonoBehaviour:
   windowHeaderName: "Janela Gen\xE9rica"
   showInTaskbar: 1
   minimizeWithAll: 1
+  animator: {fileID: 4342677667281544305}
+--- !u!95 &4342677667281544305
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3031027678049364262}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b2684e37339a78a4baab016752c1be55, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6044872297503187655
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.6459198, y: -8.777}
+  m_AnchoredPosition: {x: -0.6464844, y: -8.777}
   m_SizeDelta: {x: -11.6259, y: -27.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3590647782465476357

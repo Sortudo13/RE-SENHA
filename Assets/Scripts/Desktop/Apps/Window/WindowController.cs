@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class WindowController : MonoBehaviour
@@ -31,10 +32,12 @@ public class WindowController : MonoBehaviour
     public string AppName => windowName;
     public Sprite AppIcon => windowIcon;
 
+    [SerializeField]
+    private Animator animator;
+
     private void Awake()
     {
         myID = $"Win_{gameObject.GetEntityId()}";
-
         UpdateHeaderText();
     }
 
@@ -98,13 +101,19 @@ public class WindowController : MonoBehaviour
             gameObject.SetActive(true);
             ActionController.SendAction("OnWindowOpened");
         }
-        ToFront();
+        ToFront(); 
+        animator.SetTrigger("Open");
     }
 
     public void MinimizeWindow()
     {
+        animator.SetTrigger("Minimize");
+    }
+
+    public void MinimizeWindow_AfterAnimation()
+    { 
         if (gameObject.activeSelf)
-        {
+        { 
             ActionController.SendAction("SubActiveWindow");
             ActionController.SendAction("HideNotificationBadge", AppName);
             gameObject.SetActive(false);
@@ -122,13 +131,11 @@ public class WindowController : MonoBehaviour
     public void CloseWindow()
     {
         ActionController.SendAction("OnWindowClosed");
-
         if (IsWindowMenu())
         {
             Destroy(gameObject);
             return;
         }
-
         MinimizeWindow();
         Destroy(gameObject);
     }
