@@ -210,7 +210,7 @@ public class EmailController : MonoBehaviour
         if (emailButtons != null)
             emailButtons.gameObject.SetActive(currentBox.mailBox == "Company");
 
-        transform.Find("Back").gameObject.SetActive(true);
+        transform.Find("MailScreen/Back").gameObject.SetActive(true);
         listScreen.SetActive(false);
         mailScreen.SetActive(true);
     }
@@ -220,7 +220,7 @@ public class EmailController : MonoBehaviour
         if (currentEmail != null)
             PublishCurrentEmail(null);
         currentEmail = null;
-        transform.Find("Back").gameObject.SetActive(false);
+        transform.Find("MailScreen/Back").gameObject.SetActive(false);
         mailScreen.SetActive(false);
         listScreen.SetActive(true);
     }
