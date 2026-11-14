@@ -94,7 +94,7 @@ public static class DataController
     {
         if (save == null)
         {
-            save = currentSave;
+            save = CurrentSave;
             save.current_day = CurrentDay;
             save.error_count = CurrentErrorCount;
             if (ClockController.IsClockActive)
@@ -106,6 +106,9 @@ public static class DataController
             File.WriteAllText(SavePath, json);
         } else
         {
+            CurrentDay = save.current_day;
+            CurrentErrorCount = save.error_count;
+
             string json = JsonConvert.SerializeObject(save, Formatting.Indented);
             File.WriteAllText(SavePath, json);
         }
