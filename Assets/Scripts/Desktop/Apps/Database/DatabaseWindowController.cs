@@ -32,6 +32,7 @@ public class DatabaseWindowController : MonoBehaviour
     private List<EmployeeData> allEmployees = new();
     private List<EmployeeData> filteredEmployees = new();
     private EmployeeData selectedEmployee;
+    private EmployeeData inspectedEmployee;
     private bool initialized;
 
     private void Awake()
@@ -55,6 +56,8 @@ public class DatabaseWindowController : MonoBehaviour
         {
             inputPesquisa.onValueChanged.RemoveListener(OnSearchChanged);
         }
+
+        PublishInspectionSurface(null);
     }
 
     private void OnEnable()
@@ -67,32 +70,22 @@ public class DatabaseWindowController : MonoBehaviour
 
     public void CarregarBancoDeDados()
     {
-        int dia = DataController.CurrentDay;
-        TextAsset jsonAsset = Resources.Load<TextAsset>($"Database/Database_Dia_{dia}");
+        // A leitura do JSON fica no DatabaseRepository, que o Inspector tambem consulta.
+        allEmployees = new List<EmployeeData>(DatabaseRepository.GetEmployees());
+    }
 
-        if (jsonAsset == null)
-        {
-            jsonAsset = Resources.Load<TextAsset>("Database/Database_Base");
-        }
+    // Avisa o Inspector qual colaborador esta na tela (so quando ele muda: SelecionarFuncionario
+    // roda de novo a cada letra digitada na pesquisa).
+    private void PublishInspectionSurface(EmployeeData emp)
+    {
+        if (ReferenceEquals(inspectedEmployee, emp))
+            return;
 
-#if UNITY_EDITOR
-        if (jsonAsset == null)
-        {
-            jsonAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Resources/Database/Database_Base.json");
-        }
-#endif
-
-        if (jsonAsset != null && !string.IsNullOrEmpty(jsonAsset.text))
-        {
-            EmployeeDatabaseSave data = JsonUtility.FromJson<EmployeeDatabaseSave>(jsonAsset.text);
-            allEmployees = data?.employees ?? new List<EmployeeData>();
-            Debug.Log($"[DatabaseWindow] {allEmployees.Count} colaboradores carregados com sucesso do JSON.");
-        }
+        inspectedEmployee = emp;
+        if (emp == null)
+            InspectionEvaluationController.CloseSurface(DatabaseInspectionSurface.Source);
         else
-        {
-            Debug.LogError("[DatabaseWindow] Nenhum arquivo JSON do banco de dados foi encontrado em Resources/Database.");
-            allEmployees = new List<EmployeeData>();
-        }
+            InspectionEvaluationController.PublishSurface(new DatabaseInspectionSurface(emp));
     }
 
     private void OnSearchChanged(string query)
@@ -247,11 +240,14 @@ public class DatabaseWindowController : MonoBehaviour
             LayoutRebuilder.ForceRebuildLayoutImmediate(pRt);
         }
 
+        PublishInspectionSurface(emp);
+
     }
 
     private void ExibirVazio()
     {
         selectedEmployee = null;
+        PublishInspectionSurface(null);
         if (painelDetalhesConteudo != null)
             painelDetalhesConteudo.SetActive(false);
 

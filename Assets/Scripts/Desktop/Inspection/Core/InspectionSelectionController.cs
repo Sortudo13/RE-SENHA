@@ -22,9 +22,13 @@ public sealed class InspectionSelectionController : MonoBehaviour
     {
         ActionController.SyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
         ActionController.SyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
-        ActionController.SyncSignal<EmailData>(
-            InspectionEvaluationController.EmailSelectedAction,
-            ClearSelectionForEmail
+        ActionController.SyncSignal<IInspectionSurface>(
+            InspectionEvaluationController.SurfaceChangedAction,
+            ClearSelectionForSurface
+        );
+        ActionController.SyncSignal<string>(
+            InspectionEvaluationController.SurfaceClosedAction,
+            ClearSelectionForClosedSurface
         );
         ActionController.SyncSignal<bool>(
             InspectionModeController.ModeChangedAction,
@@ -40,9 +44,13 @@ public sealed class InspectionSelectionController : MonoBehaviour
     {
         ActionController.UnsyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
         ActionController.UnsyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
-        ActionController.UnsyncSignal<EmailData>(
-            InspectionEvaluationController.EmailSelectedAction,
-            ClearSelectionForEmail
+        ActionController.UnsyncSignal<IInspectionSurface>(
+            InspectionEvaluationController.SurfaceChangedAction,
+            ClearSelectionForSurface
+        );
+        ActionController.UnsyncSignal<string>(
+            InspectionEvaluationController.SurfaceClosedAction,
+            ClearSelectionForClosedSurface
         );
         ActionController.UnsyncSignal<bool>(
             InspectionModeController.ModeChangedAction,
@@ -68,6 +76,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
         }
 
         selectedField = selection.FieldId;
+        WarnIfFieldIsUnknown(selectedField);
         TryRegisterSelection();
         if (string.Equals(selectedField, selection.FieldId, System.StringComparison.Ordinal))
             ActionController.SendAction(FieldHighlightAction, selection.FieldId);
@@ -101,9 +110,53 @@ public sealed class InspectionSelectionController : MonoBehaviour
         ActionController.SendAction<string>(RuleHighlightAction, null);
     }
 
-    private void ClearSelectionForEmail(EmailData email)
+    // Trocar de item (outro email, outro ticket...) descarta a combinacao parcial do item anterior.
+    // Um app de referencia (sem achados, ex.: Database) trocar de item so limpa a selecao
+    // se o campo selecionado for dele; assim da para escolher um campo do item em julgamento
+    // e depois procurar o colaborador no Database.
+    private void ClearSelectionForSurface(IInspectionSurface surface)
     {
-        ClearSelection();
+        if (surface == null
+            || surface.FindingStore != null
+            || SelectedFieldBelongsTo(surface.SourceType))
+            ClearSelection();
+    }
+
+    private void ClearSelectionForClosedSurface(string sourceType)
+    {
+        if (selectedField != null || selectedSubruleId != null)
+            ClearSelection();
+    }
+
+    private bool SelectedFieldBelongsTo(string sourceType)
+    {
+        InspectionFields.Split(selectedField, out string source, out _);
+        return InspectionFields.Matches(source, sourceType);
+    }
+
+    // Erro de configuracao comum: o "field" (ou o "source") do seletor no prefab nao existe
+    // na superficie do app.
+    private void WarnIfFieldIsUnknown(string qualifiedField)
+    {
+        if (evaluation == null)
+            return;
+
+        InspectionFields.Split(qualifiedField, out string source, out string field);
+        IInspectionSurface surface = evaluation.CurrentSurface;
+        if (source != null && !evaluation.TryGetSurface(source, out surface))
+        {
+            Debug.LogWarning(
+                $"InspectionSelectionController: no open surface for source '{source}'. "
+                    + "Check the 'source' of the InspectionFieldSelectable and PublishSurface in the app."
+            );
+            return;
+        }
+
+        if (surface != null && !InspectionFields.Contains(surface.Capabilities, field))
+            Debug.LogWarning(
+                $"InspectionSelectionController: field '{field}' is not a capability of the "
+                    + $"'{surface.SourceType}' surface. Check the 'field' of the InspectionFieldSelectable."
+            );
     }
 
     // A selecao so existe enquanto o modo esta ativo; assim, republicar os highlights
@@ -145,7 +198,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
             return;
         }
 
-        if (!string.Equals(result.FieldId, selectedField, System.StringComparison.Ordinal))
+        if (!InspectionFields.Matches(result.FieldId, selectedField))
         {
             RejectSelection("The selected field does not match the selected rule.");
             return;

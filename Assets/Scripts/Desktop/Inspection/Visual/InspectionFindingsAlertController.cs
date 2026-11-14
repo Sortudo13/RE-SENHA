@@ -36,17 +36,17 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
 
     public void ShowCurrentFindings()
     {
-        if (evaluation == null || evaluation.CurrentEmail == null)
+        if (evaluation == null || evaluation.CurrentSurface == null)
             return;
 
         ActionController.SendAction(
             AlertManagerController.ShowFindingsAction,
-            BuildPages(evaluation.CurrentEmail.evidences)
+            BuildPages(evaluation.CurrentFindings)
         );
     }
 
     // Uma pagina por achado. Lista vazia: o FindingsAlertWindow mostra "Nenhum achado registrado.".
-    private static string[] BuildPages(List<EvidenceData> findings)
+    private static string[] BuildPages(IReadOnlyList<EvidenceData> findings)
     {
         if (findings == null)
             return new string[0];

@@ -8,16 +8,33 @@ public sealed class EmailDecisionController : MonoBehaviour
     [SerializeField]
     private InspectionEvaluationController evaluation;
 
+    // Publicado pelo EmailController com o EmailData aberto (null ao fechar o email).
+    public const string CurrentEmailChangedAction = "CurrentEmailChanged";
+
     private void Awake()
     {
         ActionController.SyncSignal(ApproveAction, ApproveCurrentEmail);
         ActionController.SyncSignal(BlockAction, BlockCurrentEmail);
+        ActionController.SyncSignal<EmailData>(CurrentEmailChangedAction, PublishEmailSurface);
     }
 
     private void OnDestroy()
     {
         ActionController.UnsyncSignal(ApproveAction, ApproveCurrentEmail);
         ActionController.UnsyncSignal(BlockAction, BlockCurrentEmail);
+        ActionController.UnsyncSignal<EmailData>(CurrentEmailChangedAction, PublishEmailSurface);
+    }
+
+    // Ponte Email -> Inspector: o EmailController nao conhece o Inspector, entao a superficie
+    // do email aberto e criada e publicada aqui.
+    private static void PublishEmailSurface(EmailData email)
+    {
+        if (email == null)
+            InspectionEvaluationController.CloseSurface(EmailInspectionSurface.Source);
+        else
+            InspectionEvaluationController.PublishSurface(
+                new EmailInspectionSurface(email, new EmailInspectionFindingStore(email))
+            );
     }
 
     private void ApproveCurrentEmail()
@@ -40,14 +57,14 @@ public sealed class EmailDecisionController : MonoBehaviour
         }
 
         // Os botoes so aparecem com um email aberto; a checagem evita contar uma decisao sem email.
-        EmailData email = evaluation.CurrentEmail;
+        EmailData email = (evaluation.CurrentSurface as EmailInspectionSurface)?.Email;
         if (email == null)
             return;
 
         bool emailHasFindings = evaluation.CurrentResults.Count > 0;
         // Bloquear exige ao menos uma evidencia registrada com o Inspector; sem ela conta como erro
         // mesmo que o email quebre regras (o jogador tem que mostrar o motivo do bloqueio).
-        bool hasEvidence = email.evidences != null && email.evidences.Count > 0;
+        bool hasEvidence = evaluation.CurrentFindings.Count > 0;
         bool blockedWithoutEvidence = blockEmail && emailHasFindings && !hasEvidence;
         bool correctDecision = blockEmail == emailHasFindings && !blockedWithoutEvidence;
         string feedbackMessage = correctDecision

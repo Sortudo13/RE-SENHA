@@ -25,11 +25,11 @@ public sealed class ManualRuleEvaluator
     // Tipos de verificacao aceitos no ManualRules.json e a capacidade que cada um exige da superficie.
     private static readonly Dictionary<string, CheckDefinition> Checks = new()
     {
-        ["SenderDomain"] = new("sender", EvaluateSenderDomain),
-        ["SubjectTerms"] = new("subject", EvaluateSubjectTerms),
-        ["BodyTerms"] = new("body", EvaluateBodyTerms),
-        ["BodyLinkDomains"] = new("body", EvaluateBodyLinkDomains),
-        ["AttachmentExtension"] = new("attachments", EvaluateAttachmentExtension),
+        ["SenderDomain"] = new(InspectionFields.Sender, EvaluateSenderDomain),
+        ["SubjectTerms"] = new(InspectionFields.Subject, EvaluateSubjectTerms),
+        ["BodyTerms"] = new(InspectionFields.Body, EvaluateBodyTerms),
+        ["BodyLinkDomains"] = new(InspectionFields.Body, EvaluateBodyLinkDomains),
+        ["AttachmentExtension"] = new(InspectionFields.Attachments, EvaluateAttachmentExtension),
     };
 
     public static bool SupportsCheck(string type)
@@ -53,7 +53,7 @@ public sealed class ManualRuleEvaluator
             foreach (ManualSubruleData subrule in rule.subrules)
             {
                 CheckDefinition check = Checks[subrule.check.type];
-                if (!surface.Capabilities.Contains(check.Capability))
+                if (!InspectionFields.Contains(surface.Capabilities, check.Capability))
                     continue;
 
                 string evidence = check.Evaluate(surface.FieldSource, subrule.check);
@@ -85,7 +85,7 @@ public sealed class ManualRuleEvaluator
     )
     {
         RequireValues(check.allowedDomains, check.type, "allowedDomains");
-        if (!fields.TryGetText("sender", out string sender))
+        if (!fields.TryGetText(InspectionFields.Sender, out string sender))
             return null;
 
         int separator = sender?.LastIndexOf('@') ?? -1;
@@ -111,7 +111,7 @@ public sealed class ManualRuleEvaluator
     {
         RequireValues(check.terms, check.type, "terms");
         return FindTerm(
-            fields.TryGetText("subject", out string subject) ? subject : null,
+            fields.TryGetText(InspectionFields.Subject, out string subject) ? subject : null,
             check.terms,
             check.caseSensitive
         );
@@ -126,7 +126,7 @@ public sealed class ManualRuleEvaluator
             RequireValues(check.suspiciousDomains, check.type, "terms or suspiciousDomains");
 
         string term = FindTerm(
-            fields.TryGetText("body", out string body) ? body : null,
+            fields.TryGetText(InspectionFields.Body, out string body) ? body : null,
             check.terms,
             check.caseSensitive
         );
@@ -178,7 +178,7 @@ public sealed class ManualRuleEvaluator
     )
     {
         RequireValues(check.allowedDomains, check.type, "allowedDomains");
-        if (!fields.TryGetText("body", out string body) || string.IsNullOrEmpty(body))
+        if (!fields.TryGetText(InspectionFields.Body, out string body) || string.IsNullOrEmpty(body))
             return null;
 
         foreach (Match match in HostPattern.Matches(body))
