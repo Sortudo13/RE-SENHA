@@ -24,10 +24,6 @@ public class ClockController : MonoBehaviour
     private float totalWorkHours;
     private float realSecondsPerGameHour;
     private TextMeshProUGUI textTMPro;
-    private void Awake()
-    {
-        InitializeClockSettings();
-    }
 
     private void OnEnable()
     {
@@ -44,6 +40,11 @@ public class ClockController : MonoBehaviour
         IsClockActive = false;
         ActionController.UnsyncSignal("TimeUpdated", UpdateText);
         ActionController.UnsyncSignal("DayChanged", StartWork);
+    }
+
+    private void Awake()
+    {
+        InitializeClockSettings();
     }
 
     void Start()

@@ -49,7 +49,7 @@ public class WindowController : MonoBehaviour
         }
 
         if (ShouldMinimizeWithAll())
-            ActionController.SyncSignal("MinimizeAllWindow", MinimizeWindow);
+            ActionController.SyncSignal<bool>("MinimizeAllWindow", MinimizeWindow);
 
         
         ActionController.SyncSignal($"Swap_{myID}", SwapWindow);
@@ -75,14 +75,16 @@ public class WindowController : MonoBehaviour
         animator.SetTrigger(Animator.StringToHash("Open"));
     }
 
-    public async void MinimizeWindow()
+    public async void MinimizeWindow(bool animate = true)
     {
         int currentAction = ++countActions;
-        animator.SetTrigger(Animator.StringToHash("Minimize"));
-
-        await Awaitable.NextFrameAsync();
-        float duration = animator.GetCurrentAnimatorStateInfo(0).length;
-        await Awaitable.WaitForSecondsAsync(duration);
+        if (animate)
+        {
+            animator.SetTrigger(Animator.StringToHash("Minimize"));
+            await Awaitable.NextFrameAsync();
+            float duration = animator.GetCurrentAnimatorStateInfo(0).length;
+            await Awaitable.WaitForSecondsAsync(duration);
+        }
 
         if (this == null || currentAction != countActions)
             return;
@@ -113,14 +115,14 @@ public class WindowController : MonoBehaviour
             return;
         }
 
-        MinimizeWindow();
+        MinimizeWindow(false);
         Destroy(gameObject);
     }
 
     private void OnDestroy()
     {
         if (ShouldMinimizeWithAll())
-            ActionController.UnsyncSignal("MinimizeAllWindow", MinimizeWindow);
+            ActionController.UnsyncSignal<bool>("MinimizeAllWindow", MinimizeWindow);
 
         ActionController.UnsyncSignal($"Swap_{myID}", SwapWindow);
         ActionController.UnsyncSignal($"ToFront_{myID}", ToFront);
