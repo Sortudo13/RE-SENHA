@@ -60,7 +60,7 @@ public static class DataController
     {
         CurrentDay++;
 
-        if (CurrentDay >= MaxDay)
+        if (CurrentDay > MaxDay)
         {
             ResetGame();
             SceneManager.LoadScene("GameWin");
@@ -92,16 +92,26 @@ public static class DataController
 
     public static void SavingGame(SaveData save = null)
     {
-        save ??= currentSave;
-        save.current_day = CurrentDay;
-        save.error_count = CurrentErrorCount;
-        if (ClockController.IsClockActive)
+        if (save == null)
         {
-            save.current_hour = ClockController.CurrentHour;
-            save.current_minute = ClockController.CurrentMinute;
+            save = CurrentSave;
+            save.current_day = CurrentDay;
+            save.error_count = CurrentErrorCount;
+            if (ClockController.IsClockActive)
+            {
+                save.current_hour = ClockController.CurrentHour;
+                save.current_minute = ClockController.CurrentMinute;
+            }
+            string json = JsonConvert.SerializeObject(save, Formatting.Indented);
+            File.WriteAllText(SavePath, json);
+        } else
+        {
+            CurrentDay = save.current_day;
+            CurrentErrorCount = save.error_count;
+
+            string json = JsonConvert.SerializeObject(save, Formatting.Indented);
+            File.WriteAllText(SavePath, json);
         }
-        string json = JsonConvert.SerializeObject(save, Formatting.Indented);
-        File.WriteAllText(SavePath, json);
     }
 
     public static SaveData LoadingGame()
@@ -136,7 +146,7 @@ public static class DataController
             current_day = day,
             error_count = 0,
             current_hour = -1,
-            current_minute = 0,
+            current_minute = -1,
             availableMails = LoadJsonList<EmailData>($"Emails/Dia_{day}"),
             currentMailBoxes = new()
             {

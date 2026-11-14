@@ -8,12 +8,12 @@ public class NewMovementController : MonoBehaviour, IPointerUpHandler, IPointerD
     [Header("Movement config")]
     [SerializeField] private RectTransform targetTransform;
     [SerializeField] private PointerEventData.InputButton dragButton = PointerEventData.InputButton.Left;
-    [SerializeField] private CursorStyle pressedCursorType = CursorStyle.Hand;
+    [SerializeField] private CursorStyle pressedCursorType = CursorStyle.Default;
     [SerializeField][Range(0f, 1f)] private float dragSensitivity = 1f;
 
     [Header("Fluidez")]
     [SerializeField] private float followSpeed = 22f;
-    [SerializeField] private float cursorEdgeMargin = 15f;
+    [SerializeField] private float cursorEdgeMargin = 0f;
 
     private Canvas canvas;
     private RectTransform containerRect;

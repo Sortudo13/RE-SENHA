@@ -1177,7 +1177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlertManagerController
   alertWindow: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
-  findingsAlertWindow: {fileID: 7103127874696851641, guid: 33015898b53f22c41906a8579bebe45f, type: 3}
+  findingsAlertWindow: {fileID: 5705083864832289761, guid: 33015898b53f22c41906a8579bebe45f, type: 3}
+  findingNotificationWindow: {fileID: 8982443217242161933, guid: 28ead7758f6e186499d98f6120976222, type: 3}
 --- !u!1 &487173559
 GameObject:
   m_ObjectHideFlags: 0

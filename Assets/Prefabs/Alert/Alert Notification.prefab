@@ -234,9 +234,33 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 274.87
       objectReference: {fileID: 0}
+    - target: {fileID: 4136456020118225247, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+      propertyPath: m_text
+      value: "UMA EVID\xCANCIA FOI ENCONTRADA"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136456020118225247, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+      propertyPath: m_fontSize
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136456020118225247, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136456020118225247, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4526818001374080645, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+      propertyPath: cursorEdgeMargin
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_Name
       value: Alert Notification
+      objectReference: {fileID: 0}
+    - target: {fileID: 6416792992027355986, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+      propertyPath: m_Name
+      value: Text
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_Pivot.x
@@ -264,11 +288,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 700
+      value: 616.4089
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 350
+      value: 255.1997
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -300,11 +324,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25.441132
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 14.932838
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -321,6 +345,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2827396318124693304, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+    - {fileID: 7417353802525883221, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       insertIndex: 0
