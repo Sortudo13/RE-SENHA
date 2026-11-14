@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7523081237d8b557f8e8e30397468ca0
+guid: b4f0caa61800b3b6c8a5bd1bed97e873
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8541215567605348538
-    second: pixelartgeneric_0
+      213: 4395514471702073394
+    second: "\u2014Pngtree\u2014man avatar with circle frame_8515464_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixelartgeneric_0
+      name: "\u2014Pngtree\u2014man avatar with circle frame_8515464_0"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 183
-        height: 275
+        x: 18
+        y: 19
+        width: 1163
+        height: 1163
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 647c8dec1b1877980800000000000000
-      internalID: -8541215567605348538
+      spriteID: 23014e2af11000d30800000000000000
+      internalID: 4395514471702073394
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pixelartgeneric_0: -8541215567605348538
+      "\u2014Pngtree\u2014man avatar with circle frame_8515464_0": 4395514471702073394
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
