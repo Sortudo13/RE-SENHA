@@ -60,7 +60,7 @@ public static class DataController
     {
         CurrentDay++;
 
-        if (CurrentDay >= MaxDay)
+        if (CurrentDay > MaxDay)
         {
             ResetGame();
             SceneManager.LoadScene("GameWin");

@@ -86,6 +86,7 @@ public class AlertManagerController : MonoBehaviour
             button.GetComponentInChildren<TextMeshProUGUI>().text = "Avançar Dia";
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => DataController.AdvanceDay());
+            button.onClick.AddListener(() => Destroy(connectedAlert));
         }
 
         txtTituloAviso.text = "[Gerência]";
