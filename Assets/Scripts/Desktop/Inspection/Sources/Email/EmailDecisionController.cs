@@ -45,11 +45,17 @@ public sealed class EmailDecisionController : MonoBehaviour
             return;
 
         bool emailHasFindings = evaluation.CurrentResults.Count > 0;
-        bool correctDecision = blockEmail == emailHasFindings;
+        // Bloquear exige ao menos uma evidencia registrada com o Inspector; sem ela conta como erro
+        // mesmo que o email quebre regras (o jogador tem que mostrar o motivo do bloqueio).
+        bool hasEvidence = email.evidences != null && email.evidences.Count > 0;
+        bool blockedWithoutEvidence = blockEmail && emailHasFindings && !hasEvidence;
+        bool correctDecision = blockEmail == emailHasFindings && !blockedWithoutEvidence;
         string feedbackMessage = correctDecision
             ? blockEmail
                 ? "Decisão correta! O e-mail possui achados de segurança."
                 : "Decisão correta! Nenhuma regra do Manual foi violada."
+            : blockedWithoutEvidence
+                ? "Erro de análise! Você bloqueou o e-mail sem registrar nenhuma evidência. Use o Inspetor para apontar a regra quebrada antes de bloquear."
             : blockEmail
                 ? "Erro de análise! O e-mail não possui achados aplicáveis."
                 : "Erro de análise! O e-mail possui achados de segurança.";

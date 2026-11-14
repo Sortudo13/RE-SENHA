@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFindingsAlertController
   evaluation: {fileID: 1950000003}
-  findingNotificationPrefab: {fileID: 8982443217242161933, guid: 28ead7758f6e186499d98f6120976222, type: 3}
 --- !u!114 &1950000006
 MonoBehaviour:
   m_ObjectHideFlags: 0
