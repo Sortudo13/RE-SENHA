@@ -237,15 +237,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6044872297503187655, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6639795652706198320}
-    - targetCorrespondingSourceObject: {fileID: 2360748789322744742, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1677387742685788782}
   m_SourcePrefab: {fileID: 100100000, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
---- !u!224 &656885565334851911 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7244335230691186804, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
-  m_PrefabInstance: {fileID: 7896135549544532275}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4501073094431566836 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6044872297503187655, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
@@ -266,29 +258,6 @@ MonoBehaviour:
   zoomSpeed: 0.01
   zoomMin: 0.01
   zoomMax: 3
---- !u!1 &5573105542012570261 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2360748789322744742, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
-  m_PrefabInstance: {fileID: 7896135549544532275}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1677387742685788782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5573105542012570261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd4b57672979734383370a64db72a1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NewMovementController
-  targetTransform: {fileID: 656885565334851911}
-  dragButton: 0
-  pressedCursorType: 1
-  dragSensitivity: 0.5
-  followSpeed: 15
-  cursorEdgeMargin: 20
 --- !u!224 &8794717278131998613 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1700576937751332518, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
