@@ -819,10 +819,10 @@ GameObject:
   - component: {fileID: 5300046688587953657}
   - component: {fileID: 4897016433350173788}
   - component: {fileID: 5768604489022633694}
-  - component: {fileID: 1140133709841502377}
   - component: {fileID: 6508305073108122265}
   - component: {fileID: 1423618413347096393}
   - component: {fileID: 5705083864832289761}
+  - component: {fileID: 1105956265454175256}
   m_Layer: 5
   m_Name: Alert Achados
   m_TagString: Untagged
@@ -888,22 +888,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1140133709841502377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7103127874696851641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 311af8c12b247064e9de3236ba582355, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WindowMovementController
-  targetTransform: {fileID: 5300046688587953657}
-  dragButton: 0
-  pressedCursorType: 1
-  followSpeed: 22
 --- !u!114 &6508305073108122265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,6 +944,24 @@ MonoBehaviour:
   previousButton: {fileID: 6727815760915900153}
   nextButton: {fileID: 8709008641211199636}
   closeButton: {fileID: 8080905694928775573}
+--- !u!114 &1105956265454175256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7103127874696851641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd4b57672979734383370a64db72a1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewMovementController
+  targetTransform: {fileID: 5300046688587953657}
+  dragButton: 0
+  pressedCursorType: 1
+  dragSensitivity: 0.8
+  followSpeed: 22
+  cursorEdgeMargin: 15
 --- !u!1 &7169836265848303013
 GameObject:
   m_ObjectHideFlags: 0

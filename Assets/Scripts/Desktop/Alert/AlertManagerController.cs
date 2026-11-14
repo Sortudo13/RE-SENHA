@@ -78,6 +78,7 @@ public class AlertManagerController : MonoBehaviour
             txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f); // Verde
         }
 
+        connectedAlert.transform.SetAsFirstSibling();
         connectedAlert.SetActive(true);
     }
 
