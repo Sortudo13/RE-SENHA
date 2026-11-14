@@ -31,8 +31,14 @@ public class SenderController : MonoBehaviour
 
             EmailData email = availableMails[0];
 
-            yield return new WaitUntil(() => (ClockController.CurrentHour >= email.hourToReceive && ClockController.CurrentMinute >= email.minuteToReceive) || !ClockController.IsStillWorking);
-            yield return new WaitForSeconds(email.timeToReceive);
+            yield return new WaitUntil(() =>
+            {
+                int currentTotalMinutes = ClockController.CurrentHour * 60 + ClockController.CurrentMinute;
+                int targetTotalMinutes = email.hourToReceive * 60 + email.minuteToReceive;
+
+                return currentTotalMinutes >= targetTotalMinutes || !ClockController.IsStillWorking;
+            });
+            yield return new WaitForSeconds(email.timeToReceive * ClockController.RealSecondsPerGameMinute);
 
             availableMails = DataController.CurrentSave.availableMails;
 

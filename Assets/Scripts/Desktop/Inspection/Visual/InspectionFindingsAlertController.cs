@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public sealed class InspectionFindingsAlertController : MonoBehaviour
 {
@@ -8,6 +10,10 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
 
     [SerializeField]
     private InspectionEvaluationController evaluation;
+
+    // Prefab "Alert Notification": filhos "Fechar" (com Button) e "Conteúdo" > "Título" e "Conteúdo".
+    [SerializeField]
+    private GameObject findingNotificationPrefab;
 
     private void Awake()
     {
@@ -27,9 +33,56 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
         ActionController.UnsyncSignal(ShowFindingsAction, ShowCurrentFindings);
     }
 
+    // Achado novo: notificacao curta so com ele. A lista completa (Alert Achados) continua
+    // no botao do Email que publica ShowInspectionFindings.
     private void OnFindingRegistered(string findingId)
     {
-        ShowCurrentFindings();
+        ShowFindingNotification();
+    }
+
+    private void ShowFindingNotification()
+    {
+        if (findingNotificationPrefab == null)
+        {
+            Debug.LogError(
+                "InspectionFindingsAlertController: \"Finding Notification Prefab\" is not set (Inspector.prefab). Drag \"Alert Notification\" into it.",
+                this
+            );
+            return;
+        }
+
+        if (AlertManagerController.AlertsLayer == null)
+        {
+            Debug.LogError("InspectionFindingsAlertController: AlertManagerController.AlertsLayer is missing.", this);
+            return;
+        }
+
+        GameObject notification = Instantiate(
+            findingNotificationPrefab,
+            AlertManagerController.AlertsLayer
+        );
+
+        // So a mensagem: o titulo do Alert base ("Titulo") fica escondido.
+        Transform title = notification.transform.Find("Conteúdo/Título");
+        Transform message = notification.transform.Find("Conteúdo/Conteúdo");
+        if (title != null)
+            title.gameObject.SetActive(false);
+        if (message != null && message.TryGetComponent(out TextMeshProUGUI messageText))
+            messageText.text = "Um achado foi encontrado";
+        else
+            Debug.LogWarning(
+                "InspectionFindingsAlertController: \"Conteúdo/Conteúdo\" text was not found in the notification."
+            );
+
+        Transform close = notification.transform.Find("Fechar");
+        if (close != null && close.TryGetComponent(out Button closeButton))
+            closeButton.onClick.AddListener(() => Destroy(notification));
+        else
+            Debug.LogWarning(
+                "InspectionFindingsAlertController: \"Fechar\" has no Button; the notification cannot be closed."
+            );
+
+        notification.SetActive(true);
     }
 
     public void ShowCurrentFindings()

@@ -17,42 +17,37 @@ public class ClockController : MonoBehaviour
     public static int CurrentHour { get; private set; }
     public static int CurrentMinute { get; private set; }
     public static bool IsStillWorking { get; private set; }
+    public static bool IsClockActive { get; private set; }
+    public static float RealSecondsPerGameMinute { get; private set; }
 
     private float realTimeElapsed;
     private float totalWorkHours;
     private float realSecondsPerGameHour;
     private TextMeshProUGUI textTMPro;
+    private void Awake()
+    {
+        InitializeClockSettings();
+    }
 
     private void OnEnable()
     {
         if (TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI component))
             textTMPro = component;
 
+        IsClockActive = true;
         ActionController.SyncSignal("TimeUpdated", UpdateText);
         ActionController.SyncSignal("DayChanged", StartWork);
     }
 
     private void OnDisable()
     {
-         ActionController.UnsyncSignal("TimeUpdated", UpdateText);
+        IsClockActive = false;
+        ActionController.UnsyncSignal("TimeUpdated", UpdateText);
         ActionController.UnsyncSignal("DayChanged", StartWork);
     }
 
     void Start()
     {
-        StartHour = startHour;
-        // Calculates how many hours the shift lasts in the game (e.g., 16 - 8 = 8 hours)
-        totalWorkHours = endHour - startHour;
-
-        // If the end hour is earlier than the start hour (passing midnight)
-        if (totalWorkHours <= 0) totalWorkHours += 24;
-
-        // Converts real time from minutes to seconds
-        float realDurationInSeconds = workDurationInMinutes * 60f;
-
-        // Finds how many real seconds equal 1 game hour
-        realSecondsPerGameHour = realDurationInSeconds / totalWorkHours;
-
         StartWork();
     }
 
@@ -83,12 +78,58 @@ public class ClockController : MonoBehaviour
         ActionController.SendAction("TimeUpdated");
     }
 
+    private void InitializeClockSettings()
+    {
+        StartHour = startHour;
+        totalWorkHours = endHour - startHour;
+
+        if (totalWorkHours <= 0) totalWorkHours += 24;
+
+        float realDurationInSeconds = workDurationInMinutes * 60f;
+        realSecondsPerGameHour = realDurationInSeconds / totalWorkHours;
+        RealSecondsPerGameMinute = realSecondsPerGameHour / 60f;
+    }
+
     private void StartWork()
     {
-        IsStillWorking = true;
-        realTimeElapsed = 0f;
-        CurrentHour = startHour;
-        CurrentMinute = 0;
+        if (realSecondsPerGameHour <= 0f)
+            InitializeClockSettings();
+
+        SaveData save = DataController.CurrentSave;
+
+        // Se houver um horário válido salvo, calcula quanto tempo real já passou
+        if (save != null && save.current_hour >= 0)
+        {
+            int hoursPassed = save.current_hour - startHour;
+            if (hoursPassed < 0) hoursPassed += 24;
+
+            float totalGameHoursPassed = hoursPassed + (save.current_minute / 60f) + 0.0001f;
+
+            if (totalGameHoursPassed >= totalWorkHours)
+            {
+                EndWork();
+                return;
+            }
+
+            IsStillWorking = true;
+            realTimeElapsed = totalGameHoursPassed * realSecondsPerGameHour;
+            CurrentHour = save.current_hour;
+            CurrentMinute = save.current_minute;
+        }
+        else
+        {
+            // Novo save ou novo dia: começa do início do expediente
+            IsStillWorking = true;
+            realTimeElapsed = 0f;
+            CurrentHour = startHour;
+            CurrentMinute = 0;
+
+            if (save != null)
+            {
+                save.current_hour = CurrentHour;
+                save.current_minute = CurrentMinute;
+            }
+        }
 
         ActionController.SendAction("TimeUpdated");
         ActionController.SendAction("WorkStarted");

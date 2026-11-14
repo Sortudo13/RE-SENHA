@@ -8,6 +8,10 @@ public sealed class InspectionSelectionController : MonoBehaviour
     public const string SelectionClearedAction = "InspectionSelectionCleared";
     public const string FieldHighlightAction = "InspectionFieldHighlight";
     public const string RuleHighlightAction = "InspectionRuleHighlight";
+    // Payload: InspectionSelection com FieldId = campo e SelectionId = subregra da combinacao recusada.
+    public const string SelectionRejectedAction = "InspectionSelectionRejected";
+    // Mesmo payload, para a combinacao valida (achado registrado).
+    public const string SelectionAcceptedAction = "InspectionSelectionAccepted";
 
     [SerializeField]
     private InspectionEvaluationController evaluation;
@@ -55,6 +59,14 @@ public sealed class InspectionSelectionController : MonoBehaviour
         if (selection == null)
             return;
 
+        // Clicar de novo no campo ja selecionado desmarca so ele.
+        if (string.Equals(selectedField, selection.FieldId, System.StringComparison.Ordinal))
+        {
+            selectedField = null;
+            ActionController.SendAction<string>(FieldHighlightAction, null);
+            return;
+        }
+
         selectedField = selection.FieldId;
         TryRegisterSelection();
         if (string.Equals(selectedField, selection.FieldId, System.StringComparison.Ordinal))
@@ -65,6 +77,14 @@ public sealed class InspectionSelectionController : MonoBehaviour
     {
         if (selection == null)
             return;
+
+        // Clicar de novo na subregra ja selecionada desmarca so ela.
+        if (string.Equals(selectedSubruleId, selection.SelectionId, System.StringComparison.Ordinal))
+        {
+            selectedSubruleId = null;
+            ActionController.SendAction<string>(RuleHighlightAction, null);
+            return;
+        }
 
         selectedSubruleId = selection.SelectionId;
         TryRegisterSelection();
@@ -151,6 +171,11 @@ public sealed class InspectionSelectionController : MonoBehaviour
             return;
         }
 
+        // Os seletores da combinacao piscam em verde antes de a selecao ser limpa.
+        ActionController.SendAction(
+            SelectionAcceptedAction,
+            new InspectionSelection(selectedField, selectedSubruleId)
+        );
         ActionController.SendAction(FindingRegisteredAction, selectedSubruleId);
         ClearSelection();
         ActionController.SendAction(InspectionModeController.DeactivateAction);
@@ -158,6 +183,11 @@ public sealed class InspectionSelectionController : MonoBehaviour
 
     private void RejectSelection(string message)
     {
+        // Avisa os seletores escolhidos antes de limpar, para eles piscarem em vermelho.
+        ActionController.SendAction(
+            SelectionRejectedAction,
+            new InspectionSelection(selectedField, selectedSubruleId)
+        );
         ClearSelection();
         Debug.LogWarning($"InspectionSelectionController: {message}");
     }
