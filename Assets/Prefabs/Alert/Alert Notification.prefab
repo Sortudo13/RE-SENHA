@@ -250,6 +250,10 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4526818001374080645, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
+      propertyPath: cursorEdgeMargin
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4641189156026426695, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_Name
       value: Alert Notification
@@ -260,11 +264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_Pivot.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -320,11 +324,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 157
+      value: 25.441132
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -39.533905
+      value: 14.932838
       objectReference: {fileID: 0}
     - target: {fileID: 7743444471528267783, guid: 34ffac467e029504fb34e24795856f2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

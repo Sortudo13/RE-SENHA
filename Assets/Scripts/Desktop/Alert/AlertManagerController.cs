@@ -102,6 +102,7 @@ public class AlertManagerController : MonoBehaviour
         txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f);
         txtFeedback.text = "Você terminou o seu expediente. Clique abaixo para avançar ao próximo dia.";
 
+        connectedAlert.transform.SetAsLastSibling();
         connectedAlert.SetActive(true);
     }
 

@@ -961,7 +961,7 @@ MonoBehaviour:
   pressedCursorType: 1
   dragSensitivity: 0.8
   followSpeed: 22
-  cursorEdgeMargin: 15
+  cursorEdgeMargin: 0
 --- !u!1 &7169836265848303013
 GameObject:
   m_ObjectHideFlags: 0
