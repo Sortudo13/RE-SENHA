@@ -86,7 +86,6 @@ public class DatabaseWindowController : MonoBehaviour
         {
             EmployeeDatabaseSave data = JsonUtility.FromJson<EmployeeDatabaseSave>(jsonAsset.text);
             allEmployees = data?.employees ?? new List<EmployeeData>();
-            Debug.Log($"[DatabaseWindow] {allEmployees.Count} colaboradores carregados com sucesso do JSON.");
         }
         else
         {
