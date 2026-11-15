@@ -11,23 +11,31 @@ public class CalendarController : MonoBehaviour
             textTMPro = component;
 
         AtualizarTexto();
-        ActionController.SyncSignal("Resetar Jogo", ResetGame);
     }
 
     private void OnEnable()
     {
+        ActionController.SyncSignal("Resetar Jogo", ResetGame);
         ActionController.SyncSignal("DayChanged", AtualizarTexto);
+        ActionController.SyncSignal("AdvanceDay", AdvanceDay);
     }
 
     private void OnDisable()
     {
+        ActionController.UnsyncSignal("Resetar Jogo", ResetGame);
         ActionController.UnsyncSignal("DayChanged", AtualizarTexto);
+        ActionController.UnsyncSignal("AdvanceDay", AdvanceDay);
     }
 
     private void AtualizarTexto()
     {
         if (textTMPro != null)
             textTMPro.text = $"Dia {DataController.CurrentDay:D2}";
+    }
+
+    private void AdvanceDay()
+    {
+        DataController.AdvanceDay();
     }
 
     private void ResetGame()

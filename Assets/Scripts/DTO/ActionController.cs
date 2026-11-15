@@ -8,9 +8,7 @@ public static class ActionController
     public static void SendAction(string command)
     {
         if (signalRegistry.TryGetValue(command, out Delegate del) && del is Action action)
-        {
             action?.Invoke();
-        }
     }
 
     public static void SendAction<T>(string command, T data)
