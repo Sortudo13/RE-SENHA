@@ -94,7 +94,7 @@ public class AlertManagerController : MonoBehaviour
         {
             button.GetComponentInChildren<TextMeshProUGUI>().text = "Avançar Dia";
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => DataController.AdvanceDay());
+            button.onClick.AddListener(() => LoadingScreen.Run(DataController.AdvanceDay, "Avançando o dia..."));
             button.onClick.AddListener(() => Destroy(connectedAlert));
         }
 

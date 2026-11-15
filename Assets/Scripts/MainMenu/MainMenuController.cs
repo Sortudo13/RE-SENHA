@@ -1,5 +1,3 @@
-using UnityEngine.SceneManagement;
-
 public class MainMenuController : UnityEngine.MonoBehaviour
 {
     public void NovoJogo()
@@ -16,7 +14,7 @@ public class MainMenuController : UnityEngine.MonoBehaviour
 
     private void AbrirDesktop()
     {
-        SceneManager.LoadScene("Desktop");
+        LoadingScreen.LoadScene("Desktop");
     }
 
     public void Sair()
@@ -24,7 +22,7 @@ public class MainMenuController : UnityEngine.MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+        UnityEngine.Application.Quit();
 #endif
     }
 }

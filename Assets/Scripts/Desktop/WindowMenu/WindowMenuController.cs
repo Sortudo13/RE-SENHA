@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(WindowController))]
@@ -41,7 +40,7 @@ public class WindowMenuController : MonoBehaviour
     private void OnReturnToMenuClicked()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(mainMenuSceneName);
+        LoadingScreen.LoadScene(mainMenuSceneName);
     }
 
     private void OnDestroy()

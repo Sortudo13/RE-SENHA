@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public static class DataController
 {
@@ -63,7 +62,8 @@ public static class DataController
         if (CurrentDay > MaxDay)
         {
             ResetGame();
-            SceneManager.LoadScene("GameWin");
+            LoadingScreen.LoadScene("GameWin");
+            return;
         }
 
         LoadDay();

@@ -35,7 +35,7 @@ public class CalendarController : MonoBehaviour
 
     private void AdvanceDay()
     {
-        DataController.AdvanceDay();
+        LoadingScreen.Run(DataController.AdvanceDay, "Avançando o dia...");
     }
 
     private void ResetGame()

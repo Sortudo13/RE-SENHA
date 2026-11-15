@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // Conta do dia dos apps com decisao
 /* O expediente acaba pelo relogio (ClockController)
@@ -28,7 +27,7 @@ public static class DayProgressController
         if (DataController.CurrentErrorCount >= DataController.MaxErrors)
         {
             DataController.ResetGame();
-            SceneManager.LoadScene("GameOver");
+            LoadingScreen.LoadScene("GameOver");
             return;
         }
 
