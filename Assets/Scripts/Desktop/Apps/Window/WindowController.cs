@@ -57,9 +57,14 @@ public class WindowController : MonoBehaviour
         ActionController.SendAction("OnWindowOpened");
     }
 
-    private void ToFront()
+    public void ToFront()
     {
-        transform.SetAsLastSibling();
+        if (transform.parent == null)
+            return;
+
+        int lastIndex = transform.parent.childCount - 1;
+        if (transform.GetSiblingIndex() < lastIndex)
+            transform.SetAsLastSibling();
     }
 
     public void OpenWindow()
