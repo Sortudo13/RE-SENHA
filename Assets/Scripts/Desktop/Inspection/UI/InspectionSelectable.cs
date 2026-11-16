@@ -24,6 +24,11 @@ public abstract class InspectionSelectable : ActionButtonController,
     [SerializeField]
     private Color acceptedColor = new(0.3f, 0.8f, 0.35f, 1f);
 
+    // Campo que ja tem achado registrado no item aberto. Fica ate o item trocar; nao bloqueia
+    // o clique, porque o mesmo campo pode quebrar mais de uma regra.
+    [SerializeField]
+    private Color foundColor = new(0.55f, 0.85f, 0.55f, 0.6f);
+
     // Quantidade e duracao das piscadas, para recusa e para achado.
     [SerializeField, Min(1), FormerlySerializedAs("rejectedBlinks")]
     private int flashBlinks = 2;
@@ -36,9 +41,11 @@ public abstract class InspectionSelectable : ActionButtonController,
     private bool isSelected;
     private bool isHovered;
     private bool isFlashing;
+    private bool isFound;
     private Color flashColor;
     private Coroutine flashRoutine;
 
+    protected readonly SignalSubscriptions Signals = new();
     protected bool InspectionModeActive { get; private set; }
     protected abstract string SelectionId { get; }
     protected abstract string HighlightAction { get; }
@@ -51,51 +58,25 @@ public abstract class InspectionSelectable : ActionButtonController,
         if (graphic != null)
             originalColor = graphic.color;
 
-        ActionController.SyncSignal<string>(HighlightAction, OnHighlight);
-        ActionController.SyncSignal<bool>(
-            InspectionModeController.ModeChangedAction,
-            OnInspectionModeChanged
-        );
-        ActionController.SyncSignal(
-            InspectionSelectionController.SelectionClearedAction,
-            ClearHighlight
-        );
-        ActionController.SyncSignal<InspectionSelection>(
-            InspectionSelectionController.SelectionRejectedAction,
-            OnSelectionRejected
-        );
-        ActionController.SyncSignal<InspectionSelection>(
-            InspectionSelectionController.SelectionAcceptedAction,
-            OnSelectionAccepted
-        );
+        Signals
+            .On<string>(HighlightAction, OnHighlight)
+            .On<bool>(InspectionSignals.ModeChanged, OnInspectionModeChanged)
+            .On(InspectionSignals.SelectionCleared, ClearHighlight)
+            .On<InspectionSelection>(InspectionSignals.SelectionRejected, OnSelectionRejected)
+            .On<InspectionSelection>(InspectionSignals.SelectionAccepted, OnSelectionAccepted);
     }
 
     // Start roda depois do Setup feito logo apos o Instantiate, entao o seletor ja tem seu ID
     // quando o estado atual (modo e highlights) chega.
     protected virtual void Start()
     {
-        ActionController.SendAction(InspectionModeController.StateRequestedAction);
+        ActionController.SendAction(InspectionSignals.StateRequested);
     }
 
+    // As subclasses inscrevem sinais extras em Signals no Awake; tudo sai aqui.
     protected virtual void OnDestroy()
     {
-        ActionController.UnsyncSignal<string>(HighlightAction, OnHighlight);
-        ActionController.UnsyncSignal<bool>(
-            InspectionModeController.ModeChangedAction,
-            OnInspectionModeChanged
-        );
-        ActionController.UnsyncSignal(
-            InspectionSelectionController.SelectionClearedAction,
-            ClearHighlight
-        );
-        ActionController.UnsyncSignal<InspectionSelection>(
-            InspectionSelectionController.SelectionRejectedAction,
-            OnSelectionRejected
-        );
-        ActionController.UnsyncSignal<InspectionSelection>(
-            InspectionSelectionController.SelectionAcceptedAction,
-            OnSelectionAccepted
-        );
+        Signals.Clear();
     }
 
     // Objeto desativado (ex.: pagina do Manual trocada) nao recebe OnPointerExit,
@@ -130,6 +111,12 @@ public abstract class InspectionSelectable : ActionButtonController,
     protected void SetSelected(bool selected)
     {
         isSelected = selected;
+        ApplyColor();
+    }
+
+    protected void SetFound(bool found)
+    {
+        isFound = found;
         ApplyColor();
     }
 
@@ -171,7 +158,8 @@ public abstract class InspectionSelectable : ActionButtonController,
         flashRoutine = null;
     }
 
-    // Prioridade: piscando (recusa/achado) > selecionado > hover (so com o modo ligado) > cor original.
+    // Prioridade: piscando (recusa/achado) > selecionado > hover (so com o modo ligado)
+    // > ja tem achado > cor original.
     private void ApplyColor()
     {
         if (graphic == null)
@@ -183,6 +171,8 @@ public abstract class InspectionSelectable : ActionButtonController,
             graphic.color = selectedColor;
         else if (isHovered && InspectionModeActive)
             graphic.color = hoverColor;
+        else if (isFound)
+            graphic.color = foundColor;
         else
             graphic.color = originalColor;
     }

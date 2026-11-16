@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public static class ManualRulesLoader
+// Regras do Manual (Resources/Manual/ManualRules.json): carrega uma vez, valida e filtra.
+// Instancia unica, compartilhada pela janela do Manual e pelo avaliador do Inspector.
+public static class ManualRules
 {
-    public const string DefaultResourcePath = "Manual/ManualRules";
+    public const string ResourcePath = "Manual/ManualRules";
     public const int SupportedVersion = 1;
+
+    private static ManualRuleBookData cached;
+
+    // Estaticos sobrevivem entre Plays. Limpar aqui faz cada Play reler o ManualRules.json atual.
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetCache()
+    {
+        cached = null;
+    }
 
     // Chave desconhecida (ex.: "allowedDomain" sem "s") falha no carregamento, em vez de virar null em silencio.
     private static readonly JsonSerializerSettings JsonSettings = new()
@@ -21,13 +32,40 @@ public static class ManualRulesLoader
         "chat",
     };
 
-    public static ManualRuleBookData Load(
-        string resourcePath = DefaultResourcePath
+    public static bool IsSupportedApp(string app)
+    {
+        return !string.IsNullOrWhiteSpace(app) && SupportedApps.Contains(app.Trim());
+    }
+
+    // Lanca InvalidOperationException se o JSON nao existe ou e invalido.
+    public static ManualRuleBookData Load()
+    {
+        return cached ??= LoadFromResources(ResourcePath);
+    }
+
+    // Regras do app que ja valem no dia.
+    public static IReadOnlyList<ManualRuleData> GetActiveRules(
+        ManualRuleBookData manual,
+        int currentDay,
+        string app
     )
     {
-        if (string.IsNullOrWhiteSpace(resourcePath))
-            throw new ArgumentException("Manual rules resource path is required.", nameof(resourcePath));
+        if (manual?.rules == null)
+            throw new ArgumentNullException(nameof(manual));
 
+        List<ManualRuleData> activeRules = new();
+        foreach (ManualRuleData rule in manual.rules)
+        {
+            if (rule.introductionDay <= currentDay
+                && string.Equals(rule.app, app, StringComparison.OrdinalIgnoreCase))
+                activeRules.Add(rule);
+        }
+
+        return activeRules;
+    }
+
+    private static ManualRuleBookData LoadFromResources(string resourcePath)
+    {
         TextAsset jsonAsset = Resources.Load<TextAsset>(resourcePath);
         if (jsonAsset == null)
             throw new InvalidOperationException(

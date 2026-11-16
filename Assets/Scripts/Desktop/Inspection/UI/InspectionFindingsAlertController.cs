@@ -4,27 +4,21 @@ using UnityEngine;
 // So decide o que mostrar; as janelas sao criadas pelo AlertManagerController.
 public sealed class InspectionFindingsAlertController : MonoBehaviour
 {
-    public const string ShowFindingsAction = "ShowInspectionFindings";
 
     [SerializeField]
     private InspectionEvaluationController evaluation;
+    private readonly SignalSubscriptions signals = new();
 
     private void Awake()
     {
-        ActionController.SyncSignal<string>(
-            InspectionSelectionController.FindingRegisteredAction,
-            OnFindingRegistered
-        );
-        ActionController.SyncSignal(ShowFindingsAction, ShowCurrentFindings);
+        signals
+            .On<string>(InspectionSignals.FindingRegistered, OnFindingRegistered)
+            .On(InspectionSignals.ShowFindings, ShowCurrentFindings);
     }
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<string>(
-            InspectionSelectionController.FindingRegisteredAction,
-            OnFindingRegistered
-        );
-        ActionController.UnsyncSignal(ShowFindingsAction, ShowCurrentFindings);
+        signals.Clear();
     }
 
     // Achado novo: aviso curto (Alert Notification). A lista paginada (Alert Achados) abre

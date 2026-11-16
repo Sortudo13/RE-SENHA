@@ -2,64 +2,27 @@ using UnityEngine;
 
 public sealed class InspectionSelectionController : MonoBehaviour
 {
-    public const string FieldSelectedAction = "InspectionFieldSelected";
-    public const string RuleSelectedAction = "InspectionRuleSelected";
-    public const string FindingRegisteredAction = "InspectionFindingRegistered";
-    public const string SelectionClearedAction = "InspectionSelectionCleared";
-    public const string FieldHighlightAction = "InspectionFieldHighlight";
-    public const string RuleHighlightAction = "InspectionRuleHighlight";
-    // Payload: InspectionSelection com FieldId = campo e SelectionId = subregra da combinacao recusada.
-    public const string SelectionRejectedAction = "InspectionSelectionRejected";
-    // Mesmo payload, para a combinacao valida (achado registrado).
-    public const string SelectionAcceptedAction = "InspectionSelectionAccepted";
 
     [SerializeField]
     private InspectionEvaluationController evaluation;
+    private readonly SignalSubscriptions signals = new();
     private string selectedField;
     private string selectedSubruleId;
 
     private void Awake()
     {
-        ActionController.SyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
-        ActionController.SyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
-        ActionController.SyncSignal<IInspectionSurface>(
-            InspectionEvaluationController.SurfaceChangedAction,
-            ClearSelectionForSurface
-        );
-        ActionController.SyncSignal<string>(
-            InspectionEvaluationController.SurfaceClosedAction,
-            ClearSelectionForClosedSurface
-        );
-        ActionController.SyncSignal<bool>(
-            InspectionModeController.ModeChangedAction,
-            ClearSelectionWhenModeEnds
-        );
-        ActionController.SyncSignal(
-            InspectionModeController.StateRequestedAction,
-            PublishHighlights
-        );
+        signals
+            .On<InspectionSelection>(InspectionSignals.FieldSelected, SelectField)
+            .On<InspectionSelection>(InspectionSignals.RuleSelected, SelectRule)
+            .On<IInspectionSurface>(InspectionSignals.SurfaceChanged, ClearSelectionForSurface)
+            .On<string>(InspectionSignals.SurfaceClosed, ClearSelectionForClosedSurface)
+            .On<bool>(InspectionSignals.ModeChanged, ClearSelectionWhenModeEnds)
+            .On(InspectionSignals.StateRequested, PublishHighlights);
     }
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<InspectionSelection>(FieldSelectedAction, SelectField);
-        ActionController.UnsyncSignal<InspectionSelection>(RuleSelectedAction, SelectRule);
-        ActionController.UnsyncSignal<IInspectionSurface>(
-            InspectionEvaluationController.SurfaceChangedAction,
-            ClearSelectionForSurface
-        );
-        ActionController.UnsyncSignal<string>(
-            InspectionEvaluationController.SurfaceClosedAction,
-            ClearSelectionForClosedSurface
-        );
-        ActionController.UnsyncSignal<bool>(
-            InspectionModeController.ModeChangedAction,
-            ClearSelectionWhenModeEnds
-        );
-        ActionController.UnsyncSignal(
-            InspectionModeController.StateRequestedAction,
-            PublishHighlights
-        );
+        signals.Clear();
     }
 
     public void SelectField(InspectionSelection selection)
@@ -71,7 +34,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
         if (string.Equals(selectedField, selection.FieldId, System.StringComparison.Ordinal))
         {
             selectedField = null;
-            ActionController.SendAction<string>(FieldHighlightAction, null);
+            ActionController.SendAction<string>(InspectionSignals.FieldHighlight, null);
             return;
         }
 
@@ -79,7 +42,7 @@ public sealed class InspectionSelectionController : MonoBehaviour
         WarnIfFieldIsUnknown(selectedField);
         TryRegisterSelection();
         if (string.Equals(selectedField, selection.FieldId, System.StringComparison.Ordinal))
-            ActionController.SendAction(FieldHighlightAction, selection.FieldId);
+            ActionController.SendAction(InspectionSignals.FieldHighlight, selection.FieldId);
     }
 
     public void SelectRule(InspectionSelection selection)
@@ -91,23 +54,23 @@ public sealed class InspectionSelectionController : MonoBehaviour
         if (string.Equals(selectedSubruleId, selection.SelectionId, System.StringComparison.Ordinal))
         {
             selectedSubruleId = null;
-            ActionController.SendAction<string>(RuleHighlightAction, null);
+            ActionController.SendAction<string>(InspectionSignals.RuleHighlight, null);
             return;
         }
 
         selectedSubruleId = selection.SelectionId;
         TryRegisterSelection();
         if (string.Equals(selectedSubruleId, selection.SelectionId, System.StringComparison.Ordinal))
-            ActionController.SendAction(RuleHighlightAction, selection.SelectionId);
+            ActionController.SendAction(InspectionSignals.RuleHighlight, selection.SelectionId);
     }
 
     public void ClearSelection()
     {
         selectedField = null;
         selectedSubruleId = null;
-        ActionController.SendAction(SelectionClearedAction);
-        ActionController.SendAction<string>(FieldHighlightAction, null);
-        ActionController.SendAction<string>(RuleHighlightAction, null);
+        ActionController.SendAction(InspectionSignals.SelectionCleared);
+        ActionController.SendAction<string>(InspectionSignals.FieldHighlight, null);
+        ActionController.SendAction<string>(InspectionSignals.RuleHighlight, null);
     }
 
     // Trocar de item (outro email, outro ticket...) descarta a combinacao parcial do item anterior.
@@ -172,9 +135,9 @@ public sealed class InspectionSelectionController : MonoBehaviour
     private void PublishHighlights()
     {
         if (!string.IsNullOrWhiteSpace(selectedField))
-            ActionController.SendAction(FieldHighlightAction, selectedField);
+            ActionController.SendAction(InspectionSignals.FieldHighlight, selectedField);
         if (!string.IsNullOrWhiteSpace(selectedSubruleId))
-            ActionController.SendAction(RuleHighlightAction, selectedSubruleId);
+            ActionController.SendAction(InspectionSignals.RuleHighlight, selectedSubruleId);
     }
 
     private void TryRegisterSelection()
@@ -226,19 +189,19 @@ public sealed class InspectionSelectionController : MonoBehaviour
 
         // Os seletores da combinacao piscam em verde antes de a selecao ser limpa.
         ActionController.SendAction(
-            SelectionAcceptedAction,
+            InspectionSignals.SelectionAccepted,
             new InspectionSelection(selectedField, selectedSubruleId)
         );
-        ActionController.SendAction(FindingRegisteredAction, selectedSubruleId);
+        ActionController.SendAction(InspectionSignals.FindingRegistered, selectedSubruleId);
         ClearSelection();
-        ActionController.SendAction(InspectionModeController.DeactivateAction);
+        ActionController.SendAction(InspectionSignals.DeactivateMode);
     }
 
     private void RejectSelection(string message)
     {
         // Avisa os seletores escolhidos antes de limpar, para eles piscarem em vermelho.
         ActionController.SendAction(
-            SelectionRejectedAction,
+            InspectionSignals.SelectionRejected,
             new InspectionSelection(selectedField, selectedSubruleId)
         );
         ClearSelection();

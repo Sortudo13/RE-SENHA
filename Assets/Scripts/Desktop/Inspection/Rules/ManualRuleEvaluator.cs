@@ -5,26 +5,39 @@ using System.Text.RegularExpressions;
 
 public sealed class ManualRuleEvaluator
 {
+    // Evaluate recebe (campos, parametros do check, campo a verificar) e devolve a evidencia
+    // encontrada ou null.
     private sealed class CheckDefinition
     {
+        // Campo fixo que o verificador le; null = generico, le o "field" da regra.
         public string Capability { get; }
-        public Func<IInspectionFieldSource, ManualRuleCheckData, string> Evaluate { get; }
+        public Func<IInspectionFieldSource, ManualRuleCheckData, string, string> Evaluate { get; }
 
         public CheckDefinition(
             string capability,
-            Func<IInspectionFieldSource, ManualRuleCheckData, string> evaluate
+            Func<IInspectionFieldSource, ManualRuleCheckData, string, string> evaluate
         )
         {
             Capability = capability;
             Evaluate = evaluate;
         }
+
+        // Verificador especifico do Email (campo fixo, ignora o "field" da regra).
+        public CheckDefinition(
+            string capability,
+            Func<IInspectionFieldSource, ManualRuleCheckData, string> evaluate
+        )
+            : this(capability, (fields, check, _) => evaluate(fields, check)) { }
     }
 
     public const string EvaluatorId = "manual-content";
 
     // Tipos de verificacao aceitos no ManualRules.json e a capacidade que cada um exige da superficie.
+    // Os genericos (capacidade null) servem para qualquer app: leem o "field" da regra.
     private static readonly Dictionary<string, CheckDefinition> Checks = new()
     {
+        ["Contains"] = new(null, EvaluateContains),
+        ["DomainNotAllowed"] = new(null, EvaluateDomainNotAllowed),
         ["SenderDomain"] = new(InspectionFields.Sender, EvaluateSenderDomain),
         ["SubjectTerms"] = new(InspectionFields.Subject, EvaluateSubjectTerms),
         ["BodyTerms"] = new(InspectionFields.Body, EvaluateBodyTerms),
@@ -37,7 +50,48 @@ public sealed class ManualRuleEvaluator
         return type != null && Checks.ContainsKey(type);
     }
 
-    // O ManualRulesLoader ja valida IDs, subregras, check, finding e tipos ao carregar o JSON.
+    // Campo que a superficie precisa ter para a subregra ser avaliada: o campo fixo do
+    // verificador ou, nos genericos, o "field" da regra. Null se o tipo nao existe.
+    public static string GetRequiredField(ManualRuleData rule, ManualSubruleData subrule)
+    {
+        string type = subrule?.check?.type;
+        if (type == null || !Checks.TryGetValue(type, out CheckDefinition check))
+            return null;
+
+        return check.Capability ?? rule?.field;
+    }
+
+    // O ManualRules ja valida IDs, subregras, check, finding e tipos ao carregar o JSON.
+
+    // Generico: o campo contem um dos termos.
+    private static string EvaluateContains(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check,
+        string field
+    )
+    {
+        RequireValues(check.terms, check.type, "terms");
+        return FindTerm(
+            fields.TryGetText(field, out string value) ? value : null,
+            check.terms,
+            check.caseSensitive
+        );
+    }
+
+    // Generico: o endereco de email do campo nao e de um dominio permitido. Campo vazio ou sem
+    // "@" acusa (nao da para confirmar o dominio), como no SenderDomain.
+    private static string EvaluateDomainNotAllowed(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check,
+        string field
+    )
+    {
+        RequireValues(check.allowedDomains, check.type, "allowedDomains");
+        if (!fields.TryGetText(field, out string value))
+            return null;
+
+        return FindDomainNotAllowed(value, check.allowedDomains);
+    }
     public IReadOnlyList<InspectionEvaluationResult> Evaluate(
         IInspectionSurface surface,
         ManualRuleBookData manual,
@@ -48,15 +102,16 @@ public sealed class ManualRuleEvaluator
             throw new ArgumentNullException(nameof(surface));
 
         List<InspectionEvaluationResult> results = new();
-        foreach (ManualRuleData rule in ManualRepository.GetActiveRules(manual, currentDay, surface.SourceType))
+        foreach (ManualRuleData rule in ManualRules.GetActiveRules(manual, currentDay, surface.SourceType))
         {
             foreach (ManualSubruleData subrule in rule.subrules)
             {
                 CheckDefinition check = Checks[subrule.check.type];
-                if (!InspectionFields.Contains(surface.Capabilities, check.Capability))
+                string field = check.Capability ?? rule.field;
+                if (!InspectionFields.Contains(surface.Capabilities, field))
                     continue;
 
-                string evidence = check.Evaluate(surface.FieldSource, subrule.check);
+                string evidence = check.Evaluate(surface.FieldSource, subrule.check, field);
                 if (evidence == null)
                     continue;
 
@@ -88,12 +143,17 @@ public sealed class ManualRuleEvaluator
         if (!fields.TryGetText(InspectionFields.Sender, out string sender))
             return null;
 
-        int separator = sender?.LastIndexOf('@') ?? -1;
-        if (separator < 0 || separator == sender.Length - 1)
-            return sender ?? string.Empty;
+        return FindDomainNotAllowed(sender, check.allowedDomains);
+    }
 
-        string domain = sender[(separator + 1)..].Trim().ToLowerInvariant();
-        bool allowed = check.allowedDomains.Any(
+    private static string FindDomainNotAllowed(string address, string[] allowedDomains)
+    {
+        int separator = address?.LastIndexOf('@') ?? -1;
+        if (separator < 0 || separator == address.Length - 1)
+            return address ?? string.Empty;
+
+        string domain = address[(separator + 1)..].Trim().ToLowerInvariant();
+        bool allowed = allowedDomains.Any(
             allowedDomain =>
                 string.Equals(
                     domain,

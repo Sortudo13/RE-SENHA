@@ -85,7 +85,7 @@ public class ManualWindowController : MonoBehaviour
     {
         try
         {
-            manual = ManualRepository.Load();
+            manual = ManualRules.Load();
         }
         catch (InvalidOperationException exception)
         {
@@ -118,7 +118,7 @@ public class ManualWindowController : MonoBehaviour
             return;
 
         ClearChildren(rulesContainer);
-        IReadOnlyList<ManualRuleData> rules = ManualRepository.GetActiveRules(
+        IReadOnlyList<ManualRuleData> rules = ManualRules.GetActiveRules(
             manual,
             DataController.CurrentDay,
             selectedApp

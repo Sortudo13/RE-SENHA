@@ -8,7 +8,7 @@ public sealed class InspectionRuleSelectable : InspectionSelectable
 
     protected override string SelectionId => subruleId;
     protected override string HighlightAction =>
-        InspectionSelectionController.RuleHighlightAction;
+        InspectionSignals.RuleHighlight;
 
     public void Setup(string id)
     {
@@ -19,7 +19,7 @@ public sealed class InspectionRuleSelectable : InspectionSelectable
     {
         if (InspectionModeActive && !string.IsNullOrWhiteSpace(subruleId))
             ActionController.SendAction(
-                InspectionSelectionController.RuleSelectedAction,
+                InspectionSignals.RuleSelected,
                 new InspectionSelection(string.Empty, subruleId)
             );
     }
