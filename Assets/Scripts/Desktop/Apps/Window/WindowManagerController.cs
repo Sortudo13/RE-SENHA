@@ -20,9 +20,6 @@ public class WindowManagerController : MonoBehaviour
     [SerializeField]
     private WindowController windowChat;
 
-    [SerializeField]
-    private WindowController windowMenu;
-
     private void Awake()
     {
         WindowsLayer = transform;
@@ -65,7 +62,7 @@ public class WindowManagerController : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform window = transform.GetChild(i);
-            if (window.GetComponentInChildren<WindowMenuController>() == null)
+            if (window.GetComponentInChildren<InGameMenuController>() == null)
                 window.gameObject.SetActive(!desktopWindowsHidden);
         }
     }
@@ -77,28 +74,11 @@ public class WindowManagerController : MonoBehaviour
 
     public void SwapWorkspace()
     {
-        CloseOpenWindowMenu();
 
         if (activeWindowCount > 0)
             SwapDesktop();
         else
             DeactivateDesktop();
-    }
-
-    private void CloseOpenWindowMenu()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            WindowController window = transform
-                .GetChild(i)
-                .GetComponentInChildren<WindowController>();
-
-            if (window != null && window.GetComponentInChildren<WindowMenuController>() != null)
-            {
-                window.CloseWindow();
-                return;
-            }
-        }
     }
 
     private void OnDestroy()
@@ -117,7 +97,6 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
-        ActionController.SyncSignal("OpenWindowMenu", OpenWindowMenu);
     }
 
     private void CloseTemplateSignals()
@@ -127,7 +106,6 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
-        ActionController.UnsyncSignal("OpenWindowMenu", OpenWindowMenu);
     }
 
     private void OpenURL(string url)
@@ -153,11 +131,5 @@ public class WindowManagerController : MonoBehaviour
     private void InitChat(AttachmentContent data)
     {
         Instantiate(windowChat.gameObject, transform);
-    }
-
-    private void OpenWindowMenu()
-    {
-        ActivateDesktop();
-        Instantiate(windowMenu.gameObject, transform);
     }
 }

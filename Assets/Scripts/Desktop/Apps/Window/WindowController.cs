@@ -67,9 +67,6 @@ public class WindowController : MonoBehaviour
 
     private void Start()
     {
-        if (IsWindowMenu())
-            return;
-
         ActionController.SendAction("AddActiveWindow");
 
         if (showInTaskbar)
@@ -128,12 +125,6 @@ public class WindowController : MonoBehaviour
         ActionController.SendAction("OnWindowClosed");
         ActionController.SendAction("HideNotificationBadge", AppName);
 
-        if (IsWindowMenu())
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         MinimizeWindow();
         Destroy(gameObject);
     }
@@ -150,11 +141,7 @@ public class WindowController : MonoBehaviour
 
     private bool ShouldMinimizeWithAll()
     {
-        return minimizeWithAll && !IsWindowMenu();
+        return minimizeWithAll;
     }
 
-    private bool IsWindowMenu()
-    {
-        return GetComponentInChildren<WindowMenuController>() != null;
-    }
 }

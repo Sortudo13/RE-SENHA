@@ -11,17 +11,18 @@ public class CalendarController : MonoBehaviour
             textTMPro = component;
 
         AtualizarTexto();
-        ActionController.SyncSignal("Resetar Jogo", ResetGame);
     }
 
     private void OnEnable()
     {
         ActionController.SyncSignal("DayChanged", AtualizarTexto);
+        ActionController.SyncSignal("Resetar Jogo", ResetGame);
     }
 
     private void OnDisable()
     {
         ActionController.UnsyncSignal("DayChanged", AtualizarTexto);
+        ActionController.UnsyncSignal("Resetar Jogo", ResetGame);
     }
 
     private void AtualizarTexto()
@@ -36,7 +37,7 @@ public class CalendarController : MonoBehaviour
         // Debug show notification badge
         ActionController.SendAction("ShowNotificationBadge", "Email");
         ActionController.SendAction("ShowNotificationBadge", "Banco de Dados");
-        ActionController.SendAction("ShowNotificationBadge", "Requisições");
+        ActionController.SendAction("ShowNotificationBadge", "Requisiï¿½ï¿½es");
         ActionController.SendAction("ShowNotificationBadge", "Manual");
     }
 }

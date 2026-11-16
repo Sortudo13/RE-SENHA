@@ -1,10 +1,16 @@
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
-public class MainMenuController : UnityEngine.MonoBehaviour
+public class MainMenuController : MonoBehaviour
 {
     public void NovoJogo()
     {
+        // Limpa o save do disco
         DataController.ResetGame();
+
+        // Avisa todos os sistemas que o jogo foi resetado
+        ActionController.SendAction("Resetar Jogo");
+
         AbrirDesktop();
     }
 

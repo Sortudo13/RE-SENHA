@@ -85,6 +85,13 @@ public static class DataController
     public static void SavingGame(SaveData save = null)
     {
         save ??= currentSave;
+        if (save == null)
+        {
+            Debug.LogError("[DataController] Não foi possível salvar: SaveData nulo.");
+            return;
+        }
+
+        save.chatStates ??= new List<ChatSaveState>();
         save.current_day = CurrentDay;
         save.error_count = CurrentErrorCount;
         string json = JsonConvert.SerializeObject(save, Formatting.Indented);
@@ -106,6 +113,7 @@ public static class DataController
             CurrentErrorCount = 0;
             save = GetDailyDataJson(CurrentDay);
         }
+        save.chatStates ??= new List<ChatSaveState>();
         currentSave = save;
 
         CurrentDay = currentSave.current_day;
@@ -172,6 +180,8 @@ public class SaveData
     public List<EmailData> availableMails;
     public List<MailBox> currentMailBoxes;
     public List<TicketData> tickets;
+    public List<ChatSaveState> chatStates = new();
+
 }
 
 [System.Serializable]
@@ -277,4 +287,14 @@ public enum DocumentType
     Manual,
     Email,
     RG,
+}
+
+[System.Serializable]
+public class ChatSaveState
+{
+    public string conversationId;
+    public string currentNodeId;
+    public bool isFinished;
+    public bool hasArrived;
+    public bool hasUnread;
 }
