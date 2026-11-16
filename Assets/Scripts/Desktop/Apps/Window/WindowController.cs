@@ -91,8 +91,6 @@ public class WindowController : MonoBehaviour
     public void CloseWindow()
     {
         ActionController.SendAction("OnWindowClosed");
-        ActionController.SendAction("HideNotificationBadge", AppName);
-
         MinimizeWindow(false);
         Destroy(gameObject);
     }
