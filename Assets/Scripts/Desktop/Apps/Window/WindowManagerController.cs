@@ -57,14 +57,7 @@ public class WindowManagerController : MonoBehaviour
 
     private void SwapDesktop()
     {
-        desktopWindowsHidden = !desktopWindowsHidden;
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform window = transform.GetChild(i);
-            if (window.GetComponentInChildren<InGameMenuController>() == null)
-                window.gameObject.SetActive(!desktopWindowsHidden);
-        }
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 
     private void DeactivateDesktop()
