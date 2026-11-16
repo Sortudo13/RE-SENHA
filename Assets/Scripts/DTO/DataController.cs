@@ -16,7 +16,7 @@ public static class DataController
 
     public static int MaxDay
     {
-        get => PlayerPrefs.GetInt("MaxDay", 1);
+        get => PlayerPrefs.GetInt("MaxDay", 5);
         set => PlayerPrefs.SetInt("MaxDay", value);
     }
 
@@ -58,8 +58,25 @@ public static class DataController
     public static void AdvanceDay()
     {
         CurrentDay++;
+
+        if (CurrentDay > MaxDay)
+        {
+            ResetGame();
+            LoadingScreen.LoadScene("GameWin");
+            return;
+        }
+
         LoadDay();
-        ActionController.SendAction("DayChanged");
+    }
+
+    public static void RetrocedeDay()
+    {
+        CurrentDay--;
+
+        if (CurrentDay < 1)
+            CurrentDay = 1;
+
+        LoadDay();
     }
 
     public static void LoadDay()
@@ -73,6 +90,7 @@ public static class DataController
         }
         currentSave = save;
         SavingGame(save);
+        ActionController.SendAction("DayChanged");
     }
 
     public static void ResetGame()
@@ -84,16 +102,25 @@ public static class DataController
 
     public static void SavingGame(SaveData save = null)
     {
-        save ??= currentSave;
+        if (save == null)
+            save = currentSave ?? CurrentSave;
         if (save == null)
         {
             Debug.LogError("[DataController] Não foi possível salvar: SaveData nulo.");
             return;
         }
 
+        currentSave = save;
+        CurrentDay = save.current_day;
+        CurrentErrorCount = save.error_count;
         save.chatStates ??= new List<ChatSaveState>();
         save.current_day = CurrentDay;
         save.error_count = CurrentErrorCount;
+        if (ClockController.IsClockActive)
+        {
+            save.current_hour = ClockController.CurrentHour;
+            save.current_minute = ClockController.CurrentMinute;
+        }
         string json = JsonConvert.SerializeObject(save, Formatting.Indented);
         File.WriteAllText(SavePath, json);
     }
@@ -118,9 +145,9 @@ public static class DataController
 
         CurrentDay = currentSave.current_day;
         CurrentErrorCount = currentSave.error_count;
+        ActionController.SendAction("DayChanged");
         SavingGame();
 
-        ActionController.SendAction("DayChanged");
         return save;
     }
 
@@ -130,6 +157,8 @@ public static class DataController
         {
             current_day = day,
             error_count = 0,
+            current_hour = -1,
+            current_minute = -1,
             availableMails = LoadJsonList<EmailData>($"Emails/Dia_{day}"),
             currentMailBoxes = new()
             {
@@ -177,6 +206,8 @@ public class SaveData
 {
     public int current_day;
     public int error_count;
+    public int current_hour = -1;
+    public int current_minute = 0;
     public List<EmailData> availableMails;
     public List<MailBox> currentMailBoxes;
     public List<TicketData> tickets;
@@ -190,6 +221,8 @@ public class EmailData
     public string mailBox;
     public Boolean isRead = false;
     public float timeToReceive = 0f;
+    public int hourToReceive = -1;
+    public int minuteToReceive = -1;
     public string sender;
     public string subject;
     public string body;

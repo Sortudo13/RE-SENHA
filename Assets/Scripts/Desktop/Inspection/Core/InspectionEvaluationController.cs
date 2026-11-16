@@ -3,24 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// Guarda as superficies abertas (uma por app: o email aberto, o colaborador selecionado no
+// Database...) e as quebras de regra do item em julgamento.
+// Nao conhece nenhum app: cada app publica a propria superficie com PublishSurface e avisa
+// com CloseSurface quando o item e fechado.
 public sealed class InspectionEvaluationController : MonoBehaviour
 {
-    public const string EmailSelectedAction = "CurrentEmailChanged";
+    // Payload: IInspectionSurface. Use PublishSurface para enviar.
+    public const string SurfaceChangedAction = "InspectionSurfaceChanged";
+    // Payload: string com o SourceType da superficie fechada. Use CloseSurface para enviar.
+    public const string SurfaceClosedAction = "InspectionSurfaceClosed";
 
     private readonly ManualRuleEvaluator evaluator = new();
+    private readonly Dictionary<string, IInspectionSurface> surfaces =
+        new(StringComparer.OrdinalIgnoreCase);
     private ManualRuleBookData manual;
-    private IInspectionSurface currentSurface;
 
-    public EmailData CurrentEmail { get; private set; }
-    public SaveData CurrentSave { get; private set; }
+    // Item em julgamento: a ultima superficie publicada que guarda achados (FindingStore != null).
+    // Superficies sem FindingStore (ex.: Database) sao so referencia; consulte com TryGetSurface.
+    public IInspectionSurface CurrentSurface { get; private set; }
     public IReadOnlyList<InspectionEvaluationResult> CurrentResults { get; private set; } =
         Array.Empty<InspectionEvaluationResult>();
 
-    public bool HasFindingStore => currentSurface?.FindingStore != null;
+    // Achados que o jogador ja registrou no item em julgamento.
+    public IReadOnlyList<EvidenceData> CurrentFindings =>
+        CurrentSurface?.FindingStore?.Findings ?? Array.Empty<EvidenceData>();
+
+    public bool HasFindingStore => CurrentSurface?.FindingStore != null;
+
+    // O ActionController so entrega o sinal se o tipo generico for exatamente IInspectionSurface;
+    // enviar a classe concreta (ex.: EmailInspectionSurface) seria ignorado em silencio.
+    public static void PublishSurface(IInspectionSurface surface)
+    {
+        if (surface == null)
+        {
+            Debug.LogWarning(
+                "InspectionEvaluationController: PublishSurface(null) ignored. Use CloseSurface(sourceType)."
+            );
+            return;
+        }
+
+        ActionController.SendAction<IInspectionSurface>(SurfaceChangedAction, surface);
+    }
+
+    public static void CloseSurface(string sourceType)
+    {
+        ActionController.SendAction<string>(SurfaceClosedAction, sourceType);
+    }
 
     private void Awake()
     {
-        ActionController.SyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
+        ActionController.SyncSignal<IInspectionSurface>(SurfaceChangedAction, SetSurface);
+        ActionController.SyncSignal<string>(SurfaceClosedAction, RemoveSurface);
         try
         {
             manual = ManualRepository.Load();
@@ -33,27 +67,49 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<EmailSelectionContext>(EmailSelectedAction, SetEmailContext);
+        ActionController.UnsyncSignal<IInspectionSurface>(SurfaceChangedAction, SetSurface);
+        ActionController.UnsyncSignal<string>(SurfaceClosedAction, RemoveSurface);
     }
 
-    private void SetEmailContext(EmailSelectionContext context)
+    public bool TryGetSurface(string sourceType, out IInspectionSurface surface)
     {
-        CurrentEmail = context?.Email;
-        currentSurface = CurrentEmail == null
-            ? null
-            : new EmailInspectionSurface(
-                CurrentEmail,
-                new EmailInspectionFindingStore(CurrentEmail)
-            );
+        surface = null;
+        return !string.IsNullOrWhiteSpace(sourceType)
+            && surfaces.TryGetValue(sourceType.Trim(), out surface);
+    }
 
-        CurrentResults = currentSurface == null || manual == null
+    private void SetSurface(IInspectionSurface surface)
+    {
+        if (surface == null || string.IsNullOrWhiteSpace(surface.SourceType))
+            return;
+
+        surfaces[surface.SourceType.Trim()] = surface;
+        if (surface.FindingStore != null)
+            SetCurrentSurface(surface);
+    }
+
+    private void RemoveSurface(string sourceType)
+    {
+        if (string.IsNullOrWhiteSpace(sourceType) || !surfaces.Remove(sourceType.Trim()))
+            return;
+
+        // Se outro app com achados continua aberto, ele volta a ser o item em julgamento.
+        if (CurrentSurface != null
+            && InspectionFields.Matches(CurrentSurface.SourceType, sourceType))
+            SetCurrentSurface(surfaces.Values.FirstOrDefault(open => open.FindingStore != null));
+    }
+
+    private void SetCurrentSurface(IInspectionSurface surface)
+    {
+        CurrentSurface = surface;
+        CurrentResults = CurrentSurface == null || manual == null
             ? Array.Empty<InspectionEvaluationResult>()
-            : evaluator.Evaluate(currentSurface, manual, DataController.CurrentDay);
+            : evaluator.Evaluate(CurrentSurface, manual, DataController.CurrentDay);
     }
 
     public bool HasRegisteredFinding(string findingId)
     {
-        return currentSurface?.FindingStore?.HasFinding(findingId) ?? false;
+        return CurrentSurface?.FindingStore?.HasFinding(findingId) ?? false;
     }
 
     public bool TryGetFinding(string findingId, out InspectionEvaluationResult finding)
@@ -66,8 +122,8 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
     public bool RegisterFinding(string findingId)
     {
-        return currentSurface?.FindingStore != null
+        return CurrentSurface?.FindingStore != null
             && TryGetFinding(findingId, out InspectionEvaluationResult result)
-            && currentSurface.FindingStore.TryRegisterFinding(result);
+            && CurrentSurface.FindingStore.TryRegisterFinding(result);
     }
 }

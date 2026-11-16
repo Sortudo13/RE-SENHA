@@ -1,18 +1,22 @@
 using System.Collections.Generic;
 
+// Superficie de inspecao do Email: expoe os campos do email aberto para as regras do Manual.
+// Serve de modelo para os outros apps (ticket, chat, database).
 public sealed class EmailInspectionSurface : IInspectionSurface, IInspectionFieldSource
 {
-    private readonly EmailData email;
+    public const string Source = "email";
+
     private readonly IInspectionFindingStore findingStore;
 
-    public string SourceType => "email";
+    public EmailData Email { get; }
+    public string SourceType => Source;
     public IReadOnlyCollection<string> Capabilities { get; } =
-        new HashSet<string>
+        new[]
         {
-            "sender",
-            "subject",
-            "body",
-            "attachments",
+            InspectionFields.Sender,
+            InspectionFields.Subject,
+            InspectionFields.Body,
+            InspectionFields.Attachments,
         };
     public IInspectionFieldSource FieldSource => this;
     public IInspectionFindingStore FindingStore => findingStore;
@@ -22,33 +26,35 @@ public sealed class EmailInspectionSurface : IInspectionSurface, IInspectionFiel
         IInspectionFindingStore findingStore = null
     )
     {
-        this.email = email;
+        Email = email;
         this.findingStore = findingStore;
     }
 
     public bool TryGetText(string fieldId, out string value)
     {
         value = null;
-        if (email == null)
+        if (Email == null)
             return false;
 
-        value = fieldId switch
-        {
-            "sender" => email.sender,
-            "subject" => email.subject,
-            "body" => email.body,
-            _ => null,
-        };
-        return fieldId is "sender" or "subject" or "body";
+        if (InspectionFields.Matches(fieldId, InspectionFields.Sender))
+            value = Email.sender;
+        else if (InspectionFields.Matches(fieldId, InspectionFields.Subject))
+            value = Email.subject;
+        else if (InspectionFields.Matches(fieldId, InspectionFields.Body))
+            value = Email.body;
+        else
+            return false;
+
+        return true;
     }
 
     public IReadOnlyList<InspectionAttachmentDescriptor> GetAttachments()
     {
         List<InspectionAttachmentDescriptor> attachments = new();
-        if (email?.attachments == null)
+        if (Email?.attachments == null)
             return attachments;
 
-        foreach (AttachmentData attachment in email.attachments)
+        foreach (AttachmentData attachment in Email.attachments)
         {
             if (attachment != null)
                 attachments.Add(new InspectionAttachmentDescriptor(attachment.extension));

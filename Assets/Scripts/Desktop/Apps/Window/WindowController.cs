@@ -4,91 +4,50 @@ using UnityEngine;
 
 public class WindowController : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite windowIcon;
-
-    [SerializeField]
-    private string windowName;
-
-    [Header("Nome da Janela (para exibição no header)")]
-    [SerializeField]
-    [Tooltip(
-        "Nome que aparece no header da janela. Se não for fornecido, o nome do app será usado."
-    )]
-    private string windowHeaderName;
-    private TextMeshProUGUI headerText;
-
-    [Header("Comportamento")]
-    [SerializeField]
-    private bool showInTaskbar = true; //para casos como o Window Menu, que não deve aparecer na taskbar
-
-    [SerializeField]
-    private bool minimizeWithAll = true;
+    [SerializeField] private Sprite windowIcon;
+    [SerializeField] private string windowName;
+    [SerializeField] private string windowHeaderName;
 
     private string myID;
-
     public string AppID => myID;
     public string AppName => windowName;
     public Sprite AppIcon => windowIcon;
 
+    [SerializeField] private Animator animator;
+    public int countActions = 0;
+
     private void Awake()
     {
         myID = $"Win_{gameObject.GetEntityId()}";
-
         UpdateHeaderText();
-    }
-
-    private void OnValidate()
-    {
-        UpdateHeaderText();
-    }
-
-    private void UpdateHeaderText()
-    {
-        if (headerText == null)
-        {
-            foreach (Transform child in GetComponentsInChildren<Transform>(true))
-            {
-                if (child.name != "WindowHeaderName")
-                    continue;
-
-                headerText = child.GetComponent<TextMeshProUGUI>();
-                break;
-            }
-        }
-
-        if (headerText == null)
-            return;
-
-        headerText.text = string.IsNullOrWhiteSpace(windowHeaderName)
-            ? windowName
-            : windowHeaderName;
     }
 
     private void Start()
     {
         ActionController.SendAction("AddActiveWindow");
 
-        if (showInTaskbar)
-        {
-            WindowData data = new(myID, windowIcon, windowName);
-            ActionController.SendAction("WindowCreated", data);
-        }
+        WindowData data = new(myID, windowIcon, windowName);
+        ActionController.SendAction("WindowCreated", data);
 
-        if (ShouldMinimizeWithAll())
-            ActionController.SyncSignal("MinimizeAllWindow", MinimizeWindow);
+        ActionController.SyncSignal<bool>("MinimizeAllWindow", MinimizeWindow);
         ActionController.SyncSignal($"Swap_{myID}", SwapWindow);
         ActionController.SyncSignal($"ToFront_{myID}", ToFront);
         ActionController.SendAction("OnWindowOpened");
     }
 
-    private void ToFront()
+    public void ToFront()
     {
-        transform.SetAsLastSibling();
+        if (transform.parent == null)
+            return;
+
+        int lastIndex = transform.parent.childCount - 1;
+        if (transform.GetSiblingIndex() < lastIndex)
+            transform.SetAsLastSibling();
     }
 
     public void OpenWindow()
     {
+        countActions++;
         if (!gameObject.activeInHierarchy)
         {
             ActionController.SendAction("AddActiveWindow");
@@ -96,10 +55,23 @@ public class WindowController : MonoBehaviour
             ActionController.SendAction("OnWindowOpened");
         }
         ToFront();
+        animator.SetTrigger(Animator.StringToHash("Open"));
     }
 
-    public void MinimizeWindow()
+    public async void MinimizeWindow(bool animate = true)
     {
+        int currentAction = ++countActions;
+        if (animate)
+        {
+            animator.SetTrigger(Animator.StringToHash("Minimize"));
+            await Awaitable.NextFrameAsync();
+            float duration = animator.GetCurrentAnimatorStateInfo(0).length;
+            await Awaitable.WaitForSecondsAsync(duration);
+        }
+
+        if (this == null || currentAction != countActions)
+            return;
+
         if (gameObject.activeSelf)
         {
             ActionController.SendAction("SubActiveWindow");
@@ -111,13 +83,9 @@ public class WindowController : MonoBehaviour
     public void SwapWindow()
     {
         if (gameObject.activeInHierarchy)
-        {
             MinimizeWindow();
-        }
         else
-        {
             OpenWindow();
-        }
     }
 
     public void CloseWindow()
@@ -125,23 +93,23 @@ public class WindowController : MonoBehaviour
         ActionController.SendAction("OnWindowClosed");
         ActionController.SendAction("HideNotificationBadge", AppName);
 
-        MinimizeWindow();
+        MinimizeWindow(false);
         Destroy(gameObject);
     }
 
     private void OnDestroy()
     {
-        if (ShouldMinimizeWithAll())
-            ActionController.UnsyncSignal("MinimizeAllWindow", MinimizeWindow);
+        ActionController.UnsyncSignal<bool>("MinimizeAllWindow", MinimizeWindow);
+
         ActionController.UnsyncSignal($"Swap_{myID}", SwapWindow);
         ActionController.UnsyncSignal($"ToFront_{myID}", ToFront);
 
         ActionController.SendAction($"WindowDestroyed_{myID}");
     }
 
-    private bool ShouldMinimizeWithAll()
+    private void UpdateHeaderText()
     {
-        return minimizeWithAll;
+        if (transform.Find("Barra Superior").Find("WindowHeaderName").TryGetComponent<TextMeshProUGUI>(out var textComponent))
+            textComponent.text = string.IsNullOrWhiteSpace(windowHeaderName) ? windowName : windowHeaderName;
     }
-
 }

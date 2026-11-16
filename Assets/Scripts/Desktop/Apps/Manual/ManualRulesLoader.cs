@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public static class ManualRulesLoader
 {
     public const string DefaultResourcePath = "Manual/ManualRules";
     public const int SupportedVersion = 1;
+
+    // Chave desconhecida (ex.: "allowedDomain" sem "s") falha no carregamento, em vez de virar null em silencio.
+    private static readonly JsonSerializerSettings JsonSettings = new()
+    {
+        MissingMemberHandling = MissingMemberHandling.Error,
+    };
 
     private static readonly HashSet<string> SupportedApps = new()
     {
@@ -27,7 +34,17 @@ public static class ManualRulesLoader
                 $"Manual rules resource was not found at Resources/{resourcePath}.json."
             );
 
-        ManualRuleBookData manual = JsonUtility.FromJson<ManualRuleBookData>(jsonAsset.text);
+        // Mesmo leitor do DataController (Emails/Tickets/Save): Newtonsoft.
+        ManualRuleBookData manual;
+        try
+        {
+            manual = JsonConvert.DeserializeObject<ManualRuleBookData>(jsonAsset.text, JsonSettings);
+        }
+        catch (JsonException exception)
+        {
+            throw InvalidManual(resourcePath, $"Malformed JSON: {exception.Message}");
+        }
+
         Validate(manual, resourcePath);
         return manual;
     }

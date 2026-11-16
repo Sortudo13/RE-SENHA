@@ -25,6 +25,8 @@ public class WindowManagerController : MonoBehaviour
         WindowsLayer = transform;
         ActionController.SyncSignal("AddActiveWindow", AddWindowCount);
         ActionController.SyncSignal("SubActiveWindow", SubWindowCount);
+        ActionController.SyncSignal("DestroyWindows", DestroyWindows);
+        ActionController.SyncSignal("DayChanged", DestroyWindows);
 
         OpenTemplateSignals();
     }
@@ -34,9 +36,7 @@ public class WindowManagerController : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             if (activeWindowCount > 0)
-            {
-                ActionController.SendAction("MinimizeAllWindow");
-            }
+                ActionController.SendAction<bool>("MinimizeAllWindow", true);
             ActivateDesktop();
         }
 
@@ -74,17 +74,28 @@ public class WindowManagerController : MonoBehaviour
 
     public void SwapWorkspace()
     {
-
         if (activeWindowCount > 0)
             SwapDesktop();
         else
             DeactivateDesktop();
     }
 
+    public void DestroyWindows()
+    {
+        if (activeWindowCount > 0)
+            ActionController.SendAction<bool>("MinimizeAllWindow", false);
+
+        foreach (Transform child in transform)
+            Destroy(child.gameObject);
+    }
+    }
+
     private void OnDestroy()
     {
         ActionController.UnsyncSignal("AddActiveWindow", AddWindowCount);
         ActionController.UnsyncSignal("SubActiveWindow", SubWindowCount);
+        ActionController.UnsyncSignal("DestroyWindows", DestroyWindows);
+        ActionController.UnsyncSignal("DayChanged", DestroyWindows);
 
         CloseTemplateSignals();
     }

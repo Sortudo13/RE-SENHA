@@ -22,7 +22,7 @@ public class MainMenuController : MonoBehaviour
 
     private void AbrirDesktop()
     {
-        SceneManager.LoadScene("Desktop");
+        LoadingScreen.LoadScene("Desktop");
     }
 
     public void Sair()
@@ -30,7 +30,7 @@ public class MainMenuController : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+        UnityEngine.Application.Quit();
 #endif
     }
 }

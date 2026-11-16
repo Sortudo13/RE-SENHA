@@ -25,10 +25,11 @@ public sealed class ManualRuleEvaluator
     // Tipos de verificacao aceitos no ManualRules.json e a capacidade que cada um exige da superficie.
     private static readonly Dictionary<string, CheckDefinition> Checks = new()
     {
-        ["SenderDomain"] = new("sender", EvaluateSenderDomain),
-        ["SubjectTerms"] = new("subject", EvaluateSubjectTerms),
-        ["BodyTerms"] = new("body", EvaluateBodyTerms),
-        ["AttachmentExtension"] = new("attachments", EvaluateAttachmentExtension),
+        ["SenderDomain"] = new(InspectionFields.Sender, EvaluateSenderDomain),
+        ["SubjectTerms"] = new(InspectionFields.Subject, EvaluateSubjectTerms),
+        ["BodyTerms"] = new(InspectionFields.Body, EvaluateBodyTerms),
+        ["BodyLinkDomains"] = new(InspectionFields.Body, EvaluateBodyLinkDomains),
+        ["AttachmentExtension"] = new(InspectionFields.Attachments, EvaluateAttachmentExtension),
     };
 
     public static bool SupportsCheck(string type)
@@ -52,7 +53,7 @@ public sealed class ManualRuleEvaluator
             foreach (ManualSubruleData subrule in rule.subrules)
             {
                 CheckDefinition check = Checks[subrule.check.type];
-                if (!surface.Capabilities.Contains(check.Capability))
+                if (!InspectionFields.Contains(surface.Capabilities, check.Capability))
                     continue;
 
                 string evidence = check.Evaluate(surface.FieldSource, subrule.check);
@@ -84,7 +85,7 @@ public sealed class ManualRuleEvaluator
     )
     {
         RequireValues(check.allowedDomains, check.type, "allowedDomains");
-        if (!fields.TryGetText("sender", out string sender))
+        if (!fields.TryGetText(InspectionFields.Sender, out string sender))
             return null;
 
         int separator = sender?.LastIndexOf('@') ?? -1;
@@ -110,7 +111,7 @@ public sealed class ManualRuleEvaluator
     {
         RequireValues(check.terms, check.type, "terms");
         return FindTerm(
-            fields.TryGetText("subject", out string subject) ? subject : null,
+            fields.TryGetText(InspectionFields.Subject, out string subject) ? subject : null,
             check.terms,
             check.caseSensitive
         );
@@ -125,7 +126,7 @@ public sealed class ManualRuleEvaluator
             RequireValues(check.suspiciousDomains, check.type, "terms or suspiciousDomains");
 
         string term = FindTerm(
-            fields.TryGetText("body", out string body) ? body : null,
+            fields.TryGetText(InspectionFields.Body, out string body) ? body : null,
             check.terms,
             check.caseSensitive
         );
@@ -164,6 +165,33 @@ public sealed class ManualRuleEvaluator
                 if (matches)
                     return host;
             }
+        }
+
+        return null;
+    }
+
+    // Lista branca de links
+    // Pega o destino real de <link="OpenURL|..."> mesmo quando o texto visivel do link mostra um endereco da empresa.
+    private static string EvaluateBodyLinkDomains(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check
+    )
+    {
+        RequireValues(check.allowedDomains, check.type, "allowedDomains");
+        if (!fields.TryGetText(InspectionFields.Body, out string body) || string.IsNullOrEmpty(body))
+            return null;
+
+        foreach (Match match in HostPattern.Matches(body))
+        {
+            string host = match.Value.ToLowerInvariant();
+            bool allowed = check.allowedDomains.Any(allowedDomain =>
+            {
+                string domain = NormalizeDomain(allowedDomain);
+                return domain.Length > 0
+                    && (host == domain || host.EndsWith("." + domain, StringComparison.Ordinal));
+            });
+            if (!allowed)
+                return host;
         }
 
         return null;

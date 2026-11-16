@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
+// So decide o que mostrar; as janelas sao criadas pelo AlertManagerController.
 public sealed class InspectionFindingsAlertController : MonoBehaviour
 {
     public const string ShowFindingsAction = "ShowInspectionFindings";
@@ -27,48 +27,37 @@ public sealed class InspectionFindingsAlertController : MonoBehaviour
         ActionController.UnsyncSignal(ShowFindingsAction, ShowCurrentFindings);
     }
 
+    // Achado novo: aviso curto (Alert Notification). A lista paginada (Alert Achados) abre
+    // pelo botao do Email que publica ShowInspectionFindings.
     private void OnFindingRegistered(string findingId)
     {
-        ShowCurrentFindings();
+        ActionController.SendAction(AlertManagerController.ShowFindingNotificationAction);
     }
 
     public void ShowCurrentFindings()
     {
-        if (evaluation?.CurrentEmail == null)
+        if (evaluation == null || evaluation.CurrentSurface == null)
             return;
 
-        List<EvidenceData> findings = evaluation.CurrentEmail.evidences;
         ActionController.SendAction(
             AlertManagerController.ShowFindingsAction,
-            new FindingsAlertData(
-                "[ACHADOS DO INSPETOR]",
-                BuildSummary(findings),
-                BuildDetails(findings)
-            )
+            BuildPages(evaluation.CurrentFindings)
         );
     }
 
-    private static string BuildSummary(List<EvidenceData> findings)
+    // Uma pagina por achado. Lista vazia: o FindingsAlertWindow mostra "Nenhum achado registrado.".
+    private static string[] BuildPages(IReadOnlyList<EvidenceData> findings)
     {
-        int count = findings?.Count ?? 0;
-        return $"O Inspector registrou {count} achado(s).\n"
-            + "Use \"Ver regras\" para consultar os detalhes.";
-    }
-
-    private static string BuildDetails(List<EvidenceData> findings)
-    {
-        StringBuilder text = new();
         if (findings == null)
-            return string.Empty;
+            return new string[0];
 
-        foreach (EvidenceData finding in findings)
+        string[] pages = new string[findings.Count];
+        for (int index = 0; index < findings.Count; index++)
         {
-            text.AppendLine($"[{finding.field}] {finding.rule}");
-            text.AppendLine(finding.evidence);
-            text.AppendLine(finding.explanation);
-            text.AppendLine();
+            EvidenceData finding = findings[index];
+            pages[index] = $"[{finding.field}] {finding.rule}\n{finding.evidence}\n{finding.explanation}";
         }
 
-        return text.ToString();
+        return pages;
     }
 }

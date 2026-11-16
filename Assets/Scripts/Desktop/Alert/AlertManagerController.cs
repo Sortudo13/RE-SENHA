@@ -4,25 +4,35 @@ using UnityEngine.UI;
 
 public class AlertManagerController : MonoBehaviour
 {
+    // Inspector: lista paginada de achados (string[], uma pagina por achado) e aviso curto de achado novo.
     public const string ShowFindingsAction = "ShowFindingsAlert";
+    public const string ShowFindingNotificationAction = "ShowFindingNotification";
 
     public static Transform AlertsLayer { get; private set; }
 
     [Header("Alert Window")]
     [SerializeField] private GameObject alertWindow;
-    [SerializeField] private GameObject findingsAlertWindow;
+
+    [Header("Inspector")]
+    [SerializeField] private FindingsAlertWindow findingsAlertWindow;
+    // Prefab "Alert Notification": texto vem do prefab; o filho "Fechar" (Button) fecha.
+    [SerializeField] private GameObject findingNotificationWindow;
 
     private void Awake()
     {
         AlertsLayer = transform;
         ActionController.SyncSignal<FeedbackData>("ShowFeedback", ShowFeedback);
-        ActionController.SyncSignal<FindingsAlertData>(ShowFindingsAction, ShowFindings);
+        ActionController.SyncSignal("ShowNextDay", ShowNextDay);
+        ActionController.SyncSignal<string[]>(ShowFindingsAction, ShowFindings);
+        ActionController.SyncSignal(ShowFindingNotificationAction, ShowFindingNotification);
     }
 
     private void OnDestroy()
     {
         ActionController.UnsyncSignal<FeedbackData>("ShowFeedback", ShowFeedback);
-        ActionController.UnsyncSignal<FindingsAlertData>(ShowFindingsAction, ShowFindings);
+        ActionController.UnsyncSignal("ShowNextDay", ShowNextDay);
+        ActionController.UnsyncSignal<string[]>(ShowFindingsAction, ShowFindings);
+        ActionController.UnsyncSignal(ShowFindingNotificationAction, ShowFindingNotification);
     }
 
     private void ShowFeedback(FeedbackData feedback)
@@ -68,45 +78,60 @@ public class AlertManagerController : MonoBehaviour
             txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f); // Verde
         }
 
+        connectedAlert.transform.SetAsLastSibling();
         connectedAlert.SetActive(true);
     }
 
-    private void ShowFindings(FindingsAlertData findings)
+    private void ShowNextDay()
     {
-        GameObject connectedAlert = Instantiate(findingsAlertWindow, AlertsLayer);
-        Transform content = connectedAlert.transform.GetChild(0);
-        TextMeshProUGUI title = content.GetChild(0).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI message = content.GetChild(1).GetComponent<TextMeshProUGUI>();
-        Button button = content.GetChild(2).GetComponent<Button>();
-        TextMeshProUGUI buttonLabel = button.GetComponentInChildren<TextMeshProUGUI>();
+        GameObject connectedAlert = Instantiate(alertWindow, AlertsLayer);
+        GameObject content = connectedAlert.transform.GetChild(0).gameObject;
+        TextMeshProUGUI txtTituloAviso = content.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        connectedAlert.SetActive(false);
 
-        title.text = findings.title;
-        message.text = findings.summary;
-        buttonLabel.text = "Ver regras";
-
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(() =>
+        if (content.transform.GetChild(2).TryGetComponent(out Button button))
         {
-            message.text = findings.details;
-            buttonLabel.text = "Fechar";
+            button.GetComponentInChildren<TextMeshProUGUI>().text = "Avançar Dia";
             button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => LoadingScreen.Run(DataController.AdvanceDay, "Avançando o dia..."));
             button.onClick.AddListener(() => Destroy(connectedAlert));
-        });
+        }
 
+        txtTituloAviso.text = "[Gerência]";
+        txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f);
+        txtFeedback.text = "Você terminou o seu expediente. Clique abaixo para avançar ao próximo dia.";
+
+        connectedAlert.transform.SetAsFirstSibling();
         connectedAlert.SetActive(true);
     }
-}
 
-public class FindingsAlertData
-{
-    public string title;
-    public string summary;
-    public string details;
-
-    public FindingsAlertData(string title, string summary, string details)
+    private void ShowFindings(string[] pages)
     {
-        this.title = title;
-        this.summary = summary;
-        this.details = details;
+        if (findingsAlertWindow == null)
+        {
+            Debug.LogError("AlertManagerController: \"Findings Alert Window\" is not set. Drag \"Alert Achados\" into it.", this);
+            return;
+        }
+
+        Instantiate(findingsAlertWindow, AlertsLayer).Show(pages);
+    }
+
+    private void ShowFindingNotification()
+    {
+        if (findingNotificationWindow == null)
+        {
+            Debug.LogError("AlertManagerController: \"Finding Notification Window\" is not set. Drag \"Alert Notification\" into it.", this);
+            return;
+        }
+
+        GameObject notification = Instantiate(findingNotificationWindow, AlertsLayer);
+        Transform close = notification.transform.Find("Fechar");
+        if (close != null && close.TryGetComponent(out Button closeButton))
+            closeButton.onClick.AddListener(() => Destroy(notification));
+        else
+            Debug.LogWarning("AlertManagerController: \"Fechar\" has no Button; the notification cannot be closed.", this);
+
+        notification.SetActive(true);
     }
 }
