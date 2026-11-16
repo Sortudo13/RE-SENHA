@@ -6,6 +6,13 @@ public static class ManualRepository
 {
     private static ManualRuleBookData manual;
 
+    // sobrevivem entre Plays. Limpar aqui faz cada Play reler o ManualRules.json atual.
+    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetCache()
+    {
+        manual = null;
+    }
+
     public static ManualRuleBookData Load()
     {
         return manual ??= ManualRulesLoader.Load();

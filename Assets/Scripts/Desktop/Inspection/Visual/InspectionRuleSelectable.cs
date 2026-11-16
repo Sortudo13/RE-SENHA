@@ -28,4 +28,10 @@ public sealed class InspectionRuleSelectable : InspectionSelectable
     {
         return string.Equals(subruleId, selectionId);
     }
+
+    protected override bool MatchesSelection(InspectionSelection selection)
+    {
+        return !string.IsNullOrWhiteSpace(selection.SelectionId)
+            && MatchesHighlight(selection.SelectionId);
+    }
 }

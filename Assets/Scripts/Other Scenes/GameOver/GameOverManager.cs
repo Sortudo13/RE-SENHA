@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -29,7 +28,7 @@ public class GameOverManager : MonoBehaviour
     public void ReiniciarJogo()
     {
         DataController.ResetGame();
-        SceneManager.LoadScene("Desktop");
+        LoadingScreen.LoadScene("Desktop");
     }
 
     // Conectado ao botão "Estatísticas"

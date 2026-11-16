@@ -9,6 +9,9 @@ public sealed class EmailInspectionFindingStore : IInspectionFindingStore
         this.email = email;
     }
 
+    public IReadOnlyList<EvidenceData> Findings =>
+        email?.evidences ?? (IReadOnlyList<EvidenceData>)System.Array.Empty<EvidenceData>();
+
     public bool HasFinding(string findingId)
     {
         if (email?.evidences == null)
@@ -34,7 +37,7 @@ public sealed class EmailInspectionFindingStore : IInspectionFindingStore
             new EvidenceData
             {
                 findingId = result.FindingId,
-                sourceType = "email",
+                sourceType = EmailInspectionSurface.Source,
                 sourceItemId = string.Empty,
                 fieldId = result.FieldId,
                 evaluatorId = result.EvaluatorId,

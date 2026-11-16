@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 7743444471528267783}
   - component: {fileID: 6993530954961973666}
   - component: {fileID: 8283670995328852768}
-  - component: {fileID: 3254167699406685527}
+  - component: {fileID: 4526818001374080645}
   m_Layer: 5
   m_Name: Alert
   m_TagString: Untagged
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3254167699406685527
+--- !u!114 &4526818001374080645
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -381,13 +381,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4641189156026426695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 311af8c12b247064e9de3236ba582355, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fd4b57672979734383370a64db72a1e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WindowMovementController
+  m_EditorClassIdentifier: Assembly-CSharp::NewMovementController
   targetTransform: {fileID: 7743444471528267783}
   dragButton: 0
   pressedCursorType: 1
-  dragSensitivity: 0.976
+  dragSensitivity: 0.8
+  followSpeed: 22
+  cursorEdgeMargin: 15
 --- !u!1 &5652872438674839393
 GameObject:
   m_ObjectHideFlags: 0

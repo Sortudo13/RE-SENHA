@@ -1,0 +1,82 @@
+[
+  {
+    "timeToReceive": 2,
+    "mailBox": "User",
+    "sender": "rh@nationaltech.com",
+    "subject": "Orientações do Dia 3 - Extensões Perigosas",
+    "body": "Bom trabalho ontem! Hoje veremos anexos camuflados. Um arquivo PDF é geralmente seguro, mas criminosos escondem executáveis (.exe, .bat, .scr) com ícones falsos. Analise as extensões!",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 20,
+    "mailBox": "Company",
+    "sender": "financeiro@empresa.com.br",
+    "subject": "Seu Contracheque - Mês Atual",
+    "body": "Olá! Segue em anexo o seu demonstrativo de pagamento referente ao mês trabalhado. Qualquer dúvida, entre em contato.",
+    "attachments": [
+      {
+        "documentType": 0,
+        "name": "contracheque_mes",
+        "extension": "pdf",
+        "linkedName": "<link=\"OpenAttachment|1\">contracheque_mes.pdf</link>",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "timeToReceive": 45,
+    "mailBox": "Company",
+    "sender": "alertas@apple-id-security.com",
+    "subject": "Aviso: Seu iCloud foi bloqueado",
+    "body": "Seu Apple ID foi bloqueado por motivos de segurança. Para recuperar o acesso e evitar a exclusão dos dados, clique em <link=\"OpenURL|http://apple-suporte-br.xyz\">Desbloquear Conta</link>.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 70,
+    "mailBox": "Company",
+    "sender": "vendas@distribuidora-global.com",
+    "subject": "Catálogo de Produtos 2024",
+    "body": "Bom dia, equipe. Segue o nosso novo catálogo interativo com a tabela de preços atualizada para o próximo trimestre.",
+    "attachments": [
+      {
+        "documentType": 2,
+        "name": "catalogo_interativo",
+        "extension": "scr",
+        "linkedName": "<link=\"OpenAttachment|1\">catalogo_interativo.scr</link>",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "timeToReceive": 95,
+    "mailBox": "Company",
+    "sender": "admin@slack-update.io",
+    "subject": "Sua conta do comunicador expirou",
+    "body": "O seu token de comunicação interna venceu. Baixe o atualizador automático para continuar recebendo mensagens dos seus colegas.",
+    "attachments": [
+      {
+        "documentType": 2,
+        "name": "slack_patch_v4",
+        "extension": "exe",
+        "linkedName": "<link=\"OpenAttachment|1\">slack_patch_v4.exe</link>",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "timeToReceive": 125,
+    "mailBox": "Company",
+    "sender": "juridico@empresa.com.br",
+    "subject": "Ata da Reunião de Diretoria",
+    "body": "Conforme solicitado, segue o documento com as pautas discutidas na reunião matinal para o seu arquivamento.",
+    "attachments": [
+      {
+        "documentType": 0,
+        "name": "ata_reuniao_04",
+        "extension": "docx",
+        "linkedName": "<link=\"OpenAttachment|1\">ata_reuniao_04.docx</link>",
+        "data": {}
+      }
+    ]
+  }
+]
