@@ -67,7 +67,16 @@ public static class DataController
         }
 
         LoadDay();
-        ActionController.SendAction("DayChanged");
+    }
+
+    public static void RetrocedeDay()
+    {
+        CurrentDay--;
+
+        if (CurrentDay < 1)
+            CurrentDay = 1;
+
+        LoadDay();
     }
 
     public static void LoadDay()
@@ -81,6 +90,7 @@ public static class DataController
         }
         currentSave = save;
         SavingGame(save);
+        ActionController.SendAction("DayChanged");
     }
 
     public static void ResetGame()
