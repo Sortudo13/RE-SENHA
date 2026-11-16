@@ -7,6 +7,7 @@ using UnityEngine;
 public static class DataController
 {
     private static SaveData currentSave;
+    private static string saveNumber = "1";
     public static SaveData CurrentSave => currentSave ??= LoadingGame();
     public static int CurrentDay
     {
@@ -34,7 +35,8 @@ public static class DataController
 
     public static string SavePath
     {
-        get => Path.Combine(Application.persistentDataPath, "save.json");
+        get => Path.Combine(Application.persistentDataPath, $"save_{saveNumber}.json");
+        set => saveNumber = value;
     }
 
     public static Boolean PersistMailBox
@@ -210,6 +212,7 @@ public class SaveData
     public List<EmailData> availableMails;
     public List<MailBox> currentMailBoxes;
     public List<ChatSaveState> chatStates;
+    public List<TicketData> availableTickets;
     public List<TicketData> tickets;
 }
 
