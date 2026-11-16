@@ -88,7 +88,6 @@ public class WindowManagerController : MonoBehaviour
         foreach (Transform child in transform)
             Destroy(child.gameObject);
     }
-    }
 
     private void OnDestroy()
     {
