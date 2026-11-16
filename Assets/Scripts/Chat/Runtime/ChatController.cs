@@ -13,33 +13,44 @@ public class ChatController : MonoBehaviour
     [SerializeField]
     private ChatInbox inbox;
 
+    [SerializeField]
+    private ChatTimeSync chatTimeSync;
+
     private ChatWindowView _windowView;
     private ChatInboxState _inboxState;
     private ChatInboxState.ConversationState _activeConversation;
     private Coroutine _npcFlowCoroutine;
     private readonly Dictionary<string, List<string>> _history = new();
 
-    [SerializeField]
-    private ChatTimeSync chatTimeSync;
-
     private void Awake()
     {
-        if (chatTimeSync != null)
-            _inboxState = chatTimeSync.State;
-        else
+        if (chatTimeSync == null)
         {
             Debug.LogError("[ChatController] ChatTimeSync não atribuído!");
             return;
         }
 
-        ActionController.SyncSignal("Resetar Jogo", OnResetGame);
+        chatTimeSync.EnsureState();
+        _inboxState = chatTimeSync.State;
+        if (_inboxState == null)
+            return;
+    }
+
+    private void OnEnable()
+    {
+        if (_inboxState == null)
+            return;
+
+        ActionController.SyncSignal("ChatInboxReset", OnInboxReset);
+        ActionController.SyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.SyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.SyncSignal<string>("ChatConversationArrived", OnConversationArrived);
     }
 
     private void OnDisable()
     {
-        ActionController.UnsyncSignal("Resetar Jogo", OnResetGame);
+        ActionController.UnsyncSignal("ChatInboxReset", OnInboxReset);
+        ActionController.UnsyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.UnsyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.UnsyncSignal<string>("ChatConversationArrived", OnConversationArrived);
     }
@@ -52,7 +63,6 @@ public class ChatController : MonoBehaviour
         _windowView = window;
         _windowView.SetConversationClickHandler(OnConversationClicked);
 
-        // Reconstrói a lista com as conversas que já chegaram
         foreach (var state in _inboxState.All)
         {
             if (state.hasArrived)
@@ -69,28 +79,29 @@ public class ChatController : MonoBehaviour
     private void OnConversationArrived(string conversationId)
     {
         var state = _inboxState.Get(conversationId);
-        if (state == null)
-            return;
+        if (state == null) return;
 
         string preview = GetPreviewForState(state);
-
-        // Só atualiza a UI se a janela estiver aberta
         if (_windowView != null)
             _windowView.AddOrUpdateConversationItem(state, preview);
     }
 
-    private void OnResetGame()
+    private void OnInboxReset()
     {
         if (_npcFlowCoroutine != null)
             StopCoroutine(_npcFlowCoroutine);
 
-        if (chatTimeSync != null && chatTimeSync.State != null)
-            _inboxState = chatTimeSync.State;
-        else
-            _inboxState = new ChatInboxState(inbox); // fallback
+        _inboxState = chatTimeSync.State; // Pega o novo estado (vazio) do ChatTimeSync
 
         _history.Clear();
         _activeConversation = null;
+
+        if (DataController.CurrentSave != null)
+        {
+            DataController.CurrentSave.chatStates ??= new List<ChatSaveState>();
+            DataController.CurrentSave.chatStates.Clear();
+            DataController.SavingGame();
+        }
 
         if (_windowView != null)
             _windowView.ShowEmptyState();
@@ -101,8 +112,7 @@ public class ChatController : MonoBehaviour
     // ============================================================
     private void OnConversationClicked(string conversationId)
     {
-        if (_windowView == null)
-            return;
+        if (_windowView == null) return;
 
         var state = _inboxState.Get(conversationId);
         if (state == null || !state.hasArrived)
@@ -116,6 +126,11 @@ public class ChatController : MonoBehaviour
         }
 
         state.hasUnread = false;
+        SyncChatStateToSave();
+
+        if(_windowView != null)
+            _windowView.AddOrUpdateConversationItem(state, GetPreviewForState(state));
+
         _activeConversation = state;
         _windowView.ShowConversation(state.conversation);
 
@@ -157,6 +172,13 @@ public class ChatController : MonoBehaviour
     {
         if (_activeConversation == null || _windowView == null)
             return;
+
+        if (_activeConversation.currentNodeId != node.nodeId)
+        {
+            _activeConversation.currentNodeId = node.nodeId;
+            SyncChatStateToSave();
+        }
+
         if (_npcFlowCoroutine != null)
             StopCoroutine(_npcFlowCoroutine);
         _npcFlowCoroutine = StartCoroutine(NpcMessageFlow(node));
@@ -175,6 +197,7 @@ public class ChatController : MonoBehaviour
         if (node.isEndNode)
         {
             _activeConversation.isFinished = true;
+            SyncChatStateToSave();
             _windowView.HideChoices();
             yield break;
         }
@@ -215,6 +238,7 @@ public class ChatController : MonoBehaviour
         RegisterHistory(chosen.optionText);
 
         _activeConversation.currentNodeId = chosen.nextNodeId;
+        SyncChatStateToSave();
 
         if (chosen.securityScoreDelta != 0)
         {
@@ -269,5 +293,49 @@ public class ChatController : MonoBehaviour
 
         var start = state.conversation.GetStartNode();
         return start != null ? start.npcMessage : "Nova conversa";
+    }
+
+    // ============================================================
+    // Persistência (integração com DataController)
+    // ============================================================
+    public List<ChatSaveState> ExportState()
+    {
+        var list = new List<ChatSaveState>();
+        if (_inboxState == null)
+        {
+            Debug.LogError("[ChatController] Não foi possível exportar: _inboxState nulo.");
+            return list;
+        }
+
+        foreach (var state in _inboxState.All)
+        {
+            list.Add(new ChatSaveState
+            {
+                conversationId = state.conversation.conversationId,
+                currentNodeId = state.currentNodeId,
+                isFinished = state.isFinished,
+                hasArrived = state.hasArrived,
+                hasUnread = state.hasUnread
+            });
+        }
+        return list;
+    }
+
+    private void SyncChatStateToSave()
+    {
+        if (_inboxState == null)
+        {
+            Debug.LogError("[ChatController] Save ignorado: _inboxState nulo.");
+            return;
+        }
+
+        if (DataController.CurrentSave == null)
+        {
+            Debug.LogError("[ChatController] Save ignorado: CurrentSave nulo.");
+            return;
+        }
+
+        DataController.CurrentSave.chatStates = ExportState();
+        DataController.SavingGame();
     }
 }

@@ -20,9 +20,6 @@ public class WindowManagerController : MonoBehaviour
     [SerializeField]
     private WindowController windowChat;
 
-    [SerializeField]
-    private WindowController windowMenu;
-
     private void Awake()
     {
         WindowsLayer = transform;
@@ -83,7 +80,6 @@ public class WindowManagerController : MonoBehaviour
 
         foreach (Transform child in transform)
             Destroy(child.gameObject);
-            
     }
 
     private void OnDestroy()

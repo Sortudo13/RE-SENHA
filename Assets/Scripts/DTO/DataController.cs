@@ -317,3 +317,13 @@ public enum DocumentType
     Email,
     RG,
 }
+
+[System.Serializable]
+public class ChatSaveState
+{
+    public string conversationId;
+    public string currentNodeId;
+    public bool isFinished;
+    public bool hasArrived;
+    public bool hasUnread;
+}
