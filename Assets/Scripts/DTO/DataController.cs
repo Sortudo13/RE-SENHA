@@ -103,26 +103,25 @@ public static class DataController
     public static void SavingGame(SaveData save = null)
     {
         if (save == null)
-            save = currentSave ?? CurrentSave;
-        if (save == null)
         {
-            Debug.LogError("[DataController] Não foi possível salvar: SaveData nulo.");
-            return;
-        }
+            save = CurrentSave;
+            save.current_day = CurrentDay;
+            save.error_count = CurrentErrorCount;
+            if (ClockController.IsClockActive)
+            {
+                save.current_hour = ClockController.CurrentHour;
+                save.current_minute = ClockController.CurrentMinute;
+            }
+            string json = JsonConvert.SerializeObject(save, Formatting.Indented);
+            File.WriteAllText(SavePath, json);
+        } else
+        {
+            CurrentDay = save.current_day;
+            CurrentErrorCount = save.error_count;
 
-        currentSave = save;
-        CurrentDay = save.current_day;
-        CurrentErrorCount = save.error_count;
-        save.chatStates ??= new List<ChatSaveState>();
-        save.current_day = CurrentDay;
-        save.error_count = CurrentErrorCount;
-        if (ClockController.IsClockActive)
-        {
-            save.current_hour = ClockController.CurrentHour;
-            save.current_minute = ClockController.CurrentMinute;
+            string json = JsonConvert.SerializeObject(save, Formatting.Indented);
+            File.WriteAllText(SavePath, json);
         }
-        string json = JsonConvert.SerializeObject(save, Formatting.Indented);
-        File.WriteAllText(SavePath, json);
     }
 
     public static SaveData LoadingGame()
@@ -140,7 +139,6 @@ public static class DataController
             CurrentErrorCount = 0;
             save = GetDailyDataJson(CurrentDay);
         }
-        save.chatStates ??= new List<ChatSaveState>();
         currentSave = save;
 
         CurrentDay = currentSave.current_day;
@@ -211,8 +209,6 @@ public class SaveData
     public List<EmailData> availableMails;
     public List<MailBox> currentMailBoxes;
     public List<TicketData> tickets;
-    public List<ChatSaveState> chatStates = new();
-
 }
 
 [System.Serializable]
