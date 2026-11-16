@@ -163,7 +163,8 @@ public static class DataController
                 new(){ mailBox = "User", emails = new () },
                 new(){ mailBox = "Company", emails = new () }
             },
-            tickets = LoadJsonList<TicketData>($"Tickets/Dia_{day}")
+            tickets = LoadJsonList<TicketData>($"Tickets/Dia_{day}"),
+            chatStates = new()
         };
     }
 
@@ -208,6 +209,7 @@ public class SaveData
     public int current_minute = 0;
     public List<EmailData> availableMails;
     public List<MailBox> currentMailBoxes;
+    public List<ChatSaveState> chatStates;
     public List<TicketData> tickets;
 }
 
