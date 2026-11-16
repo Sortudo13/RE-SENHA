@@ -1,7 +1,7 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public static class DataController
@@ -116,7 +116,8 @@ public static class DataController
             }
             string json = JsonConvert.SerializeObject(save, Formatting.Indented);
             File.WriteAllText(SavePath, json);
-        } else
+        }
+        else
         {
             CurrentDay = save.current_day;
             CurrentErrorCount = save.error_count;
@@ -162,11 +163,11 @@ public static class DataController
             availableMails = LoadJsonList<EmailData>($"Emails/Dia_{day}"),
             currentMailBoxes = new()
             {
-                new(){ mailBox = "User", emails = new () },
-                new(){ mailBox = "Company", emails = new () }
+                new() { mailBox = "User", emails = new() },
+                new() { mailBox = "Company", emails = new() },
             },
             tickets = LoadJsonList<TicketData>($"Tickets/Dia_{day}"),
-            chatStates = new()
+            chatStates = new(),
         };
     }
 
@@ -280,6 +281,7 @@ public class FeedbackData
 {
     public bool isPositive;
     public string message;
+
     public FeedbackData(bool isPositive, string message)
     {
         this.isPositive = isPositive;
@@ -331,4 +333,13 @@ public class ChatSaveState
     public bool isFinished;
     public bool hasArrived;
     public bool hasUnread;
+
+    public List<ChatMessageEntry> messageHistory = new();
+}
+
+[System.Serializable]
+public class ChatMessageEntry
+{
+    public bool isFromNpc; // true = NPC, false = jogador
+    public string text;
 }

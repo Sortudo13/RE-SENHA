@@ -3,10 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Orquestra a lógica de chat: escuta o relógio, gerencia o estado da inbox,
-/// executa o fluxo de nós e conversa com o ChatWindowView para atualizar a UI.
-/// </summary>
 public class ChatController : MonoBehaviour
 {
     [Header("Configuração")]
@@ -20,7 +16,8 @@ public class ChatController : MonoBehaviour
     private ChatInboxState _inboxState;
     private ChatInboxState.ConversationState _activeConversation;
     private Coroutine _npcFlowCoroutine;
-    private readonly Dictionary<string, List<string>> _history = new();
+
+    private readonly Dictionary<string, List<ChatMessageEntry>> _history = new();
 
     private void Awake()
     {
@@ -34,6 +31,10 @@ public class ChatController : MonoBehaviour
         _inboxState = chatTimeSync.State;
         if (_inboxState == null)
             return;
+
+        // Importa o estado salvo do JSON
+        if (DataController.CurrentSave != null && DataController.CurrentSave.chatStates != null)
+            ImportState(DataController.CurrentSave.chatStates);
     }
 
     private void OnEnable()
@@ -79,7 +80,8 @@ public class ChatController : MonoBehaviour
     private void OnConversationArrived(string conversationId)
     {
         var state = _inboxState.Get(conversationId);
-        if (state == null) return;
+        if (state == null)
+            return;
 
         string preview = GetPreviewForState(state);
         if (_windowView != null)
@@ -91,7 +93,7 @@ public class ChatController : MonoBehaviour
         if (_npcFlowCoroutine != null)
             StopCoroutine(_npcFlowCoroutine);
 
-        _inboxState = chatTimeSync.State; // Pega o novo estado (vazio) do ChatTimeSync
+        _inboxState = chatTimeSync.State;
 
         _history.Clear();
         _activeConversation = null;
@@ -112,7 +114,8 @@ public class ChatController : MonoBehaviour
     // ============================================================
     private void OnConversationClicked(string conversationId)
     {
-        if (_windowView == null) return;
+        if (_windowView == null)
+            return;
 
         var state = _inboxState.Get(conversationId);
         if (state == null || !state.hasArrived)
@@ -128,7 +131,7 @@ public class ChatController : MonoBehaviour
         state.hasUnread = false;
         SyncChatStateToSave();
 
-        if(_windowView != null)
+        if (_windowView != null)
             _windowView.AddOrUpdateConversationItem(state, GetPreviewForState(state));
 
         _activeConversation = state;
@@ -151,18 +154,14 @@ public class ChatController : MonoBehaviour
 
         if (!_history.TryGetValue(state.conversation.conversationId, out var hist))
         {
-            hist = new List<string>();
+            hist = new List<ChatMessageEntry>();
             _history[state.conversation.conversationId] = hist;
         }
 
         if (hist.Count == 0)
-        {
             PlayNode(currentNode);
-        }
         else
-        {
             ShowChoicesIfAny(currentNode);
-        }
     }
 
     // ============================================================
@@ -192,7 +191,8 @@ public class ChatController : MonoBehaviour
         _windowView.HideTypingIndicator();
 
         _windowView.AppendNpcMessage(node.npcMessage);
-        RegisterHistory(node.npcMessage);
+        RegisterHistory(node.npcMessage, true);
+        SyncChatStateToSave();
 
         if (node.isEndNode)
         {
@@ -235,7 +235,7 @@ public class ChatController : MonoBehaviour
 
         _windowView.HideChoices();
         _windowView.AppendPlayerMessage(chosen.optionText);
-        RegisterHistory(chosen.optionText);
+        RegisterHistory(chosen.optionText, false);
 
         _activeConversation.currentNodeId = chosen.nextNodeId;
         SyncChatStateToSave();
@@ -258,7 +258,7 @@ public class ChatController : MonoBehaviour
     // ============================================================
     // Histórico
     // ============================================================
-    private void RegisterHistory(string text)
+    private void RegisterHistory(string text, bool isFromNpc)
     {
         if (_activeConversation == null)
             return;
@@ -266,10 +266,10 @@ public class ChatController : MonoBehaviour
         string id = _activeConversation.conversation.conversationId;
         if (!_history.TryGetValue(id, out var list))
         {
-            list = new List<string>();
+            list = new List<ChatMessageEntry>();
             _history[id] = list;
         }
-        list.Add(text);
+        list.Add(new ChatMessageEntry { isFromNpc = isFromNpc, text = text });
     }
 
     private void RebuildHistory(ChatInboxState.ConversationState state)
@@ -277,19 +277,19 @@ public class ChatController : MonoBehaviour
         if (!_history.TryGetValue(state.conversation.conversationId, out var list))
             return;
 
-        for (int i = 0; i < list.Count; i++)
+        foreach (var entry in list)
         {
-            if (i % 2 == 0)
-                _windowView.AppendNpcMessage(list[i]);
+            if (entry.isFromNpc)
+                _windowView.AppendNpcMessage(entry.text);
             else
-                _windowView.AppendPlayerMessage(list[i]);
+                _windowView.AppendPlayerMessage(entry.text);
         }
     }
 
     private string GetPreviewForState(ChatInboxState.ConversationState state)
     {
         if (_history.TryGetValue(state.conversation.conversationId, out var list) && list.Count > 0)
-            return list[list.Count - 1];
+            return list[list.Count - 1].text;
 
         var start = state.conversation.GetStartNode();
         return start != null ? start.npcMessage : "Nova conversa";
@@ -302,23 +302,73 @@ public class ChatController : MonoBehaviour
     {
         var list = new List<ChatSaveState>();
         if (_inboxState == null)
-        {
-            Debug.LogError("[ChatController] Não foi possível exportar: _inboxState nulo.");
             return list;
-        }
 
         foreach (var state in _inboxState.All)
         {
-            list.Add(new ChatSaveState
+            var saveState = new ChatSaveState
             {
                 conversationId = state.conversation.conversationId,
                 currentNodeId = state.currentNodeId,
                 isFinished = state.isFinished,
                 hasArrived = state.hasArrived,
-                hasUnread = state.hasUnread
-            });
+                hasUnread = state.hasUnread,
+                messageHistory = new List<ChatMessageEntry>(),
+            };
+
+            if (_history.TryGetValue(state.conversation.conversationId, out var messages))
+            {
+                foreach (var entry in messages)
+                {
+                    saveState.messageHistory.Add(
+                        new ChatMessageEntry { isFromNpc = entry.isFromNpc, text = entry.text }
+                    );
+                }
+            }
+
+            list.Add(saveState);
         }
         return list;
+    }
+
+    public void ImportState(List<ChatSaveState> savedStates)
+    {
+        if (savedStates == null || savedStates.Count == 0)
+            return;
+
+        foreach (var saved in savedStates)
+        {
+            if (saved == null)
+                continue;
+
+            var state = _inboxState.Get(saved.conversationId);
+            if (state == null)
+                continue;
+
+            if (state.conversation.GetNode(saved.currentNodeId) != null)
+                state.currentNodeId = saved.currentNodeId;
+            else
+                Debug.LogWarning(
+                    $"[ChatController] Nó salvo '{saved.currentNodeId}' não encontrado. Usando o nó inicial."
+                );
+
+            state.isFinished = saved.isFinished;
+            state.hasArrived = saved.hasArrived;
+            state.hasUnread = saved.hasUnread;
+
+            // Reconstrói o _history a partir do save
+            if (saved.messageHistory != null && saved.messageHistory.Count > 0)
+            {
+                var messages = new List<ChatMessageEntry>();
+                foreach (var entry in saved.messageHistory)
+                {
+                    messages.Add(
+                        new ChatMessageEntry { isFromNpc = entry.isFromNpc, text = entry.text }
+                    );
+                }
+                _history[saved.conversationId] = messages;
+            }
+        }
     }
 
     private void SyncChatStateToSave()
