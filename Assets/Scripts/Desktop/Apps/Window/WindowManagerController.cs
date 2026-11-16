@@ -86,7 +86,7 @@ public class WindowManagerController : MonoBehaviour
     public void DestroyWindows()
     {
         if (activeWindowCount > 0)
-            ActionController.SendAction("MinimizeAllWindow");
+            ActionController.SendAction<bool>("MinimizeAllWindow", false);
 
         foreach (Transform child in transform)
             Destroy(child.gameObject);
