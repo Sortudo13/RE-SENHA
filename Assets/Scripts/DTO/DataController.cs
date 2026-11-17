@@ -1,7 +1,8 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using UnityEngine;
 
 public static class DataController
@@ -218,7 +219,7 @@ public class SaveData
 }
 
 [System.Serializable]
-public class EmailData
+public class EmailData : AttachmentContent
 {
     public string mailBox;
     public Boolean isRead = false;
@@ -296,6 +297,8 @@ public class AttachmentData
     public string name;
     public string extension;
     public string linkedName;
+
+    [JsonConverter(typeof(AttachmentContentConverter))]
     public AttachmentContent data;
 }
 
@@ -314,6 +317,40 @@ public class DadosTexto : AttachmentContent
 public class DadosFoto : AttachmentContent
 {
     public string url;
+}
+
+public class AttachmentContentConverter : JsonConverter<AttachmentContent>
+{
+    // Ao salvar (SavingGame), grava a subclasse real automaticamente sem interferência
+    public override bool CanWrite => false;
+
+    public override AttachmentContent ReadJson(JsonReader reader, Type objectType, AttachmentContent existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.Null)
+            return null;
+
+        JObject obj = JObject.Load(reader);
+
+        if (!obj.HasValues)
+            return new AttachmentContent();
+
+        // Escolhe a subclasse de acordo com as chaves encontradas no JSON
+        AttachmentContent content = obj switch
+        {
+            _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
+            _ when obj.Property("texto") != null => new DadosTexto(),
+            _ when obj.Property("url") != null => new DadosFoto(),
+            _ => new AttachmentContent()
+        };
+
+        serializer.Populate(obj.CreateReader(), content);
+        return content;
+    }
+
+    public override void WriteJson(JsonWriter writer, AttachmentContent value, JsonSerializer serializer)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 // Enumerações

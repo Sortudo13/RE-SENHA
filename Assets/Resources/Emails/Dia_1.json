@@ -12,6 +12,20 @@
         "extension" : "pdf",
         "linkedName" : "<link=\"OpenAttachment|1\">manual_de_conduta.pdf</link>",
         "data" : {}
+      },
+      {
+        "documentType" : 1,
+        "name" : "teste_email",
+        "extension" : "email",
+        "linkedName" : "<link=\"OpenAttachment|2\">manual_de_conduta.email</link>",
+        "data" : {
+          "timeToReceive": 30,
+          "mailBox": "Company",
+          "sender": "financeiro@empresa.com.br",
+          "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
+          "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
+          "attachments": []
+        }
       }
     ]
   },

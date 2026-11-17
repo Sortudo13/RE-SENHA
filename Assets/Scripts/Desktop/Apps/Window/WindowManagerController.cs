@@ -108,7 +108,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.UnsyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
-        ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
+        ActionController.UnsyncSignal<AttachmentContent>("InitChat", InitChat);
     }
 
     private void OpenURL(string url)
@@ -118,21 +118,23 @@ public class WindowManagerController : MonoBehaviour
 
     private void InitEmail(AttachmentContent data)
     {
-        Instantiate(windowEmail.gameObject, transform);
+        GameObject window_email = Instantiate(windowEmail.gameObject, transform);
+        if (data is EmailData emailData)
+            window_email.GetComponentInChildren<EmailController>().ShowMail(emailData);
     }
 
     private void InitManual(AttachmentContent data)
     {
-        Instantiate(windowManual.gameObject, transform);
+        GameObject window_manual = Instantiate(windowManual.gameObject, transform);
     }
 
     private void InitRG(AttachmentContent data)
     {
-        Instantiate(windowRG.gameObject, transform);
+        GameObject window_rg = Instantiate(windowRG.gameObject, transform);
     }
 
     private void InitChat(AttachmentContent data)
     {
-        Instantiate(windowChat.gameObject, transform);
+        GameObject window_chat = Instantiate(windowChat.gameObject, transform);
     }
 }
