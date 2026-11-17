@@ -3015,7 +3015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DesktopClockController
   startHour: 8
   endHour: 18
-  workDurationInMinutes: 5
+  workDurationInMinutes: 1
 --- !u!1 &942236834
 GameObject:
   m_ObjectHideFlags: 0
@@ -3932,7 +3932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -59.550003}
+  m_AnchoredPosition: {x: 0, y: -59.55002}
   m_SizeDelta: {x: 214.56, y: 119.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1294810207
@@ -3990,7 +3990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DesktopWindowController
   windowEmail: {fileID: 7758644553291864569, guid: 5800fcb4ab52c84409ea0c813432200a, type: 3}
   windowManual: {fileID: 8361798000228143058, guid: 1addb118b00af524ab70d7e607e9ea1d, type: 3}
-  windowPDF: {fileID: 0}
+  windowPDF: {fileID: 361206965269545061, guid: d6d6a1dec513bcd42aa330b0b5d79cbd, type: 3}
   windowRG: {fileID: 9096935942626009820, guid: 76797d72c5aeeb643a27c71ce23a009d, type: 3}
   windowChat: {fileID: 0}
 --- !u!1 &1302115837

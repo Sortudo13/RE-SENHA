@@ -17,9 +17,9 @@
       },
       {
         "documentType" : 1,
-        "name" : "teste_email",
+        "name" : "exemplo_email_falso",
         "extension" : "email",
-        "linkedName" : "<link=\"OpenAttachment|2\">manual_de_conduta.email</link>",
+        "linkedName" : "<link=\"OpenAttachment|2\">exemplo_email_falso.email</link>",
         "data" : {
           "timeToReceive": 30,
           "mailBox": "Company",
@@ -55,7 +55,7 @@
     "body": "Prezado, segue em anexo a nota fiscal e o comprovante referente aos serviços de impressão prestados nesta semana para a empresa.",
     "attachments": [
       {
-        "documentType" : 2,
+        "documentType" : 3,
         "name" : "fatura_outubro_assinado",
         "extension" : "exe",
         "linkedName" : "<link=\"OpenAttachment|1\">fatura_outubro_assinado.exe</link>",

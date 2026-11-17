@@ -46,18 +46,6 @@ public static class DataController
         set => PlayerPrefs.SetInt("PersistMailBox", value ? 1 : 0);
     }
 
-    public static string ConvertExtension(string extension)
-    {
-        return extension switch
-        {
-            "mail" => "Email",
-            "manual" => "Manual",
-            "png" => "Image",
-            "exe" => "RG",
-            _ => "RG",
-        };
-    }
-
     public static void AdvanceDay()
     {
         CurrentDay++;
