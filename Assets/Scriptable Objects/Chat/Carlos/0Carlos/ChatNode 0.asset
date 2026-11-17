@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChatNode 0
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: pede_senha
-  npcName: Lulinha
+  npcName: Carlos
   npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
   npcMessage: "Ol\xE1! Precisamos validar sua conta. Pode me confirmar sua senha
     atual?"

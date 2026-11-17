@@ -29,12 +29,10 @@ public class ChatController : MonoBehaviour
 
         chatTimeSync.EnsureState();
         _inboxState = chatTimeSync.State;
-        if (_inboxState == null)
-            return;
 
-        // Importa o estado salvo do JSON
+        // Importa o histórico visual das mensagens
         if (DataController.CurrentSave != null && DataController.CurrentSave.chatStates != null)
-            ImportState(DataController.CurrentSave.chatStates);
+            ImportHistoryOnly(DataController.CurrentSave.chatStates);
     }
 
     private void OnEnable()
@@ -331,6 +329,7 @@ public class ChatController : MonoBehaviour
         return list;
     }
 
+    /* DEPRECIADO
     public void ImportState(List<ChatSaveState> savedStates)
     {
         if (savedStates == null || savedStates.Count == 0)
@@ -368,6 +367,25 @@ public class ChatController : MonoBehaviour
                 }
                 _history[saved.conversationId] = messages;
             }
+        }
+    }
+    */
+
+    private void ImportHistoryOnly(List<ChatSaveState> savedStates)
+    {
+        if (savedStates == null)
+            return;
+
+        foreach (var saved in savedStates)
+        {
+            if (saved?.messageHistory == null || saved.messageHistory.Count == 0)
+                continue;
+
+            var list = new List<ChatMessageEntry>();
+            foreach (var entry in saved.messageHistory)
+                list.Add(new ChatMessageEntry { isFromNpc = entry.isFromNpc, text = entry.text });
+
+            _history[saved.conversationId] = list;
         }
     }
 
