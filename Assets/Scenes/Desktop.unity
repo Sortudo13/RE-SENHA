@@ -250,7 +250,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 36e0bc607a29c82439e006f6bed1bcee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a546de4c90298c843b16981badb22573, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1758,7 +1758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -94.67001, y: 19.509995}
+  m_AnchoredPosition: {x: -94.67001, y: 19.509993}
   m_SizeDelta: {x: 146.70001, y: 37.380005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &427305834
@@ -1861,14 +1861,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4162232, g: 0.36585975, b: 0.8113208, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 36e0bc607a29c82439e006f6bed1bcee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f413a6d0d3ab3a544b747a11e21fefec, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1943,7 +1943,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 36e0bc607a29c82439e006f6bed1bcee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d99e54227f989b743b983bd490780d16, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3822,8 +3822,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
-  m_SizeDelta: {x: 214.56, y: 0.00012207}
+  m_AnchoredPosition: {x: 0, y: -59.550003}
+  m_SizeDelta: {x: 214.56, y: 119.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1294810207
 MonoBehaviour:
@@ -3882,7 +3882,6 @@ MonoBehaviour:
   windowManual: {fileID: 8361798000228143058, guid: 1addb118b00af524ab70d7e607e9ea1d, type: 3}
   windowRG: {fileID: 9096935942626009820, guid: 76797d72c5aeeb643a27c71ce23a009d, type: 3}
   windowChat: {fileID: 0}
-  windowMenu: {fileID: 6718230981240750156, guid: 6b4ce29ab0f34a0dea172e1a869be511, type: 3}
 --- !u!1 &1302115837
 GameObject:
   m_ObjectHideFlags: 0
@@ -5283,7 +5282,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 36e0bc607a29c82439e006f6bed1bcee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7d47712e4b3abbf42b695fe895a9b64c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
