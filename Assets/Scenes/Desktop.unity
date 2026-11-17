@@ -353,11 +353,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1516779052410086316, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_text
-      value: PDF
+      value: Bloco de Notas
       objectReference: {fileID: 0}
+    - target: {fileID: 2954288805960146520, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20089ab304c588e4ca21235e6948e548, type: 3}
     - target: {fileID: 3582873135304529804, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Name
-      value: DesktopIcon
+      value: NotepadIcon
       objectReference: {fileID: 0}
     - target: {fileID: 4463384203517173997, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: m_Pivot.x
@@ -442,7 +446,7 @@ PrefabInstance:
     - target: {fileID: 8090069572651123837, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: windowPrefab
       value: 
-      objectReference: {fileID: 361206965269545061, guid: d6d6a1dec513bcd42aa330b0b5d79cbd, type: 3}
+      objectReference: {fileID: 8607656898136101188, guid: e8e6f6a456acad249bd87b961417ca01, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4306,10 +4310,10 @@ RectTransform:
   m_Children:
   - {fileID: 85126319}
   - {fileID: 280785892}
+  - {fileID: 1194951128}
   - {fileID: 921672553}
   - {fileID: 1659578086}
   - {fileID: 539350392}
-  - {fileID: 1194951128}
   m_Father: {fileID: 1704726870}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
