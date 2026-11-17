@@ -205,8 +205,8 @@ public class EmailController : MonoBehaviour
             if (email.attachments.Count > 0)
             {
                 foreach (AttachmentData attachment in email.attachments)
-                    attach.text += attachment.linkedName + ";\n";
-                attach.text = attach.text.TrimEnd(';', '\n');
+                    attach.text += attachment.linkedName + "/ ";
+                attach.text = attach.text.TrimEnd('/', ' ');
             }
             else
                 attach.text = "Sem anexos";

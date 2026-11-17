@@ -308,15 +308,23 @@ public class AttachmentContent { }
 // Fazer classes herdadas de AttachmentContent para cada tipo de documento que contém dados do usuário.
 // Exemplos abaixo:
 [System.Serializable]
-public class DadosTexto : AttachmentContent
+public class PDFData : AttachmentContent
 {
-    public string texto;
+    public string text;
+}
+
+public class RGData : AttachmentContent
+{
+    public string rgNumber;
+    public string name;
 }
 
 [System.Serializable]
-public class DadosFoto : AttachmentContent
+public class PhotoData : AttachmentContent
 {
-    public string url;
+    public string title;
+    public string description;
+    public string photoPath;
 }
 
 public class AttachmentContentConverter : JsonConverter<AttachmentContent>
@@ -338,8 +346,8 @@ public class AttachmentContentConverter : JsonConverter<AttachmentContent>
         AttachmentContent content = obj switch
         {
             _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
-            _ when obj.Property("texto") != null => new DadosTexto(),
-            _ when obj.Property("url") != null => new DadosFoto(),
+            _ when obj.Property("text") != null => new PDFData(),
+            _ when obj.Property("url") != null => new PhotoData(),
             _ => new AttachmentContent()
         };
 
@@ -359,6 +367,7 @@ public enum DocumentType
 {
     Manual,
     Email,
+    PDF,
     RG,
 }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 public class WindowManagerController : MonoBehaviour
 {
     private int activeWindowCount = 0;
-    private bool desktopWindowsHidden;
     public static Transform WindowsLayer { get; private set; }
 
     [Header("Templates de Janela")]
@@ -13,6 +12,9 @@ public class WindowManagerController : MonoBehaviour
 
     [SerializeField]
     private WindowController windowManual;
+
+    [SerializeField]
+    private WindowController windowPDF;
 
     [SerializeField]
     private WindowController windowRG;
@@ -98,6 +100,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal<string>("OpenURL", OpenURL);
         ActionController.SyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.SyncSignal<AttachmentContent>("InitManual", InitManual);
+        ActionController.SyncSignal<AttachmentContent>("InitPDF", InitPDF);
         ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
     }
@@ -107,6 +110,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<string>("OpenURL", OpenURL);
         ActionController.UnsyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.UnsyncSignal<AttachmentContent>("InitManual", InitManual);
+        ActionController.UnsyncSignal<AttachmentContent>("InitPDF", InitPDF);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.UnsyncSignal<AttachmentContent>("InitChat", InitChat);
     }
@@ -121,6 +125,13 @@ public class WindowManagerController : MonoBehaviour
         GameObject window_email = Instantiate(windowEmail.gameObject, transform);
         if (data is EmailData emailData)
             window_email.GetComponentInChildren<EmailController>().ShowMail(emailData);
+    }
+
+    private void InitPDF(AttachmentContent data)
+    {
+        GameObject window_PDF = Instantiate(windowPDF.gameObject, transform);
+        if (data is PDFData pdfData)
+            window_PDF.GetComponentInChildren<PDFController>().LoadDocument(pdfData.text);
     }
 
     private void InitManual(AttachmentContent data)
