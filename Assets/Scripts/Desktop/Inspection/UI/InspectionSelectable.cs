@@ -12,6 +12,14 @@ public abstract class InspectionSelectable : ActionButtonController,
     [SerializeField]
     private Color selectedColor = new(1f, 0.85f, 0.2f, 1f);
 
+    // Borda do selecionado: diferencia selecionado de hover pela forma, nao so pelo tom de
+    // amarelo (os dois sao parecidos demais, inclusive para quem tem daltonismo).
+    [SerializeField]
+    private Color selectedOutlineColor = new(0.45f, 0.3f, 0f, 1f);
+
+    [SerializeField, Min(0f)]
+    private float selectedOutlineWidth = 3f;
+
     // Destaque mais fraco enquanto o mouse esta em cima, so com o modo inspetor ligado.
     [SerializeField]
     private Color hoverColor = new(1f, 0.93f, 0.6f, 1f);
@@ -36,7 +44,22 @@ public abstract class InspectionSelectable : ActionButtonController,
     [SerializeField, Min(0.01f), FormerlySerializedAs("rejectedBlinkSeconds")]
     private float flashBlinkSeconds = 0.12f;
 
+    // Pista que nao depende de cor: recusa treme na horizontal, achado da um "pulo" de escala.
+    // Assim aceito x recusado se distinguem mesmo para quem nao separa vermelho de verde.
+    [SerializeField, Min(0f)]
+    private float rejectedShakeDistance = 6f;
+
+    [SerializeField, Min(0.01f)]
+    private float rejectedShakeSeconds = 0.3f;
+
+    [SerializeField, Min(1f)]
+    private float acceptedPulseScale = 1.06f;
+
+    [SerializeField, Min(0.01f)]
+    private float acceptedPulseSeconds = 0.25f;
+
     private Graphic graphic;
+    private Outline selectedOutline;
     private Color originalColor;
     private bool isSelected;
     private bool isHovered;
@@ -44,6 +67,10 @@ public abstract class InspectionSelectable : ActionButtonController,
     private bool isFound;
     private Color flashColor;
     private Coroutine flashRoutine;
+    private Coroutine motionRoutine;
+    private bool isMoving;
+    private Vector3 restPosition;
+    private Vector3 restScale;
 
     protected readonly SignalSubscriptions Signals = new();
     protected bool InspectionModeActive { get; private set; }
@@ -56,7 +83,16 @@ public abstract class InspectionSelectable : ActionButtonController,
         if (!TryGetComponent(out graphic))
             graphic = GetComponentInChildren<Graphic>();
         if (graphic != null)
+        {
             originalColor = graphic.color;
+
+            // Criada aqui (e nao no prefab) para valer em todo seletor sem editar os prefabs.
+            selectedOutline = graphic.gameObject.AddComponent<Outline>();
+            selectedOutline.effectColor = selectedOutlineColor;
+            selectedOutline.effectDistance = new Vector2(selectedOutlineWidth, -selectedOutlineWidth);
+            selectedOutline.useGraphicAlpha = false;
+            selectedOutline.enabled = false;
+        }
 
         Signals
             .On<string>(HighlightAction, OnHighlight)
@@ -86,6 +122,7 @@ public abstract class InspectionSelectable : ActionButtonController,
         isHovered = false;
         isFlashing = false;
         flashRoutine = null;
+        ResetMotion();
         ApplyColor();
     }
 
@@ -122,22 +159,79 @@ public abstract class InspectionSelectable : ActionButtonController,
 
     private void OnSelectionRejected(InspectionSelection selection)
     {
-        Flash(selection, rejectedColor);
+        if (Flash(selection, rejectedColor))
+            StartMotion(Shake());
     }
 
     private void OnSelectionAccepted(InspectionSelection selection)
     {
-        Flash(selection, acceptedColor);
+        if (Flash(selection, acceptedColor))
+            StartMotion(Pulse());
     }
 
-    private void Flash(InspectionSelection selection, Color color)
+    // Devolve se este seletor participa da combinacao (e portanto piscou).
+    private bool Flash(InspectionSelection selection, Color color)
     {
         if (selection == null || !isActiveAndEnabled || !MatchesSelection(selection))
-            return;
+            return false;
 
         if (flashRoutine != null)
             StopCoroutine(flashRoutine);
         flashRoutine = StartCoroutine(Blink(color));
+        return true;
+    }
+
+    // Guarda a posicao/escala de repouso antes de mexer, para sempre voltar exatamente a ela.
+    private void StartMotion(IEnumerator motion)
+    {
+        if (motionRoutine != null)
+            StopCoroutine(motionRoutine);
+        ResetMotion();
+
+        restPosition = transform.localPosition;
+        restScale = transform.localScale;
+        isMoving = true;
+        motionRoutine = StartCoroutine(motion);
+    }
+
+    private void ResetMotion()
+    {
+        motionRoutine = null;
+        if (!isMoving)
+            return;
+
+        transform.localPosition = restPosition;
+        transform.localScale = restScale;
+        isMoving = false;
+    }
+
+    // Vai e volta 3 vezes na horizontal, perdendo forca ate parar.
+    private IEnumerator Shake()
+    {
+        for (float elapsed = 0f; elapsed < rejectedShakeSeconds; elapsed += Time.deltaTime)
+        {
+            float progress = elapsed / rejectedShakeSeconds;
+            float offset =
+                Mathf.Sin(progress * Mathf.PI * 6f) * rejectedShakeDistance * (1f - progress);
+            transform.localPosition = restPosition + new Vector3(offset, 0f, 0f);
+            yield return null;
+        }
+
+        ResetMotion();
+    }
+
+    // Cresce ate acceptedPulseScale e volta ao tamanho normal.
+    private IEnumerator Pulse()
+    {
+        for (float elapsed = 0f; elapsed < acceptedPulseSeconds; elapsed += Time.deltaTime)
+        {
+            float progress = elapsed / acceptedPulseSeconds;
+            float scale = 1f + (acceptedPulseScale - 1f) * Mathf.Sin(progress * Mathf.PI);
+            transform.localScale = restScale * scale;
+            yield return null;
+        }
+
+        ResetMotion();
     }
 
     private IEnumerator Blink(Color color)
@@ -164,6 +258,10 @@ public abstract class InspectionSelectable : ActionButtonController,
     {
         if (graphic == null)
             return;
+
+        // A borda segue a selecao mesmo durante a piscada, que so troca o preenchimento.
+        if (selectedOutline != null)
+            selectedOutline.enabled = isSelected;
 
         if (isFlashing)
             graphic.color = flashColor;
