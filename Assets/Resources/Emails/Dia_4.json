@@ -5,7 +5,22 @@
     "sender": "rh@nationaltech.com",
     "subject": "Orientações do Dia 4 - O Fator Humano",
     "body": "Neste dia, vamos testar como você lida com chantagens, ameaças e pedidos de 'colegas'. Golpistas usam pânico e urgência para fazer você errar. Fique atento a e-mails alarmistas.",
-    "attachments": []
+    "attachments": [
+      {
+        "documentType": 0,
+        "name": "regra_pressao_e_urgencia",
+        "extension": "manual",
+        "linkedName": "<link=\"OpenAttachment|1\">pressao_e_urgencia.manual</link>",
+        "data": { "ruleId": "rule-subject-pressure" }
+      },
+      {
+        "documentType": 0,
+        "name": "regra_documentos_com_macro",
+        "extension": "manual",
+        "linkedName": "<link=\"OpenAttachment|2\">documentos_com_macro.manual</link>",
+        "data": { "ruleId": "rule-attachment-macro" }
+      }
+    ]
   },
   {
     "timeToReceive": 10,

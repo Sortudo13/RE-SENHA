@@ -5,7 +5,15 @@
     "sender": "rh@nationaltech.com",
     "subject": "Orientações do Dia 3 - Extensões Perigosas",
     "body": "Bom trabalho ontem! Hoje veremos anexos camuflados. Um arquivo PDF é geralmente seguro, mas criminosos escondem executáveis (.exe, .bat, .scr) com ícones falsos. Analise as extensões!",
-    "attachments": []
+    "attachments": [
+      {
+        "documentType": 0,
+        "name": "regra_extensoes_camufladas",
+        "extension": "manual",
+        "linkedName": "<link=\"OpenAttachment|1\">extensoes_camufladas.manual</link>",
+        "data": { "ruleId": "rule-attachment-disguised" }
+      }
+    ]
   },
   {
     "timeToReceive": 20,

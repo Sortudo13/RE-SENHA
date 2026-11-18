@@ -137,6 +137,8 @@ public class WindowManagerController : MonoBehaviour
     private void InitManual(AttachmentContent data)
     {
         GameObject window_manual = Instantiate(windowManual.gameObject, transform);
+        if (data is ManualData manualData)
+            window_manual.GetComponentInChildren<ManualWindowController>().OpenAt(manualData.app, manualData.ruleId);
     }
 
     private void InitRG(AttachmentContent data)

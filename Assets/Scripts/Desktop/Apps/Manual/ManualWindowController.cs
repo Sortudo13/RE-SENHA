@@ -50,6 +50,11 @@ public class ManualWindowController : MonoBehaviour
     private ManualRuleBookData manual;
     private string selectedApp;
 
+    // Destino pedido por OpenAt (anexo de email). OpenAt roda logo apos o Instantiate,
+    // antes do Start carregar as regras, entao o destino fica guardado ate o Start.
+    private string pendingApp;
+    private string pendingRuleId;
+
     private void Awake()
     {
         foreach (AppTab tab in appTabs)
@@ -93,7 +98,56 @@ public class ManualWindowController : MonoBehaviour
             return;
         }
 
-        ShowApp(appTabs.Count > 0 ? appTabs[0].app : null);
+        string defaultApp = appTabs.Count > 0 ? appTabs[0].app : null;
+        ShowApp(string.IsNullOrWhiteSpace(pendingApp) ? defaultApp : pendingApp);
+
+        if (!string.IsNullOrWhiteSpace(pendingRuleId))
+            OpenRule(pendingRuleId);
+
+        pendingApp = null;
+        pendingRuleId = null;
+    }
+
+    // Abre o Manual numa aba e, opcionalmente, direto numa regra. Chamado pelo
+    // WindowManagerController ao abrir um anexo de Manual (ManualData).
+    public void OpenAt(string app, string ruleId)
+    {
+        if (manual == null)
+        {
+            pendingApp = app;
+            pendingRuleId = ruleId;
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(app))
+            ShowApp(app);
+        if (!string.IsNullOrWhiteSpace(ruleId))
+            OpenRule(ruleId);
+    }
+
+    // So abre regras ja liberadas no dia atual; regra de dia futuro ou id errado fica na lista.
+    private void OpenRule(string ruleId)
+    {
+        foreach (ManualRuleData rule in manual.rules)
+        {
+            if (rule.id != ruleId)
+                continue;
+
+            if (rule.introductionDay > DataController.CurrentDay)
+            {
+                Debug.LogWarning(
+                    $"ManualWindowController: regra '{ruleId}' so libera no dia {rule.introductionDay}."
+                );
+                return;
+            }
+
+            if (!string.Equals(rule.app, selectedApp, StringComparison.OrdinalIgnoreCase))
+                ShowApp(rule.app);
+            ShowRule(rule);
+            return;
+        }
+
+        Debug.LogWarning($"ManualWindowController: regra '{ruleId}' nao existe no ManualRules.json.");
     }
 
     public void ShowApp(string app)

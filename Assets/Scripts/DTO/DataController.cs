@@ -301,6 +301,14 @@ public class PDFData : AttachmentContent
     public string text;
 }
 
+// Anexo que abre o Manual numa aba e, se ruleId vier preenchido, direto nessa regra.
+[System.Serializable]
+public class ManualData : AttachmentContent
+{
+    public string app = "email";
+    public string ruleId;
+}
+
 public class RGData : AttachmentContent
 {
     public string rgNumber;
@@ -334,6 +342,7 @@ public class AttachmentContentConverter : JsonConverter<AttachmentContent>
         AttachmentContent content = obj switch
         {
             _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
+            _ when obj.Property("ruleId") != null => new ManualData(),
             _ when obj.Property("text") != null => new PDFData(),
             _ when obj.Property("url") != null => new PhotoData(),
             _ => new AttachmentContent()
