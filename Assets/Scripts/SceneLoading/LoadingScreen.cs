@@ -269,6 +269,7 @@ public class LoadingScreen : MonoBehaviour
 
         op.allowSceneActivation = true;
         yield return new WaitUntil(() => op.isDone);
+        Debug.Log($"LoadingScreen: cena '{sceneName}' carregada.");
     }
 
     // Progresso interno (nao aparece na tela): segura a tela ate o trabalho acabar

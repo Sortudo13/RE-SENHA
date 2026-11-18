@@ -8,20 +8,22 @@ public class ChatTimeSync : MonoBehaviour
     private ChatInboxState _state;
     public ChatInboxState State => _state;
 
-    private void Awake() => EnsureState();
+    private void Awake()
+    {
+        Debug.Log("[ChatTimeSync] Awake");
+        EnsureState();
+    }
 
     private void OnEnable()
     {
         ActionController.SyncSignal("TimeUpdated", OnTimeOrDayChanged);
         ActionController.SyncSignal("DayChanged", OnTimeOrDayChanged);
-        ActionController.SyncSignal("Resetar Jogo", OnResetGame);
     }
 
     private void OnDisable()
     {
         ActionController.UnsyncSignal("TimeUpdated", OnTimeOrDayChanged);
         ActionController.UnsyncSignal("DayChanged", OnTimeOrDayChanged);
-        ActionController.UnsyncSignal("Resetar Jogo", OnResetGame);
     }
 
     public void EnsureState()
@@ -30,6 +32,8 @@ public class ChatTimeSync : MonoBehaviour
             return;
 
         _state = new ChatInboxState(inbox);
+        int savedStateCount = DataController.CurrentSave?.chatStates?.Count ?? 0;
+        Debug.Log($"[ChatTimeSync] Importando {savedStateCount} estados");
 
         // Importa o estado salvo (hasArrived, currentNodeId, etc.)
         if (DataController.CurrentSave != null && DataController.CurrentSave.chatStates != null)
@@ -69,9 +73,4 @@ public class ChatTimeSync : MonoBehaviour
             ActionController.SendAction("ChatConversationArrived", s.conversation.conversationId);
     }
 
-    private void OnResetGame()
-    {
-        _state = new ChatInboxState(inbox);
-        ActionController.SendAction("ChatInboxReset");
-    }
 }

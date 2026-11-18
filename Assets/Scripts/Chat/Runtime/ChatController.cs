@@ -21,6 +21,10 @@ public class ChatController : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("[ChatController] Awake: INICIANDO");
+        _history.Clear();
+        _activeConversation = null;
+
         if (chatTimeSync == null)
         {
             Debug.LogError("[ChatController] ChatTimeSync não atribuído!");
@@ -33,14 +37,12 @@ public class ChatController : MonoBehaviour
         // Importa o histórico visual das mensagens
         if (DataController.CurrentSave != null && DataController.CurrentSave.chatStates != null)
             ImportHistoryOnly(DataController.CurrentSave.chatStates);
+
+        Debug.Log("[ChatController] Awake: _history limpo, _activeConversation=null");
     }
 
     private void OnEnable()
     {
-        if (_inboxState == null)
-            return;
-
-        ActionController.SyncSignal("ChatInboxReset", OnInboxReset);
         ActionController.SyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.SyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.SyncSignal<string>("ChatConversationArrived", OnConversationArrived);
@@ -48,7 +50,6 @@ public class ChatController : MonoBehaviour
 
     private void OnDisable()
     {
-        ActionController.UnsyncSignal("ChatInboxReset", OnInboxReset);
         ActionController.UnsyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.UnsyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.UnsyncSignal<string>("ChatConversationArrived", OnConversationArrived);
@@ -61,6 +62,9 @@ public class ChatController : MonoBehaviour
     {
         _windowView = window;
         _windowView.SetConversationClickHandler(OnConversationClicked);
+
+        if (_inboxState == null)
+            return;
 
         foreach (var state in _inboxState.All)
         {
@@ -84,27 +88,6 @@ public class ChatController : MonoBehaviour
         string preview = GetPreviewForState(state);
         if (_windowView != null)
             _windowView.AddOrUpdateConversationItem(state, preview);
-    }
-
-    private void OnInboxReset()
-    {
-        if (_npcFlowCoroutine != null)
-            StopCoroutine(_npcFlowCoroutine);
-
-        _inboxState = chatTimeSync.State;
-
-        _history.Clear();
-        _activeConversation = null;
-
-        if (DataController.CurrentSave != null)
-        {
-            DataController.CurrentSave.chatStates ??= new List<ChatSaveState>();
-            DataController.CurrentSave.chatStates.Clear();
-            DataController.SavingGame();
-        }
-
-        if (_windowView != null)
-            _windowView.ShowEmptyState();
     }
 
     // ============================================================

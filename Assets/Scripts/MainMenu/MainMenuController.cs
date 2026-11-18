@@ -7,10 +7,6 @@ public class MainMenuController : MonoBehaviour
     {
         // Limpa o save do disco
         DataController.ResetGame();
-
-        // Avisa todos os sistemas que o jogo foi resetado
-        ActionController.SendAction("Resetar Jogo");
-
         AbrirDesktop();
     }
 
