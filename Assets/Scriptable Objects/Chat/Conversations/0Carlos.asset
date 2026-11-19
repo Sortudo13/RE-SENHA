@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
-  m_Name: ChatConversation
+  m_Name: 0Carlos
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
-  conversationId: ChatConversation_0Carlos
+  conversationId: 0Carlos
   npcName: Carlos
-  npcAvatar: {fileID: 4395514471702073394, guid: b4f0caa61800b3b6c8a5bd1bed97e873, type: 3}
+  npcAvatar: {fileID: 21300000, guid: 655de6e309851354daed65e33c3723ac, type: 3}
   nodes:
   - {fileID: 11400000, guid: c51b9257c868abb9d96edc39621d1cb9, type: 2}
   - {fileID: 11400000, guid: b69676e60e186bdd794443e28f66567a, type: 2}
