@@ -152,11 +152,7 @@ public class WindowManagerController : MonoBehaviour
     {
         GameObject window_PNG = Instantiate(windowPNG.gameObject, transform);
         if (data is PNGData pngData)
-        {
-            Image teste = window_PNG.transform.Find("Área de Conteúdo/Image").GetComponentInChildren<Image>();
-            if (teste != null)
-                teste.sprite = pngData.GetImage();
-        }
+            window_PNG.transform.Find("Área de Conteúdo/Image").GetComponentInChildren<Image>().sprite = pngData.GetImage();
     }
 
     private void InitRG(AttachmentContent data)
