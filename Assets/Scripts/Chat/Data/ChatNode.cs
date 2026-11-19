@@ -1,3 +1,6 @@
+// Os dados de nome e avatar do NPC pertencem a ChatConversation.
+// ChatNode guarda apenas o conteudo e o fluxo da mensagem.
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,13 +11,7 @@ public class ChatNode : ScriptableObject
     [Tooltip("ID único DENTRO da conversa. Ex.: 'inicio', 'pede_senha', 'fim_negou'.")]
     public string nodeId;
 
-    [Header("Mensagem do NPC")]
-    [Tooltip("Nome exibido no header da janela (ou no nó, se quiser variar).")]
-    public string npcName;
-
-    [Tooltip("Avatar do NPC.")]
-    public Sprite npcAvatar;
-
+    [Header("Mensagem")]
     [Tooltip("Mensagem do NPC. Suporta rich text do TextMeshPro.")]
     [TextArea(3, 10)]
     public string npcMessage;

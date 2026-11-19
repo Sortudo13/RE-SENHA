@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Encerramento_Odisseu
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: odisseu_encerramento
+  npcName: Odisseu
+  npcAvatar: {fileID: 0}
+  nodes:
+  - {fileID: 11400000, guid: 2cc5f04c18d9264d1b6abb9e119206ad, type: 2}
+  - {fileID: 11400000, guid: d57bde43fd13e51359302861c7b5f746, type: 2}
+  - {fileID: 11400000, guid: 52f865c7e402a8f4ab5249ffcbeb62e8, type: 2}
+  - {fileID: 11400000, guid: b572744b73608a61f9f15134550f1ab3, type: 2}
+  - {fileID: 11400000, guid: a452afe3de70f31df95947e79c43e42a, type: 2}
+  startNodeId: inicio

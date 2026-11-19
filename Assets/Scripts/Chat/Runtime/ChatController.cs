@@ -372,6 +372,7 @@ public class ChatController : MonoBehaviour
             }
         }
     }
+
     private void ImportHistoryOnly(List<ChatSaveState> savedStates)
     {
         if (savedStates == null)
