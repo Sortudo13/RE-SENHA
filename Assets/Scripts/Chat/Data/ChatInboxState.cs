@@ -5,15 +5,16 @@ public class ChatInboxState
     public class ConversationState
     {
         public ChatConversation conversation;
-        public ChatInbox.Entry entry; // guarda horário/ordem
+        public ChatInbox.Entry entry;
         public bool hasArrived;
         public bool hasUnread;
         public bool isFinished;
-        public string currentNodeId; // nó atual da sessão
+        public string currentNodeId;
     }
 
     private readonly Dictionary<string, ConversationState> _states = new();
     private readonly ChatInbox _inbox;
+    private int _lastProcessedDay = -1;
     private int _lastProcessedTotalMinutes = -1;
 
     public ChatInboxState(ChatInbox inbox)
@@ -42,14 +43,19 @@ public class ChatInboxState
     public IEnumerable<ConversationState> All => _states.Values;
 
     /// <summary>
-    /// Retorna apenas as conversas que acabaram de chegar neste minuto.
-    /// Chamadas repetidas com o mesmo minuto retornam lista vazia.
+    /// Processa chegada de conversas com base no dia e minuto atuais.
+    /// Conversas cujo arrivalDay < currentDay e que ainda não chegaram são
+    /// descartadas (não chegam retroativamente).
     /// </summary>
-    public List<ConversationState> ProcessTime(int currentTotalMinutes)
+    public List<ConversationState> ProcessTime(int currentDay, int currentTotalMinutes)
     {
         var result = new List<ConversationState>();
-        if (currentTotalMinutes <= _lastProcessedTotalMinutes)
+
+        // Só processa se o dia ou o minuto mudou
+        if (currentDay == _lastProcessedDay && currentTotalMinutes <= _lastProcessedTotalMinutes)
             return result;
+
+        _lastProcessedDay = currentDay;
         _lastProcessedTotalMinutes = currentTotalMinutes;
 
         foreach (var state in _states.Values)
@@ -57,12 +63,15 @@ public class ChatInboxState
             if (state.hasArrived)
                 continue;
 
-            if (
-                state.entry.ArrivalTotalMinutes < 8 * 60
-                || state.entry.ArrivalTotalMinutes > 16 * 60
-            )
+            // Não retroativo: se o dia atual passou do dia agendado, descarta
+            if (currentDay > state.entry.arrivalDay)
                 continue;
 
+            // Ainda não é o dia
+            if (currentDay < state.entry.arrivalDay)
+                continue;
+
+            // Mesmo dia: verifica o minuto
             if (currentTotalMinutes < state.entry.ArrivalTotalMinutes)
                 continue;
 
@@ -70,7 +79,6 @@ public class ChatInboxState
             state.hasUnread = true;
             result.Add(state);
         }
-
         return result;
     }
 

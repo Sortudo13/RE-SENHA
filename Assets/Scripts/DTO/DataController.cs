@@ -105,6 +105,32 @@ public static class DataController
         LoadingGame();
     }
 
+    public static void ResetDayAndReload()
+    {
+        Debug.Log("[DataController] ResetDayAndReload: INICIANDO");
+
+        if (currentSave == null)
+            LoadingGame();
+
+        currentSave.chatStates ??= new();
+        currentSave.chatStates.Clear();
+
+        // Reinicia o expediente no início da jornada quando Desktop for recarregado.
+        currentSave.current_hour = -1;
+        currentSave.current_minute = 0;
+        SavingGame(currentSave);
+
+        Debug.Log(
+            $"[DataController] ResetDayAndReload: chatStates limpo. Count={currentSave.chatStates.Count}"
+        );
+        Debug.Log(
+            "[DataController] ResetDayAndReload: horário salvo reiniciado."
+        );
+
+        LoadingScreen.LoadScene("Desktop");
+        Debug.Log("[DataController] ResetDayAndReload: LoadingScreen.LoadScene('Desktop') chamado");
+    }
+
     public static void SavingGame(SaveData save = null)
     {
         if (save == null)

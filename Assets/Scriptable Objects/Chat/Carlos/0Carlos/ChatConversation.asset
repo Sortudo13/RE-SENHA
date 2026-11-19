@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
   m_Name: ChatConversation
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
-  conversationId: ChatConversation_Test
-  npcName: Lulinha
+  conversationId: ChatConversation_0Carlos
+  npcName: Carlos
   npcAvatar: {fileID: 4395514471702073394, guid: b4f0caa61800b3b6c8a5bd1bed97e873, type: 3}
   nodes:
   - {fileID: 11400000, guid: c51b9257c868abb9d96edc39621d1cb9, type: 2}

@@ -5,4 +5,9 @@ public class GameRestartController : UnityEngine.MonoBehaviour
         DataController.ResetGame();
         LoadingScreen.LoadScene("Desktop");
     }
+
+    public void RestartDay()
+    {
+        DataController.ResetDayAndReload();
+    }
 }
