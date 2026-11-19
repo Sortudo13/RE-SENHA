@@ -126,3 +126,58 @@ public interface IInspectionFindingStore
     bool HasFinding(string findingId);
     bool TryRegisterFinding(InspectionEvaluationResult result);
 }
+
+// Armazenamento de achados generico: grava na lista "evidences" do proprio dado do item
+// (EmailData.evidences, ticket.evidences...), para os achados irem junto no save.
+// Qualquer app usa este; nao e preciso escrever um armazenamento por app.
+public sealed class ListFindingStore : IInspectionFindingStore
+{
+    private readonly string sourceType;
+    private readonly string itemId;
+    private readonly List<EvidenceData> evidences;
+
+    // evidences: a lista do dado do item. Nao pode ser null; crie antes com "item.evidences ??= new();".
+    public ListFindingStore(string sourceType, string itemId, List<EvidenceData> evidences)
+    {
+        this.sourceType = sourceType;
+        this.itemId = itemId ?? string.Empty;
+        this.evidences = evidences ?? throw new ArgumentNullException(nameof(evidences));
+    }
+
+    public IReadOnlyList<EvidenceData> Findings => evidences;
+
+    // Saves antigos guardam o id em "subruleId".
+    public bool HasFinding(string findingId)
+    {
+        return evidences.Exists(
+            finding =>
+                finding != null
+                && (finding.findingId == findingId || finding.subruleId == findingId)
+        );
+    }
+
+    public bool TryRegisterFinding(InspectionEvaluationResult result)
+    {
+        if (result == null || HasFinding(result.FindingId))
+            return false;
+
+        evidences.Add(
+            new EvidenceData
+            {
+                findingId = result.FindingId,
+                sourceType = sourceType,
+                sourceItemId = itemId,
+                fieldId = result.FieldId,
+                evaluatorId = result.EvaluatorId,
+                ruleId = result.RuleId,
+                rule = result.Title,
+                field = result.FieldId,
+                evidence = result.Evidence,
+                explanation = result.Explanation,
+                reason = result.Reason,
+            }
+        );
+        DataController.SavingGame();
+        return true;
+    }
+}

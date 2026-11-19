@@ -424,7 +424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75.8, y: -2}
+  m_AnchoredPosition: {x: 160, y: 41}
   m_SizeDelta: {x: 249.7663, y: 220.5867}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3708239545013683241
@@ -480,8 +480,6 @@ MonoBehaviour:
   windowIcon: {fileID: -5739248805895703791, guid: 11661dc963ff171459f80f133264f1b0, type: 3}
   windowName: Email
   windowHeaderName: Email
-  showInTaskbar: 1
-  minimizeWithAll: 1
   animator: {fileID: 4342677667281544305}
   countActions: 0
 --- !u!95 &4342677667281544305
@@ -661,7 +659,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Email
+  m_text: Exemplo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
   m_sharedMaterial: {fileID: -8858064809551631060, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}

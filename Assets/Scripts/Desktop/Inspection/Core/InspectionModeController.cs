@@ -6,25 +6,22 @@ using UnityEngine.UI;
 
 public sealed class InspectionModeController : MonoBehaviour
 {
-    public const string ToggleAction = "ToggleInspectionMode";
-    public const string DeactivateAction = "DeactivateInspectionMode";
-    public const string ModeChangedAction = "InspectionModeChanged";
-    // Pedido de um seletor criado depois da ultima mudanca de modo (ex.: subregras do Manual);
-    // a resposta e republicar o estado atual em ModeChangedAction e nos highlights.
-    public const string StateRequestedAction = "InspectionStateRequested";
 
     // O overlay apenas escurece a tela durante a inspecao; ele nao bloqueia cliques
     // (raycastTarget desligado no proprio objeto, na cena Desktop).
     [SerializeField]
     private GameObject inspectionOverlay;
 
+    private readonly SignalSubscriptions signals = new();
+
     public bool IsActive { get; private set; }
 
     private void Awake()
     {
-        ActionController.SyncSignal(ToggleAction, ToggleMode);
-        ActionController.SyncSignal(DeactivateAction, DeactivateMode);
-        ActionController.SyncSignal(StateRequestedAction, PublishState);
+        signals
+            .On(InspectionSignals.ToggleMode, ToggleMode)
+            .On(InspectionSignals.DeactivateMode, DeactivateMode)
+            .On(InspectionSignals.StateRequested, PublishState);
         IsActive = false;
         if (inspectionOverlay != null)
             inspectionOverlay.SetActive(false);
@@ -32,9 +29,7 @@ public sealed class InspectionModeController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal(ToggleAction, ToggleMode);
-        ActionController.UnsyncSignal(DeactivateAction, DeactivateMode);
-        ActionController.UnsyncSignal(StateRequestedAction, PublishState);
+        signals.Clear();
     }
 
     private void Update()
@@ -54,12 +49,12 @@ public sealed class InspectionModeController : MonoBehaviour
         if (inspectionOverlay != null)
             inspectionOverlay.SetActive(active);
 
-        ActionController.SendAction(ModeChangedAction, active);
+        ActionController.SendAction(InspectionSignals.ModeChanged, active);
     }
 
     private void PublishState()
     {
-        ActionController.SendAction(ModeChangedAction, IsActive);
+        ActionController.SendAction(InspectionSignals.ModeChanged, IsActive);
     }
 
     public void ToggleMode()

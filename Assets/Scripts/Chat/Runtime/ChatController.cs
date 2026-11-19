@@ -90,6 +90,27 @@ public class ChatController : MonoBehaviour
             _windowView.AddOrUpdateConversationItem(state, preview);
     }
 
+    private void OnInboxReset()
+    {
+        if (_npcFlowCoroutine != null)
+            StopCoroutine(_npcFlowCoroutine);
+
+        _inboxState = chatTimeSync.State;
+
+        _history.Clear();
+        _activeConversation = null;
+
+        if (DataController.CurrentSave != null)
+        {
+            DataController.CurrentSave.chatStates ??= new List<ChatSaveState>();
+            DataController.CurrentSave.chatStates.Clear();
+            DataController.SavingGame();
+        }
+
+        if (_windowView != null)
+            _windowView.ShowEmptyState();
+    }
+
     // ============================================================
     // Clique na lista
     // ============================================================
@@ -312,7 +333,6 @@ public class ChatController : MonoBehaviour
         return list;
     }
 
-    /* DEPRECIADO
     public void ImportState(List<ChatSaveState> savedStates)
     {
         if (savedStates == null || savedStates.Count == 0)
@@ -352,8 +372,6 @@ public class ChatController : MonoBehaviour
             }
         }
     }
-    */
-
     private void ImportHistoryOnly(List<ChatSaveState> savedStates)
     {
         if (savedStates == null)

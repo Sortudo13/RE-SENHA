@@ -24,6 +24,16 @@ public class EmailController : MonoBehaviour
         ActionController.SyncSignal("ShowList", ShowList);
         ActionController.SyncSignal<string>("MailChanged", MailChanged);
         ActionController.SyncSignal<EmailData>("RemoveEmail", RemoveEmail);
+
+        mailScreen = transform.Find("MailScreen").gameObject;
+        listScreen = transform.Find("ListScreen").gameObject;
+
+        ShowList();
+    }
+
+    private void Start()
+    {
+        LoadEmails();
     }
 
     private void OnEnable()
@@ -45,15 +55,6 @@ public class EmailController : MonoBehaviour
 
         if (currentEmail != null)
             PublishCurrentEmail(null);
-    }
-
-    void Start()
-    {
-        mailScreen = transform.Find("MailScreen").gameObject;
-        listScreen = transform.Find("ListScreen").gameObject;
-
-        ShowList();
-        LoadEmails();
     }
 
     private void LoadEmails()
@@ -167,20 +168,23 @@ public class EmailController : MonoBehaviour
         ActionController.SendAction("CurrentEmailChanged", email);
     }
 
-    private void ShowMail(EmailData email)
+    public void ShowMail(EmailData email)
     {
         currentEmail = email;
-        PublishCurrentEmail(email);
 
-        if (!currentEmail.isRead)
+        if (currentBox != null)
         {
-            currentBox.newEmails = Math.Max(0, currentBox.newEmails - 1);
-            currentEmail.isRead = true;
-            DataController.SavingGame();
-            // Apaga a bolinha do item e, se for o ultimo nao lido, a da caixa.
-            UpdateEmailListScreen(currentBox);
+            PublishCurrentEmail(email);
+            if (!currentEmail.isRead)
+            {
+                MailBox mailBox = mailBoxes.Find(box => box.mailBox == email.mailBox);
+                mailBox.newEmails = Math.Max(0, mailBox.newEmails - 1);
+                currentEmail.isRead = true;
+                DataController.SavingGame();
+                // Apaga a bolinha do item e, se for o ultimo nao lido, a da caixa.
+                UpdateEmailListScreen(mailBox);
+            }
         }
-
 
         Transform emailSender = mailScreen.transform.Find("SenderField");
         Transform emailSubject = mailScreen.transform.Find("SubjectField");
@@ -201,16 +205,18 @@ public class EmailController : MonoBehaviour
             if (email.attachments.Count > 0)
             {
                 foreach (AttachmentData attachment in email.attachments)
-                    attach.text += attachment.linkedName + ";\n";
-                attach.text = attach.text.TrimEnd(';', '\n');
+                    attach.text += attachment.linkedName + "/ ";
+                attach.text = attach.text.TrimEnd('/', ' ');
             }
             else
                 attach.text = "Sem anexos";
         }
         if (emailButtons != null)
-            emailButtons.gameObject.SetActive(currentBox.mailBox == "Company");
+            emailButtons.gameObject.SetActive(currentBox != null && currentBox.mailBox == "Company");
 
-        transform.Find("MailScreen/Back").gameObject.SetActive(true);
+        if (currentBox != null)
+            transform.Find("MailScreen/Back").gameObject.SetActive(true);
+
         listScreen.SetActive(false);
         mailScreen.SetActive(true);
     }

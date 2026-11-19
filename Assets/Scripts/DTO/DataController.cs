@@ -1,14 +1,18 @@
+using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using UnityEngine;
 
 public static class DataController
 {
     private static SaveData currentSave;
+    private static MetaData currentMetaData;
     private static string saveNumber = "1";
     public static SaveData CurrentSave => currentSave ??= LoadingGame();
+    public static MetaData CurrentMetaData => currentMetaData ??= LoadMetaData();
     public static int CurrentDay
     {
         get => PlayerPrefs.GetInt("CurrentDay", 1);
@@ -33,6 +37,12 @@ public static class DataController
         set => PlayerPrefs.SetInt("MaxErrors", value);
     }
 
+    public static int MaxWindows
+    {
+        get => PlayerPrefs.GetInt("MaxWindows", 2);
+        set => PlayerPrefs.SetInt("MaxWindows", value);
+    }
+
     public static string SavePath
     {
         get => Path.Combine(Application.persistentDataPath, $"save_{saveNumber}.json");
@@ -45,16 +55,9 @@ public static class DataController
         set => PlayerPrefs.SetInt("PersistMailBox", value ? 1 : 0);
     }
 
-    public static string ConvertExtension(string extension)
+    public static string DataPath
     {
-        return extension switch
-        {
-            "mail" => "Email",
-            "manual" => "Manual",
-            "png" => "Image",
-            "exe" => "RG",
-            _ => "RG",
-        };
+        get => Path.Combine(Application.persistentDataPath, $"data.json");
     }
 
     public static void AdvanceDay()
@@ -211,22 +214,61 @@ public static class DataController
         if (File.Exists(SavePath))
             File.Delete(SavePath);
     }
+
+    public static void SaveMetaData(MetaData metaData = null)
+    {
+        currentMetaData = metaData ?? CurrentMetaData;
+        string json = JsonConvert.SerializeObject(currentMetaData, Formatting.Indented);
+        File.WriteAllText(DataPath, json);
+    }
+
+    public static MetaData LoadMetaData()
+    {
+        if (!File.Exists(DataPath))
+        {
+            currentMetaData = new MetaData();
+            SaveMetaData();
+            return currentMetaData;
+
+        }
+        string json = File.ReadAllText(DataPath);
+        currentMetaData = JsonConvert.DeserializeObject<MetaData>(json) ?? new MetaData();
+        return currentMetaData;
+    }
 }
 
 // Estruturas de dados
 
-public class WindowData
+[System.Serializable]
+public class MetaData
 {
-    public string ID { get; }
-    public Sprite Icon { get; }
-    public string Name { get; }
+    public string currentBackground = null;
+    public List<AchievementData> achievements = new();
+    public List<TrinketData> trinkets = new();
+    public StatisticsData statistics = new();
+}
 
-    public WindowData(string id, Sprite icon, string name)
-    {
-        ID = id;
-        Icon = icon;
-        Name = name;
-    }
+[System.Serializable]
+public class AchievementData
+{
+    public string achievementId;
+    public string title;
+    public string description;
+    public bool isUnlocked;
+}
+
+[System.Serializable]
+public class TrinketData
+{
+    public string TrinketId { get; set; }
+    public string IconName { get; set; }
+    public string Name { get; set; }
+}
+
+[System.Serializable]
+public class StatisticsData
+{
+
 }
 
 [System.Serializable]
@@ -244,7 +286,7 @@ public class SaveData
 }
 
 [System.Serializable]
-public class EmailData
+public class EmailData : AttachmentContent
 {
     public string mailBox;
     public Boolean isRead = false;
@@ -302,6 +344,20 @@ public enum TicketDecision
     Reject,
 }
 
+public class WindowData
+{
+    public string ID { get; }
+    public Sprite Icon { get; }
+    public string Name { get; }
+
+    public WindowData(string id, Sprite icon, string name)
+    {
+        ID = id;
+        Icon = icon;
+        Name = name;
+    }
+}
+
 [System.Serializable]
 public class FeedbackData
 {
@@ -322,6 +378,8 @@ public class AttachmentData
     public string name;
     public string extension;
     public string linkedName;
+
+    [JsonConverter(typeof(AttachmentContentConverter))]
     public AttachmentContent data;
 }
 
@@ -331,15 +389,66 @@ public class AttachmentContent { }
 // Fazer classes herdadas de AttachmentContent para cada tipo de documento que contém dados do usuário.
 // Exemplos abaixo:
 [System.Serializable]
-public class DadosTexto : AttachmentContent
+public class PDFData : AttachmentContent
 {
-    public string texto;
+    public string text;
+}
+
+// Anexo que abre o Manual numa aba e, se ruleId vier preenchido, direto nessa regra.
+[System.Serializable]
+public class ManualData : AttachmentContent
+{
+    public string app = "email";
+    public string ruleId;
+}
+
+public class RGData : AttachmentContent
+{
+    public string rgNumber;
+    public string name;
 }
 
 [System.Serializable]
-public class DadosFoto : AttachmentContent
+public class PNGData : AttachmentContent
 {
-    public string url;
+    public string imagePath;
+
+    public Sprite GetImage() => Resources.Load<Sprite>($"Images/{imagePath}");
+}
+
+public class AttachmentContentConverter : JsonConverter<AttachmentContent>
+{
+    // Ao salvar (SavingGame), grava a subclasse real automaticamente sem interferência
+    public override bool CanWrite => false;
+
+    public override AttachmentContent ReadJson(JsonReader reader, Type objectType, AttachmentContent existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.Null)
+            return null;
+
+        JObject obj = JObject.Load(reader);
+
+        if (!obj.HasValues)
+            return new AttachmentContent();
+
+        // Escolhe a subclasse de acordo com as chaves encontradas no JSON
+        AttachmentContent content = obj switch
+        {
+            _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
+            _ when obj.Property("ruleId") != null => new ManualData(),
+            _ when obj.Property("imagePath") != null => new PNGData(),
+            _ when obj.Property("text") != null => new PDFData(),
+            _ => new AttachmentContent()
+        };
+
+        serializer.Populate(obj.CreateReader(), content);
+        return content;
+    }
+
+    public override void WriteJson(JsonWriter writer, AttachmentContent value, JsonSerializer serializer)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 // Enumerações
@@ -348,6 +457,8 @@ public enum DocumentType
 {
     Manual,
     Email,
+    PDF,
+    PNG,
     RG,
 }
 

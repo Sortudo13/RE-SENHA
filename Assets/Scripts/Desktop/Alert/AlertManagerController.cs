@@ -23,6 +23,7 @@ public class AlertManagerController : MonoBehaviour
         AlertsLayer = transform;
         ActionController.SyncSignal<FeedbackData>("ShowFeedback", ShowFeedback);
         ActionController.SyncSignal("ShowNextDay", ShowNextDay);
+        ActionController.SyncSignal("ShowBlockedWindow", ShowBlockedWindow);
         ActionController.SyncSignal<string[]>(ShowFindingsAction, ShowFindings);
         ActionController.SyncSignal(ShowFindingNotificationAction, ShowFindingNotification);
     }
@@ -31,6 +32,7 @@ public class AlertManagerController : MonoBehaviour
     {
         ActionController.UnsyncSignal<FeedbackData>("ShowFeedback", ShowFeedback);
         ActionController.UnsyncSignal("ShowNextDay", ShowNextDay);
+        ActionController.UnsyncSignal("ShowBlockedWindow", ShowBlockedWindow);
         ActionController.UnsyncSignal<string[]>(ShowFindingsAction, ShowFindings);
         ActionController.UnsyncSignal(ShowFindingNotificationAction, ShowFindingNotification);
     }
@@ -101,6 +103,28 @@ public class AlertManagerController : MonoBehaviour
         txtTituloAviso.text = "[Gerência]";
         txtTituloAviso.color = new Color(53 / 255f, 128 / 255f, 19 / 255f);
         txtFeedback.text = "Você terminou o seu expediente. Clique abaixo para avançar ao próximo dia.";
+
+        connectedAlert.transform.SetAsFirstSibling();
+        connectedAlert.SetActive(true);
+    }
+
+    private void ShowBlockedWindow()
+    {
+        GameObject connectedAlert = Instantiate(alertWindow, AlertsLayer);
+        GameObject content = connectedAlert.transform.GetChild(0).gameObject;
+        TextMeshProUGUI txtTituloAviso = content.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        connectedAlert.SetActive(false);
+
+        if (content.transform.GetChild(2).TryGetComponent(out Button button))
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => Destroy(connectedAlert));
+        }
+
+        txtTituloAviso.text = "[Alerta de Sistema]";
+        txtTituloAviso.color = new Color(150 / 255f, 58 / 255f, 27 / 255f);
+        txtFeedback.text = "Seu computador não possui capacidade de abrir mais janelas. Procure aumentar a sua capacidade de Memória RAM.";
 
         connectedAlert.transform.SetAsFirstSibling();
         connectedAlert.SetActive(true);

@@ -5,7 +5,15 @@
     "sender": "rh@nationaltech.com",
     "subject": "Orientações do Dia 5 - O Desafio Final",
     "body": "Parabéns por chegar até aqui! Hoje será o seu teste definitivo. Você receberá diversas ameaças e e-mails normais simultaneamente. Mantenha a calma e lembre-se de tudo que aprendeu.",
-    "attachments": []
+    "attachments": [
+      {
+        "documentType": 0,
+        "name": "regra_arquivos_compactados",
+        "extension": "manual",
+        "linkedName": "<link=\"OpenAttachment|1\">arquivos_compactados.manual</link>",
+        "data": { "ruleId": "rule-attachment-archive" }
+      }
+    ]
   },
   {
     "timeToReceive": 15,

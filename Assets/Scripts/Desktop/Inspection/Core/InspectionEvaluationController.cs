@@ -9,15 +9,12 @@ using UnityEngine;
 // com CloseSurface quando o item e fechado.
 public sealed class InspectionEvaluationController : MonoBehaviour
 {
-    // Payload: IInspectionSurface. Use PublishSurface para enviar.
-    public const string SurfaceChangedAction = "InspectionSurfaceChanged";
-    // Payload: string com o SourceType da superficie fechada. Use CloseSurface para enviar.
-    public const string SurfaceClosedAction = "InspectionSurfaceClosed";
 
     private readonly ManualRuleEvaluator evaluator = new();
     private readonly Dictionary<string, IInspectionSurface> surfaces =
         new(StringComparer.OrdinalIgnoreCase);
     private ManualRuleBookData manual;
+    private readonly SignalSubscriptions signals = new();
 
     // Item em julgamento: a ultima superficie publicada que guarda achados (FindingStore != null).
     // Superficies sem FindingStore (ex.: Database) sao so referencia; consulte com TryGetSurface.
@@ -43,21 +40,24 @@ public sealed class InspectionEvaluationController : MonoBehaviour
             return;
         }
 
-        ActionController.SendAction<IInspectionSurface>(SurfaceChangedAction, surface);
+        ActionController.SendAction<IInspectionSurface>(InspectionSignals.SurfaceChanged, surface);
     }
 
     public static void CloseSurface(string sourceType)
     {
-        ActionController.SendAction<string>(SurfaceClosedAction, sourceType);
+        ActionController.SendAction<string>(InspectionSignals.SurfaceClosed, sourceType);
     }
 
     private void Awake()
     {
-        ActionController.SyncSignal<IInspectionSurface>(SurfaceChangedAction, SetSurface);
-        ActionController.SyncSignal<string>(SurfaceClosedAction, RemoveSurface);
+        signals
+            .On<IInspectionSurface>(InspectionSignals.SurfaceChanged, SetSurface)
+            .On<string>(InspectionSignals.SurfaceClosed, RemoveSurface)
+            .On<string>(InspectionSignals.FindingRegistered, OnFindingRegistered)
+            .On(InspectionSignals.StateRequested, PublishFoundFields);
         try
         {
-            manual = ManualRepository.Load();
+            manual = ManualRules.Load();
         }
         catch (InvalidOperationException exception)
         {
@@ -67,8 +67,7 @@ public sealed class InspectionEvaluationController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ActionController.UnsyncSignal<IInspectionSurface>(SurfaceChangedAction, SetSurface);
-        ActionController.UnsyncSignal<string>(SurfaceClosedAction, RemoveSurface);
+        signals.Clear();
     }
 
     public bool TryGetSurface(string sourceType, out IInspectionSurface surface)
@@ -105,6 +104,26 @@ public sealed class InspectionEvaluationController : MonoBehaviour
         CurrentResults = CurrentSurface == null || manual == null
             ? Array.Empty<InspectionEvaluationResult>()
             : evaluator.Evaluate(CurrentSurface, manual, DataController.CurrentDay);
+        PublishFoundFields();
+    }
+
+    private void OnFindingRegistered(string findingId)
+    {
+        PublishFoundFields();
+    }
+
+    // Um campo pode ter varios achados (ex.: Attachments em dias diferentes); vai uma vez so.
+    // Saves antigos podem ter so o campo legado "field".
+    private void PublishFoundFields()
+    {
+        string[] fields = CurrentFindings
+            .Select(finding => string.IsNullOrWhiteSpace(finding?.fieldId)
+                ? finding?.field
+                : finding.fieldId)
+            .Where(field => !string.IsNullOrWhiteSpace(field))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        ActionController.SendAction<string[]>(InspectionSignals.FoundFieldsChanged, fields);
     }
 
     public bool HasRegisteredFinding(string findingId)
