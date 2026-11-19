@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -8,8 +9,10 @@ using UnityEngine;
 public static class DataController
 {
     private static SaveData currentSave;
+    private static MetaData currentMetaData;
     private static string saveNumber = "1";
     public static SaveData CurrentSave => currentSave ??= LoadingGame();
+    public static MetaData CurrentMetaData => currentMetaData ??= LoadMetaData();
     public static int CurrentDay
     {
         get => PlayerPrefs.GetInt("CurrentDay", 1);
@@ -44,6 +47,11 @@ public static class DataController
     {
         get => PlayerPrefs.GetInt("PersistMailBox", 0) == 1;
         set => PlayerPrefs.SetInt("PersistMailBox", value ? 1 : 0);
+    }
+
+    public static string DataPath
+    {
+        get => Path.Combine(Application.persistentDataPath, $"data.json");
     }
 
     public static void AdvanceDay()
@@ -174,22 +182,61 @@ public static class DataController
         if (File.Exists(SavePath))
             File.Delete(SavePath);
     }
+
+    public static void SaveMetaData(MetaData metaData = null)
+    {
+        currentMetaData = metaData ?? CurrentMetaData;
+        string json = JsonConvert.SerializeObject(CurrentMetaData, Formatting.Indented);
+        File.WriteAllText(DataPath, json);
+    }
+
+    public static MetaData LoadMetaData()
+    {
+        if (!File.Exists(DataPath))
+        {
+            currentMetaData = new MetaData();
+            SaveMetaData();
+            return CurrentMetaData;
+
+        }
+        string json = File.ReadAllText(DataPath);
+        currentMetaData = JsonConvert.DeserializeObject<MetaData>(json) ?? new MetaData();
+        return CurrentMetaData;
+    }
 }
 
 // Estruturas de dados
 
-public class WindowData
+[System.Serializable]
+public class MetaData
 {
-    public string ID { get; }
-    public Sprite Icon { get; }
-    public string Name { get; }
+    public string currentBackground = null;
+    public List<AchievementData> achievements = new();
+    public List<TrinketData> trinkets = new();
+    public StatisticsData statistics = new();
+}
 
-    public WindowData(string id, Sprite icon, string name)
-    {
-        ID = id;
-        Icon = icon;
-        Name = name;
-    }
+[System.Serializable]
+public class AchievementData
+{
+    public string achievementId;
+    public string title;
+    public string description;
+    public bool isUnlocked;
+}
+
+[System.Serializable]
+public class TrinketData
+{
+    public string TrinketId { get; set; }
+    public string IconName { get; set; }
+    public string Name { get; set; }
+}
+
+[System.Serializable]
+public class StatisticsData
+{
+
 }
 
 [System.Serializable]
@@ -263,6 +310,20 @@ public enum TicketDecision
 {
     Approve,
     Reject,
+}
+
+public class WindowData
+{
+    public string ID { get; }
+    public Sprite Icon { get; }
+    public string Name { get; }
+
+    public WindowData(string id, Sprite icon, string name)
+    {
+        ID = id;
+        Icon = icon;
+        Name = name;
+    }
 }
 
 [System.Serializable]
