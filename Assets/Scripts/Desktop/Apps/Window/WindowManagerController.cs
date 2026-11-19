@@ -1,9 +1,11 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WindowManagerController : MonoBehaviour
 {
-    private int activeWindowCount = 0;
+    private static int activeWindowCount = 0;
+    public static int ActiveWindows => activeWindowCount;
     public static Transform WindowsLayer { get; private set; }
 
     [Header("Templates de Janela")]
@@ -15,6 +17,9 @@ public class WindowManagerController : MonoBehaviour
 
     [SerializeField]
     private WindowController windowPDF;
+
+    [SerializeField]
+    private WindowController windowPNG;
 
     [SerializeField]
     private WindowController windowRG;
@@ -101,6 +106,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.SyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.SyncSignal<AttachmentContent>("InitPDF", InitPDF);
+        ActionController.SyncSignal<AttachmentContent>("InitPNG", InitPNG);
         ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
     }
@@ -111,6 +117,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<AttachmentContent>("InitEmail", InitEmail);
         ActionController.UnsyncSignal<AttachmentContent>("InitManual", InitManual);
         ActionController.UnsyncSignal<AttachmentContent>("InitPDF", InitPDF);
+        ActionController.UnsyncSignal<AttachmentContent>("InitPNG", InitPNG);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.UnsyncSignal<AttachmentContent>("InitChat", InitChat);
     }
@@ -118,6 +125,13 @@ public class WindowManagerController : MonoBehaviour
     private void OpenURL(string url)
     {
         Debug.Log("Abertura de url na janela do app Navegador.");
+    }
+
+    private void InitManual(AttachmentContent data)
+    {
+        GameObject window_manual = Instantiate(windowManual.gameObject, transform);
+        if (data is ManualData manualData)
+            window_manual.GetComponentInChildren<ManualWindowController>().OpenAt(manualData.app, manualData.ruleId);
     }
 
     private void InitEmail(AttachmentContent data)
@@ -134,11 +148,15 @@ public class WindowManagerController : MonoBehaviour
             window_PDF.GetComponentInChildren<PDFController>().LoadDocument(pdfData.text);
     }
 
-    private void InitManual(AttachmentContent data)
+    private void InitPNG(AttachmentContent data)
     {
-        GameObject window_manual = Instantiate(windowManual.gameObject, transform);
-        if (data is ManualData manualData)
-            window_manual.GetComponentInChildren<ManualWindowController>().OpenAt(manualData.app, manualData.ruleId);
+        GameObject window_PNG = Instantiate(windowPNG.gameObject, transform);
+        if (data is PNGData pngData)
+        {
+            Image teste = window_PNG.transform.Find("Área de Conteúdo/Image").GetComponentInChildren<Image>();
+            if (teste != null)
+                teste.sprite = pngData.GetImage();
+        }
     }
 
     private void InitRG(AttachmentContent data)
