@@ -33,6 +33,12 @@ public class WindowController : MonoBehaviour
         ActionController.SyncSignal($"Swap_{myID}", SwapWindow);
         ActionController.SyncSignal($"ToFront_{myID}", ToFront);
         ActionController.SendAction("OnWindowOpened");
+
+        if (WindowManagerController.ActiveWindows > DataController.MaxWindows)
+        {
+            ActionController.SendAction("ShowBlockedWindow");
+            CloseWindow();
+        }
     }
 
     public void ToFront()

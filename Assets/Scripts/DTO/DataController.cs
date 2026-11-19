@@ -37,6 +37,12 @@ public static class DataController
         set => PlayerPrefs.SetInt("MaxErrors", value);
     }
 
+    public static int MaxWindows
+    {
+        get => PlayerPrefs.GetInt("MaxWindows", 2);
+        set => PlayerPrefs.SetInt("MaxWindows", value);
+    }
+
     public static string SavePath
     {
         get => Path.Combine(Application.persistentDataPath, $"save_{saveNumber}.json");
@@ -186,7 +192,7 @@ public static class DataController
     public static void SaveMetaData(MetaData metaData = null)
     {
         currentMetaData = metaData ?? CurrentMetaData;
-        string json = JsonConvert.SerializeObject(CurrentMetaData, Formatting.Indented);
+        string json = JsonConvert.SerializeObject(currentMetaData, Formatting.Indented);
         File.WriteAllText(DataPath, json);
     }
 
@@ -196,12 +202,12 @@ public static class DataController
         {
             currentMetaData = new MetaData();
             SaveMetaData();
-            return CurrentMetaData;
+            return currentMetaData;
 
         }
         string json = File.ReadAllText(DataPath);
         currentMetaData = JsonConvert.DeserializeObject<MetaData>(json) ?? new MetaData();
-        return CurrentMetaData;
+        return currentMetaData;
     }
 }
 
@@ -377,11 +383,11 @@ public class RGData : AttachmentContent
 }
 
 [System.Serializable]
-public class PhotoData : AttachmentContent
+public class PNGData : AttachmentContent
 {
-    public string title;
-    public string description;
-    public string photoPath;
+    public string imagePath;
+
+    public Sprite GetImage() => Resources.Load<Sprite>($"Images/{imagePath}");
 }
 
 public class AttachmentContentConverter : JsonConverter<AttachmentContent>
@@ -404,8 +410,8 @@ public class AttachmentContentConverter : JsonConverter<AttachmentContent>
         {
             _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
             _ when obj.Property("ruleId") != null => new ManualData(),
+            _ when obj.Property("imagePath") != null => new PNGData(),
             _ when obj.Property("text") != null => new PDFData(),
-            _ when obj.Property("url") != null => new PhotoData(),
             _ => new AttachmentContent()
         };
 
@@ -426,6 +432,7 @@ public enum DocumentType
     Manual,
     Email,
     PDF,
+    PNG,
     RG,
 }
 

@@ -28,6 +28,15 @@
           "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
           "attachments": []
         }
+      },
+      {
+        "documentType" : 3,
+        "name" : "arvore_boas_vindas",
+        "extension" : "png",
+        "linkedName" : "<link=\"OpenAttachment|3\">arvore_boas_vindas.png</link>",
+        "data" : {
+          "imagePath" : "arvore"
+        }
       }
     ]
   },
