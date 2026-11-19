@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: clip_bem_vindo
   npcName: Clip
-  npcAvatar: {fileID: 0}
+  npcAvatar: {fileID: 21300000, guid: 2c651be6a0bc7514fba3183790612f6f, type: 3}
   nodes:
   - {fileID: 11400000, guid: c90931445ba2adbb1915bff11da05c68, type: 2}
   - {fileID: 11400000, guid: 345b2a149639b1c1e9803f2c2a00c63b, type: 2}

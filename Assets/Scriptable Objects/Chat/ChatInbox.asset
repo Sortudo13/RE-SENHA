@@ -43,3 +43,8 @@ MonoBehaviour:
     arrivalHour: 15
     arrivalMinute: 0
     sortOrder: 5
+  - conversation: {fileID: 11400000, guid: 22dda095c200f7b7aa9a9f830243b08f, type: 2}
+    arrivalDay: 3
+    arrivalHour: 8
+    arrivalMinute: 48
+    sortOrder: 5
