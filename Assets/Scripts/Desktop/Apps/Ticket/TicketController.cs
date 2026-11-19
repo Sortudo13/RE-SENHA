@@ -37,10 +37,9 @@ public class TicketController : MonoBehaviour
     {
         HideTicketDetails();
 
-        currentSave = DataController.LoadEmails();
+        currentSave = DataController.LoadingGame();
         tickets = currentSave.tickets;
-        if (tickets == null)
-            tickets = DataController.LoadDailyJson(DataController.CurrentDay).tickets;
+        tickets ??= DataController.GetDailyDataJson(DataController.CurrentDay).tickets;
         tickets ??= new List<TicketData>();
         currentSave.tickets = tickets;
         UpdateTicketSidebar();
@@ -112,23 +111,9 @@ public class TicketController : MonoBehaviour
         foreach (TicketData ticket in tickets)
         {
             GameObject buttonObject = Instantiate(listButton, listBar);
-            TextMeshProUGUI label = new GameObject("Texto").AddComponent<TextMeshProUGUI>();
-            label.transform.SetParent(buttonObject.transform, false);
-            label.font = TMP_Settings.defaultFontAsset;
-
-            label.text = ticket.requester;
-
-            label.enableAutoSizing = true;
-            label.fontSizeMin = 50;
-            label.fontSizeMax = 100;
-            label.color = Color.black;
-            label.alignment = TextAlignmentOptions.Center;
-
-            RectTransform rect = label.rectTransform;
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
+            TextMeshProUGUI label = buttonObject.GetComponentInChildren<TextMeshProUGUI>();
+            if (label != null)
+                label.text = ticket.requester;
 
             if (buttonObject.TryGetComponent(out Button button))
             {
@@ -174,35 +159,12 @@ public class TicketController : MonoBehaviour
         if (!correct)
             DataController.CurrentErrorCount++;
 
-        ShowFeedback(correct, feedback);
+        ActionController.SendAction("ShowFeedback", new FeedbackData(correct, feedback));
+
         tickets.Remove(currentTicket);
-        DataController.SaveEmails(currentSave);
+        DataController.SavingGame(currentSave);
         currentTicket = null;
         HideTicketDetails();
         UpdateTicketSidebar();
-    }
-
-    private void ShowFeedback(bool correct, string message)
-    {
-        if (alertWindow == null)
-        {
-            Debug.LogWarning("TicketController: o prefab de feedback não foi configurado.");
-            return;
-        }
-
-        GameObject alert = Instantiate(alertWindow, AlertManagerController.AlertsLayer);
-        Transform content = alert.transform.GetChild(0);
-        content.GetChild(0).GetComponent<TextMeshProUGUI>().text = correct
-            ? "[ANÁLISE CORRETA]"
-            : "[ALERTA DE SEGURANÇA]";
-        content.GetChild(1).GetComponent<TextMeshProUGUI>().text = message;
-
-        if (content.GetChild(2).TryGetComponent(out Button closeButton))
-        {
-            closeButton.onClick.RemoveAllListeners();
-            closeButton.onClick.AddListener(() => Destroy(alert));
-        }
-
-        alert.SetActive(true);
     }
 }

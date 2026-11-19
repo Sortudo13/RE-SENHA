@@ -37,11 +37,21 @@ public class CursorSwap : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!isActiveAndEnabled) return;
         CursorController.Instance.SetToMode(pointerIsOver ? enterCursorType : clickCursorType);
     }
 
     public void OnPointerMove(PointerEventData eventData)
     {
         CursorController.Instance.SetToMode(moveCursorType);
+    }
+
+    private void OnDisable()
+    {
+        if (pointerIsOver)
+        {
+            pointerIsOver = false;
+            CursorController.Instance.SetToMode(CursorStyle.Default);
+        }
     }
 }

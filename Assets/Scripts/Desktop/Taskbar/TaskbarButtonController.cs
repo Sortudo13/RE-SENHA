@@ -16,6 +16,7 @@ public class TaskbarButtonController : MonoBehaviour
             iconImage.sprite = data.Icon;
 
         button.onClick.AddListener(() => ActionController.SendAction($"Swap_{targetWindowID}"));
+        button.onClick.AddListener(() => ActionController.SendAction("HideNotificationBadge", data.Name));
 
         ActionController.SyncSignal($"WindowDestroyed_{targetWindowID}", DestroyTaskbarButton);
         ActionController.SyncSignal($"ToFront_{targetWindowID}", ToFront);
