@@ -201,6 +201,11 @@ public class ChatController : MonoBehaviour
             _activeConversation.isFinished = true;
             SyncChatStateToSave();
             _windowView.HideChoices();
+            // O ChatDecisionController confere o fim do dia (pode ter sido a ultima pendente).
+            ActionController.SendAction(
+                ChatDecisionController.ConversationFinishedAction,
+                _activeConversation.conversation.conversationId
+            );
             yield break;
         }
 
@@ -240,6 +245,12 @@ public class ChatController : MonoBehaviour
         RegisterHistory(chosen.optionText, false);
 
         _activeConversation.currentNodeId = chosen.nextNodeId;
+
+        // Conta antes de salvar, para o erro ir junto no save (SavingGame grava CurrentErrorCount).
+        // GameOver apaga o save e troca de cena: nao salvar nem seguir (salvaria no save novo).
+        if (ChatDecisionController.RegisterChoice(chosen))
+            return;
+
         SyncChatStateToSave();
 
         if (chosen.securityScoreDelta != 0)

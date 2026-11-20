@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -78.27, y: -0.6}
+  m_AnchoredPosition: {x: -78.26996, y: -0.6}
   m_SizeDelta: {x: -285.95, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3745054
@@ -4261,9 +4261,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 487173560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 245.9, y: -1.305}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -196.9, y: 25.305}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292115672
@@ -4310,19 +4310,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1292115675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292115670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e27c6453b23456ea97fbab677d98d00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectionModeButton
-  activeColor: {r: 1, g: 0.85, b: 0.3, a: 1}
 --- !u!114 &1292115673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4361,6 +4348,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292115670}
   m_CullTransparentMesh: 1
+--- !u!114 &1292115675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292115670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e27c6453b23456ea97fbab677d98d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InspectionModeButton
+  activeColor: {r: 1, g: 0.85, b: 0.3, a: 1}
 --- !u!1 &1294810205
 GameObject:
   m_ObjectHideFlags: 0
@@ -5550,6 +5550,7 @@ GameObject:
   - component: {fileID: 1715634149}
   - component: {fileID: 1715634148}
   - component: {fileID: 1715634150}
+  - component: {fileID: 1715634151}
   m_Layer: 0
   m_Name: ChatSystem
   m_TagString: Untagged
@@ -5599,6 +5600,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatController
   inbox: {fileID: 11400000, guid: 7a4d65df24168728ab32d0dcefd9212a, type: 2}
   chatTimeSync: {fileID: 1715634148}
+--- !u!114 &1715634151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715634147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c23aa99d3b8c4a54f8151e62f12dcd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChatDecisionController
+  chatTimeSync: {fileID: 0}
 --- !u!1 &1795534930
 GameObject:
   m_ObjectHideFlags: 0
@@ -6401,6 +6415,10 @@ PrefabInstance:
     - target: {fileID: 1950000001, guid: a04a89a1718f4a828ee810884a2705c8, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3677260691703774559, guid: a04a89a1718f4a828ee810884a2705c8, type: 3}
+      propertyPath: m_fontSize
+      value: 44.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

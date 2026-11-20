@@ -1,6 +1,14 @@
 using System;
 using UnityEngine;
 
+// Como a escolha conta na conta do dia: Neutra nao conta; Errada da advertencia, igual ao email.
+public enum ChatOptionOutcome
+{
+    Neutral,
+    Correct,
+    Wrong,
+}
+
 [Serializable]
 public class ChatOption
 {
@@ -9,6 +17,13 @@ public class ChatOption
 
     [Tooltip("ID do próximo ChatNode para onde esta escolha leva.")]
     public string nextNodeId;
+
+    [Tooltip("Neutra não conta. Correta/Errada contam como resposta do dia; Errada dá advertência.")]
+    public ChatOptionOutcome outcome = ChatOptionOutcome.Neutral;
+
+    [Tooltip("Texto do feedback para Correta/Errada. Vazio usa o texto padrão.")]
+    [TextArea]
+    public string outcomeFeedback;
 
     [Tooltip("Impacto na pontuação de segurança (pode ser negativo).")]
     public int securityScoreDelta;

@@ -17,6 +17,25 @@ public class ChatConversation : ScriptableObject
     [Tooltip("nodeId do nó onde a conversa começa.")]
     public string startNodeId;
 
+    [Header("Fim do dia")]
+    [Tooltip("Se marcado, o \"Avançar Dia\" só aparece depois que esta conversa terminar (no dia em que ela chega).")]
+    public bool blocksDayEnd;
+
+    /// <summary>True se algum nó tem opção Correta/Errada (conta na conta do dia).</summary>
+    public bool HasJudgedOption()
+    {
+        foreach (var node in nodes)
+        {
+            if (node?.options == null)
+                continue;
+
+            foreach (var option in node.options)
+                if (option != null && option.outcome != ChatOptionOutcome.Neutral)
+                    return true;
+        }
+        return false;
+    }
+
     // Cache interno (não serializado)
     private Dictionary<string, ChatNode> _nodeLookup;
 
@@ -70,6 +89,15 @@ public class ChatConversation : ScriptableObject
 
     private void ValidateReferences()
     {
+        // Aviso, nao erro: pode ser de proposito, mas o jogador poderia avancar o dia sem responder.
+        if (!blocksDayEnd && HasJudgedOption())
+        {
+            Debug.LogWarning(
+                $"[{name}] Tem opção Correta/Errada, mas não segura o fim do dia (blocksDayEnd desmarcado).",
+                this
+            );
+        }
+
         if (string.IsNullOrEmpty(startNodeId))
         {
             Debug.LogWarning($"[{name}] startNodeId vazio.", this);

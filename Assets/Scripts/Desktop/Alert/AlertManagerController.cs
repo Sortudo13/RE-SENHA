@@ -18,6 +18,9 @@ public class AlertManagerController : MonoBehaviour
     // Prefab "Alert Notification": texto vem do prefab; o filho "Fechar" (Button) fecha.
     [SerializeField] private GameObject findingNotificationWindow;
 
+    // Alerta "Avancar Dia" aberto. Cada item terminado depois do expediente chama CheckDayEnd de novo, sem isso cada chamada empilhava mais um alerta
+    private GameObject nextDayAlert;
+
     private void Awake()
     {
         AlertsLayer = transform;
@@ -86,7 +89,11 @@ public class AlertManagerController : MonoBehaviour
 
     private void ShowNextDay()
     {
+        if (nextDayAlert != null)
+            return;
+
         GameObject connectedAlert = Instantiate(alertWindow, AlertsLayer);
+        nextDayAlert = connectedAlert;
         GameObject content = connectedAlert.transform.GetChild(0).gameObject;
         TextMeshProUGUI txtTituloAviso = content.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI txtFeedback = content.transform.GetChild(1).GetComponent<TextMeshProUGUI>();

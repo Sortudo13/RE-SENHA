@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 463fe33e5aac31d80863e9d4c884b07e, type: 2}
   - {fileID: 11400000, guid: b1d1a7c7882c60e40b7f36f366405afe, type: 2}
   startNodeId: pede_senha
+  blocksDayEnd: 1
