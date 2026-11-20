@@ -29,6 +29,9 @@ public class WindowManagerController : MonoBehaviour
 
     private void Awake()
     {
+        // O contador e estatico e sobrevive a troca de cena; janelas destruidas junto com a cena
+        // (ex.: ResetDayAndReload) nao descontam. Cena nova comeca sem janelas.
+        activeWindowCount = 0;
         WindowsLayer = transform;
         ActionController.SyncSignal("AddActiveWindow", AddWindowCount);
         ActionController.SyncSignal("SubActiveWindow", SubWindowCount);
