@@ -477,10 +477,80 @@ public class ManualData : AttachmentContent
     public string ruleId;
 }
 
+// Anexo de RG. Os dados vem do colaborador do Database (employeeId = EmployeeData.id);
+// qualquer campo preenchido aqui substitui o do Database so neste documento (RG adulterado).
+// foto: caminho dentro de Resources/Images (ex.: "NPCs/npc_3"); vazio usa a foto do colaborador.
+// digital: idem (ex.: "Impressões Digitais/impressoes_digitais_2"); vazio usa a digital do RG do colaborador.
+[System.Serializable]
 public class RGData : AttachmentContent
 {
-    public string rgNumber;
-    public string name;
+    public string employeeId;
+    public string nome;
+    public string numero;
+    public string dataExpedicao;
+    public string dataNascimento;
+    public string naturalidade;
+    public string estadoEmissor;
+    public string estadoEmissao;
+    public string foto;
+    public string digital;
+
+    // Junta Database + campos do anexo. Sem colaborador, usa so o que veio no anexo.
+    public RGDocument Resolve()
+    {
+        EmployeeData employee = null;
+        if (!string.IsNullOrEmpty(employeeId))
+        {
+            foreach (EmployeeData candidate in DatabaseRepository.GetEmployees())
+                if (candidate.id == employeeId)
+                {
+                    employee = candidate;
+                    break;
+                }
+
+            if (employee == null)
+                Debug.LogWarning($"RGData: colaborador '{employeeId}' nao existe no Database do dia.");
+        }
+
+        EmployeeRGData rg = employee?.rg;
+        return new RGDocument
+        {
+            nome = Pick(nome, employee?.nome),
+            numero = Pick(numero, rg?.numero),
+            dataExpedicao = Pick(dataExpedicao, rg?.dataExpedicao),
+            dataNascimento = Pick(dataNascimento, rg?.dataNascimento),
+            naturalidade = Pick(naturalidade, rg?.naturalidade),
+            estadoEmissor = Pick(estadoEmissor, rg?.estadoEmissor),
+            estadoEmissao = Pick(estadoEmissao, rg?.estadoEmissao),
+            foto = Pick(foto, employee?.foto),
+            digital = Pick(digital, rg?.digital),
+        };
+    }
+
+    private static string Pick(string fromAttachment, string fromDatabase) =>
+        !string.IsNullOrEmpty(fromAttachment) ? fromAttachment : fromDatabase ?? string.Empty;
+}
+
+// RG ja resolvido (Database + anexo), pronto para a tela.
+public class RGDocument
+{
+    public string nome;
+    public string numero;
+    public string dataExpedicao;
+    public string dataNascimento;
+    public string naturalidade;
+    public string estadoEmissor;
+    public string estadoEmissao;
+    public string foto;
+    public string digital;
+
+    public Sprite GetPhoto() => LoadImage(foto);
+
+    public Sprite GetDigital() => LoadImage(digital);
+
+    // Caminho dentro de Resources/Images, sem extensao.
+    private static Sprite LoadImage(string path) =>
+        string.IsNullOrEmpty(path) ? null : Resources.Load<Sprite>($"Images/{path}");
 }
 
 [System.Serializable]
@@ -510,6 +580,7 @@ public class AttachmentContentConverter : JsonConverter<AttachmentContent>
         AttachmentContent content = obj switch
         {
             _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
+            _ when obj.Property("employeeId") != null || obj.Property("numero") != null => new RGData(),
             _ when obj.Property("ruleId") != null => new ManualData(),
             _ when obj.Property("imagePath") != null => new PNGData(),
             _ when obj.Property("text") != null => new PDFData(),

@@ -161,6 +161,17 @@ public class WindowManagerController : MonoBehaviour
     private void InitRG(AttachmentContent data)
     {
         GameObject window_rg = Instantiate(windowRG.gameObject, transform);
+        if (data is not RGData rgData)
+        {
+            Debug.LogWarning("InitRG: anexo sem dados de RG; o documento abre vazio.");
+            return;
+        }
+
+        RGController rg = window_rg.GetComponentInChildren<RGController>(true);
+        if (rg != null)
+            rg.Show(rgData);
+        else
+            Debug.LogError("InitRG: RGController nao encontrado no Window RG (adicionar na raiz do RG.prefab).");
     }
 
     private void InitChat(AttachmentContent data)
