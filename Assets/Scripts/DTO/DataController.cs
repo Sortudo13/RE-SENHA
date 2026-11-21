@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class DataController
 {
@@ -43,10 +44,28 @@ public static class DataController
         set => PlayerPrefs.SetInt("MaxWindows", value);
     }
 
+    // Recebe o numero do slot (ex.: SavePath = "2"), nao o caminho.
     public static string SavePath
     {
         get => Path.Combine(Application.persistentDataPath, $"save_{saveNumber}.json");
-        set => saveNumber = value;
+        set
+        {
+            if (saveNumber == value)
+                return;
+
+            saveNumber = value;
+            // O save em memoria era do slot anterior; o proximo CurrentSave le o slot novo
+            // (LoadingGame tambem acerta CurrentDay e CurrentErrorCount, que ficam no PlayerPrefs).
+            currentSave = null;
+        }
+    }
+
+    // Copia do save como estava no comeco do dia atual; o "Reiniciar Dia" volta para ela.
+    // Um por slot. Nome fora do padrao "save_*.json" para nao aparecer numa lista de saves.
+    // Quem copiar, renomear ou apagar um slot leva este arquivo junto (DeleteSaveFile ja apaga).
+    public static string DayStartPath
+    {
+        get => Path.Combine(Application.persistentDataPath, $"daystart_{saveNumber}.json");
     }
 
     public static Boolean PersistMailBox
@@ -86,16 +105,45 @@ public static class DataController
 
     public static void LoadDay()
     {
-        SaveData save = GetDailyDataJson(CurrentDay);
+        SaveData save = BuildDayStart(CurrentDay);
+        currentSave = save;
+        SavingGame(save);
+        SaveDayStart(save);
+        ActionController.SendAction("DayChanged");
+    }
+
+    // Save do comeco do dia: dados do dia (Resources) + o que vem dos dias anteriores
+    // (caixa User, se PersistMailBox estiver ligado).
+    private static SaveData BuildDayStart(int day)
+    {
+        SaveData save = GetDailyDataJson(day);
         if (PersistMailBox && currentSave != null)
         {
             MailBox userBox = currentSave.currentMailBoxes.Find(box => box.mailBox == "User");
             List<EmailData> oldMails = userBox?.emails ?? new List<EmailData>();
             save.currentMailBoxes.Find(box => box.mailBox == "User").emails = oldMails;
         }
-        currentSave = save;
-        SavingGame(save);
-        ActionController.SendAction("DayChanged");
+        return save;
+    }
+
+    private static void SaveDayStart(SaveData save)
+    {
+        string json = JsonConvert.SerializeObject(save, Formatting.Indented);
+        File.WriteAllText(DayStartPath, json);
+    }
+
+    // Devolve null se nao ha copia ou se ela e de outro dia.
+    private static SaveData LoadDayStart(int day)
+    {
+        if (!File.Exists(DayStartPath))
+            return null;
+
+        string json = File.ReadAllText(DayStartPath);
+        if (string.IsNullOrEmpty(json))
+            return null;
+
+        SaveData save = JsonConvert.DeserializeObject<SaveData>(json);
+        return save != null && save.current_day == day ? save : null;
     }
 
     public static void ResetGame()
@@ -105,30 +153,54 @@ public static class DataController
         LoadingGame();
     }
 
+    // Desfaz tudo o que foi feito no dia: volta para o save do comeco do dia (emails, achados,
+    // advertencias, chat, horario) e recarrega o Desktop. So o que vem de dias anteriores fica.
     public static void ResetDayAndReload()
     {
-        Debug.Log("[DataController] ResetDayAndReload: INICIANDO");
+        // Um loading em andamento ignoraria o LoadScene, e o save ja teria sido reiniciado.
+        if (LoadingScreen.IsLoading)
+        {
+            Debug.LogWarning("[DataController] ResetDayAndReload ignorado: ja existe um loading.");
+            return;
+        }
 
         if (currentSave == null)
             LoadingGame();
 
-        currentSave.chatStates ??= new();
-        currentSave.chatStates.Clear();
+        SaveData save = LoadDayStart(CurrentDay);
+        if (save == null)
+        {
+            // Save antigo, de antes da copia do comeco do dia: remonta o dia a partir dos Resources.
+            Debug.LogWarning(
+                "[DataController] ResetDayAndReload: sem copia do comeco do dia; remontando o dia."
+            );
+            save = BuildDayStart(CurrentDay);
+            SaveDayStart(save);
+        }
 
-        // Reinicia o expediente no início da jornada quando Desktop for recarregado.
-        currentSave.current_hour = -1;
-        currentSave.current_minute = 0;
-        SavingGame(currentSave);
+        currentSave = save;
+        SavingGame(save); // tambem volta CurrentDay e CurrentErrorCount para os do comeco do dia
 
         Debug.Log(
-            $"[DataController] ResetDayAndReload: chatStates limpo. Count={currentSave.chatStates.Count}"
-        );
-        Debug.Log(
-            "[DataController] ResetDayAndReload: horário salvo reiniciado."
+            $"[DataController] ResetDayAndReload: dia {save.current_day} reiniciado (erros={save.error_count})."
         );
 
+        // A cena antiga continua rodando durante o loading (minimo 1,5 s). Pausado, o relogio, o
+        // envio de emails e o "digitando..." do chat nao mexem no save reiniciado nem o salvam
+        // com o horario antigo. A tela de loading anima com unscaledDeltaTime.
+        Time.timeScale = 0f;
+        SceneManager.sceneLoaded += OnDayResetSceneLoaded;
         LoadingScreen.LoadScene("Desktop");
-        Debug.Log("[DataController] ResetDayAndReload: LoadingScreen.LoadScene('Desktop') chamado");
+
+        // Pedido recusado (ex.: cena fora do Build Settings): nao deixar o jogo pausado.
+        if (!LoadingScreen.IsLoading)
+            OnDayResetSceneLoaded(default, LoadSceneMode.Single);
+    }
+
+    private static void OnDayResetSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnDayResetSceneLoaded;
+        Time.timeScale = 1f;
     }
 
     public static void SavingGame(SaveData save = null)
@@ -170,6 +242,7 @@ public static class DataController
             CurrentDay = 1;
             CurrentErrorCount = 0;
             save = GetDailyDataJson(CurrentDay);
+            SaveDayStart(save);
         }
         currentSave = save;
 
@@ -213,6 +286,8 @@ public static class DataController
     {
         if (File.Exists(SavePath))
             File.Delete(SavePath);
+        if (File.Exists(DayStartPath))
+            File.Delete(DayStartPath);
     }
 
     public static void SaveMetaData(MetaData metaData = null)
