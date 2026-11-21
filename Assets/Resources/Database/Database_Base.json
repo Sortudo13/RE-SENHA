@@ -14,7 +14,8 @@
         "dataNascimento": "22/09/1988",
         "naturalidade": "São Paulo",
         "estadoEmissor": "SP",
-        "estadoEmissao": "Estado de São Paulo"
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_1"
       },
       "foto": "NPCs/npc_9"
     },
@@ -32,7 +33,8 @@
         "dataNascimento": "10/04/1995",
         "naturalidade": "Três Rios",
         "estadoEmissor": "RJ",
-        "estadoEmissao": "Estado de Rio de Janeiro"
+        "estadoEmissao": "Estado de Rio de Janeiro",
+        "digital": "Impressões Digitais/impressoes_digitais_2"
       },
       "foto": "NPCs/npc_2"
     },
@@ -50,7 +52,8 @@
         "dataNascimento": "05/12/1982",
         "naturalidade": "Ribeirão Preto",
         "estadoEmissor": "SP",
-        "estadoEmissao": "Estado de São Paulo"
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_3"
       },
       "foto": "NPCs/npc_3"
     },
@@ -68,7 +71,8 @@
         "dataNascimento": "30/01/1975",
         "naturalidade": "Santos",
         "estadoEmissor": "SP",
-        "estadoEmissao": "Estado de São Paulo"
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_4"
       },
       "foto": "NPCs/npc_8"
     },
@@ -86,7 +90,8 @@
         "dataNascimento": "18/06/1998",
         "naturalidade": "Sorocaba",
         "estadoEmissor": "SP",
-        "estadoEmissao": "Estado de São Paulo"
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_5"
       },
       "foto": "NPCs/npc_7"
     },
@@ -104,7 +109,8 @@
         "dataNascimento": "14/03/1993",
         "naturalidade": "Bauru",
         "estadoEmissor": "SP",
-        "estadoEmissao": "Estado de São Paulo"
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_1"
       },
       "foto": "NPCs/npc_12"
     },
@@ -122,7 +128,8 @@
         "dataNascimento": "07/11/1985",
         "naturalidade": "Piracicaba",
         "estadoEmissor": "SP",
-        "estadoEmissao": "Estado de São Paulo"
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_2"
       },
       "foto": "NPCs/npc_1"
     }

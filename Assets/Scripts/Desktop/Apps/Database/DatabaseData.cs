@@ -31,5 +31,6 @@ public class EmployeeRGData
     public string naturalidade;
     public string estadoEmissor;
     public string estadoEmissao; // Estado por extenso 
+    public string digital; // Caminho em Resources/Images, sem extensao (ex.: "Impressões Digitais/impressoes_digitais_1")
 }
 

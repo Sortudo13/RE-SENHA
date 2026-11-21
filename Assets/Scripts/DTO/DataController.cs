@@ -405,6 +405,7 @@ public class ManualData : AttachmentContent
 // Anexo de RG. Os dados vem do colaborador do Database (employeeId = EmployeeData.id);
 // qualquer campo preenchido aqui substitui o do Database so neste documento (RG adulterado).
 // foto: caminho dentro de Resources/Images (ex.: "NPCs/npc_3"); vazio usa a foto do colaborador.
+// digital: idem (ex.: "Impressões Digitais/impressoes_digitais_2"); vazio usa a digital do RG do colaborador.
 [System.Serializable]
 public class RGData : AttachmentContent
 {
@@ -417,6 +418,7 @@ public class RGData : AttachmentContent
     public string estadoEmissor;
     public string estadoEmissao;
     public string foto;
+    public string digital;
 
     // Junta Database + campos do anexo. Sem colaborador, usa so o que veio no anexo.
     public RGDocument Resolve()
@@ -446,6 +448,7 @@ public class RGData : AttachmentContent
             estadoEmissor = Pick(estadoEmissor, rg?.estadoEmissor),
             estadoEmissao = Pick(estadoEmissao, rg?.estadoEmissao),
             foto = Pick(foto, employee?.foto),
+            digital = Pick(digital, rg?.digital),
         };
     }
 
@@ -464,9 +467,15 @@ public class RGDocument
     public string estadoEmissor;
     public string estadoEmissao;
     public string foto;
+    public string digital;
 
-    public Sprite GetPhoto() =>
-        string.IsNullOrEmpty(foto) ? null : Resources.Load<Sprite>($"Images/{foto}");
+    public Sprite GetPhoto() => LoadImage(foto);
+
+    public Sprite GetDigital() => LoadImage(digital);
+
+    // Caminho dentro de Resources/Images, sem extensao.
+    private static Sprite LoadImage(string path) =>
+        string.IsNullOrEmpty(path) ? null : Resources.Load<Sprite>($"Images/{path}");
 }
 
 [System.Serializable]

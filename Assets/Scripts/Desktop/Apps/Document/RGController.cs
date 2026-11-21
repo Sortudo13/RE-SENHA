@@ -19,6 +19,7 @@ public class RGController : MonoBehaviour
     [Tooltip("Cabecalho (Informacoes Estado/Nome Estado). Sem estadoEmissao nos dados, fica o texto do prefab.")]
     [SerializeField] private TextMeshProUGUI estadoEmissao;
     [SerializeField] private Image foto;
+    [SerializeField] private Image digital;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class RGController : MonoBehaviour
         if (assinatura == null) LogMissing(nameof(assinatura));
         if (estadoEmissao == null) LogMissing(nameof(estadoEmissao));
         if (foto == null) LogMissing(nameof(foto));
+        if (digital == null) LogMissing(nameof(digital));
     }
 
     public void Show(RGData data)
@@ -51,14 +53,20 @@ public class RGController : MonoBehaviour
         if (!string.IsNullOrEmpty(rg.estadoEmissao))
             SetText(estadoEmissao, rg.estadoEmissao);
 
-        if (foto != null)
-        {
-            Sprite sprite = rg.GetPhoto();
-            if (sprite != null)
-                foto.sprite = sprite;
-            else if (!string.IsNullOrEmpty(rg.foto))
-                Debug.LogWarning($"[RGController] Foto 'Images/{rg.foto}' nao encontrada.", this);
-        }
+        SetImage(foto, rg.GetPhoto(), rg.foto, "Foto");
+        SetImage(digital, rg.GetDigital(), rg.digital, "Digital");
+    }
+
+    // Sem imagem nos dados, fica a do prefab; caminho preenchido mas sem arquivo da aviso.
+    private void SetImage(Image target, Sprite sprite, string path, string label)
+    {
+        if (target == null)
+            return;
+
+        if (sprite != null)
+            target.sprite = sprite;
+        else if (!string.IsNullOrEmpty(path))
+            Debug.LogWarning($"[RGController] {label} 'Images/{path}' nao encontrada.", this);
     }
 
     private static void SetText(TextMeshProUGUI target, string value)
