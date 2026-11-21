@@ -18,7 +18,8 @@ public class EmployeeData
     public string cargo;
     public string status; // "Ativo", "Férias", "Demitido"
     public EmployeeRGData rg;
-    public string fotoUrl;
+    // Caminho dentro de Resources/Images, sem extensao (ex.: "NPCs/npc_2"). Usado pelo RG.
+    public string foto;
 }
 
 [Serializable]
@@ -29,5 +30,6 @@ public class EmployeeRGData
     public string dataNascimento;
     public string naturalidade;
     public string estadoEmissor;
+    public string estadoEmissao; // Estado por extenso 
 }
 
