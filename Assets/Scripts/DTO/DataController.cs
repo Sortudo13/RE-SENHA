@@ -11,7 +11,14 @@ public static class DataController
 {
     private static SaveData currentSave;
     private static MetaData currentMetaData;
-    private static string saveNumber = "1";
+    // Slot em uso ("1".."3"). Comeca no ultimo slot escolhido no menu (PlayerPrefs), para o Play
+    // direto na cena Desktop pelo editor continuar no mesmo slot.
+    private static string saveNumber;
+    private static string SaveNumber =>
+        saveNumber ??= Mathf.Clamp(PlayerPrefs.GetInt(LastSlotKey, 1), 1, SaveSlotCount).ToString();
+
+    public const int SaveSlotCount = 3;
+    private const string LastSlotKey = "LastSaveSlot";
     public static SaveData CurrentSave => currentSave ??= LoadingGame();
     public static MetaData CurrentMetaData => currentMetaData ??= LoadMetaData();
     public static int CurrentDay
@@ -47,10 +54,10 @@ public static class DataController
     // Recebe o numero do slot (ex.: SavePath = "2"), nao o caminho.
     public static string SavePath
     {
-        get => Path.Combine(Application.persistentDataPath, $"save_{saveNumber}.json");
+        get => SlotPath(SaveNumber);
         set
         {
-            if (saveNumber == value)
+            if (SaveNumber == value)
                 return;
 
             saveNumber = value;
@@ -65,7 +72,47 @@ public static class DataController
     // Quem copiar, renomear ou apagar um slot leva este arquivo junto (DeleteSaveFile ja apaga).
     public static string DayStartPath
     {
-        get => Path.Combine(Application.persistentDataPath, $"daystart_{saveNumber}.json");
+        get => Path.Combine(Application.persistentDataPath, $"daystart_{SaveNumber}.json");
+    }
+
+    public static int CurrentSlot => int.Parse(SaveNumber);
+
+    private static string SlotPath(string slot) =>
+        Path.Combine(Application.persistentDataPath, $"save_{slot}.json");
+
+    // Troca o slot em uso e lembra dele. Depois: ResetGame() para jogo novo ou LoadingGame() para carregar.
+    public static void SelectSlot(int slot)
+    {
+        slot = Mathf.Clamp(slot, 1, SaveSlotCount);
+        SavePath = slot.ToString();
+        PlayerPrefs.SetInt(LastSlotKey, slot);
+        PlayerPrefs.Save();
+    }
+
+    public static bool SlotExists(int slot) => File.Exists(SlotPath(slot.ToString()));
+
+    // Le so o resumo do save_<n>.json, sem carregar (nao mexe no CurrentSave nem no PlayerPrefs).
+    public static SaveSlotInfo GetSlotInfo(int slot)
+    {
+        var info = new SaveSlotInfo { slot = slot };
+        string path = SlotPath(slot.ToString());
+        if (!File.Exists(path))
+            return info;
+
+        try
+        {
+            JObject json = JObject.Parse(File.ReadAllText(path));
+            info.day = json.Value<int?>("current_day") ?? 1;
+            info.hour = json.Value<int?>("current_hour") ?? -1;
+            info.minute = json.Value<int?>("current_minute") ?? 0;
+            info.lastSaved = File.GetLastWriteTime(path);
+            info.exists = true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[DataController] Slot {slot} ilegivel ({path}): {e.Message}");
+        }
+        return info;
     }
 
     public static Boolean PersistMailBox
@@ -344,6 +391,17 @@ public class TrinketData
 public class StatisticsData
 {
 
+}
+
+// Resumo de um slot para o menu. hour = -1: save de comeco de dia (relogio ainda nao andou).
+public class SaveSlotInfo
+{
+    public int slot;
+    public bool exists;
+    public int day;
+    public int hour = -1;
+    public int minute;
+    public DateTime lastSaved;
 }
 
 [System.Serializable]
