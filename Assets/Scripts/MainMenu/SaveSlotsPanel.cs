@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Painel com os 3 slots de save do menu (secao 48 do SESSION_RULES).
+// Painel com os 3 slots de save do menu
 // Montado na cena MainMenu; botoes e textos arrastados no Inspector, na ordem slot 1, 2, 3.
 // Novo Jogo: qualquer slot (ocupado e sobrescrito direto). Carregar: slot vazio fica desabilitado.
 public class SaveSlotsPanel : MonoBehaviour
