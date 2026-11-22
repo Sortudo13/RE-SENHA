@@ -75,8 +75,6 @@ public static class DataController
         get => Path.Combine(Application.persistentDataPath, $"daystart_{SaveNumber}.json");
     }
 
-    public static int CurrentSlot => int.Parse(SaveNumber);
-
     private static string SlotPath(string slot) =>
         Path.Combine(Application.persistentDataPath, $"save_{slot}.json");
 
@@ -88,8 +86,6 @@ public static class DataController
         PlayerPrefs.SetInt(LastSlotKey, slot);
         PlayerPrefs.Save();
     }
-
-    public static bool SlotExists(int slot) => File.Exists(SlotPath(slot.ToString()));
 
     // Le so o resumo do save_<n>.json, sem carregar (nao mexe no CurrentSave nem no PlayerPrefs).
     public static SaveSlotInfo GetSlotInfo(int slot)

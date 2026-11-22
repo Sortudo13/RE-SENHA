@@ -30,9 +30,6 @@ public class SaveSlotsPanel : MonoBehaviour
 
     private void Awake()
     {
-        if (slotButtons.Length != DataController.SaveSlotCount || slotTexts.Length != DataController.SaveSlotCount)
-            Debug.LogError($"[SaveSlotsPanel] Esperados {DataController.SaveSlotCount} botoes e textos.", this);
-
         for (int i = 0; i < slotButtons.Length; i++)
         {
             if (slotButtons[i] == null)

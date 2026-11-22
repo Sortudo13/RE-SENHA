@@ -3,31 +3,19 @@ using UnityEngine;
 
 public class MainMenuController : MonoBehaviour
 {
-    [Tooltip("Painel dos 3 slots. Vazio: Novo Jogo/Carregar usam o ultimo slot direto (comportamento antigo).")]
+    [Tooltip("Painel dos 3 slots (SaveSlotCanvas).")]
     [SerializeField]
     private SaveSlotsPanel slotsPanel;
 
-    public void NovoJogo()
+    private void Awake()
     {
         if (slotsPanel == null)
-        {
-            ComecarNoSlot(DataController.CurrentSlot);
-            return;
-        }
-
-        slotsPanel.Open(SaveSlotsPanel.Mode.NewGame, ComecarNoSlot);
+            Debug.LogError("[MainMenuController] Slots Panel nao foi arrastado no Inspector.", this);
     }
 
-    public void Carregar()
-    {
-        if (slotsPanel == null)
-        {
-            CarregarSlot(DataController.CurrentSlot);
-            return;
-        }
+    public void NovoJogo() => slotsPanel.Open(SaveSlotsPanel.Mode.NewGame, ComecarNoSlot);
 
-        slotsPanel.Open(SaveSlotsPanel.Mode.Load, CarregarSlot);
-    }
+    public void Carregar() => slotsPanel.Open(SaveSlotsPanel.Mode.Load, CarregarSlot);
 
     // Slot ocupado e sobrescrito direto, sem confirmacao (decidido em 2026-11-21).
     private void ComecarNoSlot(int slot)
