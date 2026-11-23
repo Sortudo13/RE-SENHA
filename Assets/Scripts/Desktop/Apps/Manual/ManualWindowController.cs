@@ -106,6 +106,8 @@ public class ManualWindowController : MonoBehaviour
 
         pendingApp = null;
         pendingRuleId = null;
+
+        CompanionSignals.Show("manual_first_open");
     }
 
     // Abre o Manual numa aba e, opcionalmente, direto numa regra. Chamado pelo
