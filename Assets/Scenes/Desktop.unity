@@ -5102,7 +5102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8090069572651123837, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: dayToAppear
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8090069572651123837, guid: 64b163c02e4cc7a4caccb1b36285e4f8, type: 3}
       propertyPath: windowPrefab

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatInbox
   entries:
   - conversation: {fileID: 11400000, guid: 22dda095c200f7b7aa9a9f830243b08f, type: 2}
+    arrivalDay: 1
     arrivalHour: 8
     arrivalMinute: 1
     sortOrder: 0
