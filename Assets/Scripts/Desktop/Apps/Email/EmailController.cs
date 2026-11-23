@@ -219,6 +219,10 @@ public class EmailController : MonoBehaviour
 
         listScreen.SetActive(false);
         mailScreen.SetActive(true);
+
+        // Dica do companheiro ligada a este email (so na primeira vez em cada save).
+        if (!string.IsNullOrWhiteSpace(email.companionTip))
+            CompanionSignals.Show(email.companionTip);
     }
 
     private void ShowList()

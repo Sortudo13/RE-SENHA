@@ -160,6 +160,9 @@ public static class DataController
     private static SaveData BuildDayStart(int day)
     {
         SaveData save = GetDailyDataJson(day);
+        // Dicas do companheiro ja vistas valem para o save inteiro, nao so para o dia.
+        if (currentSave?.seenTips != null)
+            save.seenTips = new List<string>(currentSave.seenTips);
         if (PersistMailBox && currentSave != null)
         {
             MailBox userBox = currentSave.currentMailBoxes.Find(box => box.mailBox == "User");
@@ -219,6 +222,17 @@ public static class DataController
             );
             save = BuildDayStart(CurrentDay);
             SaveDayStart(save);
+        }
+
+        // Dicas do companheiro vistas hoje continuam vistas (nao repetem ao reiniciar o dia).
+        if (currentSave?.seenTips != null)
+        {
+            save.seenTips ??= new List<string>();
+            foreach (string tipId in currentSave.seenTips)
+            {
+                if (!save.seenTips.Contains(tipId))
+                    save.seenTips.Add(tipId);
+            }
         }
 
         currentSave = save;
@@ -412,6 +426,8 @@ public class SaveData
     public List<ChatSaveState> chatStates;
     public List<TicketData> availableTickets;
     public List<TicketData> tickets;
+    // Ids das dicas do companheiro ja mostradas neste save (CompanionTips).
+    public List<string> seenTips = new();
 }
 
 [System.Serializable]
@@ -427,6 +443,8 @@ public class EmailData : AttachmentContent
     public string body;
     public List<AttachmentData> attachments = new();
     public List<EvidenceData> evidences = new();
+    // Opcional: id de uma dica do Resources/Companion/CompanionTips.json, mostrada ao abrir este email.
+    public string companionTip;
 }
 
 [System.Serializable]

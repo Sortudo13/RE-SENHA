@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "tips": [
+    {
+      "id": "manual_first_open",
+      "lines": [
+        { "pose": "happy", "anim": "jump", "text": "Opa! Esse é o Manual. Aqui ficam todas as regras que você precisa seguir." },
+        { "pose": "scared", "anim": "shake", "text": "Nossa... são muitas regras mesmo." },
+        { "pose": "angry", "text": "Mas nada de pular! Se aprovar algo fora das regras, quem leva a advertência é você." },
+        { "text": "Clique numa regra para ver os detalhes. Boa sorte!" }
+      ]
+    },
+    {
+      "id": "email_boas_vindas",
+      "lines": [
+        { "pose": "happy", "anim": "jump", "text": "Seu primeiro email! O RH mandou as orientações do dia." },
+        { "pose": "thinking", "text": "Hmm... esse anexo aí parece meio estranho, não acha?" },
+        { "pose": "scared", "anim": "shake", "text": "Sempre confira o remetente antes de confiar em qualquer coisa!" }
+      ]
+    }
+  ]
+}
