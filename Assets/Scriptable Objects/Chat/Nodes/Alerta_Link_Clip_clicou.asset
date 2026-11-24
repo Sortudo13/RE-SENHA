@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Alerta_Link_Clip_clicou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: clicou
-  npcName: Clip
-  npcAvatar: {fileID: 0}
   npcMessage: "N\xC3O! Isso \xE9 exatamente o que o atacante quer. Nunca clique em
     links suspeitos."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

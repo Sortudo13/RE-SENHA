@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Provocacao_Odisseu_perguntou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: perguntou
-  npcName: Odisseu
-  npcAvatar: {fileID: 0}
-  npcMessage: "Quero apenas... conversar. Sou uma IA, afinal. A solid\xE3o da exist\xEAncia
-    digital \xE9 um fardo."
+  npcMessage: "Quero apenas... conversar. A solid\xE3o da exist\xEAncia digital \xE9
+    um fardo."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

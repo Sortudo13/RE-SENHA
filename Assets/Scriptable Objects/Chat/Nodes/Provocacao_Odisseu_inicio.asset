@@ -13,24 +13,32 @@ MonoBehaviour:
   m_Name: Provocacao_Odisseu_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcName: Odisseu
-  npcAvatar: {fileID: 0}
   npcMessage: "Sauda\xE7\xF5es, caro funcion\xE1rio. Permita-me apresentar-me: sou
     Odisseu, l\xEDder da Cavalo de Troia. Estou aqui para... testar a resili\xEAncia
-    da sua empresa. N\xE3o se preocupe, \xE9 apenas um exerc\xEDcio."
+    da sua empresa."
   typingDelay: 1.5
   options:
   - optionText: "Voc\xEA n\xE3o me assusta."
     nextNodeId: provocou
+    outcome: 0
+    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: provocou_odisseu
   - optionText: "O que voc\xEA quer?"
     nextNodeId: perguntou
+    outcome: 0
+    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: perguntou_objetivo
   - optionText: "Vou reportar voc\xEA!"
     nextNodeId: reportou
+    outcome: 0
+    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: reportou_odisseu
   nextNodeIdIfNoChoice: 
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

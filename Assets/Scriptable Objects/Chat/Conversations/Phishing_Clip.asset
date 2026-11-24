@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Phishing_Clip
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: clip_phishing
+  npcName: Clip
+  npcAvatar: {fileID: 0}
+  nodes:
+  - {fileID: 11400000, guid: 0aec07846b724ad0cb3c6566e8ad498c, type: 2}
+  - {fileID: 11400000, guid: c3b509477d13739fd9482b148e3e0bec, type: 2}
+  - {fileID: 11400000, guid: 0f1204a39ad7f1db991e646ef8b46970, type: 2}
+  - {fileID: 11400000, guid: b76846ba5ff359e17a4293d7111776f0, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

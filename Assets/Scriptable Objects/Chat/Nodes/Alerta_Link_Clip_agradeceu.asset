@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Alerta_Link_Clip_agradeceu
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: agradeceu
-  npcName: Clip
-  npcAvatar: {fileID: 0}
   npcMessage: De nada. Fique atento.
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Dilema_Odisseu_ignorar
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: ignorar
-  npcName: Odisseu
-  npcAvatar: {fileID: 0}
   npcMessage: "A neglig\xEAncia \xE9 a m\xE3e de todas as brechas."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
