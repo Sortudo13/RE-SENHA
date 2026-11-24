@@ -45,7 +45,12 @@ public static class DayProgressController
     public static void RegisterAnswer(bool correct)
     {
         if (!correct)
-            DataController.CurrentErrorCount++;
+        {
+            int previousErrorCount = DataController.CurrentErrorCount;
+            DataController.CurrentErrorCount = previousErrorCount + 1;
+            if (previousErrorCount == 0)
+                ActionController.SendAction(TutorialSignals.FirstErrorCommitted, "");
+        }
     }
 
     // Devolve true se deu GameOver: o save foi apagado, e quem chamou nao deve salvar mais nada.

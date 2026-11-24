@@ -161,8 +161,7 @@ public class TicketController : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(currentTicket.reason))
             feedback += $"\n\nJustificativa: {currentTicket.reason}";
 
-        if (!correct)
-            DataController.CurrentErrorCount++;
+        DayProgressController.RegisterAnswer(correct);
 
         ActionController.SendAction("ShowFeedback", new FeedbackData(correct, feedback));
 
@@ -171,5 +170,8 @@ public class TicketController : MonoBehaviour
         currentTicket = null;
         HideTicketDetails();
         UpdateTicketSidebar();
+
+        if (!correct && DataController.CurrentErrorCount >= DataController.MaxErrors)
+            DayProgressController.CheckDayEnd();
     }
 }

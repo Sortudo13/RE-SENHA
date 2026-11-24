@@ -82,6 +82,48 @@
         { "pose": "", "anim": "", "text": "Recebeu um alerta? Leia tudo com calma antes de agir." },
         { "pose": "", "anim": "", "text": "Se algo não fizer sentido, consulte o Manual. Eu também fico nervoso com janelas vermelhas!" }
       ]
+    },
+    {
+      "id": "tutorial_company_mailbox",
+      "lines": [
+        { "pose": "", "anim": "", "text": "Essa é a caixa da Empresa, diferente da sua caixa User. Aqui, cada e-mail pede uma decisão: Aprovar ou Bloquear." },
+        { "pose": "", "anim": "", "text": "Atenção redobrada: aprovar algo errado pode render uma advertência. Eu já estou suando!" }
+      ]
+    },
+    {
+      "id": "tutorial_action_buttons",
+      "lines": [
+        { "pose": "", "anim": "", "text": "Esses botões registram sua decisão: Aprovar aceita o e-mail; Bloquear o recusa. Em ambos os casos, ele sai da fila." },
+        { "pose": "", "anim": "", "text": "A escolha é definitiva e errar conta como advertência. Confira o Manual antes de clicar; minhas patinhas estão tremendo." }
+      ]
+    },
+    {
+      "id": "tutorial_first_error",
+      "lines": [
+        { "pose": "", "anim": "", "text": "Eita, essa decisão virou uma advertência! Você tem no máximo três erros; ao terceiro, é Game Over." },
+        { "pose": "", "anim": "", "text": "Respire fundo e confira o Manual antes da próxima. Eu vou tentar não entrar em pânico." }
+      ]
+    },
+    {
+      "id": "tutorial_day_end",
+      "lines": [
+        { "pose": "", "anim": "", "text": "O expediente acabou! Avançar Dia só aparece depois de responder os e-mails já recebidos na caixa Company e terminar as conversas que bloqueiam o fechamento." },
+        { "pose": "", "anim": "", "text": "Ao avançar, começa o próximo dia com novas tarefas. E-mails da Empresa que ainda não chegaram são descartados no fim do expediente. Ufa!" }
+      ]
+    },
+    {
+      "id": "tutorial_pause_menu",
+      "lines": [
+        { "pose": "", "anim": "", "text": "Neste menu, Retornar ao Menu Principal leva você à tela inicial; Sair fecha o jogo." },
+        { "pose": "", "anim": "", "text": "Resetar Dia não é um dos botões daqui; quando disponível, ele restaura o estado do começo do dia. Eu confirmaria antes de apertar qualquer coisa!" }
+      ]
+    },
+    {
+      "id": "tutorial_taskbar",
+      "lines": [
+        { "pose": "", "anim": "", "text": "Os ícones da barra de tarefas representam janelas abertas. Clique em um para trazê-la à frente — ou minimizá-la se já estiver ativa." },
+        { "pose": "", "anim": "", "text": "O botão no canto direito mostra a área de trabalho; clique de novo para voltar às janelas. Parece magia, mas é só bagunça organizada." }
+      ]
     }
   ]
 }

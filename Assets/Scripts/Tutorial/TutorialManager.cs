@@ -54,6 +54,12 @@ public class TutorialManager : MonoBehaviour
         ActionController.SyncSignal<string>(TutorialSignals.InspectionModeEntered, OnInspectionModeEntered);
         ActionController.SyncSignal<string>(TutorialSignals.DocumentOpened, OnDocumentOpened);
         ActionController.SyncSignal<string>(TutorialSignals.AlertReceived, OnAlertReceived);
+        ActionController.SyncSignal<string>(TutorialSignals.CompanyMailboxOpened, OnCompanyMailboxOpened);
+        ActionController.SyncSignal<string>(TutorialSignals.EmailActionButtonsShown, OnEmailActionButtonsShown);
+        ActionController.SyncSignal<string>(TutorialSignals.FirstErrorCommitted, OnFirstErrorCommitted);
+        ActionController.SyncSignal<string>(TutorialSignals.DayEndApproaching, OnDayEndApproaching);
+        ActionController.SyncSignal<string>(TutorialSignals.PauseMenuOpened, OnPauseMenuOpened);
+        ActionController.SyncSignal<string>(TutorialSignals.TaskbarUsed, OnTaskbarUsed);
         ActionController.SyncSignal<string>(CompanionSignals.TipFinished, OnTipFinished);
     }
 
@@ -67,6 +73,12 @@ public class TutorialManager : MonoBehaviour
         ActionController.UnsyncSignal<string>(TutorialSignals.InspectionModeEntered, OnInspectionModeEntered);
         ActionController.UnsyncSignal<string>(TutorialSignals.DocumentOpened, OnDocumentOpened);
         ActionController.UnsyncSignal<string>(TutorialSignals.AlertReceived, OnAlertReceived);
+        ActionController.UnsyncSignal<string>(TutorialSignals.CompanyMailboxOpened, OnCompanyMailboxOpened);
+        ActionController.UnsyncSignal<string>(TutorialSignals.EmailActionButtonsShown, OnEmailActionButtonsShown);
+        ActionController.UnsyncSignal<string>(TutorialSignals.FirstErrorCommitted, OnFirstErrorCommitted);
+        ActionController.UnsyncSignal<string>(TutorialSignals.DayEndApproaching, OnDayEndApproaching);
+        ActionController.UnsyncSignal<string>(TutorialSignals.PauseMenuOpened, OnPauseMenuOpened);
+        ActionController.UnsyncSignal<string>(TutorialSignals.TaskbarUsed, OnTaskbarUsed);
         ActionController.UnsyncSignal<string>(CompanionSignals.TipFinished, OnTipFinished);
     }
 
@@ -132,6 +144,18 @@ public class TutorialManager : MonoBehaviour
     private void OnDocumentOpened(string documentType) => ShowTipOnce(tipDocumentOpened);
 
     private void OnAlertReceived(string alertType) => ShowTipOnce(tipAlertReceived);
+
+    private void OnCompanyMailboxOpened(string mailbox) => ShowTipOnce("tutorial_company_mailbox");
+
+    private void OnEmailActionButtonsShown(string emailSubject) => ShowTipOnce("tutorial_action_buttons");
+
+    private void OnFirstErrorCommitted(string errorType) => ShowTipOnce("tutorial_first_error");
+
+    private void OnDayEndApproaching(string source) => ShowTipOnce("tutorial_day_end");
+
+    private void OnPauseMenuOpened(string source) => ShowTipOnce("tutorial_pause_menu");
+
+    private void OnTaskbarUsed(string source) => ShowTipOnce("tutorial_taskbar");
 
     private static void ShowTipOnce(string tipId)
     {

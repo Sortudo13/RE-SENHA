@@ -94,6 +94,7 @@ public class AlertManagerController : MonoBehaviour
         if (nextDayAlert != null)
             return;
 
+        ActionController.SendAction(TutorialSignals.DayEndApproaching, "");
         GameObject connectedAlert = Instantiate(alertWindow, AlertsLayer);
         nextDayAlert = connectedAlert;
         GameObject content = connectedAlert.transform.GetChild(0).gameObject;
