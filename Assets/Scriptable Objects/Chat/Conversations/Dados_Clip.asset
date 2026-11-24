@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b6f5635c6d524df2af35a3955475e7e, type: 2}
   - {fileID: 11400000, guid: eecee36684f4a967cbbab5a992121b1c, type: 2}
   startNodeId: inicio
+  blocksDayEnd: 0

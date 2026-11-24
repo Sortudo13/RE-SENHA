@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Provocacao_Odisseu_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: fim
-  npcName: Odisseu
-  npcAvatar: {fileID: 0}
   npcMessage: "At\xE9 a pr\xF3xima. (Ou n\xE3o.)"
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
   isEndNode: 1
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

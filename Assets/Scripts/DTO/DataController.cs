@@ -1,9 +1,9 @@
-using JetBrains.Annotations;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +11,7 @@ public static class DataController
 {
     private static SaveData currentSave;
     private static MetaData currentMetaData;
+
     // Slot em uso ("1".."3"). Comeca no ultimo slot escolhido no menu (PlayerPrefs), para o Play
     // direto na cena Desktop pelo editor continuar no mesmo slot.
     private static string saveNumber;
@@ -363,7 +364,6 @@ public static class DataController
             currentMetaData = new MetaData();
             SaveMetaData();
             return currentMetaData;
-
         }
         string json = File.ReadAllText(DataPath);
         currentMetaData = JsonConvert.DeserializeObject<MetaData>(json) ?? new MetaData();
@@ -400,10 +400,7 @@ public class TrinketData
 }
 
 [System.Serializable]
-public class StatisticsData
-{
-
-}
+public class StatisticsData { }
 
 // Resumo de um slot para o menu. hour = -1: save de comeco de dia (relogio ainda nao andou).
 public class SaveSlotInfo
@@ -429,6 +426,7 @@ public class SaveData
     public List<ChatSaveState> chatStates;
     public List<TicketData> availableTickets;
     public List<TicketData> tickets;
+
     // Ids das dicas do companheiro ja mostradas neste save (CompanionTips).
     public List<string> seenTips = new();
 }
@@ -446,6 +444,7 @@ public class EmailData : AttachmentContent
     public string body;
     public List<AttachmentData> attachments = new();
     public List<EvidenceData> evidences = new();
+
     // Opcional: id de uma dica do Resources/Companion/CompanionTips.json, mostrada ao abrir este email.
     public string companionTip;
     // Opcional: so chega quando o chat manda (emailTriggerId no ChatNode/ChatOption).
@@ -586,7 +585,9 @@ public class RGData : AttachmentContent
                 }
 
             if (employee == null)
-                Debug.LogWarning($"RGData: colaborador '{employeeId}' nao existe no Database do dia.");
+                Debug.LogWarning(
+                    $"RGData: colaborador '{employeeId}' nao existe no Database do dia."
+                );
         }
 
         EmployeeRGData rg = employee?.rg;
@@ -643,7 +644,13 @@ public class AttachmentContentConverter : JsonConverter<AttachmentContent>
     // Ao salvar (SavingGame), grava a subclasse real automaticamente sem interferência
     public override bool CanWrite => false;
 
-    public override AttachmentContent ReadJson(JsonReader reader, Type objectType, AttachmentContent existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override AttachmentContent ReadJson(
+        JsonReader reader,
+        Type objectType,
+        AttachmentContent existingValue,
+        bool hasExistingValue,
+        JsonSerializer serializer
+    )
     {
         if (reader.TokenType == JsonToken.Null)
             return null;
@@ -656,19 +663,25 @@ public class AttachmentContentConverter : JsonConverter<AttachmentContent>
         // Escolhe a subclasse de acordo com as chaves encontradas no JSON
         AttachmentContent content = obj switch
         {
-            _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
-            _ when obj.Property("employeeId") != null || obj.Property("numero") != null => new RGData(),
+            _ when obj.Property("sender") != null || obj.Property("subject") != null =>
+                new EmailData(),
+            _ when obj.Property("employeeId") != null || obj.Property("numero") != null =>
+                new RGData(),
             _ when obj.Property("ruleId") != null => new ManualData(),
             _ when obj.Property("imagePath") != null => new PNGData(),
             _ when obj.Property("text") != null => new PDFData(),
-            _ => new AttachmentContent()
+            _ => new AttachmentContent(),
         };
 
         serializer.Populate(obj.CreateReader(), content);
         return content;
     }
 
-    public override void WriteJson(JsonWriter writer, AttachmentContent value, JsonSerializer serializer)
+    public override void WriteJson(
+        JsonWriter writer,
+        AttachmentContent value,
+        JsonSerializer serializer
+    )
     {
         throw new NotImplementedException();
     }
@@ -695,6 +708,7 @@ public class ChatSaveState
     public bool hasUnread;
 
     public List<ChatMessageEntry> messageHistory = new();
+    public List<string> shownScheduledNodeIds = new();
 }
 
 [System.Serializable]

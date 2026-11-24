@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_prazer
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: prazer
-  npcName: Odisseu
-  npcAvatar: {fileID: 0}
   npcMessage: "O prazer foi meu. (Literalmente, uma simula\xE7\xE3o de prazer.)"
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

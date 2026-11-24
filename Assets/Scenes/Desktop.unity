@@ -3026,7 +3026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DesktopClockController
   startHour: 8
   endHour: 18
-  workDurationInMinutes: 1
+  workDurationInMinutes: 5
 --- !u!1 &942236834
 GameObject:
   m_ObjectHideFlags: 0
@@ -4675,6 +4675,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542438842}
   m_CullTransparentMesh: 1
+--- !u!1 &1570152481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1570152483}
+  - component: {fileID: 1570152482}
+  m_Layer: 0
+  m_Name: TutorialSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1570152482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570152481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1a052b85854cfada86900550b2eca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
+  tipWelcome: tutorial_welcome
+  tipOpenEmail: tutorial_open_email
+  tipReadEmail: tutorial_read_email
+  tipFinished: tutorial_finished
+  tipManualOpened: manual_first_open
+  tipChatOpened: first_chat_open
+  tipInspectionModeEntered: first_inspection_mode
+  tipDecisionMade: first_decision_pending
+  tipDocumentOpened: first_document_open
+  tipAlertReceived: first_alert_received
+--- !u!4 &1570152483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570152481}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.20271, y: -0.22688, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1573052252 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8989298296935455343, guid: 3308057c671a62c4899718a97a138162, type: 3}
@@ -6807,3 +6861,4 @@ SceneRoots:
   - {fileID: 1885617887}
   - {fileID: 107381171}
   - {fileID: 1715634149}
+  - {fileID: 1570152483}

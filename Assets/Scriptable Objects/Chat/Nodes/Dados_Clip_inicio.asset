@@ -13,24 +13,32 @@ MonoBehaviour:
   m_Name: Dados_Clip_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcName: Clip
-  npcAvatar: {fileID: 0}
   npcMessage: "Parceiro, para fins de calibra\xE7\xE3o, preciso verificar alguns
-    dados. \xC9 uma simula\xE7\xE3o, claro. Qual \xE9 o seu prato favorito? A pergunta
-    \xE9 irrelevante para a seguran\xE7a, mas ajuda na minha humaniza\xE7\xE3o."
+    dados. Qual \xE9 o seu prato favorito? A pergunta \xE9 irrelevante para a seguran\xE7a,
+    mas ajuda na minha humaniza\xE7\xE3o."
   typingDelay: 1.5
   options:
   - optionText: Pizza.
     nextNodeId: respondeu
+    outcome: 0
+    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: compartilhou_dado_pessoal
   - optionText: "Por que voc\xEA quer saber?"
     nextNodeId: questionou
+    outcome: 0
+    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: questionou_solicitacao
   - optionText: Recuso-me a responder.
     nextNodeId: recusou
+    outcome: 0
+    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: recusou_dado_pessoal
   nextNodeIdIfNoChoice: 
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

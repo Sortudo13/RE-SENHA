@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: BoasVindas_Clip
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: clip_boas_vindas
+  npcName: Clip
+  npcAvatar: {fileID: 0}
+  nodes:
+  - {fileID: 11400000, guid: cab1d0438c1d1bf51a7944419a1b1cfc, type: 2}
+  - {fileID: 11400000, guid: be7bf05a5cd51802fbee2d1d1b7460ac, type: 2}
+  - {fileID: 11400000, guid: 3e4ceccabebca9443a231fded9984375, type: 2}
+  - {fileID: 11400000, guid: bd8330a614036ca81915439b5bc95eb2, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

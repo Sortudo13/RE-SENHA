@@ -18,7 +18,9 @@ public class ChatConversation : ScriptableObject
     public string startNodeId;
 
     [Header("Fim do dia")]
-    [Tooltip("Se marcado, o \"Avançar Dia\" só aparece depois que esta conversa terminar (no dia em que ela chega).")]
+    [Tooltip(
+        "Se marcado, o \"Avançar Dia\" só aparece depois que esta conversa terminar (no dia em que ela chega)."
+    )]
     public bool blocksDayEnd;
 
     /// <summary>True se algum nó tem opção Correta/Errada (conta na conta do dia).</summary>
@@ -44,15 +46,103 @@ public class ChatConversation : ScriptableObject
         BuildLookup();
     }
 
+    // Flag para ignorar o OnValidate durante a geração
+    public static bool IsGenerating = false;
+
     private void OnValidate()
     {
+        if (IsGenerating)
+            return;
+
         BuildLookup();
-        ValidateReferences();
+
+        if (nodes == null || nodes.Count == 0)
+            return;
+
+        UnityEditor.EditorApplication.delayCall += () =>
+        {
+            if (this == null)
+                return;
+            ValidateReferences();
+        };
+    }
+
+    private void ValidateReferences()
+    {
+        if (nodes == null || nodes.Count == 0)
+            return;
+
+        if (!blocksDayEnd && HasJudgedOption())
+        {
+            Debug.LogWarning(
+                $"[{name}] Tem opção Correta/Errada, mas não segura o fim do dia (blocksDayEnd desmarcado).",
+                this
+            );
+        }
+
+        if (string.IsNullOrEmpty(startNodeId))
+        {
+            Debug.LogWarning($"[{name}] startNodeId vazio.", this);
+        }
+        else if (!NodeExists(startNodeId))
+        {
+            Debug.LogError($"[{name}] startNodeId '{startNodeId}' não existe.", this);
+        }
+
+        foreach (var node in nodes)
+        {
+            if (node == null)
+                continue;
+
+            if (node.options != null)
+            {
+                foreach (var opt in node.options)
+                {
+                    if (string.IsNullOrEmpty(opt.nextNodeId))
+                        continue;
+
+                    if (!NodeExists(opt.nextNodeId))
+                    {
+                        Debug.LogError(
+                            $"[{name}] Nó '{node.nodeId}' aponta para '{opt.nextNodeId}' inexistente.",
+                            this
+                        );
+                    }
+                }
+            }
+
+            if (
+                !string.IsNullOrEmpty(node.nextNodeIdIfNoChoice)
+                && !NodeExists(node.nextNodeIdIfNoChoice)
+            )
+            {
+                Debug.LogError(
+                    $"[{name}] Nó '{node.nodeId}' aponta (no choice) para '{node.nextNodeIdIfNoChoice}' inexistente.",
+                    this
+                );
+            }
+        }
+    }
+
+    // Helper que varre a lista real, sem usar cache
+    private bool NodeExists(string nodeId)
+    {
+        if (string.IsNullOrEmpty(nodeId))
+            return false;
+        foreach (var n in nodes)
+        {
+            if (n != null && n.nodeId == nodeId)
+                return true;
+        }
+        return false;
     }
 
     private void BuildLookup()
     {
         _nodeLookup = new Dictionary<string, ChatNode>();
+        if (nodes == null)
+            return;
+
         foreach (var node in nodes)
         {
             if (node == null || string.IsNullOrEmpty(node.nodeId))
@@ -70,6 +160,11 @@ public class ChatConversation : ScriptableObject
         }
     }
 
+    public void RefreshCache()
+    {
+        BuildLookup();
+    }
+
     /// <summary>Retorna o nó pelo ID, ou null se não existir.</summary>
     public ChatNode GetNode(string id)
     {
@@ -85,51 +180,5 @@ public class ChatConversation : ScriptableObject
     public ChatNode GetStartNode()
     {
         return GetNode(startNodeId);
-    }
-
-    private void ValidateReferences()
-    {
-        // Aviso, nao erro: pode ser de proposito, mas o jogador poderia avancar o dia sem responder.
-        if (!blocksDayEnd && HasJudgedOption())
-        {
-            Debug.LogWarning(
-                $"[{name}] Tem opção Correta/Errada, mas não segura o fim do dia (blocksDayEnd desmarcado).",
-                this
-            );
-        }
-
-        if (string.IsNullOrEmpty(startNodeId))
-        {
-            Debug.LogWarning($"[{name}] startNodeId vazio.", this);
-        }
-        else if (GetNode(startNodeId) == null)
-        {
-            Debug.LogError($"[{name}] startNodeId '{startNodeId}' não existe.", this);
-        }
-
-        foreach (var node in nodes)
-        {
-            if (node == null)
-                continue;
-
-            foreach (var opt in node.options)
-            {
-                if (string.IsNullOrEmpty(opt.nextNodeId))
-                {
-                    Debug.LogWarning(
-                        $"[{name}] Nó '{node.nodeId}' tem opção sem nextNodeId.",
-                        this
-                    );
-                    continue;
-                }
-                if (GetNode(opt.nextNodeId) == null)
-                {
-                    Debug.LogError(
-                        $"[{name}] Nó '{node.nodeId}' aponta para '{opt.nextNodeId}' inexistente.",
-                        this
-                    );
-                }
-            }
-        }
     }
 }

@@ -62,15 +62,21 @@ public class ChatTimeSync : MonoBehaviour
 
     private void OnTimeOrDayChanged()
     {
-        if (_state == null)
-            return;
-
         int day = DataController.CurrentDay;
-        int totalMinutes = ClockController.CurrentHour * 60 + ClockController.CurrentMinute;
-        var arrived = _state.ProcessTime(day, totalMinutes);
+        int totalMinutes = (ClockController.CurrentHour * 60) + ClockController.CurrentMinute;
 
-        foreach (var s in arrived)
-            ActionController.SendAction("ChatConversationArrived", s.conversation.conversationId);
+        // Processa chegadas normais
+        var arrivedConversations = State.ProcessTime(day, totalMinutes);
+        foreach (var convId in arrivedConversations)
+        {
+            ActionController.SendAction("ChatConversationArrived", convId);
+        }
+
+        // Processa nós agendados
+        var scheduledNodes = State.ProcessScheduledNodes(day, totalMinutes);
+        foreach (var payload in scheduledNodes)
+        {
+            ActionController.SendAction("ChatScheduledNodeArrived", payload);
+        }
     }
-
 }
