@@ -417,6 +417,7 @@ public class SaveSlotInfo
 [System.Serializable]
 public class SaveData
 {
+    public string currentCharacter = null;
     public int current_day;
     public int error_count;
     public int current_hour = -1;
