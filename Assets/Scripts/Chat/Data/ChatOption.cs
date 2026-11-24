@@ -30,8 +30,4 @@ public class ChatOption
 
     [Tooltip("Tag interna para logs/relatórios (não aparece no jogo).")]
     public string feedbackTag;
-
-    [Tooltip("triggerId de um email do JSON do dia, que chega emailDelay segundos depois desta escolha.")]
-    public string emailTriggerId;
-    public float emailDelay = 3f;
 }

@@ -30,8 +30,4 @@ public class ChatNode : ScriptableObject
 
     [Tooltip("Marca este nó como final da conversa.")]
     public bool isEndNode;
-
-    [Tooltip("triggerId de um email do JSON do dia, que chega emailDelay segundos depois desta mensagem.")]
-    public string emailTriggerId;
-    public float emailDelay = 3f;
 }
