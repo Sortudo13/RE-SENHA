@@ -448,6 +448,8 @@ public class EmailData : AttachmentContent
     public List<EvidenceData> evidences = new();
     // Opcional: id de uma dica do Resources/Companion/CompanionTips.json, mostrada ao abrir este email.
     public string companionTip;
+    // Opcional: so chega quando o chat manda (emailTriggerId no ChatNode/ChatOption).
+    public string triggerId;
 }
 
 [System.Serializable]

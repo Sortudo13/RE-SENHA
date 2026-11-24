@@ -8,11 +8,13 @@ public class SenderController : MonoBehaviour
     void Awake()
     {
         ActionController.SyncSignal("WorkStarted", CreateRoutines);
+        ActionController.SyncSignal<string>("TriggerEmail", SendTriggeredEmail);
     }
 
     void OnDestroy()
     {
         ActionController.UnsyncSignal("WorkStarted", CreateRoutines);
+        ActionController.UnsyncSignal<string>("TriggerEmail", SendTriggeredEmail);
     }
 
     private void CreateRoutines()
@@ -26,10 +28,10 @@ public class SenderController : MonoBehaviour
         while (true)
         {
             List<EmailData> availableMails = DataController.CurrentSave.availableMails;
-            if (availableMails.Count <= 0)
+            // Emails com triggerId esperam o chat (SendTriggeredEmail).
+            EmailData email = availableMails.Find(m => string.IsNullOrEmpty(m.triggerId));
+            if (email == null)
                 yield break;
-
-            EmailData email = availableMails[0];
 
             yield return new WaitUntil(() =>
             {
@@ -45,23 +47,35 @@ public class SenderController : MonoBehaviour
             if (!ClockController.IsStillWorking)
                 availableMails.RemoveAll(m => m.mailBox == "Company");
 
-            if (availableMails.Count <= 0 || availableMails[0] != email)
+            if (!availableMails.Contains(email))
                 continue;
 
-            availableMails.RemoveAt(0);
-
-            List<MailBox> mailBoxes = DataController.CurrentSave.currentMailBoxes;
-            foreach (MailBox box in mailBoxes)
-                if (box.mailBox == email.mailBox)
-                {
-                    box.emails.Insert(0, email);
-                    box.newEmails++;
-                    ActionController.SendAction("MailChanged", email.mailBox);
-                    ActionController.SendAction("ShowNotificationBadge", "Email");
-                    break;
-                }
-            DataController.SavingGame();
+            Deliver(email);
         }
+    }
+
+    private void SendTriggeredEmail(string triggerId)
+    {
+        EmailData email = DataController.CurrentSave.availableMails.Find(m => m.triggerId == triggerId);
+        if (email != null) // null: ja entregue
+            Deliver(email);
+    }
+
+    private static void Deliver(EmailData email)
+    {
+        DataController.CurrentSave.availableMails.Remove(email);
+
+        List<MailBox> mailBoxes = DataController.CurrentSave.currentMailBoxes;
+        foreach (MailBox box in mailBoxes)
+            if (box.mailBox == email.mailBox)
+            {
+                box.emails.Insert(0, email);
+                box.newEmails++;
+                ActionController.SendAction("MailChanged", email.mailBox);
+                ActionController.SendAction("ShowNotificationBadge", "Email");
+                break;
+            }
+        DataController.SavingGame();
     }
 
     //Caso precise ordenar algum dia
