@@ -10,27 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
-  m_Name: BemVindo_Clip_inicio
+  m_Name: BoasVindas_Clip_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcName: Clip
-  npcAvatar: {fileID: 0}
   npcMessage: "Sauda\xE7\xF5es, parceiro! Sou o Clip, o antiv\xEDrus da NationalTech.
-    Estou aqui para te ajudar a manter nossa empresa segura. Vamos come\xE7ar com
-    o b\xE1sico: voc\xEA sabe identificar um e-mail de phishing?"
+    Estou aqui para te ajudar a manter nossa empresa segura. Como voc\xEA deve saber,
+    o RH monitora nosso expediente."
   typingDelay: 1.5
   options:
-  - optionText: Sim, claro!
+  - optionText: Monitora? Como assim?
+    nextNodeId: explicar_monitoramento
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: perguntou_regras
+  - optionText: "J\xE1 sei, as regras s\xE3o claras."
     nextNodeId: confiante
+    outcome: 0
+    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: confiante
-  - optionText: Mais ou menos...
-    nextNodeId: inseguro
-    securityScoreDelta: 0
-    feedbackTag: inseguro
-  - optionText: "O que \xE9 phishing?"
-    nextNodeId: explicar
-    securityScoreDelta: 0
-    feedbackTag: solicitou_explicacao
   nextNodeIdIfNoChoice: 
   isEndNode: 0

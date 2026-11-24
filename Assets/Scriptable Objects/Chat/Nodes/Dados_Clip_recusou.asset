@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
   m_Name: Dados_Clip_recusou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: recusou
-  npcName: Clip
-  npcAvatar: {fileID: 0}
-  npcMessage: "Compreendo. A privacidade \xE9 importante."
+  nodeId: 
+  npcMessage: 
   typingDelay: 1.5
   options: []
-  nextNodeIdIfNoChoice: fim
+  nextNodeIdIfNoChoice: 
   isEndNode: 0

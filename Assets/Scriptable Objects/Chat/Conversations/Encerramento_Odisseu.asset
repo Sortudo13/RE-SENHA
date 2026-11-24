@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: odisseu_encerramento
   npcName: Odisseu
-  npcAvatar: {fileID: 21300000, guid: 69e3ed6813564f648a9d3f270b7e933e, type: 3}
+  npcAvatar: {fileID: 0}
   nodes:
   - {fileID: 11400000, guid: 2cc5f04c18d9264d1b6abb9e119206ad, type: 2}
   - {fileID: 11400000, guid: d57bde43fd13e51359302861c7b5f746, type: 2}
@@ -22,4 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b572744b73608a61f9f15134550f1ab3, type: 2}
   - {fileID: 11400000, guid: a452afe3de70f31df95947e79c43e42a, type: 2}
   startNodeId: inicio
-  blocksDayEnd: 1
+  blocksDayEnd: 0

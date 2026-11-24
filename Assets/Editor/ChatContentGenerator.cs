@@ -29,12 +29,8 @@ public static class ChatContentGenerator
                 spec.AssetName
             );
 
-            conversation.conversationId = spec.ConversationId;
-            conversation.npcName = spec.NpcName;
-            conversation.npcAvatar = null;
-            conversation.startNodeId = "inicio";
-            conversation.nodes = new List<ChatNode>();
-
+            // 1. Cria a nova lista de nós ANTES de atribuir ao conversation
+            var newNodes = new List<ChatNode>();
             foreach (var nodeSpec in spec.Nodes)
             {
                 var node = LoadOrCreateAsset<ChatNode>(
@@ -50,8 +46,15 @@ public static class ChatContentGenerator
                 node.isEndNode = nodeSpec.IsEndNode;
 
                 EditorUtility.SetDirty(node);
-                conversation.nodes.Add(node);
+                newNodes.Add(node);
             }
+
+            // 2. Atribui todos os campos da conversa de uma vez
+            conversation.conversationId = spec.ConversationId;
+            conversation.npcName = spec.NpcName;
+            conversation.npcAvatar = null;
+            conversation.startNodeId = "inicio";
+            conversation.nodes = newNodes; // Atribuição atômica: o OnValidate só roda depois com a lista cheia
 
             EditorUtility.SetDirty(conversation);
 
@@ -113,54 +116,109 @@ public static class ChatContentGenerator
     {
         return new List<ConversationSpec>
         {
+            // --- CONVERSAS DO DIA 1 ---
             new ConversationSpec(
-                "BemVindo_Clip",
-                "clip_bem_vindo",
+                "BoasVindas_Clip",
+                "clip_boas_vindas",
                 "Clip",
-                3, // <-- Dia 3 (era 1)
-                8,
-                1,
+                1, // Dia 1
+                8, // 08:05
+                5,
                 0,
                 new[]
                 {
                     new NodeSpec(
                         "inicio",
-                        "Saudações, parceiro! Sou o Clip, o antivírus da NationalTech. Estou aqui para te ajudar a manter nossa empresa segura. Vamos começar com o básico: você sabe identificar um e-mail de phishing?",
+                        "Saudações, parceiro! Sou o Clip, o antivírus da NationalTech. Estou aqui para te ajudar a manter nossa empresa segura. Como você deve saber, o RH monitora nosso expediente.",
                         Options(
-                            Option("Sim, claro!", "confiante", "confiante"),
-                            Option("Mais ou menos...", "inseguro", "inseguro"),
-                            Option("O que é phishing?", "explicar", "solicitou_explicacao")
+                            Option(
+                                "Monitora? Como assim?",
+                                "explicar_monitoramento",
+                                "perguntou_regras"
+                            ),
+                            Option("Já sei, as regras são claras.", "confiante", "confiante")
                         )
                     ),
                     new NodeSpec(
+                        "explicar_monitoramento",
+                        "Eles avaliam nossas decisões. Se você aprovar documentos falsos ou cair em golpes, leva advertência. Três advertências e você está fora. Por isso, use o Manual na barra de tarefas e o modo de inspeção para verificar tudo.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
                         "confiante",
-                        "Ótimo! Mas nunca subestime os hackers. Eles são criativos.",
+                        "Ótimo! Mas nunca subestime os hackers. Eles são criativos. Lembre-se de usar o Manual e o inspetor de documentos.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
-                        "inseguro",
-                        "Sem problemas! Estou aqui para isso. Phishing é quando alguém se passa por outra pessoa para roubar dados.",
-                        Options(),
-                        "fim"
+                        "fim",
+                        "Bom primeiro dia! Qualquer coisa, estou no chat.",
+                        null,
+                        null,
+                        true
                     ),
-                    new NodeSpec(
-                        "explicar",
-                        "Phishing é uma técnica de engenharia social onde o atacante se passa por uma entidade confiável para obter informações. Vou te mandar um guia.",
-                        Options(),
-                        "fim"
-                    ),
-                    new NodeSpec("fim", "Bom trabalho! Até mais tarde.", null, null, true),
                 }
             ),
+            new ConversationSpec(
+                "Phishing_Clip",
+                "clip_phishing",
+                "Clip",
+                1, // Dia 1
+                10, // 10:00
+                0,
+                1,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Parceiro, o RH acabou de mandar as orientações do dia. Mas cuidado: os hackers adoram se passar por colegas ou pelo RH.",
+                        Options(
+                            Option(
+                                "O que é Phishing?",
+                                "explicar_phishing",
+                                "solicitou_explicacao"
+                            ),
+                            Option("Como eu me protejo?", "dicas_protecao", "pediu_dicas"),
+                            Option("Vou tomar cuidado.", "encerrar", "confiante")
+                        )
+                    ),
+                    new NodeSpec(
+                        "explicar_phishing",
+                        "Phishing é uma técnica de engenharia social onde o atacante se passa por uma entidade confiável (como o RH ou o banco) para roubar dados, senhas ou instalar vírus. Eles usam a urgência e o medo para te fazer clicar.",
+                        Options(
+                            Option(
+                                "Entendi. E como eu me protejo?",
+                                "dicas_protecao",
+                                "pediu_dicas"
+                            )
+                        ),
+                        "dicas_protecao"
+                    ),
+                    new NodeSpec(
+                        "dicas_protecao",
+                        "1. Confira sempre o remetente real do e-mail.\n2. Desconfie de anexos inesperados.\n3. Nunca clique em links suspeitos.\n4. Na dúvida, use o inspetor de documentos para checar a autenticidade.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "encerrar",
+                        "Melhor prevenir do que remediar! Se precisar de ajuda para inspecionar um documento, me chame.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec("fim", "Fique atento aos e-mails!", null, null, true),
+                }
+            ),
+            // --- CONVERSAS DE DIAS ANTERIORES (MANTIDAS E AJUSTADAS) ---
             new ConversationSpec(
                 "Provocacao_Odisseu",
                 "odisseu_provocacao",
                 "Odisseu",
-                3, // <-- Dia 3 (era 1)
+                3,
                 10,
                 30,
-                1,
+                2, // SortOrder ajustado
                 new[]
                 {
                     new NodeSpec(
@@ -197,10 +255,10 @@ public static class ChatContentGenerator
                 "Alerta_Link_Clip",
                 "clip_alerta_link",
                 "Clip",
-                4, // <-- Dia 4 (era 2)
+                4,
                 9,
                 0,
-                2,
+                3,
                 new[]
                 {
                     new NodeSpec(
@@ -232,10 +290,10 @@ public static class ChatContentGenerator
                 "Dilema_Odisseu",
                 "odisseu_dilema_moral",
                 "Odisseu",
-                4, // <-- Dia 4 (era 3)
+                4,
                 11,
                 0,
-                3,
+                4,
                 new[]
                 {
                     new NodeSpec(
@@ -267,10 +325,10 @@ public static class ChatContentGenerator
                 "Dados_Clip",
                 "clip_pedido_dados",
                 "Clip",
-                5, // <-- Dia 5 (era 4)
+                5,
                 14,
                 0,
-                4,
+                5,
                 new[]
                 {
                     new NodeSpec(
@@ -311,10 +369,10 @@ public static class ChatContentGenerator
                 "Encerramento_Odisseu",
                 "odisseu_encerramento",
                 "Odisseu",
-                5, // <-- Dia 5 (era 5, mantido)
+                5,
                 15,
                 0,
-                5,
+                6,
                 new[]
                 {
                     new NodeSpec(

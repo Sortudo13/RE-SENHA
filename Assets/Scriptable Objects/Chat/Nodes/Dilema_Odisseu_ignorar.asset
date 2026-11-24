@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
   m_Name: Dilema_Odisseu_ignorar
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: ignorar
-  npcName: Odisseu
-  npcAvatar: {fileID: 0}
-  npcMessage: "A neglig\xEAncia \xE9 a m\xE3e de todas as brechas."
+  nodeId: 
+  npcMessage: 
   typingDelay: 1.5
   options: []
-  nextNodeIdIfNoChoice: fim
+  nextNodeIdIfNoChoice: 
   isEndNode: 0

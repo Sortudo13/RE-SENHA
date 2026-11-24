@@ -12,12 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
   m_Name: Dados_Clip_respondeu
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: respondeu
-  npcName: Clip
-  npcAvatar: {fileID: 0}
-  npcMessage: "Pizza. Anotado. Obrigado por contribuir com minha jornada rumo \xE0
-    humanidade."
+  nodeId: 
+  npcMessage: 
   typingDelay: 1.5
   options: []
-  nextNodeIdIfNoChoice: fim
+  nextNodeIdIfNoChoice: 
   isEndNode: 0

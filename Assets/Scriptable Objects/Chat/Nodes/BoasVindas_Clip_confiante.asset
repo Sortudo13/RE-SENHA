@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
-  m_Name: BemVindo_Clip_inseguro
+  m_Name: BoasVindas_Clip_confiante
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: inseguro
-  npcName: Clip
-  npcAvatar: {fileID: 0}
-  npcMessage: "Sem problemas! Estou aqui para isso. Phishing \xE9 quando algu\xE9m
-    se passa por outra pessoa para roubar dados."
+  nodeId: confiante
+  npcMessage: "\xD3timo! Mas nunca subestime os hackers. Eles s\xE3o criativos. Lembre-se
+    de usar o Manual e o inspetor de documentos."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim

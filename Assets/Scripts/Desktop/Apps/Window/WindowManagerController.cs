@@ -147,6 +147,7 @@ public class WindowManagerController : MonoBehaviour
     private void InitPDF(AttachmentContent data)
     {
         GameObject window_PDF = Instantiate(windowPDF.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "PDF");
         if (data is PDFData pdfData)
             window_PDF.GetComponentInChildren<PDFController>().LoadDocument(pdfData.text);
     }
@@ -154,6 +155,7 @@ public class WindowManagerController : MonoBehaviour
     private void InitPNG(AttachmentContent data)
     {
         GameObject window_PNG = Instantiate(windowPNG.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "PNG");
         if (data is PNGData pngData)
             window_PNG.transform.Find("Área de Conteúdo/Image").GetComponentInChildren<Image>().sprite = pngData.GetImage();
     }
@@ -161,6 +163,7 @@ public class WindowManagerController : MonoBehaviour
     private void InitRG(AttachmentContent data)
     {
         GameObject window_rg = Instantiate(windowRG.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "RG");
         if (data is not RGData rgData)
         {
             Debug.LogWarning("InitRG: anexo sem dados de RG; o documento abre vazio.");

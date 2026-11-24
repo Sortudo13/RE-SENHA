@@ -123,6 +123,8 @@ public class ChatController : MonoBehaviour
         if (state == null || !state.hasArrived)
             return;
 
+        ActionController.SendAction(TutorialSignals.ChatOpened, conversationId);
+
         if (_activeConversation != null && _activeConversation != state)
         {
             if (_npcFlowCoroutine != null)
@@ -164,6 +166,7 @@ public class ChatController : MonoBehaviour
             PlayNode(currentNode);
         else
             ShowChoicesIfAny(currentNode);
+
     }
 
     // ============================================================
@@ -239,6 +242,11 @@ public class ChatController : MonoBehaviour
     {
         if (_activeConversation == null || _windowView == null)
             return;
+
+        ActionController.SendAction(
+            TutorialSignals.ChoiceMade,
+            _activeConversation.conversation.conversationId
+        );
 
         _windowView.HideChoices();
         _windowView.AppendPlayerMessage(chosen.optionText);

@@ -10,17 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
-  m_Name: ChatNode 1
+  m_Name: Phishing_Clip_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: fim_negou
-  npcName: Lulinha
-  npcAvatar: {fileID: -8541215567605348538, guid: 7523081237d8b557f8e8e30397468ca0, type: 3}
-  npcMessage: "Sem problemas, era s\xF3 uma verifica\xE7\xE3o de rotina. Bom trabalho!"
+  nodeId: fim
+  npcMessage: Fique atento aos e-mails!
   typingDelay: 1.5
-  options:
-  - optionText: Tudo bem... que estranho
-    nextNodeId: batata
-    securityScoreDelta: 0
-    feedbackTag: resposta_normativa
+  options: []
   nextNodeIdIfNoChoice: 
-  isEndNode: 0
+  isEndNode: 1
