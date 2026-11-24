@@ -5,12 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class DataController
 {
     private static SaveData currentSave;
     private static MetaData currentMetaData;
-    private static string saveNumber = "1";
+    // Slot em uso ("1".."3"). Comeca no ultimo slot escolhido no menu (PlayerPrefs), para o Play
+    // direto na cena Desktop pelo editor continuar no mesmo slot.
+    private static string saveNumber;
+    private static string SaveNumber =>
+        saveNumber ??= Mathf.Clamp(PlayerPrefs.GetInt(LastSlotKey, 1), 1, SaveSlotCount).ToString();
+
+    public const int SaveSlotCount = 3;
+    private const string LastSlotKey = "LastSaveSlot";
     public static SaveData CurrentSave => currentSave ??= LoadingGame();
     public static MetaData CurrentMetaData => currentMetaData ??= LoadMetaData();
     public static int CurrentDay
@@ -43,10 +51,64 @@ public static class DataController
         set => PlayerPrefs.SetInt("MaxWindows", value);
     }
 
+    // Recebe o numero do slot (ex.: SavePath = "2"), nao o caminho.
     public static string SavePath
     {
-        get => Path.Combine(Application.persistentDataPath, $"save_{saveNumber}.json");
-        set => saveNumber = value;
+        get => SlotPath(SaveNumber);
+        set
+        {
+            if (SaveNumber == value)
+                return;
+
+            saveNumber = value;
+            // O save em memoria era do slot anterior; o proximo CurrentSave le o slot novo
+            // (LoadingGame tambem acerta CurrentDay e CurrentErrorCount, que ficam no PlayerPrefs).
+            currentSave = null;
+        }
+    }
+
+    // Copia do save como estava no comeco do dia atual; o "Reiniciar Dia" volta para ela.
+    // Um por slot. Nome fora do padrao "save_*.json" para nao aparecer numa lista de saves.
+    // Quem copiar, renomear ou apagar um slot leva este arquivo junto (DeleteSaveFile ja apaga).
+    public static string DayStartPath
+    {
+        get => Path.Combine(Application.persistentDataPath, $"daystart_{SaveNumber}.json");
+    }
+
+    private static string SlotPath(string slot) =>
+        Path.Combine(Application.persistentDataPath, $"save_{slot}.json");
+
+    // Troca o slot em uso e lembra dele. Depois: ResetGame() para jogo novo ou LoadingGame() para carregar.
+    public static void SelectSlot(int slot)
+    {
+        slot = Mathf.Clamp(slot, 1, SaveSlotCount);
+        SavePath = slot.ToString();
+        PlayerPrefs.SetInt(LastSlotKey, slot);
+        PlayerPrefs.Save();
+    }
+
+    // Le so o resumo do save_<n>.json, sem carregar (nao mexe no CurrentSave nem no PlayerPrefs).
+    public static SaveSlotInfo GetSlotInfo(int slot)
+    {
+        var info = new SaveSlotInfo { slot = slot };
+        string path = SlotPath(slot.ToString());
+        if (!File.Exists(path))
+            return info;
+
+        try
+        {
+            JObject json = JObject.Parse(File.ReadAllText(path));
+            info.day = json.Value<int?>("current_day") ?? 1;
+            info.hour = json.Value<int?>("current_hour") ?? -1;
+            info.minute = json.Value<int?>("current_minute") ?? 0;
+            info.lastSaved = File.GetLastWriteTime(path);
+            info.exists = true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[DataController] Slot {slot} ilegivel ({path}): {e.Message}");
+        }
+        return info;
     }
 
     public static Boolean PersistMailBox
@@ -86,16 +148,48 @@ public static class DataController
 
     public static void LoadDay()
     {
-        SaveData save = GetDailyDataJson(CurrentDay);
+        SaveData save = BuildDayStart(CurrentDay);
+        currentSave = save;
+        SavingGame(save);
+        SaveDayStart(save);
+        ActionController.SendAction("DayChanged");
+    }
+
+    // Save do comeco do dia: dados do dia (Resources) + o que vem dos dias anteriores
+    // (caixa User, se PersistMailBox estiver ligado).
+    private static SaveData BuildDayStart(int day)
+    {
+        SaveData save = GetDailyDataJson(day);
+        // Dicas do companheiro ja vistas valem para o save inteiro, nao so para o dia.
+        if (currentSave?.seenTips != null)
+            save.seenTips = new List<string>(currentSave.seenTips);
         if (PersistMailBox && currentSave != null)
         {
             MailBox userBox = currentSave.currentMailBoxes.Find(box => box.mailBox == "User");
             List<EmailData> oldMails = userBox?.emails ?? new List<EmailData>();
             save.currentMailBoxes.Find(box => box.mailBox == "User").emails = oldMails;
         }
-        currentSave = save;
-        SavingGame(save);
-        ActionController.SendAction("DayChanged");
+        return save;
+    }
+
+    private static void SaveDayStart(SaveData save)
+    {
+        string json = JsonConvert.SerializeObject(save, Formatting.Indented);
+        File.WriteAllText(DayStartPath, json);
+    }
+
+    // Devolve null se nao ha copia ou se ela e de outro dia.
+    private static SaveData LoadDayStart(int day)
+    {
+        if (!File.Exists(DayStartPath))
+            return null;
+
+        string json = File.ReadAllText(DayStartPath);
+        if (string.IsNullOrEmpty(json))
+            return null;
+
+        SaveData save = JsonConvert.DeserializeObject<SaveData>(json);
+        return save != null && save.current_day == day ? save : null;
     }
 
     public static void ResetGame()
@@ -103,6 +197,67 @@ public static class DataController
         DeleteSaveFile();
         currentSave = null;
         LoadingGame();
+    }
+
+    // Desfaz tudo o que foi feito no dia: volta para o save do comeco do dia (emails, achados,
+    // advertencias, chat, horario) e recarrega o Desktop. So o que vem de dias anteriores fica.
+    public static void ResetDayAndReload()
+    {
+        // Um loading em andamento ignoraria o LoadScene, e o save ja teria sido reiniciado.
+        if (LoadingScreen.IsLoading)
+        {
+            Debug.LogWarning("[DataController] ResetDayAndReload ignorado: ja existe um loading.");
+            return;
+        }
+
+        if (currentSave == null)
+            LoadingGame();
+
+        SaveData save = LoadDayStart(CurrentDay);
+        if (save == null)
+        {
+            // Save antigo, de antes da copia do comeco do dia: remonta o dia a partir dos Resources.
+            Debug.LogWarning(
+                "[DataController] ResetDayAndReload: sem copia do comeco do dia; remontando o dia."
+            );
+            save = BuildDayStart(CurrentDay);
+            SaveDayStart(save);
+        }
+
+        // Dicas do companheiro vistas hoje continuam vistas (nao repetem ao reiniciar o dia).
+        if (currentSave?.seenTips != null)
+        {
+            save.seenTips ??= new List<string>();
+            foreach (string tipId in currentSave.seenTips)
+            {
+                if (!save.seenTips.Contains(tipId))
+                    save.seenTips.Add(tipId);
+            }
+        }
+
+        currentSave = save;
+        SavingGame(save); // tambem volta CurrentDay e CurrentErrorCount para os do comeco do dia
+
+        Debug.Log(
+            $"[DataController] ResetDayAndReload: dia {save.current_day} reiniciado (erros={save.error_count})."
+        );
+
+        // A cena antiga continua rodando durante o loading (minimo 1,5 s). Pausado, o relogio, o
+        // envio de emails e o "digitando..." do chat nao mexem no save reiniciado nem o salvam
+        // com o horario antigo. A tela de loading anima com unscaledDeltaTime.
+        Time.timeScale = 0f;
+        SceneManager.sceneLoaded += OnDayResetSceneLoaded;
+        LoadingScreen.LoadScene("Desktop");
+
+        // Pedido recusado (ex.: cena fora do Build Settings): nao deixar o jogo pausado.
+        if (!LoadingScreen.IsLoading)
+            OnDayResetSceneLoaded(default, LoadSceneMode.Single);
+    }
+
+    private static void OnDayResetSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnDayResetSceneLoaded;
+        Time.timeScale = 1f;
     }
 
     public static void SavingGame(SaveData save = null)
@@ -144,6 +299,7 @@ public static class DataController
             CurrentDay = 1;
             CurrentErrorCount = 0;
             save = GetDailyDataJson(CurrentDay);
+            SaveDayStart(save);
         }
         currentSave = save;
 
@@ -187,6 +343,8 @@ public static class DataController
     {
         if (File.Exists(SavePath))
             File.Delete(SavePath);
+        if (File.Exists(DayStartPath))
+            File.Delete(DayStartPath);
     }
 
     public static void SaveMetaData(MetaData metaData = null)
@@ -245,6 +403,17 @@ public class StatisticsData
 
 }
 
+// Resumo de um slot para o menu. hour = -1: save de comeco de dia (relogio ainda nao andou).
+public class SaveSlotInfo
+{
+    public int slot;
+    public bool exists;
+    public int day;
+    public int hour = -1;
+    public int minute;
+    public DateTime lastSaved;
+}
+
 [System.Serializable]
 public class SaveData
 {
@@ -257,6 +426,8 @@ public class SaveData
     public List<ChatSaveState> chatStates;
     public List<TicketData> availableTickets;
     public List<TicketData> tickets;
+    // Ids das dicas do companheiro ja mostradas neste save (CompanionTips).
+    public List<string> seenTips = new();
 }
 
 [System.Serializable]
@@ -272,6 +443,8 @@ public class EmailData : AttachmentContent
     public string body;
     public List<AttachmentData> attachments = new();
     public List<EvidenceData> evidences = new();
+    // Opcional: id de uma dica do Resources/Companion/CompanionTips.json, mostrada ao abrir este email.
+    public string companionTip;
 }
 
 [System.Serializable]
@@ -376,10 +549,80 @@ public class ManualData : AttachmentContent
     public string ruleId;
 }
 
+// Anexo de RG. Os dados vem do colaborador do Database (employeeId = EmployeeData.id);
+// qualquer campo preenchido aqui substitui o do Database so neste documento (RG adulterado).
+// foto: caminho dentro de Resources/Images (ex.: "NPCs/npc_3"); vazio usa a foto do colaborador.
+// digital: idem (ex.: "Impressões Digitais/impressoes_digitais_2"); vazio usa a digital do RG do colaborador.
+[System.Serializable]
 public class RGData : AttachmentContent
 {
-    public string rgNumber;
-    public string name;
+    public string employeeId;
+    public string nome;
+    public string numero;
+    public string dataExpedicao;
+    public string dataNascimento;
+    public string naturalidade;
+    public string estadoEmissor;
+    public string estadoEmissao;
+    public string foto;
+    public string digital;
+
+    // Junta Database + campos do anexo. Sem colaborador, usa so o que veio no anexo.
+    public RGDocument Resolve()
+    {
+        EmployeeData employee = null;
+        if (!string.IsNullOrEmpty(employeeId))
+        {
+            foreach (EmployeeData candidate in DatabaseRepository.GetEmployees())
+                if (candidate.id == employeeId)
+                {
+                    employee = candidate;
+                    break;
+                }
+
+            if (employee == null)
+                Debug.LogWarning($"RGData: colaborador '{employeeId}' nao existe no Database do dia.");
+        }
+
+        EmployeeRGData rg = employee?.rg;
+        return new RGDocument
+        {
+            nome = Pick(nome, employee?.nome),
+            numero = Pick(numero, rg?.numero),
+            dataExpedicao = Pick(dataExpedicao, rg?.dataExpedicao),
+            dataNascimento = Pick(dataNascimento, rg?.dataNascimento),
+            naturalidade = Pick(naturalidade, rg?.naturalidade),
+            estadoEmissor = Pick(estadoEmissor, rg?.estadoEmissor),
+            estadoEmissao = Pick(estadoEmissao, rg?.estadoEmissao),
+            foto = Pick(foto, employee?.foto),
+            digital = Pick(digital, rg?.digital),
+        };
+    }
+
+    private static string Pick(string fromAttachment, string fromDatabase) =>
+        !string.IsNullOrEmpty(fromAttachment) ? fromAttachment : fromDatabase ?? string.Empty;
+}
+
+// RG ja resolvido (Database + anexo), pronto para a tela.
+public class RGDocument
+{
+    public string nome;
+    public string numero;
+    public string dataExpedicao;
+    public string dataNascimento;
+    public string naturalidade;
+    public string estadoEmissor;
+    public string estadoEmissao;
+    public string foto;
+    public string digital;
+
+    public Sprite GetPhoto() => LoadImage(foto);
+
+    public Sprite GetDigital() => LoadImage(digital);
+
+    // Caminho dentro de Resources/Images, sem extensao.
+    private static Sprite LoadImage(string path) =>
+        string.IsNullOrEmpty(path) ? null : Resources.Load<Sprite>($"Images/{path}");
 }
 
 [System.Serializable]
@@ -409,6 +652,7 @@ public class AttachmentContentConverter : JsonConverter<AttachmentContent>
         AttachmentContent content = obj switch
         {
             _ when obj.Property("sender") != null || obj.Property("subject") != null => new EmailData(),
+            _ when obj.Property("employeeId") != null || obj.Property("numero") != null => new RGData(),
             _ when obj.Property("ruleId") != null => new ManualData(),
             _ when obj.Property("imagePath") != null => new PNGData(),
             _ when obj.Property("text") != null => new PDFData(),

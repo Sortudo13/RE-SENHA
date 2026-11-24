@@ -946,12 +946,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Body
   valueText: {fileID: 0}
@@ -1598,12 +1604,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Attachments
   valueText: {fileID: 0}
@@ -1820,12 +1832,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Sender
   valueText: {fileID: 0}
@@ -1843,6 +1861,7 @@ GameObject:
   - component: {fileID: 5352866177896970366}
   - component: {fileID: 7505474183629121407}
   - component: {fileID: 8048234973118742131}
+  - component: {fileID: 7885318517913681606}
   m_Layer: 5
   m_Name: Texto
   m_TagString: Untagged
@@ -1963,7 +1982,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -116.952576, y: 0, z: 4.528201, w: -39.76831}
+  m_margin: {x: -116.952576, y: 0, z: 123.77531, w: -39.76831}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1995,6 +2014,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25eee0d4cf8b64e45bf7ebb39d05a63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LinkController
+--- !u!114 &7885318517913681606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955984519030127197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d271c5a20c912894594a4d55c7b8a5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorSwap
+  enterCursorType: 2
+  exitCursorType: 1
+  upCursorType: 2
+  downCursorType: 1
+  clickCursorType: 1
+  moveCursorType: 0
 --- !u!1 &4015124408145295297
 GameObject:
   m_ObjectHideFlags: 0
@@ -5093,12 +5130,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Subject
   valueText: {fileID: 0}

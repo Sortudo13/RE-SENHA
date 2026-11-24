@@ -11,4 +11,9 @@ public class ActionButtonController : MonoBehaviour
     {
         ActionController.SendAction(command, data);
     }
+
+    public void ResetDayAndReload()
+    {
+        DataController.ResetDayAndReload();
+    }
 }

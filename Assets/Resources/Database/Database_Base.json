@@ -13,9 +13,11 @@
         "dataExpedicao": "14/05/2016",
         "dataNascimento": "22/09/1988",
         "naturalidade": "São Paulo",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_1"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_9"
     },
     {
       "id": "002",
@@ -29,10 +31,12 @@
         "numero": "XX.221.905-8",
         "dataExpedicao": "03/11/2019",
         "dataNascimento": "10/04/1995",
-        "naturalidade": "Campinas",
-        "estadoEmissor": "SP"
+        "naturalidade": "Três Rios",
+        "estadoEmissor": "RJ",
+        "estadoEmissao": "Estado de Rio de Janeiro",
+        "digital": "Impressões Digitais/impressoes_digitais_2"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_2"
     },
     {
       "id": "003",
@@ -47,9 +51,11 @@
         "dataExpedicao": "19/08/2012",
         "dataNascimento": "05/12/1982",
         "naturalidade": "Ribeirão Preto",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_3"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_3"
     },
     {
       "id": "004",
@@ -64,9 +70,11 @@
         "dataExpedicao": "09/02/2010",
         "dataNascimento": "30/01/1975",
         "naturalidade": "Santos",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_4"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_8"
     },
     {
       "id": "005",
@@ -81,9 +89,11 @@
         "dataExpedicao": "27/07/2021",
         "dataNascimento": "18/06/1998",
         "naturalidade": "Sorocaba",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_5"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_7"
     },
     {
       "id": "006",
@@ -98,9 +108,11 @@
         "dataExpedicao": "11/10/2017",
         "dataNascimento": "14/03/1993",
         "naturalidade": "Bauru",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_1"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_12"
     },
     {
       "id": "007",
@@ -115,9 +127,11 @@
         "dataExpedicao": "04/04/2014",
         "dataNascimento": "07/11/1985",
         "naturalidade": "Piracicaba",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_2"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_1"
     }
   ]
 }

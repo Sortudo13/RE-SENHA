@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Dilema_Odisseu
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: odisseu_dilema_moral
+  npcName: Odisseu
+  npcAvatar: {fileID: 21300000, guid: 69e3ed6813564f648a9d3f270b7e933e, type: 3}
+  nodes:
+  - {fileID: 11400000, guid: 90f0e1a8e2253c997ad0c82eac6f425e, type: 2}
+  - {fileID: 11400000, guid: c129705162639153d9da4aff852cad3b, type: 2}
+  - {fileID: 11400000, guid: ffbf1df5f91008dc19544d88e9306fe7, type: 2}
+  - {fileID: 11400000, guid: f863605c7c03f8472a9979dc53423408, type: 2}
+  - {fileID: 11400000, guid: 085bba44b4b40adf38a21cc06b281c40, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 1

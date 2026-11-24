@@ -3,6 +3,7 @@
     "timeToReceive": 2,
     "mailBox": "User",
     "sender": "rh@nationaltech.com",
+    "companionTip": "email_boas_vindas",
     "subject": "Bem-vindo à equipe - Orientações do Dia 1",
     "body": "Olá! Seja bem-vindo à nossa equipe de segurança digital. Por favor, leia o manual anexado com os procedimentos do seu primeiro dia de trabalho.",
     "attachments": [
@@ -36,6 +37,24 @@
         "linkedName" : "<link=\"OpenAttachment|3\">arvore_boas_vindas.png</link>",
         "data" : {
           "imagePath" : "arvore"
+        }
+      }
+    ]
+  },
+  {
+    "timeToReceive": 4,
+    "mailBox": "User",
+    "sender": "suporte@empresa.com.br",
+    "subject": "[TESTE RG] Cópia do meu documento",
+    "body": "Oi! Segue a cópia do meu RG que você pediu para liberar o acesso.",
+    "attachments": [
+      {
+        "documentType" : 4,
+        "name" : "rg_lucas",
+        "extension" : "png",
+        "linkedName" : "<link=\"OpenAttachment|1\">rg_lucas.png</link>",
+        "data" : {
+          "employeeId" : "002"
         }
       }
     ]

@@ -21,6 +21,10 @@ public class ChatController : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("[ChatController] Awake: INICIANDO");
+        _history.Clear();
+        _activeConversation = null;
+
         if (chatTimeSync == null)
         {
             Debug.LogError("[ChatController] ChatTimeSync não atribuído!");
@@ -29,20 +33,16 @@ public class ChatController : MonoBehaviour
 
         chatTimeSync.EnsureState();
         _inboxState = chatTimeSync.State;
-        if (_inboxState == null)
-            return;
 
-        // Importa o estado salvo do JSON
+        // Importa o histórico visual das mensagens
         if (DataController.CurrentSave != null && DataController.CurrentSave.chatStates != null)
-            ImportState(DataController.CurrentSave.chatStates);
+            ImportHistoryOnly(DataController.CurrentSave.chatStates);
+
+        Debug.Log("[ChatController] Awake: _history limpo, _activeConversation=null");
     }
 
     private void OnEnable()
     {
-        if (_inboxState == null)
-            return;
-
-        ActionController.SyncSignal("ChatInboxReset", OnInboxReset);
         ActionController.SyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.SyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.SyncSignal<string>("ChatConversationArrived", OnConversationArrived);
@@ -50,7 +50,6 @@ public class ChatController : MonoBehaviour
 
     private void OnDisable()
     {
-        ActionController.UnsyncSignal("ChatInboxReset", OnInboxReset);
         ActionController.UnsyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.UnsyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.UnsyncSignal<string>("ChatConversationArrived", OnConversationArrived);
@@ -63,6 +62,9 @@ public class ChatController : MonoBehaviour
     {
         _windowView = window;
         _windowView.SetConversationClickHandler(OnConversationClicked);
+
+        if (_inboxState == null)
+            return;
 
         foreach (var state in _inboxState.All)
         {
@@ -199,6 +201,11 @@ public class ChatController : MonoBehaviour
             _activeConversation.isFinished = true;
             SyncChatStateToSave();
             _windowView.HideChoices();
+            // O ChatDecisionController confere o fim do dia (pode ter sido a ultima pendente).
+            ActionController.SendAction(
+                ChatDecisionController.ConversationFinishedAction,
+                _activeConversation.conversation.conversationId
+            );
             yield break;
         }
 
@@ -238,6 +245,12 @@ public class ChatController : MonoBehaviour
         RegisterHistory(chosen.optionText, false);
 
         _activeConversation.currentNodeId = chosen.nextNodeId;
+
+        // Conta antes de salvar, para o erro ir junto no save (SavingGame grava CurrentErrorCount).
+        // GameOver apaga o save e troca de cena: nao salvar nem seguir (salvaria no save novo).
+        if (ChatDecisionController.RegisterChoice(chosen))
+            return;
+
         SyncChatStateToSave();
 
         if (chosen.securityScoreDelta != 0)
@@ -368,6 +381,24 @@ public class ChatController : MonoBehaviour
                 }
                 _history[saved.conversationId] = messages;
             }
+        }
+    }
+
+    private void ImportHistoryOnly(List<ChatSaveState> savedStates)
+    {
+        if (savedStates == null)
+            return;
+
+        foreach (var saved in savedStates)
+        {
+            if (saved?.messageHistory == null || saved.messageHistory.Count == 0)
+                continue;
+
+            var list = new List<ChatMessageEntry>();
+            foreach (var entry in saved.messageHistory)
+                list.Add(new ChatMessageEntry { isFromNpc = entry.isFromNpc, text = entry.text });
+
+            _history[saved.conversationId] = list;
         }
     }
 

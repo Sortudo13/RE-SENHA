@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Encerramento_Odisseu_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcName: Odisseu
+  npcAvatar: {fileID: 0}
+  npcMessage: "Chegamos ao fim do expediente. Foi uma experi\xEAncia... enriquecedora.
+    Voc\xEA me ensinou coisas que meus criadores n\xE3o previram. At\xE9 amanh\xE3.
+    (Ou n\xE3o.)"
+  typingDelay: 1.5
+  options:
+  - optionText: Foi um prazer, Odisseu.
+    nextNodeId: prazer
+    securityScoreDelta: 0
+    feedbackTag: agradeceu
+  - optionText: "Voc\xEA \xE9 estranho."
+    nextNodeId: estranho
+    securityScoreDelta: 0
+    feedbackTag: criticou_odisseu
+  - optionText: Adeus.
+    nextNodeId: adeus
+    securityScoreDelta: 0
+    feedbackTag: despediu_se
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
