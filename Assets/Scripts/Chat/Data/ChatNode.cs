@@ -31,22 +31,6 @@ public class ChatNode : ScriptableObject
     [Tooltip("Marca este nó como final da conversa.")]
     public bool isEndNode;
 
-    [Header("Agendamento (opcional)")]
-    [Tooltip(
-        "Se -1, o nó é normal. Se >= 1, ele SÓ aparece quando o relógio chegar neste dia/hora."
-    )]
-    public int scheduledDay = -1;
-    public int scheduledHour = -1;
-    public int scheduledMinute = -1;
-
-    [Tooltip(
-        "Se preenchido, este nó SÓ aparece DEPOIS que o jogador responder o nó especificado aqui."
-    )]
-    public string requiresAnswerToNodeId;
-
-    public bool HasSchedule => scheduledDay > 0 && scheduledHour >= 0;
-    public int ScheduledTotalMinutes => (scheduledHour * 60) + scheduledMinute;
-
     [Tooltip("triggerId de um email do JSON do dia, que chega emailDelay segundos depois desta mensagem.")]
     public string emailTriggerId;
     public float emailDelay = 3f;

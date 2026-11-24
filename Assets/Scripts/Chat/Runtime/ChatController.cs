@@ -46,7 +46,6 @@ public class ChatController : MonoBehaviour
         ActionController.SyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.SyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.SyncSignal<string>("ChatConversationArrived", OnConversationArrived);
-        ActionController.SyncSignal<string>("ChatScheduledNodeArrived", OnScheduledNodeArrived);
     }
 
     private void OnDisable()
@@ -54,54 +53,6 @@ public class ChatController : MonoBehaviour
         ActionController.UnsyncSignal("SaveGame", SyncChatStateToSave);
         ActionController.UnsyncSignal<ChatWindowView>("ChatWindowCreated", OnWindowCreated);
         ActionController.UnsyncSignal<string>("ChatConversationArrived", OnConversationArrived);
-        ActionController.UnsyncSignal<string>("ChatScheduledNodeArrived", OnScheduledNodeArrived);
-    }
-
-    private void OnScheduledNodeArrived(string payload)
-    {
-        // Payload: "conversationId:nodeId"
-        var parts = payload.Split(':');
-        if (parts.Length != 2)
-            return;
-
-        string conversationId = parts[0];
-        string nodeId = parts[1];
-
-        var state = _inboxState.Get(conversationId);
-        if (state == null)
-            return;
-
-        var node = state.conversation.GetNode(nodeId);
-        if (node == null)
-            return;
-
-        // Se a conversa está aberta, toca o nó direto
-        if (_activeConversation == state && _windowView != null)
-        {
-            state.isFinished = false;
-            state.currentNodeId = nodeId;
-            PlayNode(node);
-            return;
-        }
-
-        // Se a conversa está fechada, atualiza a lista e marca como não lida
-        state.isFinished = false;
-        state.currentNodeId = nodeId;
-        state.hasUnread = true;
-
-        // Adiciona ao histórico visual
-        if (!_history.TryGetValue(conversationId, out var list))
-        {
-            list = new List<ChatMessageEntry>();
-            _history[conversationId] = list;
-        }
-        list.Add(new ChatMessageEntry { isFromNpc = true, text = node.npcMessage });
-
-        // Atualiza a UI da lista de conversas
-        if (_windowView != null)
-            _windowView.AddOrUpdateConversationItem(state, node.npcMessage);
-
-        SyncChatStateToSave();
     }
 
     // ============================================================
@@ -172,8 +123,6 @@ public class ChatController : MonoBehaviour
         if (state == null || !state.hasArrived)
             return;
 
-        ActionController.SendAction(TutorialSignals.ChatOpened, conversationId);
-
         if (_activeConversation != null && _activeConversation != state)
         {
             if (_npcFlowCoroutine != null)
@@ -201,22 +150,8 @@ public class ChatController : MonoBehaviour
         var currentNode = state.conversation.GetNode(state.currentNodeId);
         if (currentNode == null)
         {
-            var missingNodeId = state.currentNodeId;
-            currentNode = state.conversation.GetStartNode();
-            if (currentNode != null)
-            {
-                state.currentNodeId = currentNode.nodeId;
-                Debug.LogWarning(
-                    $"[ChatController] Nó '{missingNodeId}' não encontrado em '{state.conversation.conversationId}', usando o inicial."
-                );
-            }
-            else
-            {
-                Debug.LogError(
-                    $"[ChatController] Nenhum nó inicial válido em '{state.conversation.conversationId}'. startNodeId='{state.conversation.startNodeId}', nodes.Count={state.conversation.nodes?.Count ?? 0}."
-                );
-                return;
-            }
+            Debug.LogError($"[ChatController] Nó '{state.currentNodeId}' não encontrado.");
+            return;
         }
 
         if (!_history.TryGetValue(state.conversation.conversationId, out var hist))
@@ -315,11 +250,6 @@ public class ChatController : MonoBehaviour
         if (_activeConversation == null || _windowView == null)
             return;
 
-        ActionController.SendAction(
-            TutorialSignals.ChoiceMade,
-            _activeConversation.conversation.conversationId
-        );
-
         _windowView.HideChoices();
         _windowView.AppendPlayerMessage(chosen.optionText);
         RegisterHistory(chosen.optionText, false);
@@ -408,7 +338,6 @@ public class ChatController : MonoBehaviour
                 hasArrived = state.hasArrived,
                 hasUnread = state.hasUnread,
                 messageHistory = new List<ChatMessageEntry>(),
-                shownScheduledNodeIds = new List<string>(state.shownScheduledNodeIds), // NOVO
             };
 
             if (_history.TryGetValue(state.conversation.conversationId, out var messages))
@@ -450,10 +379,6 @@ public class ChatController : MonoBehaviour
             state.isFinished = saved.isFinished;
             state.hasArrived = saved.hasArrived;
             state.hasUnread = saved.hasUnread;
-            state.shownScheduledNodeIds =
-                saved.shownScheduledNodeIds != null
-                    ? new List<string>(saved.shownScheduledNodeIds)
-                    : new List<string>();
 
             // Reconstrói o _history a partir do save
             if (saved.messageHistory != null && saved.messageHistory.Count > 0)

@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Provocacao_Odisseu_reportou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: reportou
+  npcName: Odisseu
+  npcAvatar: {fileID: 0}
   npcMessage: "Reporte. Isso s\xF3 tornar\xE1 o jogo mais interessante."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
-  scheduledDay: -1
-  scheduledHour: -1
-  scheduledMinute: -1
-  requiresAnswerToNodeId: 
