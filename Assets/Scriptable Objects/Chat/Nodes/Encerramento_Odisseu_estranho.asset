@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
   m_Name: Encerramento_Odisseu_estranho
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: 
-  npcMessage: 
+  nodeId: estranho
+  npcMessage: "Estranho \xE9 um conceito humano. Eu apenas... sou."
   typingDelay: 1.5
   options: []
-  nextNodeIdIfNoChoice: 
+  nextNodeIdIfNoChoice: fim
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

@@ -18,3 +18,7 @@ MonoBehaviour:
   options: []
   nextNodeIdIfNoChoice: 
   isEndNode: 1
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

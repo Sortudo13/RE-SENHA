@@ -10,6 +10,7 @@ public class ChatInboxState
         public bool hasUnread;
         public bool isFinished;
         public string currentNodeId;
+        public List<string> shownScheduledNodeIds = new();
     }
 
     private readonly Dictionary<string, ConversationState> _states = new();
@@ -80,6 +81,61 @@ public class ChatInboxState
             result.Add(state);
         }
         return result;
+    }
+
+    public List<string> ProcessScheduledNodes(int currentDay, int currentTotalMinutes)
+    {
+        var nodesToShow = new List<string>();
+
+        foreach (var state in _states.Values)
+        {
+            if (!state.hasArrived || state.conversation == null)
+                continue;
+
+            ChatNode nextDue = null;
+
+            foreach (var node in state.conversation.nodes)
+            {
+                if (node == null || !node.HasSchedule)
+                    continue;
+                if (state.shownScheduledNodeIds.Contains(node.nodeId))
+                    continue;
+
+                bool timeReached =
+                    (currentDay > node.scheduledDay)
+                    || (
+                        currentDay == node.scheduledDay
+                        && currentTotalMinutes >= node.ScheduledTotalMinutes
+                    );
+
+                if (!timeReached)
+                    continue;
+
+                // Lógica Condicional (Defer)
+                // Se o nó exige uma resposta e o jogador AINDA ESTÁ naquele nó (não respondeu), pula.
+                if (
+                    !string.IsNullOrEmpty(node.requiresAnswerToNodeId)
+                    && state.currentNodeId == node.requiresAnswerToNodeId
+                )
+                {
+                    continue;
+                }
+
+                // Regra da race condition: pega o nó mais antigo (menor tempo) que já venceu
+                if (nextDue == null || node.ScheduledTotalMinutes < nextDue.ScheduledTotalMinutes)
+                {
+                    nextDue = node;
+                }
+            }
+
+            if (nextDue != null)
+            {
+                state.shownScheduledNodeIds.Add(nextDue.nodeId);
+                nodesToShow.Add($"{state.conversation.conversationId}:{nextDue.nodeId}");
+            }
+        }
+
+        return nodesToShow;
     }
 
     public void MarkAsRead(string conversationId)

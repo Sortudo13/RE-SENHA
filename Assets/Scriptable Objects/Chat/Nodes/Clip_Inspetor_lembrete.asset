@@ -10,19 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
-  m_Name: Phishing_Clip_explicar_phishing
+  m_Name: Clip_Inspetor_lembrete
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: explicar_phishing
-  npcMessage: "Phishing \xE9 uma t\xE9cnica de engenharia social onde o atacante
-    se passa por uma entidade confi\xE1vel (como o RH ou o banco) para roubar dados,
-    senhas ou instalar v\xEDrus. Eles usam a urg\xEAncia e o medo para te fazer clicar."
+  nodeId: lembrete
+  npcMessage: "S\xF3 passando para lembrar: n\xE3o deixe de inspecionar os anexos
+    de hoje!"
   typingDelay: 1.5
   options:
-  - optionText: Entendi. E como eu me protejo?
-    nextNodeId: dicas_protecao
+  - optionText: Entendido.
+    nextNodeId: fim_lembrete
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
-    feedbackTag: pediu_dicas
-  nextNodeIdIfNoChoice: dicas_protecao
-  isEndNode: 0
+    feedbackTag: agradeceu
+  nextNodeIdIfNoChoice: 
+  isEndNode: 1
+  scheduledDay: 2
+  scheduledHour: 11
+  scheduledMinute: 0
+  requiresAnswerToNodeId: inicio

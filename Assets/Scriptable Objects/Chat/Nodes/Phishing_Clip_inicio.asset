@@ -18,22 +18,26 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "O que \xE9 Phishing?"
-    nextNodeId: explicar_phishing
+    nextNodeId: explicar
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: solicitou_explicacao
   - optionText: Como eu me protejo?
-    nextNodeId: dicas_protecao
+    nextNodeId: dicas
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: pediu_dicas
   - optionText: Vou tomar cuidado.
-    nextNodeId: encerrar
+    nextNodeId: fim
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: confiante
   nextNodeIdIfNoChoice: 
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

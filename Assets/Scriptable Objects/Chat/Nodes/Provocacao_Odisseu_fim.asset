@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
   m_Name: Provocacao_Odisseu_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: 
-  npcMessage: 
+  nodeId: fim
+  npcMessage: "At\xE9 a pr\xF3xima. (Ou n\xE3o.)"
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
-  isEndNode: 0
+  isEndNode: 1
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

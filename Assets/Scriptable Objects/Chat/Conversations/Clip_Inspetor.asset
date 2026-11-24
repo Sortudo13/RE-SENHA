@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Clip_Inspetor
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: clip_dica_inspetor
+  npcName: Clip
+  npcAvatar: {fileID: 0}
+  nodes:
+  - {fileID: 11400000, guid: ee53c1f6e2007d0cdaf4690581b7d8b0, type: 2}
+  - {fileID: 11400000, guid: 8da8d4cb481e2a5f19bc4ea86efcb640, type: 2}
+  - {fileID: 11400000, guid: 4b9aee28af5dd0887b2b08823ad924b1, type: 2}
+  - {fileID: 11400000, guid: a4025f9911b3ca5a58df7c193fd0d4ce, type: 2}
+  - {fileID: 11400000, guid: 0bcd46d81af977569ae088bf4f4dbe99, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

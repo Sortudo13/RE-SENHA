@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: BoasVindas_Clip_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcMessage: "Sauda\xE7\xF5es, parceiro! Sou o Clip, o antiv\xEDrus da NationalTech.
-    Estou aqui para te ajudar a manter nossa empresa segura. Como voc\xEA deve saber,
-    o RH monitora nosso expediente."
+  npcMessage: "Sauda\xE7\xF5es, parceiro! Sou o Clip. Estou aqui para te ajudar a
+    manter nossa empresa segura. O RH monitora nosso expediente, sabia?"
   typingDelay: 1.5
   options:
   - optionText: Monitora? Como assim?
-    nextNodeId: explicar_monitoramento
+    nextNodeId: explicar
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
@@ -32,3 +31,7 @@ MonoBehaviour:
     feedbackTag: confiante
   nextNodeIdIfNoChoice: 
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

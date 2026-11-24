@@ -12,9 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
   m_Name: Dilema_Odisseu_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: 
-  npcMessage: 
+  nodeId: inicio
+  npcMessage: "Caro funcion\xE1rio, encontrei uma falha no sistema legado. Poderia
+    explor\xE1-la, mas... isso causaria transtornos aos funcion\xE1rios. O que voc\xEA
+    faria no meu lugar?"
   typingDelay: 1.5
-  options: []
+  options:
+  - optionText: "Seguran\xE7a sempre."
+    nextNodeId: seguranca
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: priorizou_seguranca
+  - optionText: Minimize o impacto.
+    nextNodeId: minimizar
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: incentivou_humanidade
+  - optionText: "Deixe como est\xE1."
+    nextNodeId: ignorar
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: repudiou_humanidade
   nextNodeIdIfNoChoice: 
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

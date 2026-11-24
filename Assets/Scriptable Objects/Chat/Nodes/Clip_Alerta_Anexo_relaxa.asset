@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
-  m_Name: BoasVindas_Clip_explicar_monitoramento
+  m_Name: Clip_Alerta_Anexo_relaxa
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: explicar_monitoramento
-  npcMessage: "Eles avaliam nossas decis\xF5es. Se voc\xEA aprovar documentos falsos
-    ou cair em golpes, leva advert\xEAncia. Tr\xEAs advert\xEAncias e voc\xEA est\xE1
-    fora. Por isso, use o Manual na barra de tarefas e o modo de inspe\xE7\xE3o para
-    verificar tudo."
+  nodeId: relaxa
+  npcMessage: "\xC9 esse pensamento que os hackers amam. Por favor, inspecione."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

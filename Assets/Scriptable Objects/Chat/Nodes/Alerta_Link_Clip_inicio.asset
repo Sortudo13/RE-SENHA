@@ -12,9 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
   m_Name: Alerta_Link_Clip_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
-  nodeId: 
-  npcMessage: 
+  nodeId: inicio
+  npcMessage: "Parceiro, detectei um link suspeito circulando. O dom\xEDnio \xE9
+    nationa1tech.com (com '1' em vez de 'l'). Recomendo n\xE3o clicar."
   typingDelay: 1.5
-  options: []
+  options:
+  - optionText: Obrigado pelo alerta.
+    nextNodeId: agradeceu
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: agradeceu_alerta
+  - optionText: Vou clicar para investigar.
+    nextNodeId: clicou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: clicou_link_suspeito
+  - optionText: "Como voc\xEA detectou isso?"
+    nextNodeId: explicou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: solicitou_explicacao
   nextNodeIdIfNoChoice: 
   isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 

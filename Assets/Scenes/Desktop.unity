@@ -3214,7 +3214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DesktopClockController
   startHour: 8
   endHour: 18
-  workDurationInMinutes: 1
+  workDurationInMinutes: 5
 --- !u!1 &942236834
 GameObject:
   m_ObjectHideFlags: 0
@@ -5059,6 +5059,12 @@ MonoBehaviour:
   tipOpenEmail: tutorial_open_email
   tipReadEmail: tutorial_read_email
   tipFinished: tutorial_finished
+  tipManualOpened: manual_first_open
+  tipChatOpened: first_chat_open
+  tipInspectionModeEntered: first_inspection_mode
+  tipDecisionMade: first_decision_pending
+  tipDocumentOpened: first_document_open
+  tipAlertReceived: first_alert_received
 --- !u!4 &1570152483
 Transform:
   m_ObjectHideFlags: 0

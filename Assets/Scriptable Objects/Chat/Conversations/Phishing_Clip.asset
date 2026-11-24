@@ -17,9 +17,8 @@ MonoBehaviour:
   npcAvatar: {fileID: 0}
   nodes:
   - {fileID: 11400000, guid: 0aec07846b724ad0cb3c6566e8ad498c, type: 2}
-  - {fileID: 11400000, guid: 036203ae31d49154e9da65b8802911bb, type: 2}
-  - {fileID: 11400000, guid: 2b9563ba781fb07978839292dd432ee9, type: 2}
-  - {fileID: 11400000, guid: 1a8f7ac88e42a0577a27f045853b068a, type: 2}
+  - {fileID: 11400000, guid: c3b509477d13739fd9482b148e3e0bec, type: 2}
+  - {fileID: 11400000, guid: 0f1204a39ad7f1db991e646ef8b46970, type: 2}
   - {fileID: 11400000, guid: b76846ba5ff359e17a4293d7111776f0, type: 2}
   startNodeId: inicio
   blocksDayEnd: 0
