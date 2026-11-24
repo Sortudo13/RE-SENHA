@@ -117,7 +117,7 @@ PrefabInstance:
     - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: windowIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 5e47a34627a1ce84dbec1e63fcca684a, type: 3}
+      objectReference: {fileID: 21300000, guid: a1e06aa71910bc944b2cea38e0683250, type: 3}
     - target: {fileID: 1417079691467779055, guid: 43d15509d98fcda49a3afc6027863b85, type: 3}
       propertyPath: windowName
       value: PNG
@@ -250,3 +250,4 @@ MonoBehaviour:
   zoomSpeed: 0.01
   zoomMin: 0.01
   zoomMax: 3
+  buttonStep: 0.1
