@@ -46,4 +46,8 @@ public class ChatNode : ScriptableObject
 
     public bool HasSchedule => scheduledDay > 0 && scheduledHour >= 0;
     public int ScheduledTotalMinutes => (scheduledHour * 60) + scheduledMinute;
+
+    [Tooltip("triggerId de um email do JSON do dia, que chega emailDelay segundos depois desta mensagem.")]
+    public string emailTriggerId;
+    public float emailDelay = 3f;
 }

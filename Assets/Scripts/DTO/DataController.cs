@@ -161,6 +161,8 @@ public static class DataController
     private static SaveData BuildDayStart(int day)
     {
         SaveData save = GetDailyDataJson(day);
+        if (currentSave != null)
+            save.currentCharacter = currentSave.currentCharacter;
         // Dicas do companheiro ja vistas valem para o save inteiro, nao so para o dia.
         if (currentSave?.seenTips != null)
             save.seenTips = new List<string>(currentSave.seenTips);
@@ -414,6 +416,7 @@ public class SaveSlotInfo
 [System.Serializable]
 public class SaveData
 {
+    public string currentCharacter = null;
     public int current_day;
     public int error_count;
     public int current_hour = -1;
@@ -444,6 +447,8 @@ public class EmailData : AttachmentContent
 
     // Opcional: id de uma dica do Resources/Companion/CompanionTips.json, mostrada ao abrir este email.
     public string companionTip;
+    // Opcional: so chega quando o chat manda (emailTriggerId no ChatNode/ChatOption).
+    public string triggerId;
 }
 
 [System.Serializable]

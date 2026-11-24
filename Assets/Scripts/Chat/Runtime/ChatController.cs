@@ -260,6 +260,7 @@ public class ChatController : MonoBehaviour
         _windowView.AppendNpcMessage(node.npcMessage);
         RegisterHistory(node.npcMessage, true);
         SyncChatStateToSave();
+        StartCoroutine(SendEmailLater(node.emailTriggerId, node.emailDelay));
 
         if (node.isEndNode)
         {
@@ -284,6 +285,15 @@ public class ChatController : MonoBehaviour
             if (next != null)
                 PlayNode(next);
         }
+    }
+
+    // O SenderController entrega o email do JSON do dia com esse triggerId.
+    private IEnumerator SendEmailLater(string triggerId, float delay)
+    {
+        if (string.IsNullOrWhiteSpace(triggerId))
+            yield break;
+        yield return new WaitForSeconds(delay);
+        ActionController.SendAction("TriggerEmail", triggerId);
     }
 
     private void ShowChoicesIfAny(ChatNode node)
@@ -315,6 +325,7 @@ public class ChatController : MonoBehaviour
         RegisterHistory(chosen.optionText, false);
 
         _activeConversation.currentNodeId = chosen.nextNodeId;
+        StartCoroutine(SendEmailLater(chosen.emailTriggerId, chosen.emailDelay));
 
         // Conta antes de salvar, para o erro ir junto no save (SavingGame grava CurrentErrorCount).
         // GameOver apaga o save e troca de cena: nao salvar nem seguir (salvaria no save novo).
