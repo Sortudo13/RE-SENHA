@@ -13,6 +13,7 @@ public class SaveSlotsPanel : MonoBehaviour
     [Header("Slots (arrastar na ordem 1, 2, 3)")]
     [SerializeField] private Button[] slotButtons = new Button[DataController.SaveSlotCount];
     [SerializeField] private TextMeshProUGUI[] slotTexts = new TextMeshProUGUI[DataController.SaveSlotCount];
+    [SerializeField] private Image[] slotIcons = new Image[DataController.SaveSlotCount];
 
     [Header("Opcional")]
     [SerializeField] private TextMeshProUGUI title;
@@ -58,6 +59,17 @@ public class SaveSlotsPanel : MonoBehaviour
 
             if (i < slotTexts.Length && slotTexts[i] != null)
                 slotTexts[i].text = Describe(info);
+
+            if (i < slotIcons.Length)
+            {
+                if (info.currentCharacter != null)
+                    slotIcons[i].sprite = Resources.Load<Sprite>($"Images/NPCs/{info.currentCharacter}");
+                else
+                    slotIcons[i].sprite = Resources.Load<Sprite>($"Images/NPCs/Diskette");
+
+                if (!info.exists)
+                    slotIcons[i].sprite = Resources.Load<Sprite>($"System/Plus_Signal");
+            }
         }
 
         gameObject.SetActive(true);

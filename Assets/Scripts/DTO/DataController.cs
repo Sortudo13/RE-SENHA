@@ -102,6 +102,7 @@ public static class DataController
             info.day = json.Value<int?>("current_day") ?? 1;
             info.hour = json.Value<int?>("current_hour") ?? -1;
             info.minute = json.Value<int?>("current_minute") ?? 0;
+            info.currentCharacter = json.Value<string>("currentCharacter");
             info.lastSaved = File.GetLastWriteTime(path);
             info.exists = true;
         }
@@ -410,6 +411,7 @@ public class SaveSlotInfo
     public int day;
     public int hour = -1;
     public int minute;
+    public string currentCharacter = null;
     public DateTime lastSaved;
 }
 
