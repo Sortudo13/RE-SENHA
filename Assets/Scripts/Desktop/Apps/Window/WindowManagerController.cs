@@ -77,6 +77,7 @@ public class WindowManagerController : MonoBehaviour
 
     public void SwapWorkspace()
     {
+        ActionController.SendAction(TutorialSignals.TaskbarUsed, "show_desktop");
         if (activeWindowCount > 0)
             SwapDesktop();
         else

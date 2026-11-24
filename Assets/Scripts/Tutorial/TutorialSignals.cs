@@ -8,4 +8,10 @@ public static class TutorialSignals
     public const string InspectionModeEntered = "TutorialInspectionModeEntered";
     public const string DocumentOpened = "TutorialDocumentOpened";
     public const string AlertReceived = "TutorialAlertReceived";
+    public const string CompanyMailboxOpened = "TutorialCompanyMailboxOpened";
+    public const string EmailActionButtonsShown = "TutorialEmailActionButtonsShown";
+    public const string FirstErrorCommitted = "TutorialFirstErrorCommitted";
+    public const string DayEndApproaching = "TutorialDayEndApproaching";
+    public const string PauseMenuOpened = "TutorialPauseMenuOpened";
+    public const string TaskbarUsed = "TutorialTaskbarUsed";
 }

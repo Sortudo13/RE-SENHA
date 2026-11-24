@@ -16,6 +16,7 @@ public class ChatController : MonoBehaviour
     private ChatInboxState _inboxState;
     private ChatInboxState.ConversationState _activeConversation;
     private Coroutine _npcFlowCoroutine;
+    private const string ChatAppName = "Chat";
 
     private readonly Dictionary<string, List<ChatMessageEntry>> _history = new();
 
@@ -57,6 +58,26 @@ public class ChatController : MonoBehaviour
         ActionController.UnsyncSignal<string>("ChatScheduledNodeArrived", OnScheduledNodeArrived);
     }
 
+    private IEnumerator Start()
+    {
+        if (_inboxState == null)
+            yield break;
+
+        // A chegada pode ter sido processada antes do IconController assinar o sinal,
+        // e conversas não lidas também podem ter sido restauradas do save.
+        yield return null;
+
+        foreach (var state in _inboxState.All)
+        {
+            if (state.hasArrived && state.hasUnread)
+            {
+                Debug.Log($"[BadgeDebug] ChatController disparando ShowNotificationBadge('{ChatAppName}') em Start (reconciliação de conversas não lidas).", this);
+                ActionController.SendAction("ShowNotificationBadge", ChatAppName);
+                yield break;
+            }
+        }
+    }
+
     private void OnScheduledNodeArrived(string payload)
     {
         // Payload: "conversationId:nodeId"
@@ -75,8 +96,8 @@ public class ChatController : MonoBehaviour
         if (node == null)
             return;
 
-        // Se a conversa está aberta, toca o nó direto
-        if (_activeConversation == state && _windowView != null)
+        // A referência da view permanece após minimizar a janela; só é visível enquanto ativa.
+        if (_activeConversation == state && _windowView != null && _windowView.isActiveAndEnabled)
         {
             state.isFinished = false;
             state.currentNodeId = nodeId;
@@ -88,6 +109,10 @@ public class ChatController : MonoBehaviour
         state.isFinished = false;
         state.currentNodeId = nodeId;
         state.hasUnread = true;
+        Debug.Log($"[BadgeDebug] ChatController: conversa '{conversationId}' marcada como não lida. Disparando ShowNotificationBadge.", this);
+
+        Debug.Log($"[BadgeDebug] ChatController disparando ShowNotificationBadge('{ChatAppName}') em OnScheduledNodeArrived.", this);
+        ActionController.SendAction("ShowNotificationBadge", ChatAppName);
 
         // Adiciona ao histórico visual
         if (!_history.TryGetValue(conversationId, out var list))
@@ -112,6 +137,8 @@ public class ChatController : MonoBehaviour
         _windowView = window;
         _windowView.SetConversationClickHandler(OnConversationClicked);
 
+        ActionController.SendAction("HideNotificationBadge", ChatAppName);
+
         if (_inboxState == null)
             return;
 
@@ -130,13 +157,21 @@ public class ChatController : MonoBehaviour
     // ============================================================
     private void OnConversationArrived(string conversationId)
     {
+        Debug.Log($"[BadgeDebug] ChatController recebeu ChatConversationArrived('{conversationId}'). inboxState inicializado={_inboxState != null}.", this);
         var state = _inboxState.Get(conversationId);
         if (state == null)
+        {
+            Debug.LogWarning($"[BadgeDebug] ChatController não encontrou a conversa '{conversationId}' no inbox.", this);
             return;
+        }
 
+        Debug.Log($"[BadgeDebug] ChatController: conversa '{conversationId}' marcada como não lida. Disparando ShowNotificationBadge. hasUnread={state.hasUnread}", this);
         string preview = GetPreviewForState(state);
         if (_windowView != null)
             _windowView.AddOrUpdateConversationItem(state, preview);
+
+        Debug.Log($"[BadgeDebug] ChatController disparando ShowNotificationBadge('{ChatAppName}') em OnConversationArrived.", this);
+        ActionController.SendAction("ShowNotificationBadge", ChatAppName);
     }
 
     private void OnInboxReset()
@@ -183,6 +218,18 @@ public class ChatController : MonoBehaviour
 
         state.hasUnread = false;
         SyncChatStateToSave();
+
+        bool anyUnread = false;
+        foreach (var s in _inboxState.All)
+        {
+            if (s.hasUnread)
+            {
+                anyUnread = true;
+                break;
+            }
+        }
+        if (!anyUnread)
+            ActionController.SendAction("HideNotificationBadge", ChatAppName);
 
         if (_windowView != null)
             _windowView.AddOrUpdateConversationItem(state, GetPreviewForState(state));

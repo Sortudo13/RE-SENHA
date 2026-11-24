@@ -20,16 +20,31 @@ public class IconController : MonoBehaviour
     [SerializeField]
     private Image notificationBadge;
 
-    private void Start() => CheckExistence();
+    [SerializeField]
+    private bool debugBadge = true;
+
+    private void Start()
+    {
+        if (debugBadge)
+            Debug.Log($"[BadgeDebug] IconController.Start. GameObject ativo={gameObject.activeSelf}. AppName='{windowPrefab?.AppName}'", this);
+        CheckExistence();
+    }
 
     private void OnValidate() => ApplyDesktopSettings();
 
-    private void Awake() => ActionController.SyncSignal("DayChanged", CheckExistence);
+    private void Awake()
+    {
+        if (debugBadge)
+            Debug.Log($"[BadgeDebug] IconController.Awake. GameObject ativo={gameObject.activeSelf}. AppName='{windowPrefab?.AppName}'", this);
+        ActionController.SyncSignal("DayChanged", CheckExistence);
+    }
 
     private void OnEnable()
     {
         ActionController.SyncSignal<string>("ShowNotificationBadge", ShowNotificationBadge);
         ActionController.SyncSignal<string>("HideNotificationBadge", HideNotificationBadge);
+        if (debugBadge)
+            Debug.Log($"[BadgeDebug] IconController.OnEnable registrou sinais. AppName='{windowPrefab?.AppName}'. notificationBadge={(notificationBadge != null ? notificationBadge.name : "NULL")}", this);
     }
 
     private void OnDisable()
@@ -75,12 +90,16 @@ public class IconController : MonoBehaviour
 
     private void ShowNotificationBadge(string app)
     {
+        if (debugBadge)
+            Debug.Log($"[BadgeDebug] ShowNotificationBadge chamado com app='{app}'. Meu AppName='{windowPrefab?.AppName}'. Match={app == windowPrefab?.AppName}. badge atribuído={notificationBadge != null}. badge ativo={notificationBadge?.gameObject.activeSelf}", this);
         if (app == windowPrefab.AppName)
             notificationBadge.gameObject.SetActive(true);
     }
 
     private void HideNotificationBadge(string app)
     {
+        if (debugBadge)
+            Debug.Log($"[BadgeDebug] HideNotificationBadge chamado com app='{app}'. Meu AppName='{windowPrefab?.AppName}'. Match={app == windowPrefab?.AppName}", this);
         if (app == windowPrefab.AppName)
             notificationBadge.gameObject.SetActive(false);
     }

@@ -141,6 +141,8 @@ public class EmailController : MonoBehaviour
     private void UpdateEmailListScreen(MailBox box)
     {
         currentBox = box;
+        if (box != null && box.mailBox == "Company")
+            ActionController.SendAction(TutorialSignals.CompanyMailboxOpened, "Company");
 
         Transform listContainer = listScreen.transform.Find("ListContainer");
         if (listContainer.childCount > 0)
@@ -220,10 +222,13 @@ public class EmailController : MonoBehaviour
             else
                 attach.text = "Sem anexos";
         }
+        bool showActionButtons = currentBox != null && currentBox.mailBox == "Company";
         if (emailButtons != null)
-            emailButtons.gameObject.SetActive(
-                currentBox != null && currentBox.mailBox == "Company"
-            );
+        {
+            emailButtons.gameObject.SetActive(showActionButtons);
+            if (showActionButtons)
+                ActionController.SendAction(TutorialSignals.EmailActionButtonsShown, email.subject);
+        }
 
         if (currentBox != null)
             transform.Find("MailScreen/Back").gameObject.SetActive(true);
