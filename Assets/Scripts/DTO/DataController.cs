@@ -160,6 +160,8 @@ public static class DataController
     private static SaveData BuildDayStart(int day)
     {
         SaveData save = GetDailyDataJson(day);
+        if (currentSave != null)
+            save.currentCharacter = currentSave.currentCharacter;
         // Dicas do companheiro ja vistas valem para o save inteiro, nao so para o dia.
         if (currentSave?.seenTips != null)
             save.seenTips = new List<string>(currentSave.seenTips);
