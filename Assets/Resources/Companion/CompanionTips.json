@@ -7,7 +7,7 @@
         { "pose": "happy", "anim": "jump", "text": "Opa! Esse é o Manual. Aqui ficam todas as regras que você precisa seguir." },
         { "pose": "scared", "anim": "shake", "text": "Nossa... são muitas regras mesmo." },
         { "pose": "angry", "text": "Mas nada de pular! Se aprovar algo fora das regras, quem leva a advertência é você." },
-        { "text": "Clique numa regra para ver os detalhes. Boa sorte!" }
+        { "pose": "explain", "text": "Clique numa regra para ver os detalhes. Boa sorte!" }
       ]
     },
     {
@@ -50,79 +50,80 @@
     {
       "id": "first_chat_open",
       "lines": [
-        { "pose": "", "anim": "", "text": "Ah, o chat! Aqui você conversa com os colegas e com o suporte de TI." },
-        { "pose": "", "anim": "", "text": "Só não vá clicar em links que te mandarem por aqui, combinado?" },
-        { "pose": "", "anim": "shake", "text": "A engenharia social adora um chat..." }
+        { "pose": "happy", "text": "Ah, o chat! Aqui você conversa com os colegas e com o suporte de TI." },
+        { "pose": "thinking", "text": "Só não vá clicar em links que te mandarem por aqui, combinado?" },
+        { "pose": "scared", "anim": "shake", "text": "A engenharia social adora um chat..." }
       ]
     },
     {
       "id": "first_inspection_mode",
       "lines": [
-        { "pose": "", "anim": "", "text": "Você ativou o modo de inspeção. Use-o para verificar se os documentos estão autênticos." },
-        { "pose": "", "anim": "", "text": "Mas atenção: não saia por aí aprovando tudo sem checar. Cada erro conta." }
+        { "pose": "explain", "text": "Você ativou o modo de inspeção. Use-o para verificar se os documentos estão autênticos." },
+        { "pose": "angry", "text": "Mas atenção: não saia por aí aprovando tudo sem checar. Cada erro conta." }
       ]
     },
     {
       "id": "first_decision_pending",
       "lines": [
-        { "pose": "", "anim": "", "text": "Você tem uma decisão pendente. Aprovar ou rejeitar exige cuidado." },
-        { "pose": "", "anim": "", "text": "Se tiver dúvida, consulte o Manual ou me pergunte. Estou aqui para isso." }
+        { "pose": "thinking", "text": "Você tem uma decisão pendente. Aprovar ou rejeitar exige cuidado." },
+        { "pose": "explain", "text": "Se tiver dúvida, consulte o Manual ou me pergunte. Estou aqui para isso." }
       ]
     },
     {
       "id": "first_document_open",
       "lines": [
-        { "pose": "", "anim": "", "text": "Um anexo aberto! Confira se os dados e o contexto combinam com o que foi pedido." },
-        { "pose": "", "anim": "shake", "text": "PDF, imagem e documento de identidade também podem ser adulterados. Nada de confiar só pela aparência!" }
+        { "pose": "thinking", "text": "Um anexo aberto! Confira se os dados e o contexto combinam com o que foi pedido." },
+        { "pose": "scared", "anim": "shake", "text": "PDF, imagem e documento de identidade também podem ser adulterados. Nada de confiar só pela aparência!" }
       ]
     },
     {
       "id": "first_alert_received",
       "lines": [
-        { "pose": "", "anim": "", "text": "Recebeu um alerta? Leia tudo com calma antes de agir." },
-        { "pose": "", "anim": "", "text": "Se algo não fizer sentido, consulte o Manual. Eu também fico nervoso com janelas vermelhas!" }
+        { "pose": "scared", "text": "Recebeu um alerta? Leia tudo com calma antes de agir." },
+        { "pose": "thinking", "text": "Se algo não fizer sentido, consulte o Manual. Eu também fico nervoso com janelas vermelhas!" }
       ]
     },
     {
       "id": "tutorial_company_mailbox",
       "lines": [
-        { "pose": "", "anim": "", "text": "Essa é a caixa da Empresa, diferente da sua caixa User. Aqui, cada e-mail pede uma decisão: Aprovar ou Bloquear." },
-        { "pose": "", "anim": "", "text": "Atenção redobrada: aprovar algo errado pode render uma advertência. Eu já estou suando!" }
+        { "pose": "explain", "text": "Essa é a caixa da Empresa, diferente da sua caixa User. Aqui, cada e-mail pede uma decisão: Aprovar ou Bloquear." },
+        { "pose": "scared", "anim": "shake", "text": "Atenção redobrada: aprovar algo errado pode render uma advertência. Eu já estou suando!" }
       ]
     },
     {
       "id": "tutorial_action_buttons",
       "lines": [
-        { "pose": "", "anim": "", "text": "Esses botões registram sua decisão: Aprovar aceita o e-mail; Bloquear o recusa. Em ambos os casos, ele sai da fila." },
-        { "pose": "", "anim": "", "text": "A escolha é definitiva e errar conta como advertência. Confira o Manual antes de clicar; minhas patinhas estão tremendo." }
+        { "pose": "point", "text": "Esses botões registram sua decisão: Aprovar aceita o e-mail; Bloquear o recusa. Em ambos os casos, ele sai da fila." },
+        { "pose": "scared", "anim": "shake", "text": "A escolha é definitiva e errar conta como advertência. Confira o Manual antes de clicar; minhas patinhas estão tremendo." }
       ]
     },
     {
       "id": "tutorial_first_error",
       "lines": [
-        { "pose": "", "anim": "", "text": "Eita, essa decisão virou uma advertência! Você tem no máximo três erros; ao terceiro, é Game Over." },
-        { "pose": "", "anim": "", "text": "Respire fundo e confira o Manual antes da próxima. Eu vou tentar não entrar em pânico." }
+        { "pose": "scared", "anim": "shake", "text": "Eita, essa decisão virou uma advertência! Você tem no máximo três erros; ao terceiro, é Game Over." },
+        { "pose": "thinking", "text": "Respire fundo e confira o Manual antes da próxima. Eu vou tentar não entrar em pânico." }
       ]
     },
     {
       "id": "tutorial_day_end",
       "lines": [
-        { "pose": "", "anim": "", "text": "O expediente acabou! Avançar Dia só aparece depois de responder os e-mails já recebidos na caixa Company e terminar as conversas que bloqueiam o fechamento." },
-        { "pose": "", "anim": "", "text": "Ao avançar, começa o próximo dia com novas tarefas. E-mails da Empresa que ainda não chegaram são descartados no fim do expediente. Ufa!" }
+        { "pose": "explain", "text": "O expediente acabou! Avançar Dia só aparece depois de responder os e-mails já recebidos na caixa Company e terminar as conversas que bloqueiam o fechamento." },
+        { "pose": "idle", "text": "Ao avançar, começa o próximo dia com novas tarefas. E-mails da Empresa que ainda não chegaram são descartados no fim do expediente. Ufa!" }
       ]
     },
     {
       "id": "tutorial_pause_menu",
       "lines": [
-        { "pose": "", "anim": "", "text": "Neste menu, Retornar ao Menu Principal leva você à tela inicial; Sair fecha o jogo." },
-        { "pose": "", "anim": "", "text": "Resetar Dia não é um dos botões daqui; quando disponível, ele restaura o estado do começo do dia. Eu confirmaria antes de apertar qualquer coisa!" }
+        { "pose": "explain", "text": "Este é o menu do jogo! Reiniciar o Dia restaura o save do começo do dia e desfaz o que você fez desde então." },
+        { "pose": "scared", "anim": "shake", "text": "Sair para o Menu Principal leva à tela inicial sem apagar o save. Só cuidado: Reiniciar não tem botão de desfazer... e eu fico nervoso só de pensar!" },
+        { "pose": "thinking", "text": "Trocar usuário permite alternar entre diferentes perfis de jogador. Cuidado: suas ações e progresso não serão transferidos." }
       ]
     },
     {
       "id": "tutorial_taskbar",
       "lines": [
-        { "pose": "", "anim": "", "text": "Os ícones da barra de tarefas representam janelas abertas. Clique em um para trazê-la à frente — ou minimizá-la se já estiver ativa." },
-        { "pose": "", "anim": "", "text": "O botão no canto direito mostra a área de trabalho; clique de novo para voltar às janelas. Parece magia, mas é só bagunça organizada." }
+        { "pose": "point", "text": "Os ícones da barra de tarefas representam janelas abertas. Clique em um para trazê-la à frente — ou minimizá-la se já estiver ativa." },
+        { "pose": "happy", "anim": "jump", "text": "O botão no canto direito mostra a área de trabalho; clique de novo para voltar às janelas. Parece magia, mas é só bagunça organizada." }
       ]
     }
   ]

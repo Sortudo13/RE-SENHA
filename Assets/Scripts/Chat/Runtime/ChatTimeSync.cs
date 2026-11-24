@@ -6,6 +6,7 @@ public class ChatTimeSync : MonoBehaviour
     private ChatInbox inbox;
 
     private ChatInboxState _state;
+    private bool _hasLoggedInitialTimeSync;
     public ChatInboxState State => _state;
 
     private void Awake()
@@ -65,17 +66,30 @@ public class ChatTimeSync : MonoBehaviour
         int day = DataController.CurrentDay;
         int totalMinutes = (ClockController.CurrentHour * 60) + ClockController.CurrentMinute;
 
+        if (!_hasLoggedInitialTimeSync)
+        {
+            Debug.Log($"[BadgeDebug] ChatTimeSync recebeu primeiro TimeUpdated/DayChanged: dia={day}, horário={ClockController.CurrentHour:D2}:{ClockController.CurrentMinute:D2}, estado inicializado={_state != null}.", this);
+            _hasLoggedInitialTimeSync = true;
+        }
+
         // Processa chegadas normais
         var arrivedConversations = State.ProcessTime(day, totalMinutes);
-        foreach (var convId in arrivedConversations)
+        if (arrivedConversations.Count > 0)
+            Debug.Log($"[BadgeDebug] ChatTimeSync encontrou conversas chegando: {string.Join(", ", arrivedConversations.ConvertAll(c => c.conversation.conversationId))}.", this);
+        foreach (var conversation in arrivedConversations)
         {
-            ActionController.SendAction("ChatConversationArrived", convId);
+            string conversationId = conversation.conversation.conversationId;
+            Debug.Log($"[BadgeDebug] ChatTimeSync disparando ChatConversationArrived('{conversationId}').", this);
+            ActionController.SendAction("ChatConversationArrived", conversationId);
         }
 
         // Processa nós agendados
         var scheduledNodes = State.ProcessScheduledNodes(day, totalMinutes);
+        if (scheduledNodes.Count > 0)
+            Debug.Log($"[BadgeDebug] ChatTimeSync encontrou nós agendados: {string.Join(", ", scheduledNodes)}.", this);
         foreach (var payload in scheduledNodes)
         {
+            Debug.Log($"[BadgeDebug] ChatTimeSync disparando ChatScheduledNodeArrived('{payload}').", this);
             ActionController.SendAction("ChatScheduledNodeArrived", payload);
         }
     }

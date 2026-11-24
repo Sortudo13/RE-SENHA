@@ -17,11 +17,6 @@ public class WindowMenuController : MonoBehaviour
 
     private WindowController _window;
 
-    private void OnEnable()
-    {
-        ActionController.SendAction(TutorialSignals.PauseMenuOpened, "");
-    }
-
     private void Awake()
     {
         _window = GetComponent<WindowController>();
