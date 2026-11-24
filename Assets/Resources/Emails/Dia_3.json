@@ -86,5 +86,13 @@
         "data": {}
       }
     ]
+  },
+  {
+    "triggerId": "senha_vazada",
+    "mailBox": "User",
+    "sender": "seguranca@nationaltech.com",
+    "subject": "URGENTE: sua senha foi vazada",
+    "body": "Olá. Nossa equipe de segurança foi notificada de que a sua senha corporativa foi exposta. Tome cuidado: nunca informe sua senha por chat, email ou telefone, nem mesmo para alguém que diga ser do suporte. Por precaução, troque sua senha imediatamente e fique atento a mensagens suspeitas.",
+    "attachments": []
   }
 ]
