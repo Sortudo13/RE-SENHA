@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Dados_Clip_respondeu
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: respondeu
-  npcMessage: Pizza. Anotado. Obrigado por contribuir com minha jornada.
+  npcName: Clip
+  npcAvatar: {fileID: 0}
+  npcMessage: "Pizza. Anotado. Obrigado por contribuir com minha jornada rumo \xE0
+    humanidade."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
-  scheduledDay: -1
-  scheduledHour: -1
-  scheduledMinute: -1
-  requiresAnswerToNodeId: 

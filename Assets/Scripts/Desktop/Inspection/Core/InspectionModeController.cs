@@ -50,8 +50,6 @@ public sealed class InspectionModeController : MonoBehaviour
             inspectionOverlay.SetActive(active);
 
         ActionController.SendAction(InspectionSignals.ModeChanged, active);
-        if (active)
-            ActionController.SendAction(TutorialSignals.InspectionModeEntered, "inspection");
     }
 
     private void PublishState()

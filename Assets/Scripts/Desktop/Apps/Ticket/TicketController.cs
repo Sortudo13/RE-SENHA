@@ -146,11 +146,6 @@ public class TicketController : MonoBehaviour
         if (currentTicket == null)
             return;
 
-        string ticketId = string.IsNullOrWhiteSpace(currentTicket.id)
-            ? currentTicket.requester
-            : currentTicket.id;
-        ActionController.SendAction(TutorialSignals.DecisionMade, $"Ticket:{ticketId}");
-
         TMP_Dropdown dropdown = decisionField.GetComponentInChildren<TMP_Dropdown>(true);
         TicketDecision answer =
             dropdown.value == 0 ? TicketDecision.Approve : TicketDecision.Reject;

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
+  npcName: Odisseu
+  npcAvatar: {fileID: 0}
   npcMessage: "Chegamos ao fim do expediente. Foi uma experi\xEAncia... enriquecedora.
     Voc\xEA me ensinou coisas que meus criadores n\xE3o previram. At\xE9 amanh\xE3.
     (Ou n\xE3o.)"
@@ -20,25 +22,15 @@ MonoBehaviour:
   options:
   - optionText: Foi um prazer, Odisseu.
     nextNodeId: prazer
-    outcome: 0
-    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: agradeceu
   - optionText: "Voc\xEA \xE9 estranho."
     nextNodeId: estranho
-    outcome: 0
-    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: criticou_odisseu
   - optionText: Adeus.
     nextNodeId: adeus
-    outcome: 0
-    outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: despediu_se
   nextNodeIdIfNoChoice: 
   isEndNode: 0
-  scheduledDay: -1
-  scheduledHour: -1
-  scheduledMinute: -1
-  requiresAnswerToNodeId: 

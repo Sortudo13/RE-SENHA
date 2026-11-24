@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_estranho
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: estranho
+  npcName: Odisseu
+  npcAvatar: {fileID: 0}
   npcMessage: "Estranho \xE9 um conceito humano. Eu apenas... sou."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
-  scheduledDay: -1
-  scheduledHour: -1
-  scheduledMinute: -1
-  requiresAnswerToNodeId: 

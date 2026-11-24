@@ -85,8 +85,6 @@ public class AlertManagerController : MonoBehaviour
 
         connectedAlert.transform.SetAsLastSibling();
         connectedAlert.SetActive(true);
-        if (!feedback.isPositive)
-            ActionController.SendAction(TutorialSignals.AlertReceived, "security_warning");
     }
 
     private void ShowNextDay()
@@ -137,7 +135,6 @@ public class AlertManagerController : MonoBehaviour
 
         connectedAlert.transform.SetAsFirstSibling();
         connectedAlert.SetActive(true);
-        ActionController.SendAction(TutorialSignals.AlertReceived, "blocked_window");
     }
 
     private void ShowFindings(string[] pages)

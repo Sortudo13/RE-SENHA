@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Dilema_Odisseu_seguranca
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: seguranca
+  npcName: Odisseu
+  npcAvatar: {fileID: 0}
   npcMessage: Frio e calculista. Gosto disso.
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
   isEndNode: 0
-  scheduledDay: -1
-  scheduledHour: -1
-  scheduledMinute: -1
-  requiresAnswerToNodeId: 
