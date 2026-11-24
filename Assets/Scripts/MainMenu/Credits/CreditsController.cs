@@ -34,34 +34,23 @@ public class CreditsController : MonoBehaviour
 
     private Coroutine scrollRoutine;
     private bool _isClosing;
-    private bool _shouldPlay; // NOVO: só roda se for instruído
 
     private void Awake()
     {
         _textTMP = creditsText.GetComponent<TextMeshProUGUI>();
-        _shouldPlay = false;
 
         // Garante que o objeto comece desativado, independentemente do estado da cena
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     // Método público para o MainMenuController chamar quando o jogador clicar em "Créditos"
     public void ShowCredits()
     {
-        _shouldPlay = true;
         gameObject.SetActive(true);
-        // O OnEnable será chamado automaticamente e verificará _shouldPlay
     }
 
     private void OnEnable()
     {
-        // Se não foi instruído a mostrar (ex: só foi ativado acidentalmente), desativa de novo.
-        if (!_shouldPlay)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
-
         _isClosing = false;
 
         if (fadeController != null)
@@ -77,9 +66,6 @@ public class CreditsController : MonoBehaviour
             StopCoroutine(scrollRoutine);
             scrollRoutine = null;
         }
-
-        // Reseta a flag para a próxima vez que for chamado
-        _shouldPlay = false;
     }
 
     private void StartScroll()
