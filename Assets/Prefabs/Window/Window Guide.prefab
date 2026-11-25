@@ -4978,10 +4978,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Para apontar o que est\xE1 errado, ligue o Modo Inspetor: tecla <b>Espa\xE7o</b>
-    ou o bot\xE3o do inspetor na barra de tarefas.\n\nCom ele ligado, os campos que
-    podem ser inspecionados ficam destacados quando voc\xEA passa o mouse. Links
-    e anexos n\xE3o abrem enquanto o inspetor estiver ligado."
+  m_text: "Para apontar o que est\u00e1 errado, ligue o Modo Inspetor: o bot\u00e3o da <b>lupa</b> na barra de tarefas ou a tecla <b>Espa\u00e7o</b>.\n\nCom ele ligado, os campos que podem ser inspecionados ficam destacados quando voc\u00ea passa o mouse. Links e anexos n\u00e3o abrem enquanto o inspetor estiver ligado."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
   m_sharedMaterial: {fileID: -8858064809551631060, guid: 89d8d72bd57d90f96b7118deb9f37029, type: 2}
