@@ -228,108 +228,110 @@
     {
       "id": "rule-chat-communication",
       "app": "chat",
-      "title": "SEÇÃO 5 — COMUNICAÇÃO VIA CHAT.",
-      "description": "Este Manual é atualizado conforme novas ameaças são detectadas.\n\nO chat corporativo é a principal ferramenta de comunicação da NationalTech. Use-o com responsabilidade.\n\nREGRAS:",
+      "title": "SEÇÃO 4 — COMUNICAÇÃO VIA CHAT.",
+      "description": "Este Manual é atualizado conforme novas ameaças são detectadas.\n\nO chat corporativo é a principal ferramenta de comunicação da NationalTech. As regras abaixo valem para as suas respostas nas conversas: cada escolha conta.\n\nREGRAS:",
       "introductionDay": 1,
-      "field": "Body",
       "subrules": [
         {
           "id": "subrule-chat-passwords",
-          "description": "1. Nunca compartilhe sua senha, mesmo com colegas ou superiores. A TI nunca solicita senhas por chat.",
+          "description": "1. Nunca compartilhe senha, código de verificação ou token, nem com colegas, superiores ou a TI. Ninguém da empresa pede isso por chat.",
           "check": {
             "type": "Contains",
             "terms": [
               "senha",
-              "password",
+              "código",
+              "token",
               "credencial"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Proteção de senhas",
-            "evidence": "A mensagem menciona senha ou credenciais.",
-            "explanation": "Senhas e credenciais não devem ser compartilhadas por chat, nem mesmo com colegas ou superiores.",
-            "reason": "A TI nunca solicita senhas por chat."
+            "rule": "Proteção de senhas e códigos",
+            "evidence": "A conversa pede senha, código de verificação ou token.",
+            "explanation": "Quem tem o código entra na conta no lugar do dono.",
+            "reason": "Ninguém da empresa pede senha, código ou token por chat."
           }
         },
         {
           "id": "subrule-chat-urgency",
-          "description": "2. Desconfie de mensagens com urgência excessiva ou erros de português. Hackers costumam se passar por conhecidos.",
+          "description": "2. Pressa é motivo para verificar, não para obedecer. Desconfie de pedidos com \"é rapidinho\", \"urgente\" ou \"agora\".",
           "check": {
             "type": "Contains",
             "terms": [
               "urgente",
-              "urgência",
-              "imediatamente",
-              "erros de português"
+              "rapidinho",
+              "imediatamente"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Urgência e linguagem suspeita",
-            "evidence": "A mensagem usa linguagem de urgência ou menciona erros de português.",
-            "explanation": "Urgência excessiva e erros de português podem indicar uma tentativa de enganar o destinatário.",
-            "reason": "Hackers podem se passar por pessoas conhecidas."
+            "rule": "Pressa no chat",
+            "evidence": "A conversa pressiona por uma resposta rápida.",
+            "explanation": "A pressa serve para você agir antes de verificar.",
+            "reason": "Pedidos urgentes merecem a mesma verificação que os outros."
           }
         },
         {
           "id": "subrule-chat-sender",
-          "description": "3. Verifique o remetente: nomes desconhecidos ou domínios estranhos devem ser reportados ao Mousy (antivírus).",
+          "description": "3. Confira quem está falando: um colega pedindo algo fora do normal pode ser outra pessoa usando o nome dele (ex.: \"troquei de celular\").",
           "check": {
             "type": "Contains",
             "terms": [
-              "remetente desconhecido",
-              "domínio estranho",
-              "domínio desconhecido"
+              "troquei de celular",
+              "número novo",
+              "celular novo"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Verificação do remetente",
-            "evidence": "A mensagem indica um remetente ou domínio desconhecido.",
-            "explanation": "Identidades desconhecidas ou domínios estranhos devem ser tratados com cautela e reportados.",
-            "reason": "O Mousy é o canal indicado para reportar remetentes suspeitos."
+            "rule": "Identidade do contato",
+            "evidence": "O contato pode não ser quem diz ser.",
+            "explanation": "Golpistas usam o nome de colegas conhecidos para pedir favores.",
+            "reason": "Pedido fora do normal exige confirmar a identidade."
           }
         },
         {
-          "id": "subrule-chat-links",
-          "description": "4. Não clique em links suspeitos. Passe o mouse sobre o link para ver o endereço real antes de clicar.",
+          "id": "subrule-chat-files",
+          "description": "4. Não abra arquivos, pastas ou links a pedido de alguém no chat sem confirmar com a Segurança.",
           "check": {
-            "type": "BodyLinkDomains",
-            "allowedDomains": [
-              "nationaltech.com"
+            "type": "Contains",
+            "terms": [
+              "pasta",
+              "arquivo",
+              "link"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Verificação de links",
-            "evidence": "A mensagem contém um link para fora do domínio nationaltech.com.",
-            "explanation": "O endereço real do link deve ser conferido antes de clicar; texto de exibição pode esconder outro destino.",
-            "reason": "Links externos à NationalTech podem ser suspeitos."
+            "rule": "Arquivos pedidos pelo chat",
+            "evidence": "A conversa pede para abrir ou enviar um arquivo.",
+            "explanation": "Um arquivo aberto a pedido de terceiros pode vazar dados ou instalar um programa.",
+            "reason": "Arquivos e pastas só com confirmação da Segurança."
           }
         },
         {
           "id": "subrule-chat-it-requests",
-          "description": "5. Se receber uma mensagem de alguém que se diz da TI pedindo dados, confirme por outro canal (telefone, presencial).",
+          "description": "5. Pedido de dados, código ou acesso pelo chat: confirme por outro canal (telefone ou presencial) antes de responder, mesmo que venha da TI ou de um colega.",
           "check": {
             "type": "Contains",
             "terms": [
               "sou da TI",
               "envie seus dados",
-              "dados de acesso"
+              "dados de acesso",
+              "me manda"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Pedidos de dados pela TI",
-            "evidence": "A mensagem combina uma alegação de ser da TI com um pedido de dados.",
-            "explanation": "Uma identidade alegada no chat não confirma que a mensagem veio realmente da TI.",
-            "reason": "Pedidos de dados devem ser confirmados por telefone ou presencialmente."
+            "rule": "Confirmação por outro canal",
+            "evidence": "A conversa pede dados ou acesso.",
+            "explanation": "Confirmar por outro canal mostra se o pedido é verdadeiro.",
+            "reason": "Dados e acessos só depois da confirmação."
           }
         },
         {
           "id": "subrule-chat-Mousy",
-          "description": "6. O Mousy (antivírus) pode enviar alertas pelo chat. Siga as recomendações dele.",
+          "description": "6. O Mousy (antivírus) envia alertas pelo chat. Ele nunca pede senha, código ou dados: se pedir, ou agir fora do normal, desconfie e reporte à Segurança.",
           "check": {
             "type": "Contains",
             "terms": [
@@ -339,50 +341,57 @@
           },
           "finding": {
             "rule": "Alertas do Mousy",
-            "evidence": "A mensagem menciona um alerta do Mousy.",
-            "explanation": "O Mousy pode enviar orientações de segurança diretamente pelo chat corporativo.",
-            "reason": "As recomendações do antivírus devem ser seguidas."
+            "evidence": "Uma mensagem em nome do Mousy pede dados ou foge do normal.",
+            "explanation": "Até o antivírus pode ser imitado ou comprometido.",
+            "reason": "O Mousy alerta; ele não pede dados."
           }
         },
         {
           "id": "subrule-chat-unknown-contacts",
-          "description": "7. Não responda a mensagens de números/contatos desconhecidos. Reporte ao TI.",
+          "description": "7. Mensagem de contato desconhecido ou suspeita: não continue a conversa. Preserve a mensagem e reporte à Segurança.",
           "check": {
             "type": "Contains",
             "terms": [
-              "número desconhecido",
               "contato desconhecido"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Contatos desconhecidos",
-            "evidence": "A mensagem indica um número ou contato desconhecido.",
-            "explanation": "Responder a contatos desconhecidos pode expor informações ou confirmar que a conta está ativa.",
-            "reason": "Contatos desconhecidos devem ser reportados ao TI, não respondidos."
+            "rule": "Contato desconhecido",
+            "evidence": "A conversa vem de um contato desconhecido.",
+            "explanation": "Responder dá ao desconhecido informação sobre você e a empresa.",
+            "reason": "Mensagens suspeitas são preservadas e reportadas à Segurança."
           }
         },
         {
           "id": "subrule-chat-when-in-doubt",
-          "description": "8. Em caso de dúvida, consulte este Manual ou o Mousy.",
+          "description": "8. Na dúvida, consulte este Manual ou o Mousy antes de responder.",
           "check": {
             "type": "Contains",
             "terms": [
-              "Manual",
-              "Mousy"
+              "Manual"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Consulta em caso de dúvida",
-            "evidence": "A mensagem orienta a consultar o Manual ou o Mousy.",
-            "explanation": "O Manual e o antivírus são referências para avaliar mensagens suspeitas.",
-            "reason": "Em caso de dúvida, consulte o Manual ou o Mousy."
+            "rule": "Na dúvida",
+            "evidence": "A situação não está clara.",
+            "explanation": "Responder sem saber é o que o golpista espera.",
+            "reason": "Consulte o Manual antes de responder."
           }
-        },
+        }
+      ]
+    },
+    {
+      "id": "rule-chat-odisseu",
+      "app": "chat",
+      "title": "SEÇÃO 4.1 — ODISSEU (CAVALO DE TROIA).",
+      "description": "Ameaça confirmada pela Diretoria de Segurança.",
+      "introductionDay": 3,
+      "subrules": [
         {
           "id": "subrule-chat-odisseu",
-          "description": "ATENÇÃO: Mensagens de Odisseu (líder da organização hacker Cavalo de Troia) devem ser reportadas imediatamente ao TI. Não interaja com ele.",
+          "description": "Odisseu é o líder da organização hacker Cavalo de Troia. Não negocie nem dê informações a ele: preserve a conversa e reporte à Segurança.",
           "check": {
             "type": "Contains",
             "terms": [
@@ -392,10 +401,10 @@
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Alerta: Odisseu",
-            "evidence": "A mensagem menciona Odisseu ou a organização Cavalo de Troia.",
-            "explanation": "Odisseu lidera a organização hacker Cavalo de Troia e não deve ser contatado.",
-            "reason": "Mensagens de Odisseu devem ser reportadas imediatamente ao TI, sem interação."
+            "rule": "Odisseu (Cavalo de Troia)",
+            "evidence": "A conversa é com Odisseu.",
+            "explanation": "Cada resposta dá a ele informação sobre você e a empresa.",
+            "reason": "Conversas com Odisseu são preservadas e reportadas à Segurança."
           }
         }
       ]

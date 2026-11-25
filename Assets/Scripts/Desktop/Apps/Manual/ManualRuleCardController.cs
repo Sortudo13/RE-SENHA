@@ -30,8 +30,13 @@ public sealed class ManualRuleCardController : MonoBehaviour
         this.rule = rule;
         this.onSelect = onSelect;
 
+        // Regra sem campo (chat, ticket: sem Inspetor) nao mostra o rotulo.
+        bool hasField = !string.IsNullOrWhiteSpace(fieldLabel);
         if (txtField != null)
-            txtField.text = $"[{fieldLabel}]";
+        {
+            txtField.text = hasField ? $"[{fieldLabel}]" : string.Empty;
+            txtField.gameObject.SetActive(hasField);
+        }
         if (txtTitle != null)
             txtTitle.text = rule?.title ?? string.Empty;
         if (txtDescription != null)
@@ -40,7 +45,7 @@ public sealed class ManualRuleCardController : MonoBehaviour
         RectTransform cardRect = (RectTransform)transform;
         float textWidth = Mathf.Max(0f, cardRect.rect.width - 24f);
         float contentHeight = 40f;
-        if (txtField != null)
+        if (txtField != null && hasField)
             contentHeight += txtField.GetPreferredValues(txtField.text, textWidth, float.PositiveInfinity).y;
         if (txtTitle != null)
             contentHeight += txtTitle.GetPreferredValues(txtTitle.text, textWidth, float.PositiveInfinity).y;
