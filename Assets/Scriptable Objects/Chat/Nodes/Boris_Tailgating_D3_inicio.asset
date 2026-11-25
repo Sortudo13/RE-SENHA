@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Boris_Tailgating_D3_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Amigo, fui super educado hoje: segurei a porta da sala de servidores
+    pra um cara gente boa de terno que esqueceu o crach\xE1 no carro. Fiz bem? Agora
+    t\xF4 com medo do diretor Wilbar descobrir e me dar bronca."
+  typingDelay: 1.5
+  options:
+  - optionText: "Acesso \xE0 sala de servidores exige identifica\xE7\xE3o e autoriza\xE7\xE3o.
+      Avise a Seguran\xE7a ou recep\xE7\xE3o para validar; relate tamb\xE9m que ele
+      j\xE1 entrou."
+    nextNodeId: tecnico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_tailgating_tecnico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Ser educado \xE9 \xF3timo, mas cada pessoa precisa usar o pr\xF3prio
+      crach\xE1. Pe\xE7a ajuda \xE0 recep\xE7\xE3o e conte que ele passou."
+    nextNodeId: didatico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_tailgating_didatico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Gentileza sim; abrir a porta no modo 'visita surpresa', n\xE3o!
+      Chama a Seguran\xE7a agora e explica o que rolou."
+    nextNodeId: pratico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_tailgating_pratico
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

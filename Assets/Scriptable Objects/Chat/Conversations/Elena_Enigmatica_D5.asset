@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: elena_enigmatica_d5
   npcName: Elena Valadares
-  npcAvatar: {fileID: 0}
+  npcAvatar: {fileID: 21300000, guid: f01b8760d304407dab8794d38abb09f6, type: 3}
   nodes:
   - {fileID: 11400000, guid: 4805d8c1d894e5f528b23155379a2bdd, type: 2}
   - {fileID: 11400000, guid: b132c9def8254db3f80e02d3d2e4b038, type: 2}

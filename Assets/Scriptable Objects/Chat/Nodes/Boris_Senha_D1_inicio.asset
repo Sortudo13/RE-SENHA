@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Boris_Senha_D1_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Oi, Amigo! O Mousy mandou um guia de senhas t\xE3o formal e chique
+    que fiquei com vergonha de perguntar: usar \"NationalTech123\" e trocar o final
+    pra 124 todo m\xEAs j\xE1 conta como senha forte?"
+  typingDelay: 1.5
+  options:
+  - optionText: "N\xE3o: a sequ\xEAncia \xE9 previs\xEDvel. Prefira uma senha longa
+      e \xFAnica por servi\xE7o e use o gerenciador aprovado pela empresa."
+    nextNodeId: tecnico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_senha_tecnico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: 'Pensa numa chave diferente pra cada porta: se uma vazar, as outras
+      continuam protegidas. O gerenciador ajuda a lembrar.'
+    nextNodeId: didatico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_senha_didatico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "\"124\" \xE9 s\xF3 o \"123\" de bigode. Crie uma senha longa e exclusiva
+      e deixe o gerenciador cuidar da mem\xF3ria."
+    nextNodeId: pratico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_senha_pratico
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

@@ -20,6 +20,7 @@ public static class ChatContentGenerator
         { "Constantino Wilbar", "NPCs/Constantino" },
         { "Mousy", "NPCs/Mousy" },
         { "Odisseu", "NPCs/Odisseu" },
+        { "Bóris", "NPCs/Boris" },
     };
 
     [MenuItem("Tools/Re:Senha/Gerar Conversas")]
@@ -69,6 +70,7 @@ public static class ChatContentGenerator
                 conversation.conversationId = spec.ConversationId;
                 conversation.npcName = spec.NpcName;
                 conversation.npcAvatar = LoadSpriteByNpcName(spec.NpcName); // <-- NOVO
+                conversation.blocksDayEnd = spec.BlocksDayEnd;
                 conversation.RefreshCache();
                 conversation.nodes = newNodes;
                 conversation.startNodeId = "inicio";
@@ -339,6 +341,64 @@ public static class ChatContentGenerator
                 }
             ),
             new ConversationSpec(
+                "Boris_Senha_D1",
+                "boris_senha_d1",
+                "Bóris",
+                1,
+                11,
+                0,
+                30,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi, Amigo! O Mousy mandou um guia de senhas tão formal e chique que fiquei com vergonha de perguntar: usar \"NationalTech123\" e trocar o final pra 124 todo mês já conta como senha forte?",
+                        Options(
+                            Option(
+                                "Não: a sequência é previsível. Prefira uma senha longa e única por serviço e use o gerenciador aprovado pela empresa.",
+                                "tecnico",
+                                "boris_senha_tecnico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "Pensa numa chave diferente pra cada porta: se uma vazar, as outras continuam protegidas. O gerenciador ajuda a lembrar.",
+                                "didatico",
+                                "boris_senha_didatico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "\"124\" é só o \"123\" de bigode. Crie uma senha longa e exclusiva e deixe o gerenciador cuidar da memória.",
+                                "pratico",
+                                "boris_senha_pratico",
+                                ChatOptionOutcome.Neutral
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "tecnico",
+                        "Entendi: nada de trocar só o número. Vou criar uma senha longa e diferente e guardar no gerenciador aprovado.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "didatico",
+                        "Ah, boa! Se cada porta tem uma chave, uma senha vazada não abre todas. Vou usar o gerenciador pra não me enrolar.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "pratico",
+                        "Hahaha, senha com bigode não vale! Vou parar com a sequência e usar uma senha longa e única no gerenciador.",
+                        null,
+                        null,
+                        true
+                    ),
+                },
+                blocksDayEnd: false
+            ),
+            new ConversationSpec(
                 "Wilbar_Comunicado_D1",
                 "wilbar_comunicado_d1",
                 "Constantino Wilbar",
@@ -482,6 +542,64 @@ public static class ChatContentGenerator
                         true
                     ),
                 }
+            ),
+            new ConversationSpec(
+                "Boris_2FA_D2",
+                "boris_2fa_d2",
+                "Bóris",
+                2,
+                9,
+                15,
+                31,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Amigo, dúvida básica: pra que serve o 2FA? Se alguém descobrir minha senha, eu posso só trocar depois, né?",
+                        Options(
+                            Option(
+                                "O 2FA exige uma segunda prova de identidade, reduzindo o risco se a senha for descoberta. Se vazar, avise a TI e troque-a imediatamente.",
+                                "tecnico",
+                                "boris_2fa_tecnico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "É como uma segunda fechadura: saber a senha não basta. E, se ela vazar, a gente conta pra TI e troca logo.",
+                                "didatico",
+                                "boris_2fa_didatico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "O código extra é o segurança da porta. Não deixa pra trocar depois: senha suspeita? TI e troca imediata!",
+                                "pratico",
+                                "boris_2fa_pratico",
+                                ChatOptionOutcome.Neutral
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "tecnico",
+                        "Agora entendi: o 2FA é uma camada extra, não substitui a senha. Vou manter ligado e avisar a TI se ela for exposta.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "didatico",
+                        "Ahhh, segunda fechadura! Vou deixar o 2FA ligado e, se minha senha escapar, aviso a TI e troco na hora.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "pratico",
+                        "Entendi, não espero o expediente acabar: mantenho o 2FA e chamo a TI se notar algo estranho na senha.",
+                        null,
+                        null,
+                        true
+                    ),
+                },
+                blocksDayEnd: false
             ),
             new ConversationSpec(
                 "Elena_DiaQ_D2",
@@ -715,6 +833,64 @@ public static class ChatContentGenerator
                 }
             ),
             new ConversationSpec(
+                "Boris_Tailgating_D3",
+                "boris_tailgating_d3",
+                "Bóris",
+                3,
+                13,
+                0,
+                32,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Amigo, fui super educado hoje: segurei a porta da sala de servidores pra um cara gente boa de terno que esqueceu o crachá no carro. Fiz bem? Agora tô com medo do diretor Wilbar descobrir e me dar bronca.",
+                        Options(
+                            Option(
+                                "Acesso à sala de servidores exige identificação e autorização. Avise a Segurança ou recepção para validar; relate também que ele já entrou.",
+                                "tecnico",
+                                "boris_tailgating_tecnico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "Ser educado é ótimo, mas cada pessoa precisa usar o próprio crachá. Peça ajuda à recepção e conte que ele passou.",
+                                "didatico",
+                                "boris_tailgating_didatico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "Gentileza sim; abrir a porta no modo 'visita surpresa', não! Chama a Segurança agora e explica o que rolou.",
+                                "pratico",
+                                "boris_tailgating_pratico",
+                                ChatOptionOutcome.Neutral
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "tecnico",
+                        "Vou comunicar a Segurança agora. Da próxima vez, ninguém entra sem crachá e autorização confirmada.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "didatico",
+                        "Saquei: simpatia não confirma identidade. Vou contar à recepção que ele entrou e não seguro mais a porta pra desconhecidos.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "pratico",
+                        "Hahaha, justo. Vou avisar a Segurança e na próxima mando o visitante validar o acesso, sem virar porteiro do servidor.",
+                        null,
+                        null,
+                        true
+                    ),
+                },
+                blocksDayEnd: false
+            ),
+            new ConversationSpec(
                 "Wilbar_Alerta_D3",
                 "wilbar_alerta_d3",
                 "Constantino Wilbar",
@@ -788,6 +964,64 @@ public static class ChatContentGenerator
                     ),
                     new NodeSpec("fim", "Até breve.", null, null, true),
                 }
+            ),
+            new ConversationSpec(
+                "Boris_Wifi_D4",
+                "boris_wifi_d4",
+                "Bóris",
+                4,
+                13,
+                0,
+                33,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Amigo, quero adiantar uns chamados à noite no Wi-Fi livre da padaria da esquina. Tem problema se for só por dez minutinhos?",
+                        Options(
+                            Option(
+                                "Use apenas uma conexão aprovada pela empresa e siga a política de VPN. Dez minutos ainda expõem dados numa rede não confiável.",
+                                "tecnico",
+                                "boris_wifi_tecnico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "Wi-Fi aberto é como deixar o chamado numa mesa pública: use a conexão autorizada pela empresa, com a VPN conforme as regras.",
+                                "didatico",
+                                "boris_wifi_didatico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "Dez minutos ou dez segundos, a padaria não é nosso escritório! Espera uma rede aprovada e segue as regras da VPN.",
+                                "pratico",
+                                "boris_wifi_pratico",
+                                ChatOptionOutcome.Neutral
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "tecnico",
+                        "Entendido: pouco tempo não torna a rede confiável. Vou usar uma conexão aprovada e seguir a política de VPN.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "didatico",
+                        "Ah, não quero meu chamado virando papo de balcão! Vou esperar uma conexão autorizada e seguir a política da empresa.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "pratico",
+                        "Hahaha, verdade. A padaria fica só pro café; trabalho só em rede aprovada e com os controles exigidos.",
+                        null,
+                        null,
+                        true
+                    ),
+                },
+                blocksDayEnd: false
             ),
             new ConversationSpec(
                 "Mousy_Alerta_Anexo",
@@ -968,6 +1202,64 @@ public static class ChatContentGenerator
                 }
             ),
             new ConversationSpec(
+                "Boris_Scareware_D5",
+                "boris_scareware_d5",
+                "Bóris",
+                5,
+                13,
+                0,
+                34,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Amigo, caos total aqui: apareceu um pop-up dizendo que meu PC tem 47 vírus e mandando baixar um \"Limpador Oficial\" urgente. Clico agora ou espero acabar o expediente?",
+                        Options(
+                            Option(
+                                "Não clique nem instale. Feche o navegador ou app sem interagir e reporte o alerta à TI pelo canal oficial.",
+                                "tecnico",
+                                "boris_scareware_tecnico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "Um aviso assustador na tela não prova que há vírus. Não toque nele; feche a janela e peça ajuda à TI.",
+                                "didatico",
+                                "boris_scareware_didatico",
+                                ChatOptionOutcome.Neutral
+                            ),
+                            Option(
+                                "Quarenta e sete? Que número específico! Não baixa esse 'limpador': fecha a janela e manda o alerta pra TI.",
+                                "pratico",
+                                "boris_scareware_pratico",
+                                ChatOptionOutcome.Neutral
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "tecnico",
+                        "Entendi: não clico, não instalo e aviso a TI pelo canal oficial. Vou fechar a janela sem interagir.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "didatico",
+                        "Ah, então o susto pode ser falso! Não vou baixar nada; fecho a janela e peço ajuda à TI.",
+                        null,
+                        null,
+                        true
+                    ),
+                    new NodeSpec(
+                        "pratico",
+                        "Hahaha, muito específico mesmo. Nada de clicar: vou fechar a janela e reportar pra TI, sem instalar o tal limpador.",
+                        null,
+                        null,
+                        true
+                    ),
+                },
+                blocksDayEnd: false
+            ),
+            new ConversationSpec(
                 "Encerramento_Odisseu",
                 "odisseu_encerramento",
                 "Odisseu",
@@ -1080,12 +1372,20 @@ public static class ChatContentGenerator
         };
     }
 
-    private static ChatOption Option(string text, string nextNodeId, string feedbackTag)
+    private static ChatOption Option(
+        string text,
+        string nextNodeId,
+        string feedbackTag,
+        ChatOptionOutcome outcome = ChatOptionOutcome.Neutral,
+        string outcomeFeedback = null
+    )
     {
         return new ChatOption
         {
             optionText = text,
             nextNodeId = nextNodeId,
+            outcome = outcome,
+            outcomeFeedback = outcomeFeedback,
             securityScoreDelta = 0,
             feedbackTag = feedbackTag,
         };
@@ -1106,6 +1406,7 @@ public static class ChatContentGenerator
         public readonly int ArrivalMinute;
         public readonly int SortOrder;
         public readonly NodeSpec[] Nodes;
+        public readonly bool BlocksDayEnd;
 
         public ConversationSpec(
             string assetName,
@@ -1115,7 +1416,8 @@ public static class ChatContentGenerator
             int arrivalHour,
             int arrivalMinute,
             int sortOrder,
-            NodeSpec[] nodes
+            NodeSpec[] nodes,
+            bool blocksDayEnd = false
         )
         {
             AssetName = assetName;
@@ -1126,6 +1428,7 @@ public static class ChatContentGenerator
             ArrivalMinute = arrivalMinute;
             SortOrder = sortOrder;
             Nodes = nodes;
+            BlocksDayEnd = blocksDayEnd;
         }
     }
 
