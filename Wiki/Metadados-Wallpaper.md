@@ -1,12 +1,30 @@
 # Metadados e Wallpaper
 
-`BackgroundList` usa `Resources.LoadAll<Sprite>("Background")` para construir a
-lista de escolha. `BackgroundButton` publica `SetWallpaper` com o sprite escolhido.
-`WallpaperController` aplica o sprite à `Image`, grava seu nome em
-`DataController.CurrentMetaData.currentBackground` e chama `SaveMetaData`.
+`BackgroundList` carrega sprites por
+`Resources.LoadAll<Sprite>("Background")` e cria uma opção para cada sprite.
+`BackgroundButton` envia `SetWallpaper` com o sprite escolhido;
+`WallpaperController` troca a imagem e grava `sprite.name` em
+`MetaData.currentBackground`, salvando `data.json`.
 
-Na inicialização, o controller tenta carregar o mesmo nome de
-`Resources/Background/{nome}`. Portanto, renomear ou mover um wallpaper pode deixar
-um metadado antigo sem correspondência; nesse caso o sprite configurado no objeto
-permanece como fallback visual.
+## Adicionar um wallpaper
 
+1. Adicione uma imagem em `Assets/Resources/Background/`.
+2. Configure a importação como Sprite 2D (e ajuste recorte se houver múltiplos
+   sprites na mesma imagem).
+3. Entre no jogo e confirme que a opção aparece e que a escolha persiste ao
+   reiniciar.
+
+Na inicialização, o wallpaper salvo é resolvido por
+`Resources.Load<Sprite>("Background/<nome>")`. Se o arquivo for renomeado/removido,
+o nome persistido deixa de corresponder; mantenha o sprite original ou escolha
+outro wallpaper no jogo.
+
+## Outros metadados
+
+`data.json` também contém `achievements`, `unlockedTrinkets` e `statistics`.
+Os campos existem no modelo `MetaData`, mas `StatisticsData` está vazio e não foi
+confirmada uma integração completa de coleta/desbloqueio. Não trate esses dados
+como funcionalidades concluídas sem verificar os sistemas consumidores.
+
+Consulte [Sistema de Save](./Sistema-de-Save.md) para escopo e localização dos
+arquivos.
