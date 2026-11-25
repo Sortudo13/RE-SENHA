@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: wilbar_comunicado_d2
   npcName: Constantino Wilbar
-  npcAvatar: {fileID: 0}
+  npcAvatar: {fileID: 21300000, guid: 76b898276088bbc1b8b71f264004d3d1, type: 3}
   nodes:
   - {fileID: 11400000, guid: 8deb07a4d004b984bbb2cadf12915b25, type: 2}
   - {fileID: 11400000, guid: cc2c2084a9fd001bb8b210ebfe24cb66, type: 2}

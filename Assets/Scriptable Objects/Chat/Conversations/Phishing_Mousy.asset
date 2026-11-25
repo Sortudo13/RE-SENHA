@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: mousy_phishing
   npcName: Mousy
-  npcAvatar: {fileID: 0}
+  npcAvatar: {fileID: 21300000, guid: 97fbf67659c8d1fe8b6e238951b2b9c3, type: 3}
   nodes:
   - {fileID: 11400000, guid: 439794fbf47b23e549d653059f1201cf, type: 2}
   - {fileID: 11400000, guid: 35501034c416fea839d267c1dc20f49f, type: 2}

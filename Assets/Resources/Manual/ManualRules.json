@@ -228,7 +228,7 @@
     {
       "id": "rule-chat-communication",
       "app": "chat",
-      "title": "SEÇÃO 4 — COMUNICAÇÃO VIA CHAT.",
+      "title": "SEÇÃO 5 — COMUNICAÇÃO VIA CHAT.",
       "description": "Este Manual é atualizado conforme novas ameaças são detectadas.\n\nO chat corporativo é a principal ferramenta de comunicação da NationalTech. Use-o com responsabilidade.\n\nREGRAS:",
       "introductionDay": 1,
       "field": "Body",
@@ -403,7 +403,7 @@
     {
       "id": "rule-ticket-fragment",
       "app": "ticket",
-      "title": "SEÇÃO 5 — SISTEMA DE TICKETS (FRAGMENTO CORROMPIDO)",
+      "title": "SEÇÃO 4 — SISTEMA DE TICKETS (FRAGMENTO CORROMPIDO)",
       "description": "Este Manual é atualizado conforme novas ameaças são detectadas.\n\nO sistema de tickets da NationalTech foi projetado para registrar, classificar e acompanhar solicitações internas. No entanto, registros recentes indicam que o módulo foi parcialmente corrompido ou removido.\n\nO que sabemos:\n1. Tickets legítimos seguem o mesmo padrão de segurança do chat: remetente verificado, ausência de urgência e nenhum pedido de senha.\n2. Tickets com anexos executáveis ou links externos devem ser tratados como suspeitos.\n3. Se um ticket for aberto, o protocolo exige confirmação por outro canal (telefone ou presencial).\n\nATENÇÃO: O módulo de tickets está indisponível. Não tente acessá-lo por meios alternativos. Se ele retornar, será devidamente documentado. (Ou não.)\n\nNota do Mousy: \"Algumas coisas desaparecem porque devem desaparecer. Outras... porque alguém quis que desaparecessem.\"",
       "introductionDay": 1,
       "field": "Body",

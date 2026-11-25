@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: odisseu_observa_d1
   npcName: Odisseu
-  npcAvatar: {fileID: 0}
+  npcAvatar: {fileID: -7856166980875032514, guid: cd282314efde98dc2a3ccf73ea39312b, type: 3}
   nodes:
   - {fileID: 11400000, guid: 6628ef3c5042134a0b7ad814f48732ab, type: 2}
   - {fileID: 11400000, guid: 6348234711b1eb63b9f59478b45dd627, type: 2}

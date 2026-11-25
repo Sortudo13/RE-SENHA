@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: mousy_pedido_dados
   npcName: Mousy
-  npcAvatar: {fileID: 0}
+  npcAvatar: {fileID: 21300000, guid: 97fbf67659c8d1fe8b6e238951b2b9c3, type: 3}
   nodes:
   - {fileID: 11400000, guid: 5081b70aaaf03e79681c192404de1729, type: 2}
   - {fileID: 11400000, guid: ae1a830e47a6e9825aa0b02ff2d1534d, type: 2}

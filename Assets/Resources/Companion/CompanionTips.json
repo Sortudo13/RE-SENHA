@@ -86,7 +86,7 @@
     {
       "id": "tutorial_company_mailbox",
       "lines": [
-        { "pose": "explain", "text": "Essa é a caixa da Empresa, diferente da sua caixa User. Aqui, cada e-mail pede uma decisão: Aprovar ou Bloquear." },
+        { "pose": "explain", "text": "Essa é a caixa da Empresa, diferente da sua caixa de Usuário. Aqui, cada e-mail pede uma decisão: Aprovar ou Bloquear." },
         { "pose": "scared", "anim": "shake", "text": "Atenção redobrada: aprovar algo errado pode render uma advertência. Eu já estou suando!" }
       ]
     },

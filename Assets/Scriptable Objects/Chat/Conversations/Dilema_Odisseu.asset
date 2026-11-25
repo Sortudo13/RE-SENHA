@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: odisseu_dilema_moral
   npcName: Odisseu
-  npcAvatar: {fileID: 0}
+  npcAvatar: {fileID: -7856166980875032514, guid: cd282314efde98dc2a3ccf73ea39312b, type: 3}
   nodes:
   - {fileID: 11400000, guid: 90f0e1a8e2253c997ad0c82eac6f425e, type: 2}
   - {fileID: 11400000, guid: c129705162639153d9da4aff852cad3b, type: 2}

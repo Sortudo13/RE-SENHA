@@ -12,6 +12,16 @@ public static class ChatContentGenerator
     private const string NodesFolder = RootFolder + "/Nodes";
     private const string InboxAssetPath = RootFolder + "/ChatInbox.asset";
 
+    // Mapeia o nome do NPC para o caminho em Resources (sem extensão).
+    // Ex.: "Elena" -> "NPCs/Elena" carrega Assets/Resources/NPCs/Elena.png
+    private static readonly Dictionary<string, string> NpcSpriteMap = new()
+    {
+        { "Elena Valadares", "NPCs/Elena" },
+        { "Constantino Wilbar", "NPCs/Constantino" },
+        { "Mousy", "NPCs/Mousy" },
+        { "Odisseu", "NPCs/Odisseu" },
+    };
+
     [MenuItem("Tools/Re:Senha/Gerar Conversas")]
     public static void Generate()
     {
@@ -58,8 +68,8 @@ public static class ChatContentGenerator
 
                 conversation.conversationId = spec.ConversationId;
                 conversation.npcName = spec.NpcName;
-                conversation.npcAvatar = null;
-                conversation.RefreshCache(); // Limpa o cache antigo antes de trocar os nós
+                conversation.npcAvatar = LoadSpriteByNpcName(spec.NpcName); // <-- NOVO
+                conversation.RefreshCache();
                 conversation.nodes = newNodes;
                 conversation.startNodeId = "inicio";
                 conversation.RefreshCache();
@@ -105,6 +115,32 @@ public static class ChatContentGenerator
         {
             ChatConversation.IsGenerating = false;
         }
+    }
+
+    // Carrega o sprite do NPC a partir de Resources/NPCs/<nome>.png
+    private static Sprite LoadSpriteByNpcName(string npcName)
+    {
+        if (string.IsNullOrEmpty(npcName))
+            return null;
+
+        if (!NpcSpriteMap.TryGetValue(npcName, out string path))
+        {
+            Debug.LogWarning(
+                $"[ChatContentGenerator] Nenhum sprite mapeado para o NPC '{npcName}'. "
+                    + "Adicione uma entrada em NpcSpriteMap."
+            );
+            return null;
+        }
+
+        Sprite sprite = Resources.Load<Sprite>(path);
+        if (sprite == null)
+        {
+            Debug.LogWarning(
+                $"[ChatContentGenerator] Sprite não encontrado em Resources/{path}. "
+                    + "Verifique se o arquivo existe em Assets/Resources/ e se está importado como Sprite."
+            );
+        }
+        return sprite;
     }
 
     private static T LoadOrCreateAsset<T>(string path, string assetName)
@@ -274,7 +310,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_PrimeiroContato",
                 "elena_primeiro_contato",
-                "Elena",
+                "Elena Valadares",
                 1,
                 9,
                 0,
@@ -450,7 +486,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_DiaQ_D2",
                 "elena_dia_q_d2",
-                "Elena",
+                "Elena Valadares",
                 2,
                 11,
                 15,
@@ -634,7 +670,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_Pedido_D3",
                 "elena_pedido_d3",
-                "Elena",
+                "Elena Valadares",
                 3,
                 12,
                 0,
@@ -799,7 +835,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_Pedido_Codigo_D4",
                 "elena_pedido_codigo_d4",
-                "Elena",
+                "Elena Valadares",
                 4,
                 14,
                 30,
@@ -990,7 +1026,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_Enigmatica_D5",
                 "elena_enigmatica_d5",
-                "Elena",
+                "Elena Valadares",
                 5,
                 15,
                 0,
