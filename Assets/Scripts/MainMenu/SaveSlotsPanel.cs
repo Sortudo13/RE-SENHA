@@ -42,6 +42,10 @@ public class SaveSlotsPanel : MonoBehaviour
             int slot = i + 1;
             slotButtons[i].onClick.AddListener(() => Choose(slot));
         }
+
+        for (int i = 0; i < slotIcons.Length; i++)
+            if (slotIcons[i] == null)
+                Debug.LogWarning($"[SaveSlotsPanel] Icone do slot {i + 1} nao foi arrastado no Inspector.", this);
     }
 
     public void Open(Mode mode, Action<int> onChosen)
@@ -60,7 +64,7 @@ public class SaveSlotsPanel : MonoBehaviour
             if (i < slotTexts.Length && slotTexts[i] != null)
                 slotTexts[i].text = Describe(info);
 
-            if (i < slotIcons.Length)
+            if (i < slotIcons.Length && slotIcons[i] != null)
             {
                 if (info.currentCharacter != null)
                     slotIcons[i].sprite = Resources.Load<Sprite>($"Images/NPCs/{info.currentCharacter}");

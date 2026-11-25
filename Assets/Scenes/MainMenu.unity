@@ -2202,7 +2202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -235.48589}
+  m_AnchoredPosition: {x: 960, y: -329.45056}
   m_SizeDelta: {x: 320, y: 148.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &342739822
@@ -2314,7 +2314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -411.08588}
+  m_AnchoredPosition: {x: 960, y: -505.0506}
   m_SizeDelta: {x: 320, y: 148.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &437324505
@@ -3613,7 +3613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -474.99997, y: -607}
+  m_AnchoredPosition: {x: -474.99994, y: -607}
   m_SizeDelta: {x: -1352.05, y: 121.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1024321362
@@ -4359,7 +4359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -586.6859}
+  m_AnchoredPosition: {x: 960, y: -680.6506}
   m_SizeDelta: {x: 320, y: 148.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1230504467
@@ -4709,9 +4709,9 @@ MonoBehaviour:
   - {fileID: 234372391}
   - {fileID: 1553297448}
   slotIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 437324507}
+  - {fileID: 1785904805}
+  - {fileID: 2011113363}
   title: {fileID: 1024321362}
   newGameTitle: Novo Jogo - escolha um slot
   loadTitle: Carregar - escolha um slot
