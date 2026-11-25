@@ -200,7 +200,11 @@ public class ManualWindowController : MonoBehaviour
         if (txtRuleTitle != null)
             txtRuleTitle.text = rule.title;
         if (txtRuleField != null)
-            txtRuleField.text = $"[{FieldLabel(rule.field)}]";
+        {
+            string label = FieldLabel(rule.field);
+            txtRuleField.text = label != null ? $"[{label}]" : string.Empty;
+            txtRuleField.gameObject.SetActive(label != null);
+        }
         if (txtRuleDescription != null)
             txtRuleDescription.text = rule.description;
 
@@ -263,8 +267,9 @@ public class ManualWindowController : MonoBehaviour
 
     private static string FieldLabel(string field)
     {
+        // Sem campo (regra de chat/ticket): sem rotulo.
         if (string.IsNullOrWhiteSpace(field))
-            return "Campo";
+            return null;
 
         return FieldLabels.TryGetValue(field, out string label) ? label : field;
     }
