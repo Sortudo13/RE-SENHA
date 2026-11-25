@@ -257,6 +257,269 @@
           }
         }
       ]
+    },
+    {
+      "id": "rule-chat-communication",
+      "app": "chat",
+      "title": "SEÇÃO 4 — COMUNICAÇÃO VIA CHAT.",
+      "description": "Este Manual é atualizado conforme novas ameaças são detectadas.\n\nO chat corporativo é a principal ferramenta de comunicação da NationalTech. Use-o com responsabilidade.\n\nREGRAS:",
+      "introductionDay": 1,
+      "field": "Body",
+      "subrules": [
+        {
+          "id": "subrule-chat-passwords",
+          "description": "1. Nunca compartilhe sua senha, mesmo com colegas ou superiores. A TI nunca solicita senhas por chat.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "senha",
+              "password",
+              "credencial"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Proteção de senhas",
+            "evidence": "A mensagem menciona senha ou credenciais.",
+            "explanation": "Senhas e credenciais não devem ser compartilhadas por chat, nem mesmo com colegas ou superiores.",
+            "reason": "A TI nunca solicita senhas por chat."
+          }
+        },
+        {
+          "id": "subrule-chat-urgency",
+          "description": "2. Desconfie de mensagens com urgência excessiva ou erros de português. Hackers costumam se passar por conhecidos.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "urgente",
+              "urgência",
+              "imediatamente",
+              "erros de português"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Urgência e linguagem suspeita",
+            "evidence": "A mensagem usa linguagem de urgência ou menciona erros de português.",
+            "explanation": "Urgência excessiva e erros de português podem indicar uma tentativa de enganar o destinatário.",
+            "reason": "Hackers podem se passar por pessoas conhecidas."
+          }
+        },
+        {
+          "id": "subrule-chat-sender",
+          "description": "3. Verifique o remetente: nomes desconhecidos ou domínios estranhos devem ser reportados ao Mousy (antivírus).",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "remetente desconhecido",
+              "domínio estranho",
+              "domínio desconhecido"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Verificação do remetente",
+            "evidence": "A mensagem indica um remetente ou domínio desconhecido.",
+            "explanation": "Identidades desconhecidas ou domínios estranhos devem ser tratados com cautela e reportados.",
+            "reason": "O Mousy é o canal indicado para reportar remetentes suspeitos."
+          }
+        },
+        {
+          "id": "subrule-chat-links",
+          "description": "4. Não clique em links suspeitos. Passe o mouse sobre o link para ver o endereço real antes de clicar.",
+          "check": {
+            "type": "BodyLinkDomains",
+            "allowedDomains": [
+              "nationaltech.com"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Verificação de links",
+            "evidence": "A mensagem contém um link para fora do domínio nationaltech.com.",
+            "explanation": "O endereço real do link deve ser conferido antes de clicar; texto de exibição pode esconder outro destino.",
+            "reason": "Links externos à NationalTech podem ser suspeitos."
+          }
+        },
+        {
+          "id": "subrule-chat-it-requests",
+          "description": "5. Se receber uma mensagem de alguém que se diz da TI pedindo dados, confirme por outro canal (telefone, presencial).",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "sou da TI",
+              "envie seus dados",
+              "dados de acesso"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Pedidos de dados pela TI",
+            "evidence": "A mensagem combina uma alegação de ser da TI com um pedido de dados.",
+            "explanation": "Uma identidade alegada no chat não confirma que a mensagem veio realmente da TI.",
+            "reason": "Pedidos de dados devem ser confirmados por telefone ou presencialmente."
+          }
+        },
+        {
+          "id": "subrule-chat-Mousy",
+          "description": "6. O Mousy (antivírus) pode enviar alertas pelo chat. Siga as recomendações dele.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "Mousy"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Alertas do Mousy",
+            "evidence": "A mensagem menciona um alerta do Mousy.",
+            "explanation": "O Mousy pode enviar orientações de segurança diretamente pelo chat corporativo.",
+            "reason": "As recomendações do antivírus devem ser seguidas."
+          }
+        },
+        {
+          "id": "subrule-chat-unknown-contacts",
+          "description": "7. Não responda a mensagens de números/contatos desconhecidos. Reporte ao TI.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "número desconhecido",
+              "contato desconhecido"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Contatos desconhecidos",
+            "evidence": "A mensagem indica um número ou contato desconhecido.",
+            "explanation": "Responder a contatos desconhecidos pode expor informações ou confirmar que a conta está ativa.",
+            "reason": "Contatos desconhecidos devem ser reportados ao TI, não respondidos."
+          }
+        },
+        {
+          "id": "subrule-chat-when-in-doubt",
+          "description": "8. Em caso de dúvida, consulte este Manual ou o Mousy.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "Manual",
+              "Mousy"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Consulta em caso de dúvida",
+            "evidence": "A mensagem orienta a consultar o Manual ou o Mousy.",
+            "explanation": "O Manual e o antivírus são referências para avaliar mensagens suspeitas.",
+            "reason": "Em caso de dúvida, consulte o Manual ou o Mousy."
+          }
+        },
+        {
+          "id": "subrule-chat-odisseu",
+          "description": "ATENÇÃO: Mensagens de Odisseu (líder da organização hacker Cavalo de Troia) devem ser reportadas imediatamente ao TI. Não interaja com ele.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "Odisseu",
+              "Cavalo de Troia"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Alerta: Odisseu",
+            "evidence": "A mensagem menciona Odisseu ou a organização Cavalo de Troia.",
+            "explanation": "Odisseu lidera a organização hacker Cavalo de Troia e não deve ser contatado.",
+            "reason": "Mensagens de Odisseu devem ser reportadas imediatamente ao TI, sem interação."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-ticket-fragment",
+      "app": "ticket",
+      "title": "SEÇÃO 5 — SISTEMA DE TICKETS (FRAGMENTO CORROMPIDO)",
+      "description": "Este Manual é atualizado conforme novas ameaças são detectadas.\n\nO sistema de tickets da NationalTech foi projetado para registrar, classificar e acompanhar solicitações internas. No entanto, registros recentes indicam que o módulo foi parcialmente corrompido ou removido.\n\nO que sabemos:\n1. Tickets legítimos seguem o mesmo padrão de segurança do chat: remetente verificado, ausência de urgência e nenhum pedido de senha.\n2. Tickets com anexos executáveis ou links externos devem ser tratados como suspeitos.\n3. Se um ticket for aberto, o protocolo exige confirmação por outro canal (telefone ou presencial).\n\nATENÇÃO: O módulo de tickets está indisponível. Não tente acessá-lo por meios alternativos. Se ele retornar, será devidamente documentado. (Ou não.)\n\nNota do Mousy: \"Algumas coisas desaparecem porque devem desaparecer. Outras... porque alguém quis que desaparecessem.\"",
+      "introductionDay": 1,
+      "field": "Body",
+      "subrules": [
+        {
+          "id": "subrule-ticket-sender",
+          "description": "1. O remetente de um ticket legítimo deve pertencer a um domínio corporativo conhecido. Domínios estranhos indicam corrupção ou falsificação.",
+          "check": {
+            "type": "SenderDomain",
+            "allowedDomains": [
+              "empresa.com.br",
+              "nationaltech.com"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Verificação do remetente",
+            "evidence": "O ticket tem um remetente de domínio desconhecido.",
+            "explanation": "Tickets legítimos usam o mesmo padrão de verificação de domínio do e-mail.",
+            "reason": "Somente empresa.com.br e nationaltech.com são aceitos."
+          }
+        },
+        {
+          "id": "subrule-ticket-urgency",
+          "description": "2. Tickets com urgência excessiva são suspeitos. O sistema de tickets não usa pânico como ferramenta.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "urgente",
+              "imediato",
+              "última chance",
+              "cancelamento"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Urgência em tickets",
+            "evidence": "O ticket usa linguagem de urgência.",
+            "explanation": "Tickets legítimos seguem um fluxo calmo e rastreável.",
+            "reason": "Urgência excessiva é um sinal de fraude ou corrupção do sistema."
+          }
+        },
+        {
+          "id": "subrule-ticket-attachment",
+          "description": "3. Tickets não devem conter anexos executáveis. Se contiverem, o módulo foi comprometido.",
+          "check": {
+            "type": "AttachmentExtension",
+            "forbiddenExtensions": [
+              "exe",
+              "bat",
+              "cmd",
+              "scr",
+              "vbs",
+              "js"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Anexos suspeitos em tickets",
+            "evidence": "O ticket tem um anexo executável.",
+            "explanation": "Tickets legítimos não carregam executáveis.",
+            "reason": "Executáveis em tickets indicam comprometimento do módulo."
+          }
+        },
+        {
+          "id": "subrule-ticket-missing",
+          "description": "4. O módulo de tickets está indisponível. Registros recentes indicam corrupção ou remoção intencional. Não tente acessá-lo por meios alternativos.",
+          "check": {
+            "type": "Contains",
+            "terms": [
+              "ticket",
+              "sistema de tickets"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Módulo de tickets indisponível",
+            "evidence": "Menciona o sistema de tickets.",
+            "explanation": "O módulo está corrompido ou foi removido. Não há como acessá-lo atualmente.",
+            "reason": "A ausência do Ticket é parte da lore: ele está faltando, e talvez retorne."
+          }
+        }
+      ]
     }
   ]
 }

@@ -36,6 +36,25 @@ public sealed class ManualRuleCardController : MonoBehaviour
             txtTitle.text = rule?.title ?? string.Empty;
         if (txtDescription != null)
             txtDescription.text = rule?.description ?? string.Empty;
+
+        RectTransform cardRect = (RectTransform)transform;
+        float textWidth = Mathf.Max(0f, cardRect.rect.width - 24f);
+        float contentHeight = 40f;
+        if (txtField != null)
+            contentHeight += txtField.GetPreferredValues(txtField.text, textWidth, float.PositiveInfinity).y;
+        if (txtTitle != null)
+            contentHeight += txtTitle.GetPreferredValues(txtTitle.text, textWidth, float.PositiveInfinity).y;
+        if (txtDescription != null)
+            contentHeight += txtDescription.GetPreferredValues(
+                txtDescription.text,
+                textWidth,
+                float.PositiveInfinity
+            ).y;
+
+        cardRect.SetSizeWithCurrentAnchors(
+            RectTransform.Axis.Vertical,
+            Mathf.Max(cardRect.rect.height, contentHeight)
+        );
     }
 
     private void Select()
