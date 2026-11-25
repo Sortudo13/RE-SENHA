@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_prazer
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: prazer
-  npcMessage: "O prazer foi meu. (Literalmente, uma simula\xE7\xE3o de prazer.)"
+  npcMessage: "Porque voc\xEA ainda est\xE1 olhando. Por enquanto, isso basta."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

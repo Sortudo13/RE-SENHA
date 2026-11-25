@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Odisseu_Ameaca_D2_falar
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: falar
-  npcMessage: Abra os seus olhos. Ou melhor, os seus e-mails.
+  npcMessage: "Observe as mensagens que chegam. A falha mais \xFAtil \xE9 aquela
+    que algu\xE9m aceita como normal."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +23,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

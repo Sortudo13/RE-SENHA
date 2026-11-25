@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Odisseu_Observa_reportar
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: reportar
-  npcMessage: "Reporte. Isso s\xF3 torna o jogo mais interessante."
+  npcMessage: "Fa\xE7a como achar necess\xE1rio. As consequ\xEAncias de uma decis\xE3o
+    raramente aparecem no mesmo instante."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +23,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

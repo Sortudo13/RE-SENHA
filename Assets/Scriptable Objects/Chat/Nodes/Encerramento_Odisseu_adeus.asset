@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_adeus
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: adeus
-  npcMessage: "Adeus. Nos veremos novamente. (Ou n\xE3o.)"
+  npcMessage: "Uma exig\xEAncia sensata. Guarde-a para quando algu\xE9m lhe oferecer
+    uma conclus\xE3o conveniente."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +23,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

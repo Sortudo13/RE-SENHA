@@ -22,7 +22,7 @@
 | Termo | Significado no jogo |
 |---|---|
 | NationalTech | Empresa fictícia onde o jogador trabalha como analista. |
-| Clip | Assistente/aliado que conversa com o jogador e oferece dicas de segurança. |
+| Mousy | Assistente/aliado que conversa com o jogador e oferece dicas de segurança. |
 | Odisseu | Personagem presente nas conversas e no conflito narrativo. |
 | Advertência / erro | Penalidade por uma decisão incorreta; o padrão de `MaxErrors` é três. |
 | Inspetor / modo de inspeção | Modo para comparar um item com regras e selecionar campos/subregras relevantes. |

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Odisseu_Observa_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: fim
-  npcMessage: "At\xE9 breve."
+  npcMessage: "N\xE3o se distraia com a rotina. At\xE9 breve."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

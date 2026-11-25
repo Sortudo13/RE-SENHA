@@ -66,7 +66,7 @@ O menu **Tools > Re:Senha > Gerar Conversas** chama
 new ConversationSpec(
     "Exemplo_seguro",
     "exemplo_seguro",
-    "Clip",
+    "Mousy",
     1, 8, 10, 0,
     new[]
     {

@@ -13,19 +13,15 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_despedida_final
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: despedida_final
-  npcMessage: "Na verdade, tenho uma \xFAltima pergunta... Voc\xEA confiaria em mim
-    se eu pedisse sua senha para 'testar o sistema'?"
+  npcMessage: "Uma \xFAltima observa\xE7\xE3o: se a tela ficar em sil\xEAncio, n\xE3o
+    presuma que a conversa acabou."
   typingDelay: 1.5
-  options:
-  - optionText: Nunca.
-    nextNodeId: fim_final
-    outcome: 0
-    outcomeFeedback: 
-    securityScoreDelta: 0
-    feedbackTag: seguro
+  options: []
   nextNodeIdIfNoChoice: 
   isEndNode: 1
   scheduledDay: 5
   scheduledHour: 15
-  scheduledMinute: 30
-  requiresAnswerToNodeId: 
+  scheduledMinute: 45
+  requiresAnswerToNodeId: inicio
+  emailTriggerId: 
+  emailDelay: 3

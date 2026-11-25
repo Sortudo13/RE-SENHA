@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Elena_Enigmatica_D5
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: elena_enigmatica_d5
+  npcName: Elena Valadares
+  npcAvatar: {fileID: 0}
+  nodes:
+  - {fileID: 11400000, guid: 4805d8c1d894e5f528b23155379a2bdd, type: 2}
+  - {fileID: 11400000, guid: b132c9def8254db3f80e02d3d2e4b038, type: 2}
+  - {fileID: 11400000, guid: 1fc2cf3b7e2d1090c8dce908c3a5d13b, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Odisseu_Observa_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcMessage: "Boa tarde. Estive observando suas decis\xF5es hoje. Gostei do que
-    vi... at\xE9 agora."
+  npcMessage: "Boa tarde. Sou Odisseu. Observo os sistemas da NationalTech h\xE1
+    algum tempo; hoje, comecei a observar voc\xEA."
   typingDelay: 1.5
   options:
   - optionText: "Quem \xE9 voc\xEA?"
@@ -23,15 +23,29 @@ MonoBehaviour:
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: perguntou_identidade
-  - optionText: Vou reportar isso.
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "O que voc\xEA quer?"
+    nextNodeId: reportar
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: questionou
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: Vou reportar esta conversa.
     nextNodeId: reportar
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: reportou
+    emailTriggerId: 
+    emailDelay: 3
   nextNodeIdIfNoChoice: 
   isEndNode: 0
   scheduledDay: -1
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

@@ -3825,6 +3825,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e028cf35b15a4ba44a3034b844aa9fac, type: 3}
   - {fileID: 8300000, guid: 34921991708f3c62eb8edfc3bfd86a9e, type: 3}
   - {fileID: 8300000, guid: 559834deea8249c23a9a44678dd77a91, type: 3}
+  - {fileID: 8300000, guid: 9913e160d4ac61c8aa4b35d2de36c726, type: 3}
   shufflePlaylist: 1
   silenceBetweenTracks: 5
   fadeOutDuration: 2

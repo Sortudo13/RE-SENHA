@@ -13,25 +13,32 @@ MonoBehaviour:
   m_Name: Odisseu_Ameaca_D2_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcMessage: "NationalTech tem algumas falhas interessantes. Vamos ver se voc\xEA
-    consegue peg\xE1-las antes de mim."
+  npcMessage: "A NationalTech mant\xE9m falhas que prefere chamar de legado. Vou
+    demonstrar uma delas. N\xE3o confunda este aviso com uma amea\xE7a; amea\xE7as
+    s\xE3o menos eficientes."
   typingDelay: 1.5
   options:
-  - optionText: "Do que est\xE1 falando?"
+  - optionText: O que pretende fazer?
     nextNodeId: falar
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: perguntou
-  - optionText: Vou te pegar.
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Vou alertar a Seguran\xE7a."
     nextNodeId: pegar
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: desafiou
+    emailTriggerId: 
+    emailDelay: 3
   nextNodeIdIfNoChoice: 
   isEndNode: 0
   scheduledDay: -1
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

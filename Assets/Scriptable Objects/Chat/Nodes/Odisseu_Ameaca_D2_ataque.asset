@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: Odisseu_Ameaca_D2_ataque
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: ataque
-  npcMessage: "Voc\xEA est\xE1 demorando muito para agir. Achei que fosse mais r\xE1pido.
-    Vou ajudar a sua empresa a acordar."
+  npcMessage: "Sua rea\xE7\xE3o foi registrada. N\xE3o alterar\xE1 o que j\xE1 est\xE1
+    em movimento."
   typingDelay: 1.5
   options:
-  - optionText: "O que voc\xEA fez?!"
+  - optionText: "O que est\xE1 em movimento?"
     nextNodeId: fim_ataque
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
-    feedbackTag: desespero
+    feedbackTag: questionou_ameaca
+    emailTriggerId: 
+    emailDelay: 3
   nextNodeIdIfNoChoice: 
   isEndNode: 1
   scheduledDay: 2
   scheduledHour: 14
   scheduledMinute: 0
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

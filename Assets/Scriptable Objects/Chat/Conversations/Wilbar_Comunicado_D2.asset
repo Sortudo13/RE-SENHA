@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Wilbar_Comunicado_D2
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: wilbar_comunicado_d2
+  npcName: Constantino Wilbar
+  npcAvatar: {fileID: 0}
+  nodes:
+  - {fileID: 11400000, guid: 8deb07a4d004b984bbb2cadf12915b25, type: 2}
+  - {fileID: 11400000, guid: cc2c2084a9fd001bb8b210ebfe24cb66, type: 2}
+  - {fileID: 11400000, guid: dd1cddcbd8a428f7fbf95d0b1da455f9, type: 2}
+  - {fileID: 11400000, guid: b814727d259a326b0940aedcbac7984c, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

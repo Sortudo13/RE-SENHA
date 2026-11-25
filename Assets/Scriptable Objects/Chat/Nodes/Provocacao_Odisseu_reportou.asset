@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Provocacao_Odisseu_reportou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: reportou
-  npcMessage: "Reporte. Isso s\xF3 tornar\xE1 o jogo mais interessante."
+  npcMessage: "Registre o que quiser. Um registro n\xE3o \xE9 o mesmo que controle."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

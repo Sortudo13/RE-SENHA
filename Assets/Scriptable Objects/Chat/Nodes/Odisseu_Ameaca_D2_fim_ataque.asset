@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Odisseu_Ameaca_D2_fim_ataque
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: fim_ataque
-  npcMessage: "Aguarde e ver\xE1."
+  npcMessage: "Aguarde. Voc\xEA ver\xE1 o suficiente."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

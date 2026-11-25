@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Provocacao_Odisseu_provocou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: provocou
-  npcMessage: "Ah, bravura. Admiro isso. Mas bravura sem cautela \xE9 tolice."
+  npcMessage: "Chame como quiser. Eu prefiro chamar de previs\xE3o."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

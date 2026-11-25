@@ -13,22 +13,32 @@ MonoBehaviour:
   m_Name: ChatInbox
   m_EditorClassIdentifier: Assembly-CSharp::ChatInbox
   entries:
-  - conversation: {fileID: 11400000, guid: 0476757f6956c77e2986cfba48039706, type: 2}
+  - conversation: {fileID: 11400000, guid: d2695af42655bef35a79495042a39efa, type: 2}
     arrivalDay: 1
     arrivalHour: 8
     arrivalMinute: 5
     sortOrder: 0
-  - conversation: {fileID: 11400000, guid: b04669114d767599ab5ef60d3a2a5412, type: 2}
-    arrivalDay: 1
-    arrivalHour: 10
+  - conversation: {fileID: 11400000, guid: 51f87edc22f17773284d62c65eeafcfb, type: 2}
+    arrivalDay: 2
+    arrivalHour: 8
     arrivalMinute: 0
-    sortOrder: 1
+    sortOrder: 3
   - conversation: {fileID: 11400000, guid: ae7114640d7d90fae9d11a3953e3508d, type: 2}
     arrivalDay: 1
     arrivalHour: 14
     arrivalMinute: 0
     sortOrder: 2
-  - conversation: {fileID: 11400000, guid: 8d60edf5920d1d698894173dbf2f5056, type: 2}
+  - conversation: {fileID: 11400000, guid: de24844760056a3318a9c1b7fbc7fd75, type: 2}
+    arrivalDay: 1
+    arrivalHour: 9
+    arrivalMinute: 0
+    sortOrder: 20
+  - conversation: {fileID: 11400000, guid: 7f7ca15f72fd317a2a86f9337357c8de, type: 2}
+    arrivalDay: 1
+    arrivalHour: 16
+    arrivalMinute: 0
+    sortOrder: 21
+  - conversation: {fileID: 11400000, guid: fa3f48ab594c23c28974317eb62e6ced, type: 2}
     arrivalDay: 2
     arrivalHour: 8
     arrivalMinute: 30
@@ -38,27 +48,57 @@ MonoBehaviour:
     arrivalHour: 10
     arrivalMinute: 15
     sortOrder: 4
+  - conversation: {fileID: 11400000, guid: d462198485673408e81c8ff3f18cc581, type: 2}
+    arrivalDay: 2
+    arrivalHour: 11
+    arrivalMinute: 15
+    sortOrder: 22
+  - conversation: {fileID: 11400000, guid: 894c4e64407d6c0c98b122ccb58007ed, type: 2}
+    arrivalDay: 2
+    arrivalHour: 16
+    arrivalMinute: 0
+    sortOrder: 23
   - conversation: {fileID: 11400000, guid: a46bac85f245c2b91acddb4aa383ed04, type: 2}
     arrivalDay: 3
     arrivalHour: 10
     arrivalMinute: 30
     sortOrder: 5
-  - conversation: {fileID: 11400000, guid: 04cff1a8548a6034f8608c2dccdd4fbc, type: 2}
+  - conversation: {fileID: 11400000, guid: 8f696d5e41eae6c90aba0e743dfab586, type: 2}
     arrivalDay: 3
     arrivalHour: 14
     arrivalMinute: 0
     sortOrder: 6
+  - conversation: {fileID: 11400000, guid: e2f3093cae221d46da0adf27e27df689, type: 2}
+    arrivalDay: 3
+    arrivalHour: 12
+    arrivalMinute: 0
+    sortOrder: 24
+  - conversation: {fileID: 11400000, guid: dd22147329ac86ea8b1945f4fa2ab0fd, type: 2}
+    arrivalDay: 3
+    arrivalHour: 16
+    arrivalMinute: 0
+    sortOrder: 25
   - conversation: {fileID: 11400000, guid: 7b2c9c059498aef459791dffd599e4fb, type: 2}
     arrivalDay: 4
     arrivalHour: 11
     arrivalMinute: 0
     sortOrder: 7
-  - conversation: {fileID: 11400000, guid: 490008dc0556ae8b88d98030890f392d, type: 2}
+  - conversation: {fileID: 11400000, guid: 6b6953017d06f0ebc97406cae3c05da9, type: 2}
     arrivalDay: 4
     arrivalHour: 14
     arrivalMinute: 30
     sortOrder: 8
-  - conversation: {fileID: 11400000, guid: 62a435ab037bc521e85ed220c7854361, type: 2}
+  - conversation: {fileID: 11400000, guid: a4a162c98378565ffae2d4b63db4f742, type: 2}
+    arrivalDay: 4
+    arrivalHour: 14
+    arrivalMinute: 30
+    sortOrder: 26
+  - conversation: {fileID: 11400000, guid: 28dd74a97745985808b2aa028b3625aa, type: 2}
+    arrivalDay: 4
+    arrivalHour: 16
+    arrivalMinute: 0
+    sortOrder: 27
+  - conversation: {fileID: 11400000, guid: 68ed05a5eaae8dc448dbf85a7d553d84, type: 2}
     arrivalDay: 5
     arrivalHour: 10
     arrivalMinute: 0
@@ -68,3 +108,13 @@ MonoBehaviour:
     arrivalHour: 15
     arrivalMinute: 0
     sortOrder: 10
+  - conversation: {fileID: 11400000, guid: 5d6ad9882881e73fe8157b0886547886, type: 2}
+    arrivalDay: 5
+    arrivalHour: 15
+    arrivalMinute: 0
+    sortOrder: 28
+  - conversation: {fileID: 11400000, guid: 3cb3a73f254de1dd9a40feaf40f6ea4d, type: 2}
+    arrivalDay: 5
+    arrivalHour: 16
+    arrivalMinute: 0
+    sortOrder: 29

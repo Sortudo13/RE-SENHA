@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Odisseu_Observa_cobranca
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: cobranca
-  npcMessage: "Voc\xEA n\xE3o me respondeu. Isso me deixa... curioso. Nos vemos amanh\xE3."
+  npcMessage: "Li sua resposta. Ela me diz menos do que voc\xEA imagina \u2014 e
+    mais do que gostaria."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
@@ -21,4 +22,6 @@ MonoBehaviour:
   scheduledDay: 1
   scheduledHour: 15
   scheduledMinute: 30
-  requiresAnswerToNodeId: 
+  requiresAnswerToNodeId: inicio
+  emailTriggerId: 
+  emailDelay: 3

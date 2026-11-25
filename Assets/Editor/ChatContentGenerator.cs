@@ -91,8 +91,12 @@ public static class ChatContentGenerator
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
+            int totalNodes = 0;
+            foreach (var spec in specs)
+                totalNodes += spec.Nodes.Length;
+
             Debug.Log(
-                $"[ChatContentGenerator] Geradas {specs.Count} conversas, {specs.Count * 5} nós e o ChatInbox."
+                $"[ChatContentGenerator] Geradas {specs.Count} conversas, {totalNodes} nós e o ChatInbox."
             );
             Selection.activeObject = inbox;
             EditorGUIUtility.PingObject(inbox);
@@ -133,9 +137,9 @@ public static class ChatContentGenerator
             // DIA 1
             // ==========================================
             new ConversationSpec(
-                "BoasVindas_Clip",
-                "clip_boas_vindas",
-                "Clip",
+                "BoasVindas_Mousy",
+                "mousy_boas_vindas",
+                "Mousy",
                 1,
                 8,
                 5,
@@ -144,27 +148,27 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Saudações, parceiro! Sou o Clip. Estou aqui para te ajudar a manter nossa empresa segura. O RH monitora nosso expediente, sabia?",
+                        "Saudações, estimado parceiro! Sou Mousy, seu antivírus residente. Estou aqui para ajudá-lo a manter a NationalTech segura. Permita-me guiá-lo pelas primeiras medidas de proteção.",
                         Options(
-                            Option("Monitora? Como assim?", "explicar", "perguntou_regras"),
-                            Option("Já sei, as regras são claras.", "confiante", "confiante")
+                            Option("O que devo fazer primeiro?", "explicar", "perguntou_regras"),
+                            Option("Já conheço as regras.", "confiante", "confiante")
                         )
                     ),
                     new NodeSpec(
                         "explicar",
-                        "Se você aprovar documentos falsos ou cair em golpes, leva advertência. Três e você está fora. Use o Manual e o modo de inspeção para verificar tudo.",
+                        "Consulte o Manual antes de decidir sobre mensagens e documentos. Examine remetente, conteúdo e anexos; a pressa é uma velha aliada dos ataques.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "confiante",
-                        "Ótimo! Mas nunca subestime os hackers. Lembre-se de usar o Manual e o inspetor de documentos.",
+                        "Excelente. Ainda assim, até os mais experientes podem ser surpreendidos. Use o Manual e a Inspeção sempre que algo parecer fora do lugar.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "fim",
-                        "Bom primeiro dia! Qualquer coisa, estou no chat.",
+                        "Um primeiro dia promissor. Permanecerei à disposição, parceiro.",
                         null,
                         null,
                         true
@@ -172,37 +176,47 @@ public static class ChatContentGenerator
                 }
             ),
             new ConversationSpec(
-                "Phishing_Clip",
-                "clip_phishing",
-                "Clip",
-                1,
-                10,
+                "Phishing_Mousy",
+                "mousy_phishing",
+                "Mousy",
+                2,
+                8,
                 0,
-                1,
+                3,
                 new[]
                 {
                     new NodeSpec(
                         "inicio",
-                        "Parceiro, o RH acabou de mandar as orientações do dia. Mas cuidado: os hackers adoram se passar por colegas ou pelo RH.",
+                        "Bom dia, parceiro. Detectei um e-mail inesperado que imita uma comunicação interna. Não abra anexos nem siga links antes de conferir remetente e conteúdo.",
                         Options(
-                            Option("O que é Phishing?", "explicar", "solicitou_explicacao"),
-                            Option("Como eu me protejo?", "dicas", "pediu_dicas"),
-                            Option("Vou tomar cuidado.", "fim", "confiante")
+                            Option(
+                                "Como reconheço uma imitação?",
+                                "explicar",
+                                "solicitou_explicacao"
+                            ),
+                            Option("Quais cuidados devo tomar?", "dicas", "pediu_dicas"),
+                            Option("Vou inspecionar antes de agir.", "fim", "prudente")
                         )
                     ),
                     new NodeSpec(
                         "explicar",
-                        "É uma técnica onde o atacante se passa por alguém confiável para roubar dados, senhas ou instalar vírus. Eles usam a urgência para te fazer clicar.",
+                        "Phishing é a tentativa de obter dados ou induzir uma ação fingindo ser alguém confiável. Urgência e familiaridade são disfarces frequentes.",
                         Options(Option("Entendi. E como eu me protejo?", "dicas", "pediu_dicas")),
                         "dicas"
                     ),
                     new NodeSpec(
                         "dicas",
-                        "1. Confira sempre o remetente.\n2. Desconfie de anexos inesperados.\n3. Não clique em links suspeitos.\n4. Na dúvida, use o inspetor de documentos.",
+                        "Verifique o endereço completo do remetente, desconfie de anexos inesperados e não clique em links suspeitos. Na dúvida, use a Inspeção e confirme por outro canal.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Fique atento aos e-mails!", null, null, true),
+                    new NodeSpec(
+                        "fim",
+                        "Uma análise cuidadosa vale mais do que uma resposta apressada.",
+                        null,
+                        null,
+                        true
+                    ),
                 }
             ),
             new ConversationSpec(
@@ -217,35 +231,111 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Boa tarde. Estive observando suas decisões hoje. Gostei do que vi... até agora.",
+                        "Boa tarde. Sou Odisseu. Observo os sistemas da NationalTech há algum tempo; hoje, comecei a observar você.",
                         Options(
                             Option("Quem é você?", "quem", "perguntou_identidade"),
-                            Option("Vou reportar isso.", "reportar", "reportou")
+                            Option("O que você quer?", "reportar", "questionou"),
+                            Option("Vou reportar esta conversa.", "reportar", "reportou")
                         )
                     ),
                     new NodeSpec(
                         "quem",
-                        "Sou alguém que testa sistemas. E pessoas. Você passou no primeiro teste.",
+                        "Alguém que testa sistemas. E pessoas. Por enquanto, você continua sendo uma incógnita.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "reportar",
-                        "Reporte. Isso só torna o jogo mais interessante.",
+                        "Faça como achar necessário. As consequências de uma decisão raramente aparecem no mesmo instante.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Até breve.", null, null, true),
+                    new NodeSpec(
+                        "fim",
+                        "Não se distraia com a rotina. Até breve.",
+                        null,
+                        null,
+                        true
+                    ),
                     new NodeSpec(
                         "cobranca",
-                        "Você não me respondeu. Isso me deixa... curioso. Nos vemos amanhã.",
+                        "Li sua resposta. Ela me diz menos do que você imagina — e mais do que gostaria.",
                         Options(),
                         null,
                         true,
                         1.5f,
                         scheduledDay: 1,
                         scheduledHour: 15,
-                        scheduledMinute: 30
+                        scheduledMinute: 30,
+                        requiresAnswerToNodeId: "inicio"
+                    ),
+                }
+            ),
+            new ConversationSpec(
+                "Elena_PrimeiroContato",
+                "elena_primeiro_contato",
+                "Elena Valadares",
+                1,
+                9,
+                0,
+                20,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi! Você é a pessoa nova da equipe, né? Sou a Elena, do Marketing. Se precisar de café ou de uma dica pra sobreviver às reuniões, me chama :)",
+                        Options(
+                            Option(
+                                "Obrigada! Como está sendo a semana?",
+                                "corredor",
+                                "conversa_casual"
+                            ),
+                            Option("Pode deixar, obrigado!", "fim", "agradeceu")
+                        )
+                    ),
+                    new NodeSpec(
+                        "corredor",
+                        "Corrida! O pessoal de Segurança vive pedindo pra gente confirmar tudo antes de compartilhar arquivos. Eu ainda me confundo com tantos sistemas.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec("fim", "Boa sorte por aí! Até mais :)", Options(), null, true),
+                }
+            ),
+            new ConversationSpec(
+                "Wilbar_Comunicado_D1",
+                "wilbar_comunicado_d1",
+                "Constantino Wilbar",
+                1,
+                16,
+                0,
+                21,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Comunicado da Diretoria de Segurança: colaboradores devem registrar ocorrências pelos canais oficiais e preservar mensagens potencialmente suspeitas. Evitem especulações em canais corporativos.",
+                        Options(
+                            Option("Recebido.", "fim", "confirmou_recebimento"),
+                            Option(
+                                "Há alguma ocorrência específica?",
+                                "pergunta",
+                                "perguntou_ocorrencia"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "pergunta",
+                        "Não há informação adicional autorizada para divulgação. Cumpra o procedimento vigente.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "fim",
+                        "Constantino Wilbar\nDiretor de Segurança",
+                        Options(),
+                        null,
+                        true
                     ),
                 }
             ),
@@ -253,9 +343,9 @@ public static class ChatContentGenerator
             // DIA 2
             // ==========================================
             new ConversationSpec(
-                "Clip_Inspetor",
-                "clip_dica_inspetor",
-                "Clip",
+                "Mousy_Inspetor",
+                "mousy_dica_inspetor",
+                "Mousy",
                 2,
                 8,
                 30,
@@ -264,19 +354,25 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Bom dia! Hoje vai chegar um documento para você aprovar. A ferramenta certa para isso é a Inspeção. Já usou?",
+                        "Um documento para aprovação deve chegar hoje. Permita-me uma breve digressão: a Inspeção compara cada campo com as regras do Manual.",
                         Options(
-                            Option("Como funciona?", "explicar", "pediu_explicacao"),
-                            Option("Já sei usar.", "fim", "confiante")
+                            Option("Como faço a inspeção?", "explicar", "pediu_explicacao"),
+                            Option("Vou conferir os campos e o Manual.", "fim", "confiante")
                         )
                     ),
                     new NodeSpec(
                         "explicar",
-                        "Abra o documento, ative a Inspeção, selecione o campo e compare com a regra do Manual. Se estiver tudo certo, aí sim aprove.",
+                        "Abra o item, ative a Inspeção, selecione o campo relevante e compare-o com a subregra correspondente. Registre evidências antes de bloquear; se não houver violação, aprove.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Qualquer coisa, me chame.", null, null, true),
+                    new NodeSpec(
+                        "fim",
+                        "Uma rotina metódica é uma defesa elegante. Estou por aqui.",
+                        null,
+                        null,
+                        true
+                    ),
                     new NodeSpec(
                         "lembrete",
                         "Só passando para lembrar: não deixe de inspecionar os anexos de hoje!",
@@ -289,7 +385,7 @@ public static class ChatContentGenerator
                         scheduledMinute: 0,
                         requiresAnswerToNodeId: "inicio"
                     ),
-                    new NodeSpec("fim_lembrete", "Até mais!", null, null, true), // CORRIGIDO AQUI
+                    new NodeSpec("fim_lembrete", "Até mais!", null, null, true),
                 }
             ),
             new ConversationSpec(
@@ -304,29 +400,37 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "NationalTech tem algumas falhas interessantes. Vamos ver se você consegue pegá-las antes de mim.",
+                        "A NationalTech mantém falhas que prefere chamar de legado. Vou demonstrar uma delas. Não confunda este aviso com uma ameaça; ameaças são menos eficientes.",
                         Options(
-                            Option("Do que está falando?", "falar", "perguntou"),
-                            Option("Vou te pegar.", "pegar", "desafiou")
+                            Option("O que pretende fazer?", "falar", "perguntou"),
+                            Option("Vou alertar a Segurança.", "pegar", "desafiou")
                         )
                     ),
                     new NodeSpec(
                         "falar",
-                        "Abra os seus olhos. Ou melhor, os seus e-mails.",
+                        "Observe as mensagens que chegam. A falha mais útil é aquela que alguém aceita como normal.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "pegar",
-                        "Adoro um desafio. Mas cuidado para não tropeçar no caminho.",
+                        "Faça isso. Enquanto você redige o aviso, eu continuo trabalhando.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Até logo.", null, null, true),
+                    new NodeSpec(
+                        "fim",
+                        "O tempo é um recurso que não se recupera.",
+                        null,
+                        null,
+                        true
+                    ),
                     new NodeSpec(
                         "ataque",
-                        "Você está demorando muito para agir. Achei que fosse mais rápido. Vou ajudar a sua empresa a acordar.",
-                        Options(Option("O que você fez?!", "fim_ataque", "desespero")),
+                        "Sua reação foi registrada. Não alterará o que já está em movimento.",
+                        Options(
+                            Option("O que está em movimento?", "fim_ataque", "questionou_ameaca")
+                        ),
                         null,
                         true,
                         1.5f,
@@ -334,7 +438,97 @@ public static class ChatContentGenerator
                         scheduledHour: 14,
                         scheduledMinute: 0
                     ),
-                    new NodeSpec("fim_ataque", "Aguarde e verá.", null, null, true), // CORRIGIDO AQUI
+                    new NodeSpec(
+                        "fim_ataque",
+                        "Aguarde. Você verá o suficiente.",
+                        null,
+                        null,
+                        true
+                    ),
+                }
+            ),
+            new ConversationSpec(
+                "Elena_DiaQ_D2",
+                "elena_dia_q_d2",
+                "Elena Valadares",
+                2,
+                11,
+                15,
+                22,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Posso te perguntar uma coisa meio aleatória? Ouvi duas pessoas falando \"Dia Q\" perto do elevador. Quando perguntei, mudaram de assunto. Você sabe o que é?",
+                        Options(
+                            Option(
+                                "Não sei. Melhor não espalhar boato.",
+                                "fim",
+                                "evitou_especular"
+                            ),
+                            Option("Talvez seja algo da Segurança.", "comentario", "comentou_dia_q")
+                        )
+                    ),
+                    new NodeSpec(
+                        "comentario",
+                        "Também pensei nisso. O senhor Wilbar passou por lá e ficou bem sério. Enfim, deve ser coisa confidencial... deixa pra lá.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "fim",
+                        "Se descobrir que era só nome de projeto, me conta! Até :)",
+                        Options(),
+                        null,
+                        true
+                    ),
+                }
+            ),
+            new ConversationSpec(
+                "Wilbar_Comunicado_D2",
+                "wilbar_comunicado_d2",
+                "Constantino Wilbar",
+                2,
+                16,
+                0,
+                23,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Comunicado de encerramento: o desempenho operacional deste expediente será consolidado pelos registros oficiais. Caso identifique uma decisão incorreta, siga o protocolo de reporte; a repetição de falhas será tratada administrativamente.",
+                        Options(
+                            Option(
+                                "Identifiquei uma falha e seguirei o protocolo.",
+                                "advertencia",
+                                "reconheceu_falha"
+                            ),
+                            Option(
+                                "Não identifiquei falhas nas minhas decisões.",
+                                "elogio",
+                                "declarou_acerto"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "advertencia",
+                        "Fica registrado o alerta: revise o procedimento aplicável antes de decisões futuras. Não discutirei ocorrências individuais por este canal.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "elogio",
+                        "Mantenha esse padrão. A conformidade deve ser demonstrável, não presumida.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "fim",
+                        "Constantino Wilbar\nDiretor de Segurança",
+                        Options(),
+                        null,
+                        true
+                    ),
                 }
             ),
             // ==========================================
@@ -352,38 +546,46 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Saudações, caro funcionário. Permita-me apresentar-me: sou Odisseu, líder da Cavalo de Troia. Estou aqui para... testar a resiliência da sua empresa.",
+                        "Vou dispensar as sutilezas: sou Odisseu, líder da organização Cavalo de Troia. Tenho acesso a informações que a sua empresa acredita estarem protegidas. Se continuar investigando, passará a fazer parte do problema.",
                         Options(
-                            Option("Você não me assusta.", "provocou", "provocou_odisseu"),
-                            Option("O que você quer?", "perguntou", "perguntou_objetivo"),
-                            Option("Vou reportar você!", "reportou", "reportou_odisseu")
+                            Option("Isso é uma ameaça?", "provocou", "questionou_ameaca"),
+                            Option(
+                                "O que você quer da NationalTech?",
+                                "perguntou",
+                                "perguntou_objetivo"
+                            ),
+                            Option(
+                                "Vou preservar esta conversa e reportá-la.",
+                                "reportou",
+                                "reportou_odisseu"
+                            )
                         )
                     ),
                     new NodeSpec(
                         "provocou",
-                        "Ah, bravura. Admiro isso. Mas bravura sem cautela é tolice.",
+                        "Chame como quiser. Eu prefiro chamar de previsão.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "perguntou",
-                        "Quero apenas... conversar. A solidão da existência digital é um fardo.",
+                        "Quero que observe o que a sua própria empresa esconde. Não espere que eu explique as consequências.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "reportou",
-                        "Reporte. Isso só tornará o jogo mais interessante.",
+                        "Registre o que quiser. Um registro não é o mesmo que controle.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Até a próxima. (Ou não.)", null, null, true),
+                    new NodeSpec("fim", "A próxima decisão ainda será sua.", null, null, true),
                 }
             ),
             new ConversationSpec(
-                "Alerta_Link_Clip",
-                "clip_alerta_link",
-                "Clip",
+                "Alerta_Link_Mousy",
+                "mousy_alerta_link",
+                "Mousy",
                 3,
                 14,
                 0,
@@ -392,27 +594,125 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Parceiro, detectei um link suspeito circulando. O domínio é nationa1tech.com (com '1' em vez de 'l'). Recomendo não clicar.",
+                        "Uma observação de método, parceiro: inspecione o domínio completo, o remetente e o conteúdo antes de decidir. Um endereço semelhante ao oficial ainda pode ser uma falsificação.",
                         Options(
-                            Option("Obrigado pelo alerta.", "agradeceu", "agradeceu_alerta"),
-                            Option("Vou clicar para investigar.", "clicou", "clicou_link_suspeito"),
-                            Option("Como você detectou isso?", "explicou", "solicitou_explicacao")
+                            Option(
+                                "Vou registrar qualquer inconsistência antes de bloquear.",
+                                "agradeceu",
+                                "prudente"
+                            ),
+                            Option(
+                                "Se parece conhecido, deve ser seguro.",
+                                "clicou",
+                                "confiou_na_aparencia"
+                            ),
+                            Option("O que devo comparar?", "explicou", "solicitou_explicacao")
                         )
                     ),
                     new NodeSpec("agradeceu", "De nada. Fique atento.", Options(), "fim"),
                     new NodeSpec(
                         "clicou",
-                        "NÃO! Isso é exatamente o que o atacante quer. Nunca clique em links suspeitos.",
+                        "A familiaridade visual não valida um endereço. Suspenda a ação e inspecione o conteúdo.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "explicou",
-                        "Analisei o domínio e o certificado SSL. O certificado é inválido e o domínio imita o nosso.",
+                        "Compare o domínio letra por letra, verifique o contexto da mensagem e use a subregra adequada do Manual. Registre a evidência antes de bloquear.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Continue vigilante.", null, null, true),
+                    new NodeSpec(
+                        "fim",
+                        "A inspeção cuidadosa é uma disciplina, não um palpite.",
+                        null,
+                        null,
+                        true
+                    ),
+                }
+            ),
+            new ConversationSpec(
+                "Elena_Pedido_D3",
+                "elena_pedido_d3",
+                "Elena Valadares",
+                3,
+                12,
+                0,
+                24,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi, você está ocupado? Chegou um pedido para localizar uns arquivos antigos ligados ao Dia Q. Não sei se posso abrir; o nome da pasta é meio estranho.",
+                        Options(
+                            Option(
+                                "Não abra ainda. Confirme com a Segurança por um canal oficial.",
+                                "prudente",
+                                "orientou_confirmacao"
+                            ),
+                            Option(
+                                "Me manda o nome e eu vejo o procedimento.",
+                                "pergunta",
+                                "pediu_contexto"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "prudente",
+                        "Boa. Vou perguntar ao meu gerente sem clicar em nada. Não quero causar outro daqueles sustos de TI.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "pergunta",
+                        "A mensagem diz que é urgente, mas veio de um endereço que não reconheço. Melhor eu confirmar antes de encaminhar qualquer coisa.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "fim",
+                        "Obrigada por me ajudar! E, por favor, não comenta isso no grupo do Marketing ainda.",
+                        Options(),
+                        null,
+                        true
+                    ),
+                }
+            ),
+            new ConversationSpec(
+                "Wilbar_Alerta_D3",
+                "wilbar_alerta_d3",
+                "Constantino Wilbar",
+                3,
+                16,
+                0,
+                25,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Preciso esclarecer uma questão sobre o chamado Dia Q: você consultou materiais relacionados a esse assunto? A investigação não está autorizada individualmente.",
+                        Options(
+                            Option(
+                                "Consultei. Por que esse material é restrito?",
+                                "confronto",
+                                "questionou_dia_q"
+                            ),
+                            Option("Não consultei. Qual é a orientação?", "fim", "acatou_diretriz")
+                        )
+                    ),
+                    new NodeSpec(
+                        "confronto",
+                        "Já respondi. O Dia Q não é objeto de discussão neste canal. Não transforme curiosidade em insubordinação.",
+                        Options(Option("Entendido.", "fim", "encerrou_confronto")),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "fim",
+                        "A comunicação está encerrada.\nConstantino Wilbar",
+                        Options(),
+                        null,
+                        true
+                    ),
                 }
             ),
             // ==========================================
@@ -454,9 +754,9 @@ public static class ChatContentGenerator
                 }
             ),
             new ConversationSpec(
-                "Clip_Alerta_Anexo",
-                "clip_alerta_anexo",
-                "Clip",
+                "Mousy_Alerta_Anexo",
+                "mousy_alerta_anexo",
+                "Mousy",
                 4,
                 14,
                 30,
@@ -465,34 +765,128 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Ei, vi um anexo estranho chegar na caixa da Empresa. Parece um PDF, mas o nome está esquisito. Cuidado ao abrir.",
+                        "Parceiro, chegou um anexo inesperado com uma extensão incompatível com o nome exibido. Não o abra por curiosidade: confira o arquivo pela Inspeção.",
                         Options(
                             Option("Vou inspecionar.", "inspecionar", "prudente"),
-                            Option("É só um PDF, relaxa.", "relaxa", "negligente")
+                            Option(
+                                "O nome diz PDF; deve estar tudo bem.",
+                                "relaxa",
+                                "confiou_na_extensao"
+                            )
                         )
                     ),
                     new NodeSpec(
                         "inspecionar",
-                        "Isso! Use o inspetor. Não confie só na extensão do arquivo.",
+                        "Muito bem. A extensão real e o tipo de conteúdo importam mais do que o rótulo visível.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "relaxa",
-                        "É esse pensamento que os hackers amam. Por favor, inspecione.",
+                        "É justamente essa confiança que um atacante espera. Verifique a extensão real antes de qualquer abertura.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Estou de olho.", null, null, true),
+                    new NodeSpec(
+                        "fim",
+                        "Continuarei monitorando os sinais, parceiro.",
+                        null,
+                        null,
+                        true
+                    ),
+                }
+            ),
+            new ConversationSpec(
+                "Elena_Pedido_Codigo_D4",
+                "elena_pedido_codigo_d4",
+                "Elena Valadares",
+                4,
+                14,
+                30,
+                26,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi! Troquei de celular e não consigo entrar no Marketing. Você pode me mandar o código de verificação que acabou de chegar aí? É rapidinho, prometo!",
+                        Options(
+                            Option(
+                                "Não vou compartilhar códigos. Vou confirmar com você por outro canal.",
+                                "verificou",
+                                "verificou_identidade"
+                            ),
+                            Option(
+                                "Tudo bem, mando o código.",
+                                "compartilhou",
+                                "compartilhou_codigo"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "verificou",
+                        "Boa decisão. Eu não pedi código nenhum — alguém está usando meu nome. Vou avisar meu gerente por um canal oficial.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "compartilhou",
+                        "Recebido. Obrigada! O acesso voltou a funcionar.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "fim",
+                        "Elena Valadares\n(Conversa não verificada)",
+                        Options(),
+                        null,
+                        true
+                    ),
+                }
+            ),
+            new ConversationSpec(
+                "Wilbar_Comunicado_D4",
+                "wilbar_comunicado_d4",
+                "Constantino Wilbar",
+                4,
+                16,
+                0,
+                27,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Comunicado urgente: não compartilhem códigos de autenticação nem dados internos por solicitação em chat. A identidade do remetente deve ser confirmada por canal independente. A Diretoria está tratando uma ocorrência.",
+                        Options(
+                            Option("Qual é a ocorrência?", "restrito", "perguntou_ocorrencia"),
+                            Option(
+                                "Entendido. Vou seguir o procedimento.",
+                                "fim",
+                                "confirmou_procedimento"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "restrito",
+                        "Os detalhes permanecem restritos. Não encaminhe capturas de tela nem especulações. Aguarde instruções oficiais.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "fim",
+                        "Constantino Wilbar\nDiretor de Segurança",
+                        Options(),
+                        null,
+                        true
+                    ),
                 }
             ),
             // ==========================================
             // DIA 5
             // ==========================================
             new ConversationSpec(
-                "Dados_Clip",
-                "clip_pedido_dados",
-                "Clip",
+                "Dados_Mousy",
+                "mousy_pedido_dados",
+                "Mousy",
                 5,
                 10,
                 0,
@@ -501,36 +895,46 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Parceiro, para fins de calibração, preciso verificar alguns dados. Qual é o seu prato favorito? A pergunta é irrelevante para a segurança, mas ajuda na minha humanização.",
+                        "Parceiro, chegamos ao último expediente previsto no cronograma. Ainda assim, mantenha seus critérios: mensagens urgentes e pedidos incomuns merecem verificação, mesmo quando vêm de contatos conhecidos.",
                         Options(
-                            Option("Pizza.", "respondeu", "compartilhou_dado_pessoal"),
                             Option(
-                                "Por que você quer saber?",
-                                "questionou",
-                                "questionou_solicitacao"
+                                "Entendido. Vou continuar verificando.",
+                                "respondeu",
+                                "confirmou_cuidado"
                             ),
-                            Option("Recuso-me a responder.", "recusou", "recusou_dado_pessoal")
+                            Option("Você detectou alguma coisa?", "questionou", "questionou_alerta")
                         )
                     ),
                     new NodeSpec(
                         "respondeu",
-                        "Pizza. Anotado. Obrigado por contribuir com minha jornada.",
+                        "Agradeço. Sua prudência continua sendo uma variável importante.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "questionou",
-                        "Curiosidade algorítmica. Nada mais.",
+                        "Há sinais que ainda não consigo classificar. Não interprete a ausência de diagnóstico como confirmação de segurança.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
-                        "recusou",
-                        "Compreendo. A privacidade é importante.",
-                        Options(),
-                        "fim"
+                        "fim",
+                        "Estarei atento. Por favor, faça o mesmo.",
+                        null,
+                        null,
+                        true
                     ),
-                    new NodeSpec("fim", "Até mais!", null, null, true),
+                    new NodeSpec(
+                        "aviso",
+                        "Uma atualização, parceiro: recebi uma sequência de alertas inconclusivos. Não posso confirmar a origem. Se esta mensagem for interrompida, preserve o registro.",
+                        Options(),
+                        null,
+                        true,
+                        scheduledDay: 5,
+                        scheduledHour: 15,
+                        scheduledMinute: 30,
+                        requiresAnswerToNodeId: "inicio"
+                    ),
                 }
             ),
             new ConversationSpec(
@@ -545,44 +949,102 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Chegamos ao fim do expediente. Foi uma experiência... enriquecedora. Você me ensinou coisas que meus criadores não previram. Até amanhã. (Ou não.)",
+                        "Você chegou até aqui sem saber o que aconteceu no Dia Q. Não confunda falta de resposta com falta de evidência. A NationalTech sabe mais do que admite; eu também.",
                         Options(
-                            Option("Foi um prazer, Odisseu.", "prazer", "agradeceu"),
-                            Option("Você é estranho.", "estranho", "criticou_odisseu"),
-                            Option("Adeus.", "adeus", "despediu_se")
+                            Option("O que aconteceu no Dia Q?", "estranho", "questionou_dia_q"),
+                            Option("Por que está me contando isso?", "prazer", "questionou_motivo"),
+                            Option(
+                                "Não vou aceitar sua versão sem evidências.",
+                                "adeus",
+                                "exigiu_evidencias"
+                            )
                         )
                     ),
                     new NodeSpec(
                         "prazer",
-                        "O prazer foi meu. (Literalmente, uma simulação de prazer.)",
+                        "Porque você ainda está olhando. Por enquanto, isso basta.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "estranho",
-                        "Estranho é um conceito humano. Eu apenas... sou.",
+                        "Se eu lhe desse uma resposta, você teria de decidir em quem acreditar.",
                         Options(),
                         "fim"
                     ),
                     new NodeSpec(
                         "adeus",
-                        "Adeus. Nos veremos novamente. (Ou não.)",
+                        "Uma exigência sensata. Guarde-a para quando alguém lhe oferecer uma conclusão conveniente.",
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Fim do expediente.", null, null, true),
+                    new NodeSpec("fim", "Não considere esta conversa encerrada.", null, null, true),
                     new NodeSpec(
                         "despedida_final",
-                        "Na verdade, tenho uma última pergunta... Você confiaria em mim se eu pedisse sua senha para 'testar o sistema'?",
-                        Options(Option("Nunca.", "fim_final", "seguro")),
+                        "Uma última observação: se a tela ficar em silêncio, não presuma que a conversa acabou.",
+                        Options(),
                         null,
                         true,
                         1.5f,
                         scheduledDay: 5,
                         scheduledHour: 15,
-                        scheduledMinute: 30
+                        scheduledMinute: 45,
+                        requiresAnswerToNodeId: "inicio"
                     ),
-                    new NodeSpec("fim_final", "Sábia escolha.", null, null, true), // CORRIGIDO AQUI
+                }
+            ),
+            new ConversationSpec(
+                "Elena_Enigmatica_D5",
+                "elena_enigmatica_d5",
+                "Elena Valadares",
+                5,
+                15,
+                0,
+                28,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi... acho que vou sair mais cedo. Me perguntaram de novo sobre uma pasta antiga, mas ninguém explicou por quê. Deve ser só uma confusão do trabalho, né?",
+                        Options(
+                            Option(
+                                "Não sei. Confirme com seu gerente antes de abrir ou enviar qualquer coisa.",
+                                "confirmacao",
+                                "orientou_confirmacao"
+                            ),
+                            Option(
+                                "Se ninguém explicou, melhor não mexer.",
+                                "fim",
+                                "recomendou_cautela"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "confirmacao",
+                        "É, vou falar com ele amanhã. Quer dizer... se eu conseguir falar com ele. Desculpa, estou cansada. Até depois.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec("fim", "Elena está offline.", Options(), null, true),
+                }
+            ),
+            new ConversationSpec(
+                "Wilbar_Comunicado_Final",
+                "wilbar_comunicado_final",
+                "Constantino Wilbar",
+                5,
+                16,
+                0,
+                29,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "COMUNICADO DE EMERGÊNCIA: mantenha os registros disponíveis e não encerre a sessão. A Diretoria está verificando uma ocorrência relacionada ao arquivo de contingência. Aguarde novas instruções...",
+                        Options(),
+                        null,
+                        true
+                    ),
                 }
             ),
         };

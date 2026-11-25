@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: fim
-  npcMessage: Fim do expediente.
+  npcMessage: "N\xE3o considere esta conversa encerrada."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

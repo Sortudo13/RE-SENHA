@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Phishing_Mousy_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Bom dia, parceiro. Detectei um e-mail inesperado que imita uma comunica\xE7\xE3o
+    interna. N\xE3o abra anexos nem siga links antes de conferir remetente e conte\xFAdo."
+  typingDelay: 1.5
+  options:
+  - optionText: "Como reconhe\xE7o uma imita\xE7\xE3o?"
+    nextNodeId: explicar
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: solicitou_explicacao
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: Quais cuidados devo tomar?
+    nextNodeId: dicas
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: pediu_dicas
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: Vou inspecionar antes de agir.
+    nextNodeId: fim
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: prudente
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

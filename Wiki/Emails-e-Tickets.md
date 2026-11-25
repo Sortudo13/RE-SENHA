@@ -52,8 +52,8 @@ opção. Exemplo de fragmento do e-mail:
 {
   "timeToReceive": 0,
   "mailBox": "Company",
-  "triggerId": "clip_followup_01",
-  "sender": "clip@nationaltech.com",
+  "triggerId": "Mousy_followup_01",
+  "sender": "Mousy@nationaltech.com",
   "subject": "Conforme conversamos",
   "body": "Aqui está a informação combinada.",
   "attachments": []

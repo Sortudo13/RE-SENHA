@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_estranho
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: estranho
-  npcMessage: "Estranho \xE9 um conceito humano. Eu apenas... sou."
+  npcMessage: "Se eu lhe desse uma resposta, voc\xEA teria de decidir em quem acreditar."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

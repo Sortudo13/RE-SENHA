@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Odisseu_Observa_quem
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: quem
-  npcMessage: "Sou algu\xE9m que testa sistemas. E pessoas. Voc\xEA passou no primeiro
-    teste."
+  npcMessage: "Algu\xE9m que testa sistemas. E pessoas. Por enquanto, voc\xEA continua
+    sendo uma inc\xF3gnita."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -23,3 +23,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

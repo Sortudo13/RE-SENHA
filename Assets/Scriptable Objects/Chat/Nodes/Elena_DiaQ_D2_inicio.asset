@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Elena_DiaQ_D2_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Posso te perguntar uma coisa meio aleat\xF3ria? Ouvi duas pessoas
+    falando \"Dia Q\" perto do elevador. Quando perguntei, mudaram de assunto. Voc\xEA
+    sabe o que \xE9?"
+  typingDelay: 1.5
+  options:
+  - optionText: "N\xE3o sei. Melhor n\xE3o espalhar boato."
+    nextNodeId: fim
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: evitou_especular
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Talvez seja algo da Seguran\xE7a."
+    nextNodeId: comentario
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: comentou_dia_q
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

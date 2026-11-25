@@ -24,21 +24,29 @@ MonoBehaviour:
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: priorizou_seguranca
+    emailTriggerId: 
+    emailDelay: 3
   - optionText: Minimize o impacto.
     nextNodeId: minimizar
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: incentivou_humanidade
+    emailTriggerId: 
+    emailDelay: 3
   - optionText: "Deixe como est\xE1."
     nextNodeId: ignorar
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
     feedbackTag: repudiou_humanidade
+    emailTriggerId: 
+    emailDelay: 3
   nextNodeIdIfNoChoice: 
   isEndNode: 0
   scheduledDay: -1
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

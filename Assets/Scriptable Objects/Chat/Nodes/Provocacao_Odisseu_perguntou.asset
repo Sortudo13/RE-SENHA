@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Provocacao_Odisseu_perguntou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: perguntou
-  npcMessage: "Quero apenas... conversar. A solid\xE3o da exist\xEAncia digital \xE9
-    um fardo."
+  npcMessage: "Quero que observe o que a sua pr\xF3pria empresa esconde. N\xE3o espere
+    que eu explique as consequ\xEAncias."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -23,3 +23,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

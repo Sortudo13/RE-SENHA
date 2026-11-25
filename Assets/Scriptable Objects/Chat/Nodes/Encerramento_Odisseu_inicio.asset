@@ -13,32 +13,40 @@ MonoBehaviour:
   m_Name: Encerramento_Odisseu_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcMessage: "Chegamos ao fim do expediente. Foi uma experi\xEAncia... enriquecedora.
-    Voc\xEA me ensinou coisas que meus criadores n\xE3o previram. At\xE9 amanh\xE3.
-    (Ou n\xE3o.)"
+  npcMessage: "Voc\xEA chegou at\xE9 aqui sem saber o que aconteceu no Dia Q. N\xE3o
+    confunda falta de resposta com falta de evid\xEAncia. A NationalTech sabe mais
+    do que admite; eu tamb\xE9m."
   typingDelay: 1.5
   options:
-  - optionText: Foi um prazer, Odisseu.
-    nextNodeId: prazer
-    outcome: 0
-    outcomeFeedback: 
-    securityScoreDelta: 0
-    feedbackTag: agradeceu
-  - optionText: "Voc\xEA \xE9 estranho."
+  - optionText: O que aconteceu no Dia Q?
     nextNodeId: estranho
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
-    feedbackTag: criticou_odisseu
-  - optionText: Adeus.
+    feedbackTag: questionou_dia_q
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Por que est\xE1 me contando isso?"
+    nextNodeId: prazer
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: questionou_motivo
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "N\xE3o vou aceitar sua vers\xE3o sem evid\xEAncias."
     nextNodeId: adeus
     outcome: 0
     outcomeFeedback: 
     securityScoreDelta: 0
-    feedbackTag: despediu_se
+    feedbackTag: exigiu_evidencias
+    emailTriggerId: 
+    emailDelay: 3
   nextNodeIdIfNoChoice: 
   isEndNode: 0
   scheduledDay: -1
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Odisseu_Ameaca_D2_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: fim
-  npcMessage: "At\xE9 logo."
+  npcMessage: "O tempo \xE9 um recurso que n\xE3o se recupera."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Odisseu_Ameaca_D2_pegar
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: pegar
-  npcMessage: "Adoro um desafio. Mas cuidado para n\xE3o trope\xE7ar no caminho."
+  npcMessage: "Fa\xE7a isso. Enquanto voc\xEA redige o aviso, eu continuo trabalhando."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim
@@ -22,3 +22,5 @@ MonoBehaviour:
   scheduledHour: -1
   scheduledMinute: -1
   requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3
