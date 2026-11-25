@@ -132,6 +132,25 @@
         "digital": "Impressões Digitais/impressoes_digitais_2"
       },
       "foto": "NPCs/npc_1"
+    },
+    {
+      "id": "008",
+      "matricula": "CP-3117",
+      "nome": "Ryan Alves Borges",
+      "email": "ryan.borges@nationaltech.com",
+      "departamento": "Compras",
+      "cargo": "Analista de Compras",
+      "status": "Ativo",
+      "rg": {
+        "numero": "XX.634.207-5",
+        "dataExpedicao": "12/06/2018",
+        "dataNascimento": "21/02/1997",
+        "naturalidade": "Campinas",
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_3"
+      },
+      "foto": "NPCs/npc_ryan"
     }
   ]
 }

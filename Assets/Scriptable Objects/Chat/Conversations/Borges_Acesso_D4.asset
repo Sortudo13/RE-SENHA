@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Borges_Acesso_D4
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: borges_acesso_d4
+  npcName: Ricardo Borges
+  npcAvatar: {fileID: 21300000, guid: f99b1c4bd48f13e47b386dfb2294069c, type: 3}
+  nodes:
+  - {fileID: 11400000, guid: 83b6c5bc555f22e49bf5bfaea0e44f26, type: 2}
+  - {fileID: 11400000, guid: 20ec121a165265b48b3ada6e7281414e, type: 2}
+  - {fileID: 11400000, guid: bf60549e11bac5344b523b2bc201b92e, type: 2}
+  - {fileID: 11400000, guid: 99f8c3c44fe56414b8185f8bb0ed91d8, type: 2}
+  - {fileID: 11400000, guid: 6c106e4c51ebae2449f183aca498fd3c, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 1

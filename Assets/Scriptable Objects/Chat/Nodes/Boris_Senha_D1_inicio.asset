@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Boris_Senha_D1_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcMessage: "Oi, Amigo! O Mousy mandou um guia de senhas t\xE3o formal e chique
-    que fiquei com vergonha de perguntar: usar \"NationalTech123\" e trocar o final
-    pra 124 todo m\xEAs j\xE1 conta como senha forte?"
+  npcMessage: "Oi, Amigo! O RH mandou um guia t\xE3o formal e chique que fiquei com
+    vergonha de perguntar: usar \"NationalTech123\" e trocar o final pra 124 todo
+    m\xEAs j\xE1 conta como senha forte?"
   typingDelay: 1.5
   options:
   - optionText: "N\xE3o: a sequ\xEAncia \xE9 previs\xEDvel. Prefira uma senha longa

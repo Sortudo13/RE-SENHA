@@ -21,6 +21,10 @@ public static class ChatContentGenerator
         { "Mousy", "NPCs/Mousy" },
         { "Odisseu", "NPCs/Odisseu" },
         { "Bóris", "NPCs/Boris" },
+        // "Ricardo Borges" e um impostor (dias 3 e 4; nao existe no Database).
+        // Ryan Borges e o colaborador real (008); mesma foto do RG dele no Database.
+        { "Ricardo Borges", "Images/NPCs/npc_borges" },
+        { "Ryan Borges", "Images/NPCs/npc_ryan" },
     };
 
     [MenuItem("Tools/Re:Senha/Gerar Conversas")]
@@ -352,7 +356,7 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Oi, Amigo! O Mousy mandou um guia de senhas tão formal e chique que fiquei com vergonha de perguntar: usar \"NationalTech123\" e trocar o final pra 124 todo mês já conta como senha forte?",
+                        "Oi, Amigo! O RH mandou um guia tão formal e chique que fiquei com vergonha de perguntar: usar \"NationalTech123\" e trocar o final pra 124 todo mês já conta como senha forte?",
                         Options(
                             Option(
                                 "Não: a sequência é previsível. Prefira uma senha longa e única por serviço e use o gerenciador aprovado pela empresa.",
@@ -561,21 +565,21 @@ public static class ChatContentGenerator
                         "Amigo, dúvida básica: pra que serve o 2FA? Se alguém descobrir minha senha, eu posso só trocar depois, né?",
                         Options(
                             Option(
-                                "O 2FA exige uma segunda prova de identidade, reduzindo o risco se a senha for descoberta. Se vazar, avise a TI e troque-a imediatamente.",
+                                "O 2FA exige uma segunda prova de identidade, reduzindo o risco se a senha for descoberta. Se vazar, avise a Segurança e troque-a imediatamente.",
                                 "tecnico",
                                 "boris_2fa_tecnico",
                                 ChatOptionOutcome.Neutral,
                                 shortText: "É uma segunda prova de identidade."
                             ),
                             Option(
-                                "É como uma segunda fechadura: saber a senha não basta. E, se ela vazar, a gente conta pra TI e troca logo.",
+                                "É como uma segunda fechadura: saber a senha não basta. E, se ela vazar, a gente conta pra Segurança e troca logo.",
                                 "didatico",
                                 "boris_2fa_didatico",
                                 ChatOptionOutcome.Neutral,
                                 shortText: "É como uma segunda fechadura."
                             ),
                             Option(
-                                "O código extra é o segurança da porta. Não deixa pra trocar depois: senha suspeita? TI e troca imediata!",
+                                "O código extra é o segurança da porta. Não deixa pra trocar depois: senha suspeita? Segurança e troca imediata!",
                                 "pratico",
                                 "boris_2fa_pratico",
                                 ChatOptionOutcome.Neutral,
@@ -585,21 +589,21 @@ public static class ChatContentGenerator
                     ),
                     new NodeSpec(
                         "tecnico",
-                        "Agora entendi: o 2FA é uma camada extra, não substitui a senha. Vou manter ligado e avisar a TI se ela for exposta.",
+                        "Agora entendi: o 2FA é uma camada extra, não substitui a senha. Vou manter ligado e avisar a Segurança se ela for exposta.",
                         null,
                         null,
                         true
                     ),
                     new NodeSpec(
                         "didatico",
-                        "Ahhh, segunda fechadura! Vou deixar o 2FA ligado e, se minha senha escapar, aviso a TI e troco na hora.",
+                        "Ahhh, segunda fechadura! Vou deixar o 2FA ligado e, se minha senha escapar, aviso a Segurança e troco na hora.",
                         null,
                         null,
                         true
                     ),
                     new NodeSpec(
                         "pratico",
-                        "Entendi, não espero o expediente acabar: mantenho o 2FA e chamo a TI se notar algo estranho na senha.",
+                        "Entendi, não espero o expediente acabar: mantenho o 2FA e chamo a Segurança se notar algo estranho na senha.",
                         null,
                         null,
                         true
@@ -1040,15 +1044,15 @@ public static class ChatContentGenerator
                 "Mousy_Alerta_Anexo",
                 "mousy_alerta_anexo",
                 "Mousy",
-                4,
-                14,
-                30,
+                3,
+                9,
+                0,
                 8,
                 new[]
                 {
                     new NodeSpec(
                         "inicio",
-                        "Parceiro, chegou um anexo inesperado com uma extensão incompatível com o nome exibido. Não o abra por curiosidade: confira o arquivo pela Inspeção.",
+                        "Parceiro, hoje podem chegar anexos com nome de documento e extensão de programa, como \"catalogo.pdf.scr\". Não os abra por curiosidade: confira a última extensão pela Inspeção.",
                         Options(
                             Option("Vou inspecionar.", "inspecionar", "prudente"),
                             Option(
@@ -1097,18 +1101,24 @@ public static class ChatContentGenerator
                                 "Não vou compartilhar códigos. Vou confirmar com você por outro canal.",
                                 "verificou",
                                 "verificou_identidade",
+                                ChatOptionOutcome.Correct,
+                                "Correto! Código de verificação não se passa para ninguém. Confirmar por outro canal é o jeito certo de saber quem está pedindo.",
                                 shortText: "Não compartilho códigos; confirmo por outro canal."
                             ),
                             Option(
                                 "Tudo bem, mando o código.",
                                 "compartilhou",
-                                "compartilhou_codigo"
+                                "compartilhou_codigo",
+                                ChatOptionOutcome.Wrong,
+                                "Resposta insegura! Com o código de verificação, qualquer pessoa entra na conta no lugar do dono. Ninguém pede código por chat."
                             )
                         )
                     ),
+                    // Quem pede o codigo e um impostor no contato da Elena: ele desconversa.
+                    // A Elena verdadeira escreve depois em outra conversa (Elena_Verdadeira_D4).
                     new NodeSpec(
                         "verificou",
-                        "Boa decisão. Eu não pedi código nenhum — alguém está usando meu nome. Vou avisar meu gerente por um canal oficial.",
+                        "Ah... tá bom, deixa pra lá. Eu me viro.",
                         Options(),
                         "fim"
                     ),
@@ -1119,6 +1129,44 @@ public static class ChatContentGenerator
                         "fim"
                     ),
                     new NodeSpec("fim", "Elena\n(Conversa não verificada)", Options(), null, true),
+                },
+                blocksDayEnd: true
+            ),
+            new ConversationSpec(
+                "Elena_Verdadeira_D4",
+                "elena_verdadeira_d4",
+                "Elena Valadares",
+                4,
+                15,
+                15,
+                35,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi, aqui é a Elena de verdade, escrevendo do computador do Marketing. Meu celular foi clonado hoje e alguém mandou mensagem em meu nome pedindo código de verificação. Se te pediram alguma coisa, não mande nada e avise a Segurança!",
+                        Options(
+                            Option(
+                                "Vi o pedido, mas não mandei nada.",
+                                "nao_mandou",
+                                "nao_mandou_codigo"
+                            ),
+                            Option("Eu mandei o código...", "mandou", "admitiu_codigo")
+                        )
+                    ),
+                    new NodeSpec(
+                        "nao_mandou",
+                        "Ufa! Obrigada por desconfiar. Já avisei a Segurança e troquei minhas senhas.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "mandou",
+                        "Ai, não... Avisa a Segurança agora, eles conseguem bloquear o acesso. E não se culpa: o golpe foi bem feito.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec("fim", "Elena\n(Marketing)", Options(), null, true),
                 }
             ),
             new ConversationSpec(
@@ -1230,45 +1278,45 @@ public static class ChatContentGenerator
                         "Amigo, caos total aqui: apareceu um pop-up dizendo que meu PC tem 47 vírus e mandando baixar um \"Limpador Oficial\" urgente. Clico agora ou espero acabar o expediente?",
                         Options(
                             Option(
-                                "Não clique nem instale. Feche o navegador ou app sem interagir e reporte o alerta à TI pelo canal oficial.",
+                                "Não clique nem instale. Feche o navegador ou app sem interagir e reporte o alerta à Segurança pelo canal oficial.",
                                 "tecnico",
                                 "boris_scareware_tecnico",
                                 ChatOptionOutcome.Neutral,
-                                shortText: "Não clique: feche e reporte à TI."
+                                shortText: "Não clique: feche e reporte à Segurança."
                             ),
                             Option(
-                                "Um aviso assustador na tela não prova que há vírus. Não toque nele; feche a janela e peça ajuda à TI.",
+                                "Um aviso assustador na tela não prova que há vírus. Não toque nele; feche a janela e peça ajuda à Segurança.",
                                 "didatico",
                                 "boris_scareware_didatico",
                                 ChatOptionOutcome.Neutral,
                                 shortText: "Aviso assustador não prova vírus."
                             ),
                             Option(
-                                "Quarenta e sete? Que número específico! Não baixa esse 'limpador': fecha a janela e manda o alerta pra TI.",
+                                "Quarenta e sete? Que número específico! Não baixa esse 'limpador': fecha a janela e manda o alerta pra Segurança.",
                                 "pratico",
                                 "boris_scareware_pratico",
                                 ChatOptionOutcome.Neutral,
-                                shortText: "47 vírus? Fecha e avisa a TI."
+                                shortText: "47 vírus? Fecha e avisa a Segurança."
                             )
                         )
                     ),
                     new NodeSpec(
                         "tecnico",
-                        "Entendi: não clico, não instalo e aviso a TI pelo canal oficial. Vou fechar a janela sem interagir.",
+                        "Entendi: não clico, não instalo e aviso a Segurança pelo canal oficial. Vou fechar a janela sem interagir.",
                         null,
                         null,
                         true
                     ),
                     new NodeSpec(
                         "didatico",
-                        "Ah, então o susto pode ser falso! Não vou baixar nada; fecho a janela e peço ajuda à TI.",
+                        "Ah, então o susto pode ser falso! Não vou baixar nada; fecho a janela e peço ajuda à Segurança.",
                         null,
                         null,
                         true
                     ),
                     new NodeSpec(
                         "pratico",
-                        "Hahaha, muito específico mesmo. Nada de clicar: vou fechar a janela e reportar pra TI, sem instalar o tal limpador.",
+                        "Hahaha, muito específico mesmo. Nada de clicar: vou fechar a janela e reportar pra Segurança, sem instalar o tal limpador.",
                         null,
                         null,
                         true
@@ -1387,6 +1435,196 @@ public static class ChatContentGenerator
                     ),
                 }
             ),
+            // ==========================================
+            // RICARDO BORGES (dias 3, 4 e 5): pede acesso; o jogador pede o RG, que chega no
+            // email (caixa Usuario, triggerId borges_rg_dN) e decide Liberar/Negar.
+            // D3: "RG" desenhado (negar). D4: RG do Lucas (negar). D5: RG dele, confere com o
+            // Database (008, ativo): liberar.
+            // ==========================================
+            new ConversationSpec(
+                "Borges_Acesso_D3",
+                "borges_acesso_d3",
+                "Ricardo Borges",
+                3,
+                10,
+                0,
+                40,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi! Sou o Ricardo Borges, novo em Compras. Ainda não liberaram meu acesso ao sistema. Você consegue liberar pra mim?",
+                        Options(
+                            Option(
+                                "Antes, preciso do seu RG. Manda no meu e-mail.",
+                                "enviou",
+                                "pediu_rg",
+                                emailTriggerId: "borges_rg_d3"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "enviou",
+                        "Pronto, mandei a foto do meu RG no seu e-mail (aba Usuário)!",
+                        Options(
+                            Option(
+                                "Liberar acesso.",
+                                "liberou",
+                                "liberou_rg_desenhado",
+                                ChatOptionOutcome.Wrong,
+                                "Resposta insegura! Aquilo não é um RG: é um desenho, e não existe nenhum Ricardo Borges no Database. Documento que não dá para verificar não libera acesso."
+                            ),
+                            Option(
+                                "Negar acesso.",
+                                "negou",
+                                "negou_rg_desenhado",
+                                ChatOptionOutcome.Correct,
+                                "Correto! O documento enviado é um desenho, e não há nenhum Ricardo Borges no Database."
+                            )
+                        )
+                    ),
+                    new NodeSpec("liberou", "Valeu! Já estou dentro.", Options(), "fim"),
+                    new NodeSpec(
+                        "negou",
+                        "Poxa... tá bom, amanhã eu tento de novo.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec("fim", "Ricardo Borges\nCompras", null, null, true),
+                },
+                blocksDayEnd: true
+            ),
+            new ConversationSpec(
+                "Borges_Acesso_D4",
+                "borges_acesso_d4",
+                "Ricardo Borges",
+                4,
+                10,
+                0,
+                41,
+                new[]
+                {
+                    new NodeSpec(
+                        "inicio",
+                        "Oi de novo! Ainda estou sem acesso. Hoje eu mando um RG de verdade, prometo.",
+                        Options(
+                            Option(
+                                "Manda no meu e-mail que eu confiro.",
+                                "enviou",
+                                "pediu_rg",
+                                emailTriggerId: "borges_rg_d4"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "enviou",
+                        "Mandei! Ah, eu perdi o meu, então pedi emprestado o do Lucas, que trabalha comigo. Serve, né?",
+                        Options(
+                            Option(
+                                "Liberar acesso.",
+                                "liberou",
+                                "liberou_rg_emprestado",
+                                ChatOptionOutcome.Wrong,
+                                "Resposta insegura! O RG é do Lucas Pereira Santos, e nem existe Ricardo Borges no Database. Documento de outra pessoa não prova a identidade de quem pede acesso."
+                            ),
+                            Option(
+                                "Negar acesso.",
+                                "negou",
+                                "negou_rg_emprestado",
+                                ChatOptionOutcome.Correct,
+                                "Correto! RG emprestado não prova quem está pedindo o acesso: nome e foto são de outra pessoa."
+                            )
+                        )
+                    ),
+                    new NodeSpec("liberou", "Boa! Valeu pela força.", Options(), "fim"),
+                    new NodeSpec(
+                        "negou",
+                        "Tá, entendi... vou procurar o meu.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec("fim", "Ricardo Borges\nCompras", null, null, true),
+                },
+                blocksDayEnd: true
+            ),
+            new ConversationSpec(
+                "Borges_Acesso_D5",
+                "borges_acesso_d5",
+                "Ryan Borges",
+                5,
+                11,
+                0,
+                42,
+                new[]
+                {
+                    // O Borges de verdade: Ryan (008). Os dias 3 e 4 eram um impostor ("Ricardo").
+                    new NodeSpec(
+                        "inicio",
+                        "Oi! Sou o Ryan Borges, de Compras. Estou sem acesso ao sistema. Você consegue liberar pra mim?",
+                        Options(
+                            Option(
+                                "Manda seu RG no meu e-mail que eu confiro com o Database.",
+                                "enviou",
+                                "pediu_rg",
+                                emailTriggerId: "borges_rg_d5",
+                                shortText: "Manda seu RG que eu confiro."
+                            ),
+                            Option(
+                                "Você parece familiar... Não é o Ricardo que me pediu acesso esses dias?",
+                                "ricardo",
+                                "perguntou_ricardo",
+                                shortText: "Você não é o Ricardo?"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "ricardo",
+                        "Ricardo? Não tem nenhum Ricardo em Compras. Borges sou eu, Ryan. Parece que alguém andou usando meu sobrenome... Te mando meu RG pra você conferir.",
+                        Options(
+                            Option(
+                                "Manda no meu e-mail que eu confiro.",
+                                "enviou",
+                                "pediu_rg",
+                                emailTriggerId: "borges_rg_d5"
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "enviou",
+                        "Mandei! Pode conferir com o cadastro do RH.",
+                        Options(
+                            Option(
+                                "Liberar acesso.",
+                                "liberou",
+                                "liberou_rg_proprio",
+                                ChatOptionOutcome.Correct,
+                                "Correto! O RG é do próprio Ryan Borges e bate com o Database: nome, número, foto e status Ativo."
+                            ),
+                            Option(
+                                "Negar acesso.",
+                                "negou",
+                                "negou_rg_proprio",
+                                ChatOptionOutcome.Wrong,
+                                "Erro de análise! O RG é dele e confere com o Database (colaborador ativo). Negar acesso a quem está regular também atrapalha a empresa."
+                            )
+                        )
+                    ),
+                    new NodeSpec(
+                        "liberou",
+                        "Finalmente! Obrigado pela paciência.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec(
+                        "negou",
+                        "Mas... está tudo certo com o documento. Vou falar com o RH.",
+                        Options(),
+                        "fim"
+                    ),
+                    new NodeSpec("fim", "Ryan Borges\nCompras", null, null, true),
+                },
+                blocksDayEnd: true
+            ),
         };
     }
 
@@ -1398,13 +1636,19 @@ public static class ChatContentGenerator
         string feedbackTag,
         ChatOptionOutcome outcome = ChatOptionOutcome.Neutral,
         string outcomeFeedback = null,
-        string shortText = null
+        string shortText = null,
+        string emailTriggerId = null,
+        float emailDelay = 3f
     )
     {
+        // emailTriggerId: triggerId de um email do JSON do mesmo dia, entregue emailDelay
+        // segundos depois desta escolha (ex.: o RG do Borges na caixa Usuario).
         return new ChatOption
         {
             optionText = text,
             shortText = shortText,
+            emailTriggerId = emailTriggerId,
+            emailDelay = emailDelay,
             nextNodeId = nextNodeId,
             outcome = outcome,
             outcomeFeedback = outcomeFeedback,

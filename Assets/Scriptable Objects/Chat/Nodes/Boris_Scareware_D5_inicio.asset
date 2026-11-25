@@ -19,8 +19,8 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "N\xE3o clique nem instale. Feche o navegador ou app sem interagir
-      e reporte o alerta \xE0 TI pelo canal oficial."
-    shortText: "N\xE3o clique: feche e reporte \xE0 TI."
+      e reporte o alerta \xE0 Seguran\xE7a pelo canal oficial."
+    shortText: "N\xE3o clique: feche e reporte \xE0 Seguran\xE7a."
     nextNodeId: tecnico
     outcome: 0
     outcomeFeedback: 
@@ -29,7 +29,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Um aviso assustador na tela n\xE3o prova que h\xE1 v\xEDrus. N\xE3o
-      toque nele; feche a janela e pe\xE7a ajuda \xE0 TI."
+      toque nele; feche a janela e pe\xE7a ajuda \xE0 Seguran\xE7a."
     shortText: "Aviso assustador n\xE3o prova v\xEDrus."
     nextNodeId: didatico
     outcome: 0
@@ -39,8 +39,8 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Quarenta e sete? Que n\xFAmero espec\xEDfico! N\xE3o baixa esse
-      'limpador': fecha a janela e manda o alerta pra TI."
-    shortText: "47 v\xEDrus? Fecha e avisa a TI."
+      'limpador': fecha a janela e manda o alerta pra Seguran\xE7a."
+    shortText: "47 v\xEDrus? Fecha e avisa a Seguran\xE7a."
     nextNodeId: pratico
     outcome: 0
     outcomeFeedback: 

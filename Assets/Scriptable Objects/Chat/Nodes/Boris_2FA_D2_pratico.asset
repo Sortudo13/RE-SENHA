@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: pratico
   npcMessage: "Entendi, n\xE3o espero o expediente acabar: mantenho o 2FA e chamo
-    a TI se notar algo estranho na senha."
+    a Seguran\xE7a se notar algo estranho na senha."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

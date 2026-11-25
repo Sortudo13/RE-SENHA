@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: pratico
   npcMessage: "Hahaha, muito espec\xEDfico mesmo. Nada de clicar: vou fechar a janela
-    e reportar pra TI, sem instalar o tal limpador."
+    e reportar pra Seguran\xE7a, sem instalar o tal limpador."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

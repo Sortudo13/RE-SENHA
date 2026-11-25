@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Mousy_Alerta_Anexo_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcMessage: "Parceiro, chegou um anexo inesperado com uma extens\xE3o incompat\xEDvel
-    com o nome exibido. N\xE3o o abra por curiosidade: confira o arquivo pela Inspe\xE7\xE3o."
+  npcMessage: "Parceiro, hoje podem chegar anexos com nome de documento e extens\xE3o
+    de programa, como \"catalogo.pdf.scr\". N\xE3o os abra por curiosidade: confira
+    a \xFAltima extens\xE3o pela Inspe\xE7\xE3o."
   typingDelay: 1.5
   options:
   - optionText: Vou inspecionar.

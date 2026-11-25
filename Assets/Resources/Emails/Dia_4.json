@@ -93,5 +93,23 @@
     "subject": "Chamado #8821 Resolvido",
     "body": "Seu ticket sobre falha no mouse foi encerrado. A nova peça já foi deixada na sua mesa. Por favor, avalie nosso atendimento no portal interno: <link=\"OpenURL|https://helpdesk.nationaltech.com/avaliacao\">https://helpdesk.nationaltech.com/avaliacao</link>.",
     "attachments": []
+  },
+  {
+    "triggerId": "borges_rg_d4",
+    "mailBox": "User",
+    "sender": "ricardo.borges.nt@gmail.com",
+    "subject": "RG (do Lucas)",
+    "body": "Perdi meu RG, então pedi emprestado o do Lucas, que trabalha comigo. Serve pra liberar, né?",
+    "attachments": [
+      {
+        "documentType": 4,
+        "name": "rg_lucas",
+        "extension": "png",
+        "linkedName": "<link=\"OpenAttachment|1\">rg_lucas.png</link>",
+        "data": {
+          "employeeId": "002"
+        }
+      }
+    ]
   }
 ]

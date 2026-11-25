@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: didatico
   npcMessage: "Ah, ent\xE3o o susto pode ser falso! N\xE3o vou baixar nada; fecho
-    a janela e pe\xE7o ajuda \xE0 TI."
+    a janela e pe\xE7o ajuda \xE0 Seguran\xE7a."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Elena_Pedido_Codigo_D4_verificou
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: verificou
-  npcMessage: "Boa decis\xE3o. Eu n\xE3o pedi c\xF3digo nenhum \u2014 algu\xE9m est\xE1
-    usando meu nome. Vou avisar meu gerente por um canal oficial."
+  npcMessage: "Ah... t\xE1 bom, deixa pra l\xE1. Eu me viro."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim

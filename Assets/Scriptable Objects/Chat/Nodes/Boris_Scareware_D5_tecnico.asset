@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Boris_Scareware_D5_tecnico
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: tecnico
-  npcMessage: "Entendi: n\xE3o clico, n\xE3o instalo e aviso a TI pelo canal oficial.
-    Vou fechar a janela sem interagir."
+  npcMessage: "Entendi: n\xE3o clico, n\xE3o instalo e aviso a Seguran\xE7a pelo
+    canal oficial. Vou fechar a janela sem interagir."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

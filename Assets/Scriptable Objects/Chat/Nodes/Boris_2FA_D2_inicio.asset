@@ -17,8 +17,8 @@ MonoBehaviour:
     minha senha, eu posso s\xF3 trocar depois, n\xE9?"
   typingDelay: 1.5
   options:
-  - optionText: O 2FA exige uma segunda prova de identidade, reduzindo o risco se
-      a senha for descoberta. Se vazar, avise a TI e troque-a imediatamente.
+  - optionText: "O 2FA exige uma segunda prova de identidade, reduzindo o risco se
+      a senha for descoberta. Se vazar, avise a Seguran\xE7a e troque-a imediatamente."
     shortText: "\xC9 uma segunda prova de identidade."
     nextNodeId: tecnico
     outcome: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "\xC9 como uma segunda fechadura: saber a senha n\xE3o basta. E,
-      se ela vazar, a gente conta pra TI e troca logo."
+      se ela vazar, a gente conta pra Seguran\xE7a e troca logo."
     shortText: "\xC9 como uma segunda fechadura."
     nextNodeId: didatico
     outcome: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "O c\xF3digo extra \xE9 o seguran\xE7a da porta. N\xE3o deixa pra
-      trocar depois: senha suspeita? TI e troca imediata!"
+      trocar depois: senha suspeita? Seguran\xE7a e troca imediata!"
     shortText: "O c\xF3digo extra \xE9 o seguran\xE7a da porta."
     nextNodeId: pratico
     outcome: 0

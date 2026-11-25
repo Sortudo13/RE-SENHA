@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: tecnico
   npcMessage: "Agora entendi: o 2FA \xE9 uma camada extra, n\xE3o substitui a senha.
-    Vou manter ligado e avisar a TI se ela for exposta."
+    Vou manter ligado e avisar a Seguran\xE7a se ela for exposta."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

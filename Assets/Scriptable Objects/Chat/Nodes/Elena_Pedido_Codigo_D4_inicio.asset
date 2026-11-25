@@ -22,8 +22,10 @@ MonoBehaviour:
       outro canal."
     shortText: "N\xE3o compartilho c\xF3digos; confirmo por outro canal."
     nextNodeId: verificou
-    outcome: 0
-    outcomeFeedback: 
+    outcome: 1
+    outcomeFeedback: "Correto! C\xF3digo de verifica\xE7\xE3o n\xE3o se passa para
+      ningu\xE9m. Confirmar por outro canal \xE9 o jeito certo de saber quem est\xE1
+      pedindo."
     securityScoreDelta: 0
     feedbackTag: verificou_identidade
     emailTriggerId: 
@@ -31,8 +33,9 @@ MonoBehaviour:
   - optionText: "Tudo bem, mando o c\xF3digo."
     shortText: 
     nextNodeId: compartilhou
-    outcome: 0
-    outcomeFeedback: 
+    outcome: 2
+    outcomeFeedback: "Resposta insegura! Com o c\xF3digo de verifica\xE7\xE3o, qualquer
+      pessoa entra na conta no lugar do dono. Ningu\xE9m pede c\xF3digo por chat."
     securityScoreDelta: 0
     feedbackTag: compartilhou_codigo
     emailTriggerId: 

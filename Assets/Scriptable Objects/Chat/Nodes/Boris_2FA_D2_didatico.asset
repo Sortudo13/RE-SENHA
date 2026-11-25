@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Boris_2FA_D2_didatico
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: didatico
-  npcMessage: Ahhh, segunda fechadura! Vou deixar o 2FA ligado e, se minha senha
-    escapar, aviso a TI e troco na hora.
+  npcMessage: "Ahhh, segunda fechadura! Vou deixar o 2FA ligado e, se minha senha
+    escapar, aviso a Seguran\xE7a e troco na hora."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
