@@ -67,6 +67,9 @@ public class WindowController : MonoBehaviour
     public async void MinimizeWindow(bool animate = true)
     {
         int currentAction = ++countActions;
+        if (animate && gameObject.activeSelf)
+            ActionController.SendAction("OnWindowMinimized");
+
         if (animate)
         {
             animator.SetTrigger(Animator.StringToHash("Minimize"));
@@ -80,9 +83,6 @@ public class WindowController : MonoBehaviour
 
         if (gameObject.activeSelf)
         {
-            if (animate)
-                ActionController.SendAction("OnWindowMinimized");
-
             ActionController.SendAction("SubActiveWindow");
             ActionController.SendAction("HideNotificationBadge", AppName);
             gameObject.SetActive(false);
