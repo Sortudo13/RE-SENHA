@@ -52,6 +52,12 @@ public static class DataController
         set => PlayerPrefs.SetInt("MaxWindows", value);
     }
 
+    public static int MaxTrinketSlots
+    {
+        get => PlayerPrefs.GetInt("MaxTrinketSlots", 4);
+        set => PlayerPrefs.SetInt("MaxTrinketSlots", value);
+    }
+
     // Recebe o numero do slot (ex.: SavePath = "2"), nao o caminho.
     public static string SavePath
     {
@@ -164,6 +170,7 @@ public static class DataController
         SaveData save = GetDailyDataJson(day);
         if (currentSave != null)
             save.currentCharacter = currentSave.currentCharacter;
+
         // Dicas do companheiro ja vistas valem para o save inteiro, nao so para o dia.
         if (currentSave?.seenTips != null)
             save.seenTips = new List<string>(currentSave.seenTips);
@@ -370,6 +377,7 @@ public static class DataController
         currentMetaData = JsonConvert.DeserializeObject<MetaData>(json) ?? new MetaData();
         return currentMetaData;
     }
+
 }
 
 // Estruturas de dados
@@ -379,7 +387,7 @@ public class MetaData
 {
     public string currentBackground = null;
     public List<AchievementData> achievements = new();
-    public List<TrinketData> trinkets = new();
+    public List<int> unlockedTrinkets = new();
     public StatisticsData statistics = new();
 }
 
@@ -390,14 +398,6 @@ public class AchievementData
     public string title;
     public string description;
     public bool isUnlocked;
-}
-
-[System.Serializable]
-public class TrinketData
-{
-    public string TrinketId { get; set; }
-    public string IconName { get; set; }
-    public string Name { get; set; }
 }
 
 [System.Serializable]
@@ -418,6 +418,7 @@ public class SaveSlotInfo
 [System.Serializable]
 public class SaveData
 {
+    public List<int> usedTrinkets = new();
     public string currentCharacter = null;
     public int current_day;
     public int error_count;
