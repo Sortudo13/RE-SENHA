@@ -27,6 +27,9 @@ public class WindowManagerController : MonoBehaviour
     [SerializeField]
     private WindowController windowChat;
 
+    [SerializeField]
+    private WindowController windowGuide;
+
     private void Awake()
     {
         // O contador e estatico e sobrevive a troca de cena; janelas destruidas junto com a cena
@@ -113,6 +116,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal<AttachmentContent>("InitPNG", InitPNG);
         ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
+        ActionController.SyncSignal<AttachmentContent>("InitGuide", InitGuide);
     }
 
     private void CloseTemplateSignals()
@@ -124,6 +128,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<AttachmentContent>("InitPNG", InitPNG);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.UnsyncSignal<AttachmentContent>("InitChat", InitChat);
+        ActionController.UnsyncSignal<AttachmentContent>("InitGuide", InitGuide);
     }
 
     private void OpenURL(string url)
@@ -159,6 +164,19 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SendAction(TutorialSignals.DocumentOpened, "PNG");
         if (data is PNGData pngData)
             window_PNG.transform.Find("Área de Conteúdo/Image").GetComponentInChildren<Image>().sprite = pngData.GetImage();
+    }
+
+    private void InitGuide(AttachmentContent data)
+    {
+        if (windowGuide == null)
+        {
+            Debug.LogError("InitGuide: arraste o prefab Window Guide no campo windowGuide do WindowManagerController (cena Desktop).");
+            return;
+        }
+
+        // O guia e fixo: texto e prints ficam no proprio prefab, o anexo nao traz dados.
+        Instantiate(windowGuide.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "Guide");
     }
 
     private void InitRG(AttachmentContent data)

@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -78.26999, y: -0.6}
+  m_AnchoredPosition: {x: -78.27002, y: -0.6}
   m_SizeDelta: {x: -285.95, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3745054
@@ -3027,7 +3027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DesktopClockController
   startHour: 8
   endHour: 18
-  workDurationInMinutes: 5
+  workDurationInMinutes: 1
 --- !u!1 &942236834
 GameObject:
   m_ObjectHideFlags: 0
@@ -4008,6 +4008,7 @@ MonoBehaviour:
   windowPNG: {fileID: 1184312158879678578, guid: cf375a9ae891f7040a71caf0dacc4a11, type: 3}
   windowRG: {fileID: 9096935942626009820, guid: 76797d72c5aeeb643a27c71ce23a009d, type: 3}
   windowChat: {fileID: 0}
+  windowGuide: {fileID: 7761584437119389312, guid: 033540ce0ea8b614ea9e3a37ac4d6991, type: 3}
 --- !u!1 &1302115837
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,6 +5656,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1885617887}
     m_Modifications:
+    - target: {fileID: 1717423693113569940, guid: 30b6bcef7af7b5241ab7e8769cae7fb2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -200.00003
+      objectReference: {fileID: 0}
     - target: {fileID: 2961618343503869339, guid: 30b6bcef7af7b5241ab7e8769cae7fb2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

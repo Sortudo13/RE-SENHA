@@ -4,58 +4,52 @@
     "mailBox": "User",
     "sender": "rh@nationaltech.com",
     "companionTip": "email_boas_vindas",
-    "subject": "Bem-vindo à equipe - Orientações do Dia 1",
-    "body": "Olá! Seja bem-vindo à nossa equipe de segurança digital. Por favor, leia o manual anexado com os procedimentos do seu primeiro dia de trabalho.",
+    "subject": "Bem-vindo à NationalTech - Orientações do Dia 1",
+    "body": "Olá e seja bem-vindo à equipe de Segurança Digital da NationalTech!\n\n<b>Seu trabalho:</b> cada e-mail da aba Empresa precisa da sua decisão: APROVAR ou BLOQUEAR. Os e-mails desta aba (Usuário) são só para você e não precisam de decisão.\n\n<b>Como analisar:</b>\n1. Abra o e-mail e ligue o Modo Inspetor (tecla Espaço ou botão na barra de tarefas).\n2. Clique no campo suspeito (remetente, assunto, corpo ou anexos) e depois na regra do Manual que ele quebra.\n3. Com o achado registrado, bloqueie. Se nenhuma regra for quebrada, aprove.\n\n<b>Regras de hoje:</b>\n- Spoofing: o domínio depois do @ deve ser exatamente nationaltech.com. Domínios parecidos não valem.\n- Malware: anexos .exe nunca são aceitos, mesmo de remetentes da empresa.\n\n<b>Atenção:</b> aprovar um golpe, bloquear um e-mail legítimo ou bloquear sem apontar a regra gera uma advertência. Três advertências no mesmo dia encerram o seu contrato.\n\nO guia do analista, com prints de cada ferramenta, chega em um e-mail separado. Em anexo: um exemplo de e-mail falso e as duas regras.\n\nRecursos Humanos - NationalTech",
     "attachments": [
       {
-        "documentType" : 2,
-        "name" : "manual_de_conduta",
-        "extension" : "pdf",
-        "linkedName" : "<link=\"OpenAttachment|1\">manual_de_conduta.pdf</link>",
-        "data" : {
-          "text" : "O manual de conduta não é esse aqui. Cuidado para não cair em novos golpes!!!\nCom Amor,\nRH"
-        }
-      },
-      {
         "documentType" : 1,
-        "name" : "exemplo_email_falso",
+        "name" : "email_falso",
         "extension" : "email",
-        "linkedName" : "<link=\"OpenAttachment|2\">exemplo_email_falso.email</link>",
+        "linkedName" : "<link=\"OpenAttachment|1\">email_falso.email</link>",
         "data" : {
           "timeToReceive": 30,
           "mailBox": "Company",
-          "sender": "financeiro@empresa.com.br",
+          "sender": "financeiro@nationaltech-compras.com",
           "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
           "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
           "attachments": []
         }
       },
       {
-        "documentType" : 3,
-        "name" : "arvore_boas_vindas",
-        "extension" : "png",
-        "linkedName" : "<link=\"OpenAttachment|3\">arvore_boas_vindas.png</link>",
-        "data" : {
-          "imagePath" : "arvore"
-        }
+        "documentType" : 0,
+        "name" : "regra_spoofing",
+        "extension" : "manual",
+        "linkedName" : "<link=\"OpenAttachment|2\">spoofing.manual</link>",
+        "data" : { "ruleId" : "rule-sender-domain" }
+      },
+      {
+        "documentType" : 0,
+        "name" : "regra_malware",
+        "extension" : "manual",
+        "linkedName" : "<link=\"OpenAttachment|3\">malware.manual</link>",
+        "data" : { "ruleId" : "rule-attachment-extension" }
       }
     ]
   },
   {
-    "timeToReceive": 4,
+    "timeToReceive": 3,
     "mailBox": "User",
-    "sender": "suporte@empresa.com.br",
-    "subject": "[TESTE RG] Cópia do meu documento",
-    "body": "Oi! Segue a cópia do meu RG que você pediu para liberar o acesso.",
+    "sender": "rh@nationaltech.com",
+    "subject": "Guia do Analista",
+    "body": "Olá! Segue o guia do analista, com prints de cada ferramenta: e-mail, aprovar e bloquear, Modo Inspetor, evidências, Manual e chat. Use as setas para trocar de página e consulte sempre que tiver dúvida.\n\nRecursos Humanos - NationalTech",
     "attachments": [
       {
-        "documentType" : 4,
-        "name" : "rg_lucas",
-        "extension" : "png",
-        "linkedName" : "<link=\"OpenAttachment|1\">rg_lucas.png</link>",
-        "data" : {
-          "employeeId" : "002"
-        }
+        "documentType": 5,
+        "name": "guia",
+        "extension": "pdf",
+        "linkedName": "<link=\"OpenAttachment|1\">guia.pdf</link>",
+        "data": {}
       }
     ]
   },
@@ -64,30 +58,30 @@
     "mailBox": "Company",
     "sender": "suporte-ti@gmai1-seguranca.com",
     "subject": "Atualização de Senha Obrigatória",
-    "body": "Detectamos uma tentativa de login não autorizada na sua conta de rede. Clique no link abaixo e recadastre sua senha o quanto antes.",
+    "body": "Detectamos uma tentativa de login não autorizada na sua conta de rede. Por segurança, responda este e-mail informando sua senha atual para bloquearmos o invasor.",
     "attachments": []
   },
   {
     "timeToReceive": 30,
     "mailBox": "Company",
-    "sender": "financeiro@empresa.com.br",
+    "sender": "financeiro@nationaltech.co",
     "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
-    "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
+    "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, responda este e-mail com urgência para solicitar o cancelamento.",
     "attachments": []
   },
   {
     "timeToReceive": 60,
     "mailBox": "Company",
-    "sender": "fornecedor@graficaexpressa.com.br",
+    "sender": "compras@nationaltech.com",
     "subject": "Nota Fiscal do Serviço de Impressão",
-    "body": "Prezado, segue em anexo a nota fiscal e o comprovante referente aos serviços de impressão prestados nesta semana para a empresa.",
+    "body": "Olá! Encaminho a nota fiscal que a gráfica mandou referente aos serviços de impressão desta semana. Pode conferir e arquivar?",
     "attachments": [
       {
-        "documentType" : 3,
-        "name" : "fatura_outubro_assinado",
+        "documentType" : 2,
+        "name" : "nota_fiscal_outubro",
         "extension" : "exe",
-        "linkedName" : "<link=\"OpenAttachment|1\">fatura_outubro_assinado.exe</link>",
-        "data" : {}
+        "linkedName" : "<link=\"OpenAttachment|1\">nota_fiscal_outubro.exe</link>",
+        "data" : { "text": "<b>Pré-visualização indisponível</b>\n\nO arquivo nota_fiscal_outubro.exe não pode ser exibido como documento.\n\nTipo: Aplicativo (.exe)\nTamanho: 1,2 MB\n\nConteúdo bruto:\nMZ..........@........\nThis program cannot be run in DOS mode.\n.text  .rdata  .data  .rsrc" }
       }
     ]
   },
@@ -96,16 +90,16 @@
     "minuteToReceive": 55,
     "timeToReceive": 120,
     "mailBox": "Company",
-    "sender": "diretoria@empresa.com.br",
+    "sender": "diretoria@nationaltech.com",
     "subject": "Aviso Importante sobre Reunião Geral",
-    "body": "Prezado colaborador, devido a problemas operacionais no nosso servidor local, acesse a página externa <link=\"OpenURL|http://painel-virus.onion\">http://painel-verificacao-empresa.ru</link> para confirmar sua presença.",
+    "body": "Prezado colaborador, a reunião geral desta sexta-feira foi transferida para o auditório do 2º andar, às 15h. A pauta segue em anexo. A presença de todos é obrigatória.",
     "attachments": [
       {
         "documentType" : 2,
         "name" : "pauta_reuniao",
         "extension" : "pdf",
         "linkedName" : "<link=\"OpenAttachment|1\">pauta_reuniao.pdf</link>",
-        "data" : {}
+        "data" : { "text": "<align=center><b>NATIONALTECH</b>\nReunião Geral - Sexta-feira, 15h\nAuditório do 2º andar</align>\n\n<b>Pauta</b>\n1. Boas-vindas aos novos colaboradores\n2. Resultados do trimestre\n3. Mudança do auditório e novas salas de reunião\n4. Campanha interna de segurança da informação\n5. Perguntas e respostas\n\n<b>Duração prevista:</b> 1h30\n\nDiretoria Executiva\ndiretoria@nationaltech.com" }
       }
     ]
   }
