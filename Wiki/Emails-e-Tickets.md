@@ -3,8 +3,8 @@
 ## Onde fica o conteúdo
 
 - E-mails por dia: `Assets/Resources/Emails/Dia_1.json` até `Dia_5.json`.
-- Tickets: `Assets/Resources/Tickets/Dia_1.json` foi encontrado. O carregador tenta
-  `Dia_N.json`; quando o arquivo não existe, a lista fica vazia.
+- Tickets: `Assets/Resources/Tickets/Dia_1.json`. O carregador tenta abrir
+  `Dia_N.json`; dias sem arquivo começam sem tickets.
 - As regras que orientam decisões ficam em
   [`ManualRules.json`](../Assets/Resources/Manual/ManualRules.json).
 
@@ -83,13 +83,12 @@ registra acerto/erro e remove o ticket da lista.
 
 - Decisões de e-mail Company passam pelo Inspector/Manual e exigem evidência para
   bloquear corretamente. Veja [Sistema de Inspeção](./Sistema-de-Inspecao.md).
-- Ticket usa decisão/justificativa do próprio JSON; não foi encontrada uma
-  `TicketInspectionSurface`.
+- Ticket usa a decisão e a justificativa do próprio JSON. `TicketController` não
+  publica uma superfície de inspeção.
 - Ticket incorreto conta como erro, mas `DayProgressController` ainda não inclui
   tickets em sua checagem de itens pendentes no fim do dia.
-- O modelo de Manual reconhece os apps `email`, `ticket` e `chat`, mas o runtime
-  de inspeção encontrado expõe superfícies de e-mail e Database. A integração
-  ativa para ticket/chat está **A confirmar**.
+- `ManualRules` reconhece `email`, `ticket` e `chat`, mas o Inspector está ligado
+  ao e-mail. Tickets e conversas ainda não passam por essa avaliação.
 
 Após editar conteúdo, abra o jogo na cena `Desktop` e teste horários, links de
 anexos, decisão e feedback. Consulte [Save](./Sistema-de-Save.md) para saber quando

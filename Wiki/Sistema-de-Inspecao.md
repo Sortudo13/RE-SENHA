@@ -92,11 +92,10 @@ Parâmetros obrigatórios vazios, tipo desconhecido, versão diferente de `1`, I
 duplicados ou regras sem subregras causam erro de validação/carregamento. Atualize
 o avaliador ao adicionar um novo tipo de `check`.
 
-**Limite de integração:** foram encontradas superfícies runtime para e-mail e
-Database. A superfície de Database é somente contexto; nenhuma superfície de
-julgamento para tickets ou chat foi encontrada. Embora `ManualRules` aceite os
-nomes de app `ticket` e `chat`, a aplicação dessas regras nesses apps está
-**A confirmar**.
+No runtime, o Inspector avalia e-mails. O Database fornece dados de contexto, mas
+não é um item de decisão. Embora `ManualRules` aceite os nomes `ticket` e `chat`,
+esses apps ainda não têm superfícies ligadas ao avaliador; as regras do Manual
+não são aplicadas a tickets ou conversas.
 
 Para conteúdo de decisão, veja [E-mails e Tickets](./Emails-e-Tickets.md); para
 problemas recorrentes, [Troubleshooting e glossário](./Troubleshooting-e-Glossario.md).

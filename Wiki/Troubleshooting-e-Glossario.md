@@ -27,7 +27,7 @@
 | Advertência / erro | Penalidade por uma decisão incorreta; o padrão de `MaxErrors` é três. |
 | Inspetor / modo de inspeção | Modo para comparar um item com regras e selecionar campos/subregras relevantes. |
 | Achado / evidência | Violação registrada pelo jogador e associada a um campo/regra do item. |
-| Cavalo de Troia | Termo de cibersegurança para software malicioso disfarçado de algo legítimo. **A confirmar** se e onde o conteúdo atual o apresenta explicitamente. |
+| Cavalo de Troia | Software malicioso disfarçado de um programa ou arquivo legítimo. |
 | Caixa User / Company | Caixas distintas do app de e-mail; as mensagens Company exibem decisões de aprovar/bloquear. |
 | `Resources` | Pasta Unity cujos assets podem ser carregados por caminho em runtime. |
 | `ScriptableObject` | Asset Unity usado, neste projeto, para dados de conversa, nós e inbox de chat. |

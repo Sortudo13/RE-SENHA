@@ -29,8 +29,8 @@ Corrija os avisos antes de testar a conversa no runtime. Os assets são referenc
 por GUIDs do Unity; não substitua `.meta` manualmente ao mover conteúdo.
 
 A cena `Desktop` está configurada até 18:00; portanto, o limite de validação do
-`ChatInbox` não acompanha o expediente dessa cena. Horários de chat após 16:00
-estão **A confirmar**.
+`ChatInbox` não acompanha o expediente dessa cena. Mantenha as chegadas de chat
+até 16:00.
 
 ## Outros conteúdos
 
@@ -43,5 +43,4 @@ estão **A confirmar**.
 - Wallpapers: sprites em `Assets/Resources/Background/`; veja
   [Metadados e Wallpaper](./Metadados-Wallpaper.md).
 
-Não foi encontrado `WallpaperCatalogGenerator`; a lista de wallpapers é construída
-em runtime por `BackgroundList`.
+`BackgroundList` carrega os wallpapers de `Resources/Background` em runtime.

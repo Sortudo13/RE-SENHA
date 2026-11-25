@@ -59,8 +59,8 @@ nó atual. O `ChatWindowView` cuida da interface e envia o sinal
 
 O menu **Tools > Re:Senha > Gerar Conversas** chama
 `Assets/Editor/ChatContentGenerator.cs`. Os tipos privados `ConversationSpec` e
-`NodeSpec` vivem dentro do gerador; não há um arquivo externo de spec.
-Acrescente a conversa dentro de `CreateConversationSpecs()`:
+`NodeSpec` são definidos nesse arquivo. Acrescente a conversa em
+`CreateConversationSpecs()`:
 
 ```csharp
 new ConversationSpec(
@@ -99,8 +99,8 @@ avisa sobre IDs repetidos e horários fora da faixa fixa 08:00–16:00.
 
 **Atenção ao horário:** a cena `Desktop` está configurada com relógio até 18:00,
 mas `ChatInbox.Entry` restringe o Inspector a 08:00–16:00 e sua validação também
-considera 16:00 como limite. Agendamentos de chat depois das 16:00 estão
-**A confirmar** e podem gerar avisos/incompatibilidade.
+considera 16:00 como limite. Mantenha as chegadas de chat até 16:00; horários
+posteriores ficam fora da faixa validada.
 
 Exemplo de ligação:
 
@@ -114,9 +114,8 @@ Para mensagens agendadas, teste com o dia/horário certo e também com a convers
 minimizada/fechada. Para e-mails disparados pelo chat, mantenha o `triggerId`
 idêntico nos dois conteúdos.
 
-**A confirmar:** `ChatOption.securityScoreDelta` emite `ChatSecurityScoreDelta`,
-mas nenhum consumidor desse sinal foi encontrado; não trate o valor como
-pontuação visível/persistida até localizar essa integração.
+`ChatOption.securityScoreDelta` publica `ChatSecurityScoreDelta`, mas nenhum
+componente do jogo assina o sinal. O valor não altera a pontuação nem é salvo.
 
 Veja [Ferramentas de Editor](./Editor-Tools.md), [Save](./Sistema-de-Save.md) e
 [E-mails e Tickets](./Emails-e-Tickets.md).

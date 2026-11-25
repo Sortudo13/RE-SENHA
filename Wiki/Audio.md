@@ -16,8 +16,8 @@ abertura/fechamento de janela, clique e aprovação.
 Volumes de BGM e SFX ficam nas chaves `MusicVolume` e `SFXVolume` de `PlayerPrefs`,
 limitados a 0–1. Os padrões do manager são 0,3 para música e 1,0 para efeitos.
 `MusicSliderController` lê a preferência de música e chama
-`AudioManager.SetMusicVolume`. O manager também oferece `SetSFXVolume`; verifique
-o objeto de opções da cena antes de assumir que há slider de SFX.
+`AudioManager.SetMusicVolume`. O manager também oferece `SetSFXVolume`; o projeto
+tem um slider para música, mas não um controlador equivalente para SFX.
 
 ## Adicionar ou depurar música
 
@@ -29,5 +29,4 @@ o objeto de opções da cena antes de assumir que há slider de SFX.
    O fade usa tempo não escalado, mas o intervalo entre faixas usa
    `WaitForSeconds`.
 
-Não foi localizado um guia de licenciamento de áudio no repositório; confirme as
-licenças e atribuições das faixas antes de distribuir o jogo.
+Registre as licenças e atribuições das faixas antes de distribuir o jogo.

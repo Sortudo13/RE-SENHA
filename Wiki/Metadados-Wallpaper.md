@@ -22,9 +22,8 @@ outro wallpaper no jogo.
 ## Outros metadados
 
 `data.json` também contém `achievements`, `unlockedTrinkets` e `statistics`.
-Os campos existem no modelo `MetaData`, mas `StatisticsData` está vazio e não foi
-confirmada uma integração completa de coleta/desbloqueio. Não trate esses dados
-como funcionalidades concluídas sem verificar os sistemas consumidores.
+`StatisticsData` está vazio e esses campos ainda não fazem parte de um fluxo de
+coleta ou desbloqueio do jogo.
 
 Consulte [Sistema de Save](./Sistema-de-Save.md) para escopo e localização dos
 arquivos.

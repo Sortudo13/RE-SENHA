@@ -6,9 +6,6 @@ consulta o Manual e decide como agir. O objetivo pedagógico é praticar a leitu
 de contexto, a verificação de sinais de fraude e o registro de evidências antes
 de tomar uma decisão.
 
-Esta Wiki é a documentação versionada em `Wiki/`. A página da GitHub Wiki não
-forneceu conteúdo separado do repositório quando consultada.
-
 ## Comece por público
 
 - **Desenvolvimento:** [Arquitetura](./Arquitetura.md), [Save](./Sistema-de-Save.md)
@@ -45,8 +42,8 @@ forneceu conteúdo separado do repositório quando consultada.
    bloquear uma mensagem suspeita.
 4. Nos tickets, leia o pedido e a justificativa disponível antes de aprovar ou
    rejeitar. No Chat, acompanhe o contexto e escolha uma resposta segura.
-5. Na cena Desktop atual, o expediente vai de 08:00 a 18:00 e dura cinco minutos reais. Decisões
-   incorretas contam como erros; o limite padrão é três.
+5. Na cena Desktop atual, o expediente vai de 08:00 a 18:00 e dura cinco minutos
+   reais. Decisões incorretas contam como erros; o limite padrão é três.
 
 O comportamento de fechamento do dia não é idêntico em todos os apps: o código
 verifica e-mails da caixa Company e conversas com `blocksDayEnd`; tickets ainda

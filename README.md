@@ -18,19 +18,16 @@ durante o expediente.
 
 ## Estado do projeto
 
-O estado abaixo descreve sistemas encontrados no código e nos assets; não é uma
-declaração de que cada fluxo foi validado em uma build de distribuição.
-
-| Sistema | Situação observada |
+| Sistema | Situação |
 |---|---|
 | Desktop, relógio e ciclo de dias | Implementados. A cena Desktop está configurada para 08:00–18:00 em cinco minutos reais. |
 | Companion e tutorial | Implementados com dicas em `CompanionTips.json` e eventos de tutorial. |
 | Chat | Conversas em ScriptableObjects, chegadas agendadas, escolhas, mensagens agendadas e persistência implementadas. |
 | E-mail | Filas diárias em JSON, caixas User/Company, anexos e decisões de segurança implementados. Há arquivos para os dias 1–5. |
 | Inspeção | Avaliação de regras e registro de achados implementados para e-mail; o Database fornece uma superfície de consulta contextual. |
-| Tickets | Decisões e feedback implementados. Só foi encontrado `Tickets/Dia_1.json`; não há JSON de ticket para os dias 2–5. Tickets não entram na verificação que libera o fim do dia. |
-| Pontuação de segurança | Opções de chat podem emitir `ChatSecurityScoreDelta`; não foi encontrado consumidor desse sinal. A pontuação ponta a ponta está **A confirmar**. |
-| Estatísticas e achievements | Há modelos em `MetaData`; coleta e apresentação funcionais estão **A confirmar**. |
+| Tickets | Decisões e feedback implementados. Há conteúdo em `Tickets/Dia_1.json`; os dias 2–5 não têm arquivos de tickets. Tickets não entram na verificação que libera o fim do dia. |
+| Pontuação de segurança | Opções de chat podem emitir `ChatSecurityScoreDelta`, mas nenhum componente do jogo assina esse sinal. |
+| Estatísticas e achievements | Os campos existem em `MetaData`; `StatisticsData` está vazio e os dados ainda não estão ligados a um fluxo de coleta. |
 
 ## Requisitos
 
@@ -38,8 +35,8 @@ declaração de que cada fluxo foi validado em uma build de distribuição.
 - Universal Render Pipeline **17.6.0**.
 - Input System **1.20.0** e `Assets/Settings/InputSystem_Actions.inputactions`.
 - UI/UGUI **2.5.0** e os assets TextMeshPro presentes em `Assets/Text Mesh Pro`,
-  usados pelas interfaces. O manifesto não declara um pacote/versão independente
-  de TextMeshPro (**A confirmar**).
+  usados pelas interfaces. O manifesto não declara uma versão independente de
+  TextMeshPro.
 - Newtonsoft JSON para Unity **3.2.2**.
 - Os demais pacotes estão declarados em `Packages/manifest.json`.
 
@@ -122,21 +119,17 @@ Para responsabilidades, sinais e fluxo entre componentes, consulte
    atribua um `id` único e dispare `CompanionSignals.Show("id")`. Consulte
    [Companion e Tutorial](./Wiki/Companion-e-Tutorial.md).
 7. Abra um pull request com uma descrição do comportamento alterado e como foi
-   verificado. O repositório não documenta um pipeline de testes de gameplay.
+   verificado. Inclua os passos de teste manual quando forem relevantes.
 
 ## Créditos, licença e links
 
 - **Equipe/autoria:** Nuntius Studio.
 - **Instituição/parceiros:** UNESP.
-- **Licença do código e dos assets:** **A confirmar**; não foi localizado arquivo
-  de licença no repositório.
+- **Licença do código e dos assets:** a definir.
 - **Atribuições de terceiros:** revisar fontes, sprites, músicas e pacotes antes
   de uma distribuição.
 - **Issues:** [GitHub Issues](https://github.com/Sortudo13/RE-SENHA/issues).
-- **Wiki local:** [índice de documentação](./Wiki/Home.md). A URL da GitHub Wiki
-  redireciona para a página do repositório; as páginas consultadas estão versionadas
-  em `Wiki/`.
-- **Documento de design:** **A confirmar**; não foi localizado no repositório.
+- **Wiki:** [índice de documentação](./Wiki/Home.md).
 
 ## Documentação
 
