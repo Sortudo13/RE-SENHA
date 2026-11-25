@@ -18,6 +18,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: Entendido.
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 

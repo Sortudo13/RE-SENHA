@@ -18,6 +18,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: Vou inspecionar.
+    shortText: 
     nextNodeId: inspecionar
     outcome: 0
     outcomeFeedback: 
@@ -26,6 +27,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: O nome diz PDF; deve estar tudo bem.
+    shortText: 
     nextNodeId: relaxa
     outcome: 0
     outcomeFeedback: 

@@ -20,6 +20,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: Identifiquei uma falha e seguirei o protocolo.
+    shortText: 
     nextNodeId: advertencia
     outcome: 0
     outcomeFeedback: 
@@ -28,6 +29,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "N\xE3o identifiquei falhas nas minhas decis\xF5es."
+    shortText: 
     nextNodeId: elogio
     outcome: 0
     outcomeFeedback: 

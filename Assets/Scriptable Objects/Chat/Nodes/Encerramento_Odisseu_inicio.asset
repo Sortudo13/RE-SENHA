@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: O que aconteceu no Dia Q?
+    shortText: 
     nextNodeId: estranho
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Por que est\xE1 me contando isso?"
+    shortText: 
     nextNodeId: prazer
     outcome: 0
     outcomeFeedback: 
@@ -35,6 +37,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "N\xE3o vou aceitar sua vers\xE3o sem evid\xEAncias."
+    shortText: 
     nextNodeId: adeus
     outcome: 0
     outcomeFeedback: 

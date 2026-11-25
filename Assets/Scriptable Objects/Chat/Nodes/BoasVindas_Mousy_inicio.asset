@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: O que devo fazer primeiro?
+    shortText: 
     nextNodeId: explicar
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "J\xE1 conhe\xE7o as regras."
+    shortText: 
     nextNodeId: confiante
     outcome: 0
     outcomeFeedback: 

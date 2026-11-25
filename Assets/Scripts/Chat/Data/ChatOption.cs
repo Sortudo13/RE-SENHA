@@ -12,8 +12,14 @@ public enum ChatOptionOutcome
 [Serializable]
 public class ChatOption
 {
-    [Tooltip("Texto que aparece no botão de escolha.")]
+    [Tooltip("Mensagem completa que o jogador envia no chat ao escolher.")]
     public string optionText;
+
+    [Tooltip("Resumo mostrado no botão de escolha. Vazio usa o optionText.")]
+    public string shortText;
+
+    // Texto do botão: o resumo, se houver; senão a mensagem completa.
+    public string ButtonText => string.IsNullOrWhiteSpace(shortText) ? optionText : shortText;
 
     [Tooltip("ID do próximo ChatNode para onde esta escolha leva.")]
     public string nextNodeId;

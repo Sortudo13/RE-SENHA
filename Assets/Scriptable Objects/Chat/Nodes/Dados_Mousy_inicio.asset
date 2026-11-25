@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: Entendido. Vou continuar verificando.
+    shortText: 
     nextNodeId: respondeu
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Voc\xEA detectou alguma coisa?"
+    shortText: 
     nextNodeId: questionou
     outcome: 0
     outcomeFeedback: 

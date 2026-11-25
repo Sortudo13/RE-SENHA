@@ -18,6 +18,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "O que est\xE1 em movimento?"
+    shortText: 
     nextNodeId: fim_ataque
     outcome: 0
     outcomeFeedback: 

@@ -18,6 +18,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Como reconhe\xE7o uma imita\xE7\xE3o?"
+    shortText: 
     nextNodeId: explicar
     outcome: 0
     outcomeFeedback: 
@@ -26,6 +27,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Quais cuidados devo tomar?
+    shortText: 
     nextNodeId: dicas
     outcome: 0
     outcomeFeedback: 
@@ -34,6 +36,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Vou inspecionar antes de agir.
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 

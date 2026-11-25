@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "N\xE3o abra ainda. Confirme com a Seguran\xE7a por um canal oficial."
+    shortText: "N\xE3o abra. Confirme com a Seguran\xE7a."
     nextNodeId: prudente
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Me manda o nome e eu vejo o procedimento.
+    shortText: 
     nextNodeId: pergunta
     outcome: 0
     outcomeFeedback: 

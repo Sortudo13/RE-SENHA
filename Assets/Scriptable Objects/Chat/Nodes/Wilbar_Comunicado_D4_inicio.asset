@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Qual \xE9 a ocorr\xEAncia?"
+    shortText: 
     nextNodeId: restrito
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Entendido. Vou seguir o procedimento.
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 

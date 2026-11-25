@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: Entendi. E como eu me protejo?
+    shortText: 
     nextNodeId: dicas
     outcome: 0
     outcomeFeedback: 

@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: O que pretende fazer?
+    shortText: 
     nextNodeId: falar
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Vou alertar a Seguran\xE7a."
+    shortText: 
     nextNodeId: pegar
     outcome: 0
     outcomeFeedback: 

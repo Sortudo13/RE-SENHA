@@ -20,6 +20,7 @@ MonoBehaviour:
   options:
   - optionText: "N\xE3o vou compartilhar c\xF3digos. Vou confirmar com voc\xEA por
       outro canal."
+    shortText: "N\xE3o compartilho c\xF3digos; confirmo por outro canal."
     nextNodeId: verificou
     outcome: 0
     outcomeFeedback: 
@@ -28,6 +29,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Tudo bem, mando o c\xF3digo."
+    shortText: 
     nextNodeId: compartilhou
     outcome: 0
     outcomeFeedback: 

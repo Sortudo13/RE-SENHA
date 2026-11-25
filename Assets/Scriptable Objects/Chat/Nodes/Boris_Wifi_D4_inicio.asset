@@ -19,6 +19,7 @@ MonoBehaviour:
   options:
   - optionText: "Use apenas uma conex\xE3o aprovada pela empresa e siga a pol\xEDtica
       de VPN. Dez minutos ainda exp\xF5em dados numa rede n\xE3o confi\xE1vel."
+    shortText: "S\xF3 conex\xE3o aprovada, com VPN."
     nextNodeId: tecnico
     outcome: 0
     outcomeFeedback: 
@@ -28,6 +29,7 @@ MonoBehaviour:
     emailDelay: 3
   - optionText: "Wi-Fi aberto \xE9 como deixar o chamado numa mesa p\xFAblica: use
       a conex\xE3o autorizada pela empresa, com a VPN conforme as regras."
+    shortText: "Wi-Fi aberto \xE9 uma mesa p\xFAblica."
     nextNodeId: didatico
     outcome: 0
     outcomeFeedback: 
@@ -37,6 +39,7 @@ MonoBehaviour:
     emailDelay: 3
   - optionText: "Dez minutos ou dez segundos, a padaria n\xE3o \xE9 nosso escrit\xF3rio!
       Espera uma rede aprovada e segue as regras da VPN."
+    shortText: "A padaria n\xE3o \xE9 nosso escrit\xF3rio!"
     nextNodeId: pratico
     outcome: 0
     outcomeFeedback: 

@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Consultei. Por que esse material \xE9 restrito?"
+    shortText: 
     nextNodeId: confronto
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "N\xE3o consultei. Qual \xE9 a orienta\xE7\xE3o?"
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 

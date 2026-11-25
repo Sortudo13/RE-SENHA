@@ -21,6 +21,7 @@ MonoBehaviour:
   - optionText: "Acesso \xE0 sala de servidores exige identifica\xE7\xE3o e autoriza\xE7\xE3o.
       Avise a Seguran\xE7a ou recep\xE7\xE3o para validar; relate tamb\xE9m que ele
       j\xE1 entrou."
+    shortText: "Sem crach\xE1 e autoriza\xE7\xE3o, n\xE3o entra. Avise a Seguran\xE7a."
     nextNodeId: tecnico
     outcome: 0
     outcomeFeedback: 
@@ -30,6 +31,7 @@ MonoBehaviour:
     emailDelay: 3
   - optionText: "Ser educado \xE9 \xF3timo, mas cada pessoa precisa usar o pr\xF3prio
       crach\xE1. Pe\xE7a ajuda \xE0 recep\xE7\xE3o e conte que ele passou."
+    shortText: "Cada um usa o pr\xF3prio crach\xE1. Avise a recep\xE7\xE3o."
     nextNodeId: didatico
     outcome: 0
     outcomeFeedback: 
@@ -39,6 +41,7 @@ MonoBehaviour:
     emailDelay: 3
   - optionText: "Gentileza sim; abrir a porta no modo 'visita surpresa', n\xE3o!
       Chama a Seguran\xE7a agora e explica o que rolou."
+    shortText: "Gentileza sim, porta aberta n\xE3o! Chame a Seguran\xE7a."
     nextNodeId: pratico
     outcome: 0
     outcomeFeedback: 

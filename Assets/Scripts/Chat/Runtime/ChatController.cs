@@ -69,13 +69,21 @@ public class ChatController : MonoBehaviour
 
         foreach (var state in _inboxState.All)
         {
-            if (state.hasArrived && state.hasUnread)
+            if (IsVisibleToday(state) && state.hasUnread)
             {
                 Debug.Log($"[BadgeDebug] ChatController disparando ShowNotificationBadge('{ChatAppName}') em Start (reconciliação de conversas não lidas).", this);
                 ActionController.SendAction("ShowNotificationBadge", ChatAppName);
                 yield break;
             }
         }
+    }
+
+    // So as conversas do dia aparecem; as de dias anteriores continuam no save, mas somem da lista.
+    private static bool IsVisibleToday(ChatInboxState.ConversationState state)
+    {
+        return state != null
+            && state.hasArrived
+            && ChatInboxState.IsVisibleOnDay(state, DataController.CurrentDay);
     }
 
     private void OnScheduledNodeArrived(string payload)
@@ -144,7 +152,7 @@ public class ChatController : MonoBehaviour
 
         foreach (var state in _inboxState.All)
         {
-            if (state.hasArrived)
+            if (IsVisibleToday(state))
             {
                 string preview = GetPreviewForState(state);
                 _windowView.AddOrUpdateConversationItem(state, preview);
@@ -204,7 +212,7 @@ public class ChatController : MonoBehaviour
             return;
 
         var state = _inboxState.Get(conversationId);
-        if (state == null || !state.hasArrived)
+        if (state == null || !IsVisibleToday(state))
             return;
 
         ActionController.SendAction(TutorialSignals.ChatOpened, conversationId);
@@ -222,7 +230,7 @@ public class ChatController : MonoBehaviour
         bool anyUnread = false;
         foreach (var s in _inboxState.All)
         {
-            if (s.hasUnread)
+            if (s.hasUnread && IsVisibleToday(s))
             {
                 anyUnread = true;
                 break;

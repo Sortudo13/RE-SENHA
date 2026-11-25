@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Isso \xE9 uma amea\xE7a?"
+    shortText: 
     nextNodeId: provocou
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "O que voc\xEA quer da NationalTech?"
+    shortText: 
     nextNodeId: perguntou
     outcome: 0
     outcomeFeedback: 
@@ -35,6 +37,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Vou preservar esta conversa e report\xE1-la."
+    shortText: 
     nextNodeId: reportou
     outcome: 0
     outcomeFeedback: 

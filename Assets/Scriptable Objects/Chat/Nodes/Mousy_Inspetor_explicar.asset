@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Mousy_Inspetor_explicar
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: explicar
-  npcMessage: "Abra o item, ative a Inspe\xE7\xE3o, selecione o campo relevante e
-    compare-o com a subregra correspondente. Registre evid\xEAncias antes de bloquear;
-    se n\xE3o houver viola\xE7\xE3o, aprove."
+  npcMessage: "Abra o item e ative a Inspe\xE7\xE3o pelo bot\xE3o da lupa na barra
+    de tarefas (ou a tecla Espa\xE7o). Depois, selecione o campo relevante e compare-o
+    com a subregra correspondente. Registre evid\xEAncias antes de bloquear; se n\xE3o
+    houver viola\xE7\xE3o, aprove."
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: fim

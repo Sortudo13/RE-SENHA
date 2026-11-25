@@ -20,6 +20,7 @@ MonoBehaviour:
   options:
   - optionText: "N\xE3o sei. Confirme com seu gerente antes de abrir ou enviar qualquer
       coisa."
+    shortText: Confirme com seu gerente antes.
     nextNodeId: confirmacao
     outcome: 0
     outcomeFeedback: 
@@ -28,6 +29,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Se ningu\xE9m explicou, melhor n\xE3o mexer."
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 

@@ -20,6 +20,7 @@ MonoBehaviour:
   options:
   - optionText: "N\xE3o: a sequ\xEAncia \xE9 previs\xEDvel. Prefira uma senha longa
       e \xFAnica por servi\xE7o e use o gerenciador aprovado pela empresa."
+    shortText: "N\xE3o: senha longa e \xFAnica, no gerenciador."
     nextNodeId: tecnico
     outcome: 0
     outcomeFeedback: 
@@ -29,6 +30,7 @@ MonoBehaviour:
     emailDelay: 3
   - optionText: 'Pensa numa chave diferente pra cada porta: se uma vazar, as outras
       continuam protegidas. O gerenciador ajuda a lembrar.'
+    shortText: Uma chave diferente pra cada porta.
     nextNodeId: didatico
     outcome: 0
     outcomeFeedback: 
@@ -38,6 +40,7 @@ MonoBehaviour:
     emailDelay: 3
   - optionText: "\"124\" \xE9 s\xF3 o \"123\" de bigode. Crie uma senha longa e exclusiva
       e deixe o gerenciador cuidar da mem\xF3ria."
+    shortText: "\"124\" \xE9 s\xF3 o \"123\" de bigode!"
     nextNodeId: pratico
     outcome: 0
     outcomeFeedback: 

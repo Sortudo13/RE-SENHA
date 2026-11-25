@@ -44,6 +44,25 @@ public class ChatInboxState
     public IEnumerable<ConversationState> All => _states.Values;
 
     /// <summary>
+    /// Conversas de dias anteriores somem do chat. A conversa aparece no dia em que chega
+    /// e nos dias em que tem uma mensagem agendada (scheduledDay).
+    /// </summary>
+    public static bool IsVisibleOnDay(ConversationState state, int day)
+    {
+        if (state?.entry == null || state.conversation == null)
+            return false;
+        if (state.entry.arrivalDay == day)
+            return true;
+
+        foreach (var node in state.conversation.nodes)
+        {
+            if (node != null && node.HasSchedule && node.scheduledDay == day)
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Processa chegada de conversas com base no dia e minuto atuais.
     /// Conversas cujo arrivalDay < currentDay e que ainda não chegaram são
     /// descartadas (não chegam retroativamente).
@@ -89,7 +108,8 @@ public class ChatInboxState
 
         foreach (var state in _states.Values)
         {
-            if (!state.hasArrived || state.conversation == null)
+            // Conversa de outro dia esta escondida: nao recebe mensagem atrasada.
+            if (!state.hasArrived || state.conversation == null || !IsVisibleOnDay(state, currentDay))
                 continue;
 
             ChatNode nextDue = null;

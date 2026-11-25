@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: Recebido.
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "H\xE1 alguma ocorr\xEAncia espec\xEDfica?"
+    shortText: 
     nextNodeId: pergunta
     outcome: 0
     outcomeFeedback: 

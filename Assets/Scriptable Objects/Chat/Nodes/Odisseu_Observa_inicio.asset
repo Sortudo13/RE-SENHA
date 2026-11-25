@@ -18,6 +18,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Quem \xE9 voc\xEA?"
+    shortText: 
     nextNodeId: quem
     outcome: 0
     outcomeFeedback: 
@@ -26,6 +27,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "O que voc\xEA quer?"
+    shortText: 
     nextNodeId: reportar
     outcome: 0
     outcomeFeedback: 
@@ -34,6 +36,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Vou reportar esta conversa.
+    shortText: 
     nextNodeId: reportar
     outcome: 0
     outcomeFeedback: 

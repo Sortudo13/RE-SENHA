@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "N\xE3o sei. Melhor n\xE3o espalhar boato."
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Talvez seja algo da Seguran\xE7a."
+    shortText: 
     nextNodeId: comentario
     outcome: 0
     outcomeFeedback: 

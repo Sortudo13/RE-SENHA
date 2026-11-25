@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Obrigada! Como est\xE1 sendo a semana?"
+    shortText: 
     nextNodeId: corredor
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Pode deixar, obrigado!
+    shortText: 
     nextNodeId: fim
     outcome: 0
     outcomeFeedback: 

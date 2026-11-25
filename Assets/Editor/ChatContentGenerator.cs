@@ -358,19 +358,22 @@ public static class ChatContentGenerator
                                 "Não: a sequência é previsível. Prefira uma senha longa e única por serviço e use o gerenciador aprovado pela empresa.",
                                 "tecnico",
                                 "boris_senha_tecnico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Não: senha longa e única, no gerenciador."
                             ),
                             Option(
                                 "Pensa numa chave diferente pra cada porta: se uma vazar, as outras continuam protegidas. O gerenciador ajuda a lembrar.",
                                 "didatico",
                                 "boris_senha_didatico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Uma chave diferente pra cada porta."
                             ),
                             Option(
                                 "\"124\" é só o \"123\" de bigode. Crie uma senha longa e exclusiva e deixe o gerenciador cuidar da memória.",
                                 "pratico",
                                 "boris_senha_pratico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "\"124\" é só o \"123\" de bigode!"
                             )
                         )
                     ),
@@ -458,7 +461,7 @@ public static class ChatContentGenerator
                     ),
                     new NodeSpec(
                         "explicar",
-                        "Abra o item, ative a Inspeção, selecione o campo relevante e compare-o com a subregra correspondente. Registre evidências antes de bloquear; se não houver violação, aprove.",
+                        "Abra o item e ative a Inspeção pelo botão da lupa na barra de tarefas (ou a tecla Espaço). Depois, selecione o campo relevante e compare-o com a subregra correspondente. Registre evidências antes de bloquear; se não houver violação, aprove.",
                         Options(),
                         "fim"
                     ),
@@ -561,19 +564,22 @@ public static class ChatContentGenerator
                                 "O 2FA exige uma segunda prova de identidade, reduzindo o risco se a senha for descoberta. Se vazar, avise a TI e troque-a imediatamente.",
                                 "tecnico",
                                 "boris_2fa_tecnico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "É uma segunda prova de identidade."
                             ),
                             Option(
                                 "É como uma segunda fechadura: saber a senha não basta. E, se ela vazar, a gente conta pra TI e troca logo.",
                                 "didatico",
                                 "boris_2fa_didatico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "É como uma segunda fechadura."
                             ),
                             Option(
                                 "O código extra é o segurança da porta. Não deixa pra trocar depois: senha suspeita? TI e troca imediata!",
                                 "pratico",
                                 "boris_2fa_pratico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "O código extra é o segurança da porta."
                             )
                         )
                     ),
@@ -802,7 +808,8 @@ public static class ChatContentGenerator
                             Option(
                                 "Não abra ainda. Confirme com a Segurança por um canal oficial.",
                                 "prudente",
-                                "orientou_confirmacao"
+                                "orientou_confirmacao",
+                                shortText: "Não abra. Confirme com a Segurança."
                             ),
                             Option(
                                 "Me manda o nome e eu vejo o procedimento.",
@@ -850,19 +857,22 @@ public static class ChatContentGenerator
                                 "Acesso à sala de servidores exige identificação e autorização. Avise a Segurança ou recepção para validar; relate também que ele já entrou.",
                                 "tecnico",
                                 "boris_tailgating_tecnico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Sem crachá e autorização, não entra. Avise a Segurança."
                             ),
                             Option(
                                 "Ser educado é ótimo, mas cada pessoa precisa usar o próprio crachá. Peça ajuda à recepção e conte que ele passou.",
                                 "didatico",
                                 "boris_tailgating_didatico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Cada um usa o próprio crachá. Avise a recepção."
                             ),
                             Option(
                                 "Gentileza sim; abrir a porta no modo 'visita surpresa', não! Chama a Segurança agora e explica o que rolou.",
                                 "pratico",
                                 "boris_tailgating_pratico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Gentileza sim, porta aberta não! Chame a Segurança."
                             )
                         )
                     ),
@@ -983,19 +993,22 @@ public static class ChatContentGenerator
                                 "Use apenas uma conexão aprovada pela empresa e siga a política de VPN. Dez minutos ainda expõem dados numa rede não confiável.",
                                 "tecnico",
                                 "boris_wifi_tecnico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Só conexão aprovada, com VPN."
                             ),
                             Option(
                                 "Wi-Fi aberto é como deixar o chamado numa mesa pública: use a conexão autorizada pela empresa, com a VPN conforme as regras.",
                                 "didatico",
                                 "boris_wifi_didatico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Wi-Fi aberto é uma mesa pública."
                             ),
                             Option(
                                 "Dez minutos ou dez segundos, a padaria não é nosso escritório! Espera uma rede aprovada e segue as regras da VPN.",
                                 "pratico",
                                 "boris_wifi_pratico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "A padaria não é nosso escritório!"
                             )
                         )
                     ),
@@ -1083,7 +1096,8 @@ public static class ChatContentGenerator
                             Option(
                                 "Não vou compartilhar códigos. Vou confirmar com você por outro canal.",
                                 "verificou",
-                                "verificou_identidade"
+                                "verificou_identidade",
+                                shortText: "Não compartilho códigos; confirmo por outro canal."
                             ),
                             Option(
                                 "Tudo bem, mando o código.",
@@ -1219,19 +1233,22 @@ public static class ChatContentGenerator
                                 "Não clique nem instale. Feche o navegador ou app sem interagir e reporte o alerta à TI pelo canal oficial.",
                                 "tecnico",
                                 "boris_scareware_tecnico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Não clique: feche e reporte à TI."
                             ),
                             Option(
                                 "Um aviso assustador na tela não prova que há vírus. Não toque nele; feche a janela e peça ajuda à TI.",
                                 "didatico",
                                 "boris_scareware_didatico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "Aviso assustador não prova vírus."
                             ),
                             Option(
                                 "Quarenta e sete? Que número específico! Não baixa esse 'limpador': fecha a janela e manda o alerta pra TI.",
                                 "pratico",
                                 "boris_scareware_pratico",
-                                ChatOptionOutcome.Neutral
+                                ChatOptionOutcome.Neutral,
+                                shortText: "47 vírus? Fecha e avisa a TI."
                             )
                         )
                     ),
@@ -1332,7 +1349,8 @@ public static class ChatContentGenerator
                             Option(
                                 "Não sei. Confirme com seu gerente antes de abrir ou enviar qualquer coisa.",
                                 "confirmacao",
-                                "orientou_confirmacao"
+                                "orientou_confirmacao",
+                                shortText: "Confirme com seu gerente antes."
                             ),
                             Option(
                                 "Se ninguém explicou, melhor não mexer.",
@@ -1372,17 +1390,21 @@ public static class ChatContentGenerator
         };
     }
 
+    // shortText: resumo mostrado no botao de escolha; o chat envia o text completo.
+    // Vazio mostra o text no botao.
     private static ChatOption Option(
         string text,
         string nextNodeId,
         string feedbackTag,
         ChatOptionOutcome outcome = ChatOptionOutcome.Neutral,
-        string outcomeFeedback = null
+        string outcomeFeedback = null,
+        string shortText = null
     )
     {
         return new ChatOption
         {
             optionText = text,
+            shortText = shortText,
             nextNodeId = nextNodeId,
             outcome = outcome,
             outcomeFeedback = outcomeFeedback,

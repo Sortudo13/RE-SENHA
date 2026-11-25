@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Seguran\xE7a sempre."
+    shortText: 
     nextNodeId: seguranca
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Minimize o impacto.
+    shortText: 
     nextNodeId: minimizar
     outcome: 0
     outcomeFeedback: 
@@ -35,6 +37,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: "Deixe como est\xE1."
+    shortText: 
     nextNodeId: ignorar
     outcome: 0
     outcomeFeedback: 

@@ -57,6 +57,11 @@ public class ChatTimeSync : MonoBehaviour
                 conv.isFinished = saved.isFinished;
                 conv.hasArrived = saved.hasArrived;
                 conv.hasUnread = saved.hasUnread;
+                // Sem isso, ao carregar o save a mensagem agendada ja mostrada chegava de novo.
+                if (saved.shownScheduledNodeIds != null)
+                    conv.shownScheduledNodeIds = new System.Collections.Generic.List<string>(
+                        saved.shownScheduledNodeIds
+                    );
             }
         }
     }

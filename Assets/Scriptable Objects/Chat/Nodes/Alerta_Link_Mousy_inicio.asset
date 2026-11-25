@@ -19,6 +19,7 @@ MonoBehaviour:
   typingDelay: 1.5
   options:
   - optionText: "Vou registrar qualquer inconsist\xEAncia antes de bloquear."
+    shortText: 
     nextNodeId: agradeceu
     outcome: 0
     outcomeFeedback: 
@@ -27,6 +28,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: Se parece conhecido, deve ser seguro.
+    shortText: 
     nextNodeId: clicou
     outcome: 0
     outcomeFeedback: 
@@ -35,6 +37,7 @@ MonoBehaviour:
     emailTriggerId: 
     emailDelay: 3
   - optionText: O que devo comparar?
+    shortText: 
     nextNodeId: explicou
     outcome: 0
     outcomeFeedback: 
