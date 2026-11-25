@@ -4,30 +4,31 @@
     "mailBox": "User",
     "sender": "rh@nationaltech.com",
     "subject": "Orientações do Dia 4 - O Fator Humano",
-    "body": "Neste dia, vamos testar como você lida com chantagens, ameaças e pedidos de 'colegas'. Golpistas usam pânico e urgência para fazer você errar. Fique atento a e-mails alarmistas.",
+    "body": "Bom dia! Hoje o foco é o fator humano: golpes que exploram confiança, pressa e medo.\n\n<b>Regra nova:</b>\n- Fake reply (falsa resposta): golpistas colocam RE: ou ENC: no assunto para fingir que vocês já estavam conversando. Antes de confiar, procure a conversa original aqui na aba Usuário ou anexada ao e-mail. Se ela não existe, a conversa nunca aconteceu.\n\n<b>Sobre urgência:</b> pressa e ameaças são sinais para verificar com calma, não prova de golpe. Avisos verdadeiros também podem ser urgentes. Decida pelas regras do Manual.\n\nA regra está anexada e já está no Manual.\n\nRecursos Humanos - NationalTech",
     "attachments": [
       {
         "documentType": 0,
-        "name": "regra_pressao_e_urgencia",
+        "name": "regra_falsa_resposta",
         "extension": "manual",
-        "linkedName": "<link=\"OpenAttachment|1\">pressao_e_urgencia.manual</link>",
-        "data": { "ruleId": "rule-subject-pressure" }
-      },
-      {
-        "documentType": 0,
-        "name": "regra_documentos_com_macro",
-        "extension": "manual",
-        "linkedName": "<link=\"OpenAttachment|2\">documentos_com_macro.manual</link>",
-        "data": { "ruleId": "rule-attachment-macro" }
+        "linkedName": "<link=\"OpenAttachment|1\">falsa_resposta.manual</link>",
+        "data": { "ruleId": "rule-subject-fake-reply" }
       }
     ]
   },
   {
+    "timeToReceive": 5,
+    "mailBox": "User",
+    "sender": "facilities@nationaltech.com",
+    "subject": "Reserva da sala de treinamento",
+    "body": "Olá! Recebemos seu pedido da sala de treinamento para a capacitação da equipe de segurança. Temos horário livre amanhã às 10h ou às 15h. Qual você prefere? Confirmo a reserva por aqui.",
+    "attachments": []
+  },
+  {
     "timeToReceive": 10,
     "mailBox": "Company",
-    "sender": "seguranca-trabalho@empresa.com.br",
-    "subject": "Aviso: Treinamento de Evacuação",
-    "body": "Amanhã teremos um teste de alarme de incêndio às 14h. Por favor, utilizem as escadas e sigam as instruções dos brigadistas.",
+    "sender": "seguranca-trabalho@nationaltech.com",
+    "subject": "URGENTE: Treinamento de Evacuação Amanhã",
+    "body": "Amanhã teremos um teste de alarme de incêndio às 14h. A participação é obrigatória. Por favor, utilizem as escadas e sigam as instruções dos brigadistas.",
     "attachments": []
   },
   {
@@ -35,39 +36,62 @@
     "mailBox": "Company",
     "sender": "cancelamentos@saude-convenio.com.br",
     "subject": "CANCELAMENTO DE PLANO DE SAÚDE - AÇÃO REQUERIDA",
-    "body": "Seu plano de saúde empresarial será suspenso à meia-noite devido a débitos. Para emitir a guia de regularização, acesse a <link=\"OpenURL|http://boleto-saude-br.com\">Central do Segurado</link> imediatamente.",
+    "body": "Seu plano de saúde empresarial será suspenso à meia-noite devido a débitos. Para emitir a guia de regularização, acesse a Central do Segurado imediatamente: <link=\"OpenURL|http://boleto-saude-br.com/segurado\">http://boleto-saude-br.com/segurado</link>.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 40,
+    "mailBox": "Company",
+    "sender": "facilities@nationaltech.com",
+    "subject": "RE: Reserva da sala de treinamento",
+    "body": "Combinado! A sala de treinamento ficou reservada para amanhã às 15h. O projetor e a lista de presença já estarão lá. A mensagem anterior segue anexada.",
+    "attachments": [
+      {
+        "documentType": 1,
+        "name": "reserva_sala",
+        "extension": "email",
+        "linkedName": "<link=\"OpenAttachment|1\">reserva_sala.email</link>",
+        "data": {
+          "timeToReceive": 0,
+          "mailBox": "User",
+          "sender": "facilities@nationaltech.com",
+          "subject": "Reserva da sala de treinamento",
+          "body": "Olá! Recebemos seu pedido da sala de treinamento para a capacitação da equipe de segurança. Temos horário livre amanhã às 10h ou às 15h. Qual você prefere? Confirmo a reserva por aqui.",
+          "attachments": []
+        }
+      }
+    ]
+  },
+  {
+    "timeToReceive": 55,
+    "mailBox": "Company",
+    "sender": "seguranca@nationaltech.com",
+    "subject": "AÇÃO REQUERIDA: Bloqueio da Sua Conta em 10 Minutos",
+    "body": "Identificamos acessos suspeitos na sua conta. Para evitar o bloqueio, responda este e-mail em até 10 minutos com o código de verificação que acabamos de enviar para o seu celular.",
     "attachments": []
   },
   {
     "timeToReceive": 65,
     "mailBox": "Company",
-    "sender": "marcos.souza.empresa@gmail.com",
-    "subject": "Favor urgente - Marcos (Seu Colega)",
-    "body": "Cara, esqueci minha senha da rede e estou no 3G pessoal. Pode baixar a planilha de metas de ontem que tá nesse link e me mandar as fotos? <link=\"OpenURL|http://share-drive-files.net\">Planilha_Metas_Marcos</link> Valeu!",
+    "sender": "compras@nationaltech.com",
+    "subject": "RE: Dados bancários do fornecedor",
+    "body": "Conforme combinamos na conversa abaixo, a gráfica que presta serviço para nós trocou de banco. Atualize hoje o cadastro do fornecedor para a conta nova (Banco 341, agência 0921, conta 55821-3), senão o pagamento atrasa.",
     "attachments": []
   },
   {
-    "timeToReceive": 90,
+    "timeToReceive": 80,
     "mailBox": "Company",
-    "sender": "processos@tribunal-justica-gov.com",
-    "subject": "Intimação Judicial Eletrônica - Proc. Nº 482910",
-    "body": "Você foi intimado a comparecer em audiência. O não comparecimento acarretará multa. Baixe o documento anexo e habilite as macros do Word para visualizar o processo.",
-    "attachments": [
-      {
-        "documentType": 2,
-        "name": "intimacao_judicial",
-        "extension": "docm",
-        "linkedName": "<link=\"OpenAttachment|1\">intimacao_judicial.docm</link>",
-        "data": {}
-      }
-    ]
+    "sender": "marcos.souza.nationaltech@gmail.com",
+    "subject": "Favor urgente - Marcos (Seu Colega)",
+    "body": "Cara, esqueci minha senha da rede e estou no 3G pessoal. Pode baixar a planilha de metas de ontem que tá nesse link e me mandar as fotos? <link=\"OpenURL|http://share-drive-files.net/planilha_metas_marcos\">http://share-drive-files.net/planilha_metas_marcos</link> Valeu!",
+    "attachments": []
   },
   {
     "timeToReceive": 120,
     "mailBox": "Company",
-    "sender": "ti-helpdesk@empresa.com.br",
+    "sender": "ti-helpdesk@nationaltech.com",
     "subject": "Chamado #8821 Resolvido",
-    "body": "Seu ticket sobre falha no mouse foi encerrado. A nova peça já foi deixada na sua mesa. Por favor, avalie nosso atendimento no portal interno.",
+    "body": "Seu ticket sobre falha no mouse foi encerrado. A nova peça já foi deixada na sua mesa. Por favor, avalie nosso atendimento no portal interno: <link=\"OpenURL|https://helpdesk.nationaltech.com/avaliacao\">https://helpdesk.nationaltech.com/avaliacao</link>.",
     "attachments": []
   }
 ]

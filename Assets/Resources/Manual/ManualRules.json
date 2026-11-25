@@ -4,83 +4,26 @@
     {
       "id": "rule-sender-domain",
       "app": "email",
-      "title": "Verificação do remetente",
-      "description": "Aceite apenas mensagens do domínio corporativo ou do grupo National Tech (@nationaltech.com). Endereços parecidos, com letras trocadas ou de outras empresas, devem ser bloqueados.",
+      "title": "Spoofing (falsificação de remetente)",
+      "description": "O golpista disfarça o endereço para parecer alguém confiável. Confira o domínio depois do @, letra por letra: só é aceito o domínio da NationalTech (@nationaltech.com). Endereços parecidos, com letras trocadas ou de outras empresas, devem ser bloqueados.",
       "introductionDay": 1,
       "field": "Sender",
       "subrules": [
         {
           "id": "subrule-sender-domain-corporate",
-          "description": "O endereço do remetente deve terminar exatamente em @empresa.com.br ou em @nationaltech.com.",
+          "description": "O endereço do remetente deve terminar exatamente em @nationaltech.com.",
           "check": {
             "type": "SenderDomain",
             "allowedDomains": [
-              "empresa.com.br",
               "nationaltech.com"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Verificação do remetente",
+            "rule": "Spoofing (falsificação de remetente)",
             "evidence": "O domínio do remetente não é o domínio corporativo.",
-            "explanation": "O remetente usa um domínio diferente de @empresa.com.br e @nationaltech.com, mesmo que pareça com eles.",
-            "reason": "Somente os domínios empresa.com.br e nationaltech.com são aceitos."
-          }
-        }
-      ]
-    },
-    {
-      "id": "rule-subject-alert",
-      "app": "email",
-      "title": "Verificação do assunto",
-      "description": "Desconfie de assuntos que pedem senha ou anunciam uma compra que ninguém solicitou.",
-      "introductionDay": 1,
-      "field": "Subject",
-      "subrules": [
-        {
-          "id": "subrule-subject-alert-terms",
-          "description": "O assunto não deve pedir atualização de senha nem confirmar uma compra.",
-          "check": {
-            "type": "SubjectTerms",
-            "terms": [
-              "Senha",
-              "Compra"
-            ],
-            "caseSensitive": false
-          },
-          "finding": {
-            "rule": "Verificação do assunto",
-            "evidence": "O assunto contém um pedido de senha ou uma confirmação de compra.",
-            "explanation": "Assuntos urgentes de senha ou compra empurram o leitor a agir sem conferir o remetente.",
-            "reason": "O assunto usa um termo de alerta previsto no Manual."
-          }
-        }
-      ]
-    },
-    {
-      "id": "rule-body-external-domain",
-      "app": "email",
-      "title": "Verificação do corpo",
-      "description": "Leia o texto antes de clicar. Endereços terminados em .ru ou .onion não pertencem à empresa e não devem ser seguidos.",
-      "introductionDay": 1,
-      "field": "Body",
-      "subrules": [
-        {
-          "id": "subrule-body-external-domain",
-          "description": "O corpo não deve apontar para domínios .ru nem para endereços .onion.",
-          "check": {
-            "type": "BodyTerms",
-            "suspiciousDomains": [
-              ".ru",
-              ".onion"
-            ],
-            "caseSensitive": false
-          },
-          "finding": {
-            "rule": "Verificação do corpo",
-            "evidence": "O corpo aponta para um domínio externo suspeito.",
-            "explanation": "O texto pede acesso a um endereço fora do domínio corporativo.",
-            "reason": "Domínios .ru e .onion não fazem parte dos canais da empresa."
+            "explanation": "O remetente usa um domínio diferente de @nationaltech.com, mesmo que pareça com ele.",
+            "reason": "Somente o domínio nationaltech.com é aceito."
           }
         }
       ]
@@ -88,8 +31,8 @@
     {
       "id": "rule-attachment-extension",
       "app": "email",
-      "title": "Verificação dos anexos",
-      "description": "Confira a extensão real do arquivo. Uma nota fiscal ou fatura não pode ser um executável.",
+      "title": "Malware (programa malicioso) executável",
+      "description": "Malware é qualquer programa feito para causar dano. Um arquivo .exe é um programa: abrir é o mesmo que instalá-lo. Uma nota fiscal, fatura ou atualização nunca chega como executável.",
       "introductionDay": 1,
       "field": "Attachments",
       "subrules": [
@@ -104,7 +47,7 @@
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Verificação dos anexos",
+            "rule": "Malware (programa malicioso) executável",
             "evidence": "O anexo usa uma extensão executável.",
             "explanation": "Um arquivo .exe não é uma nota fiscal nem uma fatura: ao ser aberto, ele executa um programa.",
             "reason": "Executáveis enviados por e-mail estão fora do permitido."
@@ -115,26 +58,59 @@
     {
       "id": "rule-body-links",
       "app": "email",
-      "title": "Destino dos links",
-      "description": "O texto de um link pode mostrar um endereço da empresa e levar para outro lugar. Confira o destino real: todo link deve apontar para empresa.com.br.",
+      "title": "Malicious link (link malicioso)",
+      "description": "Golpistas montam endereços que parecem da empresa. Leia o link até o fim: o domínio é o que vem logo antes da primeira barra. \"nationaltech.com.site-falso.net\" pertence a site-falso.net, não à empresa. Todo link deve apontar para nationaltech.com.",
       "introductionDay": 2,
       "field": "Body",
       "subrules": [
         {
           "id": "subrule-body-links-corporate",
-          "description": "Todo link do corpo deve levar a empresa.com.br ou a um subdomínio dela.",
+          "description": "Todo link do corpo deve levar a nationaltech.com ou a um subdomínio dele (ex.: intranet.nationaltech.com).",
           "check": {
             "type": "BodyLinkDomains",
             "allowedDomains": [
-              "empresa.com.br"
+              "nationaltech.com"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Destino dos links",
-            "evidence": "O corpo tem um link que leva para fora de empresa.com.br.",
-            "explanation": "O destino do link não pertence à empresa, mesmo que o texto do e-mail pareça oficial.",
-            "reason": "Links só podem apontar para empresa.com.br."
+            "rule": "Malicious link (link malicioso)",
+            "evidence": "O corpo tem um link que leva para fora dos domínios da empresa.",
+            "explanation": "O domínio do link não pertence à empresa, mesmo que o endereço tenha o nome dela no começo.",
+            "reason": "Links só podem apontar para nationaltech.com."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rule-credential-request",
+      "app": "email",
+      "title": "Phishing (pescaria de dados) de credenciais",
+      "description": "Phishing é \"pescar\" dados: o e-mail joga uma isca, como um bloqueio de conta ou uma compra falsa, para você entregar suas credenciais. Ninguém da empresa pede senha, código de verificação ou dados de login por e-mail, nem a TI.",
+      "introductionDay": 2,
+      "field": "Body",
+      "subrules": [
+        {
+          "id": "subrule-credential-request-terms",
+          "description": "E-mails que pedem senha, código de verificação, token ou dados de login devem ser bloqueados.",
+          "check": {
+            "type": "BodyTerms",
+            "terms": [
+              "sua senha",
+              "recadastre",
+              "confirme seu login",
+              "código de verificação",
+              "credenciais",
+              "dados de login",
+              "token"
+            ],
+            "caseSensitive": false
+          },
+          "finding": {
+            "rule": "Phishing (pescaria de dados) de credenciais",
+            "evidence": "O corpo pede uma credencial de acesso.",
+            "explanation": "Senha, código de verificação e token são pessoais: quem pede por e-mail quer entrar na sua conta.",
+            "reason": "Credenciais nunca são pedidas nem enviadas por e-mail."
           }
         }
       ]
@@ -142,8 +118,8 @@
     {
       "id": "rule-attachment-disguised",
       "app": "email",
-      "title": "Extensões camufladas",
-      "description": "Criminosos escondem programas com nomes de catálogo, etiqueta ou antivírus. Scripts e executáveis disfarçados devem ser bloqueados.",
+      "title": "Masquerading (extensão camuflada)",
+      "description": "Scripts também executam comandos, e golpistas os escondem com nomes de catálogo, etiqueta ou antivírus. Confira a última extensão do arquivo: \"fatura.pdf.vbs\" é um script, não um PDF.",
       "introductionDay": 3,
       "field": "Attachments",
       "subrules": [
@@ -162,7 +138,7 @@
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Extensões camufladas",
+            "rule": "Masquerading (extensão camuflada)",
             "evidence": "O anexo é um script ou executável disfarçado.",
             "explanation": "Arquivos .bat, .cmd, .scr, .vbs e .js executam comandos no computador ao serem abertos.",
             "reason": "Scripts e executáveis enviados por e-mail estão fora do permitido."
@@ -171,41 +147,42 @@
       ]
     },
     {
-      "id": "rule-subject-pressure",
+      "id": "rule-subject-fake-reply",
       "app": "email",
-      "title": "Pressão e urgência",
-      "description": "Golpistas usam pânico, ameaças e prazos curtos para você agir sem pensar. Assuntos alarmistas devem ser bloqueados.",
+      "title": "Fake reply (falsa resposta)",
+      "description": "Golpistas colocam RE: ou ENC: no assunto para fingir que vocês já estavam conversando, e assim você pula a verificação. Antes de confiar, procure a conversa original na sua caixa (aba Usuário) ou anexada ao e-mail.",
       "introductionDay": 4,
       "field": "Subject",
       "subrules": [
         {
-          "id": "subrule-subject-pressure-terms",
-          "description": "O assunto não deve usar urgência, cancelamento, intimação ou exigir ação imediata.",
+          "id": "subrule-subject-reply-without-original",
+          "description": "Assunto com RE: ou ENC: só vale se a conversa original, com o mesmo assunto, estiver na sua caixa ou anexada.",
           "check": {
-            "type": "SubjectTerms",
+            "type": "SubjectReplyThread",
             "terms": [
-              "urgente",
-              "ação requerida",
-              "cancelamento",
-              "intimação"
+              "RE:",
+              "RES:",
+              "ENC:",
+              "FW:",
+              "FWD:"
             ],
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Pressão e urgência",
-            "evidence": "O assunto usa urgência ou ameaça para pressionar o leitor.",
-            "explanation": "Comunicados reais da empresa não ameaçam nem exigem resposta imediata pelo assunto.",
-            "reason": "O assunto usa um termo de pressão previsto no Manual."
+            "rule": "Fake reply (falsa resposta)",
+            "evidence": "O assunto finge continuar uma conversa que não existe.",
+            "explanation": "Não há, na sua caixa nem em anexo, um e-mail original com esse assunto: a conversa citada nunca aconteceu.",
+            "reason": "Fingir uma conversa já combinada faz a vítima agir sem verificar."
           }
         }
       ]
     },
     {
-      "id": "rule-attachment-macro",
+      "id": "rule-attachment-archive",
       "app": "email",
-      "title": "Documentos com macro",
-      "description": "Documentos que pedem para habilitar macros podem executar código escondido.",
-      "introductionDay": 4,
+      "title": "Conteúdo escondido (macro e arquivo compactado)",
+      "description": "Alguns arquivos escondem o que realmente carregam. Documentos com macro podem executar código ao \"habilitar conteúdo\", e arquivos compactados escondem o conteúdo do antivírus do e-mail. Nem todo compactado é golpe, mas, como o conteúdo não pode ser verificado, a política da empresa é não aceitar compactados por e-mail (com senha, então, nem pensar: a senha no corpo do e-mail é um truque para o filtro não conseguir abrir o arquivo).",
+      "introductionDay": 5,
       "field": "Attachments",
       "subrules": [
         {
@@ -221,25 +198,15 @@
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Documentos com macro",
+            "rule": "Conteúdo escondido (macro e arquivo compactado)",
             "evidence": "O anexo é um documento com macros.",
             "explanation": "Arquivos do Office terminados em \"m\" carregam macros que podem executar código.",
             "reason": "Documentos com macro enviados por e-mail estão fora do permitido."
           }
-        }
-      ]
-    },
-    {
-      "id": "rule-attachment-archive",
-      "app": "email",
-      "title": "Arquivos compactados",
-      "description": "Arquivos compactados, principalmente com senha, escondem o conteúdo real da verificação.",
-      "introductionDay": 5,
-      "field": "Attachments",
-      "subrules": [
+        },
         {
           "id": "subrule-attachment-archive",
-          "description": "Anexos .zip, .rar e .7z devem ser bloqueados.",
+          "description": "Política da empresa: anexos .zip, .rar e .7z devem ser bloqueados, porque o conteúdo não pode ser verificado.",
           "check": {
             "type": "AttachmentExtension",
             "forbiddenExtensions": [
@@ -250,10 +217,10 @@
             "caseSensitive": false
           },
           "finding": {
-            "rule": "Arquivos compactados",
+            "rule": "Conteúdo escondido (macro e arquivo compactado)",
             "evidence": "O anexo é um arquivo compactado.",
-            "explanation": "Um arquivo compactado impede ver o que realmente foi enviado antes de abri-lo.",
-            "reason": "Arquivos compactados enviados por e-mail estão fora do permitido."
+            "explanation": "Um arquivo compactado impede ver o que realmente foi enviado antes de abri-lo: dentro dele pode haver um executável ou script.",
+            "reason": "Pela política da empresa, compactados não são aceitos por e-mail, mesmo de remetentes internos."
           }
         }
       ]

@@ -699,6 +699,7 @@ public enum DocumentType
     PDF,
     PNG,
     RG,
+    Guide,
 }
 
 [System.Serializable]

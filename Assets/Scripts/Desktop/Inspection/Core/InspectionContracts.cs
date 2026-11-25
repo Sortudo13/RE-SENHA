@@ -64,6 +64,13 @@ public interface IInspectionFieldSource
     IReadOnlyList<InspectionAttachmentDescriptor> GetAttachments();
 }
 
+// Fonte que conhece as conversas anteriores do item (ex.: Email: caixa User + emails anexados).
+// Usada pela regra de falsa resposta (RE:/ENC: sem a conversa original).
+public interface IInspectionThreadSource
+{
+    IReadOnlyCollection<string> PreviousSubjects { get; }
+}
+
 public sealed class InspectionAttachmentDescriptor
 {
     public string Extension { get; }
