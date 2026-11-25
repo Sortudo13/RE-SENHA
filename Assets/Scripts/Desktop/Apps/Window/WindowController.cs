@@ -80,6 +80,9 @@ public class WindowController : MonoBehaviour
 
         if (gameObject.activeSelf)
         {
+            if (animate)
+                ActionController.SendAction("OnWindowMinimized");
+
             ActionController.SendAction("SubActiveWindow");
             ActionController.SendAction("HideNotificationBadge", AppName);
             gameObject.SetActive(false);

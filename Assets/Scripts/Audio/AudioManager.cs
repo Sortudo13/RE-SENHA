@@ -55,6 +55,9 @@ public class AudioManager : MonoBehaviour
     private AudioClip cliqueAbrirJanela;
 
     [SerializeField]
+    private AudioClip somMinimizarJanela;
+
+    [SerializeField]
     private AudioClip cliqueBotaoPadrao;
 
     [SerializeField]
@@ -123,6 +126,7 @@ public class AudioManager : MonoBehaviour
         SceneManager.sceneLoaded += AoCarregarCena;
         ActionController.SyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.SyncSignal("OnWindowOpened", TocarSomAbrirJanela);
+        ActionController.SyncSignal("OnWindowMinimized", TocarSomMinimizarJanela);
         ActionController.SyncSignal("OnButtonClicked", TocarSomBotao);
         ActionController.SyncSignal("OnApprovalButtonClicked", TocarSomAprovacao);
     }
@@ -132,6 +136,7 @@ public class AudioManager : MonoBehaviour
         SceneManager.sceneLoaded -= AoCarregarCena;
         ActionController.UnsyncSignal("OnWindowClosed", TocarSomFecharJanela);
         ActionController.UnsyncSignal("OnWindowOpened", TocarSomAbrirJanela);
+        ActionController.UnsyncSignal("OnWindowMinimized", TocarSomMinimizarJanela);
         ActionController.UnsyncSignal("OnButtonClicked", TocarSomBotao);
         ActionController.UnsyncSignal("OnApprovalButtonClicked", TocarSomAprovacao);
     }
@@ -387,6 +392,8 @@ public class AudioManager : MonoBehaviour
     private void TocarSomFecharJanela() => TocarSFX(cliqueFecharJanela);
 
     private void TocarSomAbrirJanela() => TocarSFX(cliqueAbrirJanela);
+
+    private void TocarSomMinimizarJanela() => TocarSFX(somMinimizarJanela);
 
     private void TocarSomBotao() => TocarSFX(cliqueBotaoPadrao);
 

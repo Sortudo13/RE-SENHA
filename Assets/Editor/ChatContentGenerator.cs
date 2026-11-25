@@ -274,7 +274,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_PrimeiroContato",
                 "elena_primeiro_contato",
-                "Elena Valadares",
+                "Elena",
                 1,
                 9,
                 0,
@@ -283,7 +283,7 @@ public static class ChatContentGenerator
                 {
                     new NodeSpec(
                         "inicio",
-                        "Oi! Você é a pessoa nova da equipe, né? Sou a Elena, do Marketing. Se precisar de café ou de uma dica pra sobreviver às reuniões, me chama :)",
+                        "Oi! Você é a pessoa nova da equipe, né? Sou a Elena Valadares, do Marketing. Se precisar de café ou de uma dica pra sobreviver às reuniões, me chama :)",
                         Options(
                             Option(
                                 "Obrigada! Como está sendo a semana?",
@@ -450,7 +450,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_DiaQ_D2",
                 "elena_dia_q_d2",
-                "Elena Valadares",
+                "Elena",
                 2,
                 11,
                 15,
@@ -634,7 +634,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_Pedido_D3",
                 "elena_pedido_d3",
-                "Elena Valadares",
+                "Elena",
                 3,
                 12,
                 0,
@@ -799,7 +799,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_Pedido_Codigo_D4",
                 "elena_pedido_codigo_d4",
-                "Elena Valadares",
+                "Elena",
                 4,
                 14,
                 30,
@@ -834,13 +834,7 @@ public static class ChatContentGenerator
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec(
-                        "fim",
-                        "Elena Valadares\n(Conversa não verificada)",
-                        Options(),
-                        null,
-                        true
-                    ),
+                    new NodeSpec("fim", "Elena\n(Conversa não verificada)", Options(), null, true),
                 }
             ),
             new ConversationSpec(
@@ -996,7 +990,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Elena_Enigmatica_D5",
                 "elena_enigmatica_d5",
-                "Elena Valadares",
+                "Elena",
                 5,
                 15,
                 0,

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Elena_PrimeiroContato_inicio
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: inicio
-  npcMessage: "Oi! Voc\xEA \xE9 a pessoa nova da equipe, n\xE9? Sou a Elena, do Marketing.
-    Se precisar de caf\xE9 ou de uma dica pra sobreviver \xE0s reuni\xF5es, me chama
-    :)"
+  npcMessage: "Oi! Voc\xEA \xE9 a pessoa nova da equipe, n\xE9? Sou a Elena Valadares,
+    do Marketing. Se precisar de caf\xE9 ou de uma dica pra sobreviver \xE0s reuni\xF5es,
+    me chama :)"
   typingDelay: 1.5
   options:
   - optionText: "Obrigada! Como est\xE1 sendo a semana?"

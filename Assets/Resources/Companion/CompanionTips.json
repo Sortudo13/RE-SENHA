@@ -21,7 +21,7 @@
     {
       "id": "tutorial_welcome",
       "lines": [
-        { "pose": "happy", "anim": "jump", "text": "Bem-vindo à NationalTech! Sou seu assistente virtual de segurança." },
+        { "pose": "happy", "anim": "jump", "text": "Bem-vindo à NationalTech! Sou o Mousy, seu assistente virtual de segurança." },
         { "pose": "explain", "text": "Vou te mostrar o básico para você não fazer feio no primeiro dia." },
         { "pose": "thinking", "text": "A regra de ouro aqui é: desconfie de tudo. Até de mim." }
       ]
@@ -50,9 +50,9 @@
     {
       "id": "first_chat_open",
       "lines": [
-        { "pose": "happy", "text": "Ah, o chat! Aqui você conversa com os colegas e com o suporte de TI." },
-        { "pose": "thinking", "text": "Só não vá clicar em links que te mandarem por aqui, combinado?" },
-        { "pose": "scared", "anim": "shake", "text": "A engenharia social adora um chat..." }
+        { "pose": "happy", "text": "Ah, o chat! É por aqui que você conversa comigo e com os colegas da empresa. Veja! Já te mandei uma mensagem para você testar." },
+        { "pose": "explain", "text": "As conversas aparecem na lista à esquerda. Clique em uma para ler e responder. Quando chegar uma mensagem nova, o ícone do Chat na área de trabalho vai ganhar uma bolinha vermelha." },
+        { "pose": "thinking", "text": "Só não vá clicar em links que te mandarem por aqui, combinado? A engenharia social adora um chat..." }
       ]
     },
     {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Elena_Pedido_Codigo_D4_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: fim
-  npcMessage: "Elena Valadares\n(Conversa n\xE3o verificada)"
+  npcMessage: "Elena\n(Conversa n\xE3o verificada)"
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 
