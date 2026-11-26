@@ -40,6 +40,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal("SubActiveWindow", SubWindowCount);
         ActionController.SyncSignal("DestroyWindows", DestroyWindows);
         ActionController.SyncSignal("DayChanged", DestroyWindows);
+        ActionController.SyncSignal("ShowWorkspace", ActivateDesktop);
 
         OpenTemplateSignals();
     }
@@ -102,6 +103,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal("SubActiveWindow", SubWindowCount);
         ActionController.UnsyncSignal("DestroyWindows", DestroyWindows);
         ActionController.UnsyncSignal("DayChanged", DestroyWindows);
+        ActionController.UnsyncSignal("ShowWorkspace", ActivateDesktop);
 
         CloseTemplateSignals();
     }

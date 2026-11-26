@@ -53,13 +53,18 @@ public class WindowController : MonoBehaviour
 
     public void OpenWindow()
     {
-        countActions++;
-        if (!gameObject.activeInHierarchy)
+        if (!gameObject.activeSelf)
         {
             ActionController.SendAction("AddActiveWindow");
             gameObject.SetActive(true);
             ActionController.SendAction("OnWindowOpened");
         }
+        else if (!gameObject.activeInHierarchy)
+        {
+            ActionController.SendAction("ShowWorkspace");
+        }
+
+        countActions++;
         ToFront();
         animator.SetTrigger(Animator.StringToHash("Open"));
     }
