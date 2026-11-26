@@ -3,72 +3,87 @@
     "timeToReceive": 2,
     "mailBox": "User",
     "sender": "rh@nationaltech.com",
-    "subject": "Orientações do Dia 2 - Cuidado com Links",
-    "body": "Bom dia! Hoje o foco do nosso treinamento é a identificação de links maliciosos. Lembre-se: nem todo remetente é quem diz ser. Verifique os domínios com atenção antes de clicar.",
+    "subject": "Orientações do Dia 2 - Links e Credenciais",
+    "body": "Bom dia! Ontem você aprendeu a conferir o remetente. Hoje os golpes ficam mais difíceis: um e-mail com remetente correto também pode ser golpe.\n\n<b>Regras novas:</b>\n- Link malicioso: leia o endereço do link até o fim. O que vale é o domínio logo antes da primeira barra: \"nationaltech.com.site-falso.net\" não é da empresa, é de site-falso.net. Já intranet.nationaltech.com é da empresa.\n- Phishing de credenciais: ninguém da empresa pede senha, código de verificação ou token por e-mail. Nem a TI.\n\n<b>Lembre-se:</b> um e-mail pode quebrar mais de uma regra, mas um achado já basta para bloquear. E no chat vale o mesmo: senha não se passa para ninguém.\n\nAs duas regras estão anexadas e já estão no Manual.\n\nRecursos Humanos - NationalTech",
     "attachments": [
       {
         "documentType": 0,
-        "name": "regra_destino_dos_links",
+        "name": "regra_link_malicioso",
         "extension": "manual",
-        "linkedName": "<link=\"OpenAttachment|1\">destino_dos_links.manual</link>",
+        "linkedName": "<link=\"OpenAttachment|1\">links.manual</link>",
         "data": { "ruleId": "rule-body-links" }
+      },
+      {
+        "documentType": 0,
+        "name": "regra_phishing",
+        "extension": "manual",
+        "linkedName": "<link=\"OpenAttachment|2\">phishing.manual</link>",
+        "data": { "ruleId": "rule-credential-request" }
       }
     ]
   },
   {
     "timeToReceive": 15,
     "mailBox": "Company",
-    "sender": "ti-interna@empresa.com.br",
-    "subject": "Manutenção dos Servidores (Aviso Legítimo)",
+    "sender": "ti-interna@nationaltech.com",
+    "subject": "Manutenção Programada dos Servidores",
     "body": "Informamos que hoje às 22h realizaremos uma manutenção preventiva nos servidores locais. Os sistemas poderão apresentar instabilidade. Nenhuma ação é necessária da sua parte.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 25,
+    "mailBox": "User",
+    "sender": "redacao@pulsobinario.news",
+    "subject": "[Edição #413] Quem é o \"Cavalo de Troia\" e por que o nome Odisseu assusta o mercado?",
+    "body": "<b>PULSO BINÁRIO - ESPECIAL CIBERSEGURANÇA</b>\n\n<b>1. A sombra por trás dos vazamentos recentes</b>\nAutoridades internacionais confirmaram ontem que a onda de invasões contra empresas de infraestrutura crítica tem uma mesma assinatura: o coletivo hacker conhecido como <b>Cavalo de Troia</b>. Diferente de grupos que dependem apenas de força bruta, a organização opera como uma rede descentralizada de células autônomas.\n\n<b>2. O método: entrar pela porta da frente</b>\nSegundo analistas forenses, os membros do Cavalo de Troia raramente arrombam firewalls. Eles preferem se passar por executivos, fornecedores ou colegas de equipe, explorando a pressa e a confiança humana com links camuflados e pedidos de credenciais. Alguns operadores chegam a oferecer pagamentos em criptomoedas para funcionários internos ignorarem alertas.\n\n<b>3. O estrategista sem rosto: Odisseu</b>\nTodas as operações de grande porte do grupo são coordenadas por uma figura que assina apenas como <b>Odisseu</b>. Ninguém sabe se trata-se de um ex-engenheiro de segurança ou de um codinome compartilhado, mas seus comunicados costumam provocar diretamente os analistas encarregados de barrar suas invasões.\n\nVocê recebe este boletim por ser assinante do Pulso Binário.",
     "attachments": []
   },
   {
     "timeToReceive": 35,
     "mailBox": "Company",
-    "sender": "recursoshumanos@empresa-portal.com",
-    "subject": "URGENTE: Atualização de Dados Bancários",
-    "body": "Prezado colaborador, não conseguimos processar seu adiantamento salarial. Por favor, acesse <link=\"OpenURL|http://portal-empresa-rh.net\">http://rh.empresa.com.br/atualizar</link> em até 2 horas para corrigir seus dados.",
+    "sender": "roberto.ceo@nationaltech.com",
+    "subject": "Transferência Confidencial",
+    "body": "Estou em uma reunião o dia todo e preciso que você faça uma transferência de urgência para um novo fornecedor. As instruções de pagamento estão no portal financeiro: <link=\"OpenURL|https://nationaltech.com.pagamentos-seguros.net/fornecedor\">https://nationaltech.com.pagamentos-seguros.net/fornecedor</link>.",
     "attachments": []
   },
   {
     "timeToReceive": 55,
     "mailBox": "Company",
-    "sender": "marketing@empresa.com.br",
+    "sender": "marketing@nationaltech.com",
     "subject": "Newsletter Corporativa - Março",
-    "body": "Confira as novidades do mês na nossa newsletter oficial! Destaque para a nova campanha de sustentabilidade.",
+    "body": "Confira as novidades do mês na nossa newsletter oficial! Destaque para a nova campanha de sustentabilidade. A versão completa está na <link=\"OpenURL|https://intranet.nationaltech.com/newsletter\">https://intranet.nationaltech.com/newsletter</link>.",
     "attachments": [
       {
-        "documentType": 0,
+        "documentType": 2,
         "name": "newsletter_marco",
         "extension": "pdf",
         "linkedName": "<link=\"OpenAttachment|1\">newsletter_marco.pdf</link>",
-        "data": {}
+        "data": { "text": "<align=center><b>NATIONALTECH NEWS</b>\nEdição de Março</align>\n\n<b>Campanha de sustentabilidade</b>\nA partir deste mês, os copos descartáveis saem dos andares. Cada colaborador retira a sua caneca na recepção.\n\n<b>Aniversariantes do mês</b>\nConfira a lista completa na intranet.\n\n<b>Dica de segurança</b>\nA TI nunca pede a sua senha por e-mail, chat ou telefone. Na dúvida, abra um chamado no helpdesk.\n\nVersão completa: intranet.nationaltech.com/newsletter" }
       }
     ]
   },
   {
+    "timeToReceive": 70,
+    "mailBox": "User",
+    "sender": "boletim@observatoriociber.org",
+    "subject": "Dossiê Aberto: Estrutura interna do Cavalo de Troia e novos alvos",
+    "body": "<b>OBSERVATÓRIO CIBER - RELATÓRIO DE AMEAÇAS</b>\n\n<b>Perfil da organização: Cavalo de Troia</b>\nClassificação de risco: <b>CRÍTICO</b>\n\n<b>Como os membros atuam:</b>\n- <b>Batedores:</b> mapeiam rotinas internas, nomes de diretores e o tom de comunicação de cada empresa antes do primeiro disparo.\n- <b>Engenheiros Sociais:</b> operam perfis clonados e chats internos para pressionar analistas júniores ou extrair senhas e tokens.\n- <b>Infiltrados:</b> recrutados em fóruns fechados, responsáveis por plantar anexos adulterados e domínios espelhados.\n\n<b>Sobre a liderança (Odisseu):</b>\nMensagens interceptadas indicam que <b>Odisseu</b> enxerga a aproximação do Dia Q como uma oportunidade para expor corporações que monopolizam tecnologia de criptografia. Nos últimos dias, o grupo direcionou sua atenção para companhias que desenvolvem protocolos pós-quânticos.\n\n<b>Recomendação geral:</b> redobre a atenção com domínios quase idênticos aos oficiais e trate qualquer contato anônimo em mensageiros como hostil.\n\nObservatório Independente de Segurança Digital",
+    "attachments": []
+  },
+  {
     "timeToReceive": 80,
     "mailBox": "Company",
-    "sender": "roberto.ceo@empresa.com.br",
-    "subject": "Transferência Confidencial",
-    "body": "Estou em uma reunião o dia todo e preciso que você faça uma transferência de urgência para um novo fornecedor. Acesse as instruções de pagamento aqui: <link=\"OpenURL|http://pagamentos-secure-ceo.com\">Instruções_Fornecedor</link>.",
+    "sender": "suporte-ti@nationaltech.com",
+    "subject": "Migração das Contas de Rede",
+    "body": "Olá! Estamos migrando as contas de rede para o novo servidor. Para não perder seus arquivos, responda este e-mail com seu usuário e sua senha até o fim do dia.",
     "attachments": []
   },
   {
     "timeToReceive": 110,
     "mailBox": "Company",
-    "sender": "contato@logisticaexpress.com.br",
-    "subject": "Falha na entrega da sua encomenda",
-    "body": "Não foi possível entregar o seu pacote corporativo. Para reagendar, execute o arquivo de rastreamento em anexo para gerar um novo código QR.",
-    "attachments": [
-      {
-        "documentType": 2,
-        "name": "etiqueta_rastreio",
-        "extension": "bat",
-        "linkedName": "<link=\"OpenAttachment|1\">etiqueta_rastreio.bat</link>",
-        "data": {}
-      }
-    ]
+    "sender": "recursoshumanos@nationaltech-portal.com",
+    "subject": "URGENTE: Atualização de Dados Bancários",
+    "body": "Prezado colaborador, não conseguimos processar seu adiantamento salarial. Por favor, acesse <link=\"OpenURL|http://portal-nationaltech-rh.net/atualizar\">http://portal-nationaltech-rh.net/atualizar</link> em até 2 horas para corrigir seus dados.",
+    "attachments": []
   }
 ]

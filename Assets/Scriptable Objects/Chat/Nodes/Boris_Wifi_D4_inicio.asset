@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Boris_Wifi_D4_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Amigo, quero adiantar uns chamados \xE0 noite no Wi-Fi livre da padaria
+    da esquina. Tem problema se for s\xF3 por dez minutinhos?"
+  typingDelay: 1.5
+  options:
+  - optionText: "Use apenas uma conex\xE3o aprovada pela empresa e siga a pol\xEDtica
+      de VPN. Dez minutos ainda exp\xF5em dados numa rede n\xE3o confi\xE1vel."
+    shortText: "S\xF3 conex\xE3o aprovada, com VPN."
+    nextNodeId: tecnico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_wifi_tecnico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Wi-Fi aberto \xE9 como deixar o chamado numa mesa p\xFAblica: use
+      a conex\xE3o autorizada pela empresa, com a VPN conforme as regras."
+    shortText: "Wi-Fi aberto \xE9 uma mesa p\xFAblica."
+    nextNodeId: didatico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_wifi_didatico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Dez minutos ou dez segundos, a padaria n\xE3o \xE9 nosso escrit\xF3rio!
+      Espera uma rede aprovada e segue as regras da VPN."
+    shortText: "A padaria n\xE3o \xE9 nosso escrit\xF3rio!"
+    nextNodeId: pratico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_wifi_pratico
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

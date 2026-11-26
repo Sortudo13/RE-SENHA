@@ -15,12 +15,10 @@ public class CalendarController : MonoBehaviour
 
     private void OnEnable()
     {
-        ActionController.SyncSignal("Resetar Jogo", ResetGame);
-        ActionController.SyncSignal("ResetGame", ResetGame);
         ActionController.SyncSignal("DayChanged", AtualizarTexto);
         ActionController.SyncSignal("AdvanceDay", AdvanceDay);
         ActionController.SyncSignal("RetrocedeDay", RetrocedeDay);
-        ActionController.SyncSignal("ResetDay", LoadDay);
+        ActionController.SyncSignal("ResetDay", ResetDay);
         ActionController.SyncSignal("LoadDay", LoadDay);
         ActionController.SyncSignal("ExitGame", ExitGame);
         ActionController.SyncSignal("LoadMainMenu", LoadMainMenu);
@@ -28,12 +26,10 @@ public class CalendarController : MonoBehaviour
 
     private void OnDisable()
     {
-        ActionController.UnsyncSignal("ResetGame", ResetGame);
-        ActionController.UnsyncSignal("Resetar Jogo", ResetGame);
         ActionController.UnsyncSignal("DayChanged", AtualizarTexto);
         ActionController.UnsyncSignal("AdvanceDay", AdvanceDay);
         ActionController.UnsyncSignal("RetrocedeDay", RetrocedeDay);
-        ActionController.UnsyncSignal("ResetDay", LoadDay);
+        ActionController.UnsyncSignal("ResetDay", ResetDay);
         ActionController.UnsyncSignal("LoadDay", LoadDay);
         ActionController.UnsyncSignal("ExitGame", ExitGame);
         ActionController.UnsyncSignal("LoadMainMenu", LoadMainMenu);
@@ -60,9 +56,9 @@ public class CalendarController : MonoBehaviour
         LoadingScreen.Run(DataController.LoadDay, "Carregando o dia...");
     }
 
-    private void ResetGame()
+    private void ResetDay()
     {
-        DataController.ResetGame();
+        DataController.ResetDayAndReload();
     }
 
     private void ExitGame()

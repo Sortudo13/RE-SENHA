@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Encerramento_Odisseu_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Voc\xEA chegou at\xE9 aqui sem saber o que aconteceu no Dia Q. N\xE3o
+    confunda falta de resposta com falta de evid\xEAncia. A NationalTech sabe mais
+    do que admite; eu tamb\xE9m."
+  typingDelay: 1.5
+  options:
+  - optionText: O que aconteceu no Dia Q?
+    shortText: 
+    nextNodeId: estranho
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: questionou_dia_q
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Por que est\xE1 me contando isso?"
+    shortText: 
+    nextNodeId: prazer
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: questionou_motivo
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "N\xE3o vou aceitar sua vers\xE3o sem evid\xEAncias."
+    shortText: 
+    nextNodeId: adeus
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: exigiu_evidencias
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Mousy_Alerta_Anexo
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: mousy_alerta_anexo
+  npcName: Mousy
+  npcAvatar: {fileID: 21300000, guid: 97fbf67659c8d1fe8b6e238951b2b9c3, type: 3}
+  nodes:
+  - {fileID: 11400000, guid: d506b48b66cd67e2590ea17a79ae9557, type: 2}
+  - {fileID: 11400000, guid: 64cb8c354e6d52509b83b343078dffc5, type: 2}
+  - {fileID: 11400000, guid: 09c44977a79bfbfef979e169d0da7bc6, type: 2}
+  - {fileID: 11400000, guid: f837750e155bce4bab73dedc6e4a2f86, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

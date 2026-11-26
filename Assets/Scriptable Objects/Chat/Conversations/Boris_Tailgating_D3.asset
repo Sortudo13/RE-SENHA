@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Boris_Tailgating_D3
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: boris_tailgating_d3
+  npcName: "B\xF3ris"
+  npcAvatar: {fileID: 21300000, guid: c5d278d6e2e63a990b0a26d06eaf846c, type: 3}
+  nodes:
+  - {fileID: 11400000, guid: 2f470a208d4dfcdc6a3ef1f42236a361, type: 2}
+  - {fileID: 11400000, guid: bc7466b07f219256788ed7686578c828, type: 2}
+  - {fileID: 11400000, guid: 9296125ac323a60fa83ed8e56162a97d, type: 2}
+  - {fileID: 11400000, guid: 26f802d5a74442eaf817541a1c0a9919, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

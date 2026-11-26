@@ -14,6 +14,14 @@ public class LinkController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        // Com o Inspector ligado o link nao abre: o clique vai para o campo pai
+        // (ex.: AttachmentField), para o Inspector poder seleciona-lo.
+        if (InspectionModeController.IsActive)
+        {
+            ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.pointerClickHandler);
+            return;
+        }
+
         p_TextMeshPro.ForceMeshUpdate();
 
         // Verifica se o clique foi em cima de um link válido do TextMeshPro

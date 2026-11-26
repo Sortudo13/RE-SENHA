@@ -17,6 +17,24 @@ public sealed class ManualSubruleItemController : MonoBehaviour
 
         selectable.Setup(subrule.id);
         if (txtDescription != null)
+        {
             txtDescription.text = subrule.description;
+
+            RectTransform itemRect = (RectTransform)transform;
+            RectTransform descriptionRect = txtDescription.rectTransform;
+            descriptionRect.anchorMin = Vector2.zero;
+            descriptionRect.anchorMax = Vector2.one;
+            descriptionRect.offsetMin = new Vector2(12f, 8f);
+            descriptionRect.offsetMax = new Vector2(-12f, -8f);
+
+            float textWidth = Mathf.Max(0f, itemRect.rect.width - 24f);
+            float textHeight = txtDescription
+                .GetPreferredValues(subrule.description, textWidth, float.PositiveInfinity)
+                .y;
+            itemRect.SetSizeWithCurrentAnchors(
+                RectTransform.Axis.Vertical,
+                Mathf.Max(itemRect.rect.height, textHeight + 16f)
+            );
+        }
     }
 }

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Provocacao_Odisseu_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Vou dispensar as sutilezas: sou Odisseu, l\xEDder da organiza\xE7\xE3o
+    Cavalo de Troia. Tenho acesso a informa\xE7\xF5es que a sua empresa acredita
+    estarem protegidas. Se continuar investigando, passar\xE1 a fazer parte do problema."
+  typingDelay: 1.5
+  options:
+  - optionText: "Isso \xE9 uma amea\xE7a?"
+    shortText: 
+    nextNodeId: provocou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: questionou_ameaca
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "O que voc\xEA quer da NationalTech?"
+    shortText: 
+    nextNodeId: perguntou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: perguntou_objetivo
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Vou preservar esta conversa e report\xE1-la."
+    shortText: 
+    nextNodeId: reportou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: reportou_odisseu
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

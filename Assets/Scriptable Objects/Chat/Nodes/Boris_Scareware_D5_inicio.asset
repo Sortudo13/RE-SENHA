@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Boris_Scareware_D5_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Amigo, caos total aqui: apareceu um pop-up dizendo que meu PC tem
+    47 v\xEDrus e mandando baixar um \"Limpador Oficial\" urgente. Clico agora ou
+    espero acabar o expediente?"
+  typingDelay: 1.5
+  options:
+  - optionText: "N\xE3o clique nem instale. Feche o navegador ou app sem interagir
+      e reporte o alerta \xE0 Seguran\xE7a pelo canal oficial."
+    shortText: "N\xE3o clique: feche e reporte \xE0 Seguran\xE7a."
+    nextNodeId: tecnico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_scareware_tecnico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Um aviso assustador na tela n\xE3o prova que h\xE1 v\xEDrus. N\xE3o
+      toque nele; feche a janela e pe\xE7a ajuda \xE0 Seguran\xE7a."
+    shortText: "Aviso assustador n\xE3o prova v\xEDrus."
+    nextNodeId: didatico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_scareware_didatico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Quarenta e sete? Que n\xFAmero espec\xEDfico! N\xE3o baixa esse
+      'limpador': fecha a janela e manda o alerta pra Seguran\xE7a."
+    shortText: "47 v\xEDrus? Fecha e avisa a Seguran\xE7a."
+    nextNodeId: pratico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_scareware_pratico
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

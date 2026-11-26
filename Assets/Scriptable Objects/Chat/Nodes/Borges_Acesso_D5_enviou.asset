@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Borges_Acesso_D5_enviou
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: enviou
+  npcMessage: Mandei! Pode conferir com o cadastro do RH.
+  typingDelay: 1.5
+  options:
+  - optionText: Liberar acesso.
+    shortText: 
+    nextNodeId: liberou
+    outcome: 1
+    outcomeFeedback: "Correto! O RG \xE9 do pr\xF3prio Ryan Guimar\xE3es e bate com
+      o Database: nome, n\xFAmero, foto e status Ativo."
+    securityScoreDelta: 0
+    feedbackTag: liberou_rg_proprio
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: Negar acesso.
+    shortText: 
+    nextNodeId: negou
+    outcome: 2
+    outcomeFeedback: "Erro de an\xE1lise! O RG \xE9 dele e confere com o Database
+      (colaborador ativo). Negar acesso a quem est\xE1 regular tamb\xE9m atrapalha
+      a empresa."
+    securityScoreDelta: 0
+    feedbackTag: negou_rg_proprio
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

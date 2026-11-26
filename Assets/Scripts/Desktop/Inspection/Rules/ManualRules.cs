@@ -123,7 +123,9 @@ public static class ManualRules
                 );
             if (rule.introductionDay < 1)
                 throw InvalidManual(resourcePath, $"Rule '{rule.id}' has an invalid introductionDay.");
-            if (string.IsNullOrWhiteSpace(rule.field))
+            // So o email usa o Inspetor; nos outros apps (chat, ticket) a regra e orientacao e o
+            // campo e opcional (sem campo, o Manual nao mostra o rotulo "[Corpo]").
+            if (rule.app == "email" && string.IsNullOrWhiteSpace(rule.field))
                 throw InvalidManual(resourcePath, $"Rule '{rule.id}' has no field.");
             if (rule.subrules == null || rule.subrules.Count == 0)
                 throw InvalidManual(resourcePath, $"Rule '{rule.id}' has no subrules.");

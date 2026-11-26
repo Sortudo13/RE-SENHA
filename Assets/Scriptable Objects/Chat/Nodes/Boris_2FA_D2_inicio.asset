@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Boris_2FA_D2_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Amigo, d\xFAvida b\xE1sica: pra que serve o 2FA? Se algu\xE9m descobrir
+    minha senha, eu posso s\xF3 trocar depois, n\xE9?"
+  typingDelay: 1.5
+  options:
+  - optionText: "O 2FA exige uma segunda prova de identidade, reduzindo o risco se
+      a senha for descoberta. Se vazar, avise a Seguran\xE7a e troque-a imediatamente."
+    shortText: "\xC9 uma segunda prova de identidade."
+    nextNodeId: tecnico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_2fa_tecnico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "\xC9 como uma segunda fechadura: saber a senha n\xE3o basta. E,
+      se ela vazar, a gente conta pra Seguran\xE7a e troca logo."
+    shortText: "\xC9 como uma segunda fechadura."
+    nextNodeId: didatico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_2fa_didatico
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "O c\xF3digo extra \xE9 o seguran\xE7a da porta. N\xE3o deixa pra
+      trocar depois: senha suspeita? Seguran\xE7a e troca imediata!"
+    shortText: "O c\xF3digo extra \xE9 o seguran\xE7a da porta."
+    nextNodeId: pratico
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: boris_2fa_pratico
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

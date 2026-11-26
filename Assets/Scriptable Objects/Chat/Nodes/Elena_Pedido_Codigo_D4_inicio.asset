@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Elena_Pedido_Codigo_D4_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Oi! Troquei de celular e n\xE3o consigo entrar no Marketing. Voc\xEA
+    pode me mandar o c\xF3digo de verifica\xE7\xE3o que acabou de chegar a\xED? \xC9
+    rapidinho, prometo!"
+  typingDelay: 1.5
+  options:
+  - optionText: "N\xE3o vou compartilhar c\xF3digos. Vou confirmar com voc\xEA por
+      outro canal."
+    shortText: "N\xE3o compartilho c\xF3digos; confirmo por outro canal."
+    nextNodeId: verificou
+    outcome: 1
+    outcomeFeedback: "Correto! C\xF3digo de verifica\xE7\xE3o n\xE3o se passa para
+      ningu\xE9m. Confirmar por outro canal \xE9 o jeito certo de saber quem est\xE1
+      pedindo."
+    securityScoreDelta: 0
+    feedbackTag: verificou_identidade
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Tudo bem, mando o c\xF3digo."
+    shortText: 
+    nextNodeId: compartilhou
+    outcome: 2
+    outcomeFeedback: "Resposta insegura! Com o c\xF3digo de verifica\xE7\xE3o, qualquer
+      pessoa entra na conta no lugar do dono. Ningu\xE9m pede c\xF3digo por chat."
+    securityScoreDelta: 0
+    feedbackTag: compartilhou_codigo
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Elena_Verdadeira_D4_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Oi, aqui \xE9 a Elena de verdade, escrevendo do computador do Marketing.
+    Meu celular foi clonado hoje e algu\xE9m mandou mensagem em meu nome pedindo
+    c\xF3digo de verifica\xE7\xE3o. Se te pediram alguma coisa, n\xE3o mande nada
+    e avise a Seguran\xE7a!"
+  typingDelay: 1.5
+  options:
+  - optionText: "Vi o pedido, mas n\xE3o mandei nada."
+    shortText: 
+    nextNodeId: nao_mandou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: nao_mandou_codigo
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Eu mandei o c\xF3digo..."
+    shortText: 
+    nextNodeId: mandou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: admitiu_codigo
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

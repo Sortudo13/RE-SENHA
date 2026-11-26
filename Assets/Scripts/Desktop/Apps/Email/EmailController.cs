@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class EmailController : MonoBehaviour
 {
     [Header("List Config")]
-    [SerializeField] private GameObject listItem;
+    [SerializeField]
+    private GameObject listItem;
 
     private EmailData currentEmail = null;
     private MailBox currentBox = null;
@@ -66,7 +67,9 @@ public class EmailController : MonoBehaviour
         if (userTarget != null && userTarget.TryGetComponent(out Button userButton))
         {
             userButton.onClick.RemoveAllListeners();
-            userButton.onClick.AddListener(() => UpdateEmailListScreen(mailBoxes.Find(box => box.mailBox == "User")));
+            userButton.onClick.AddListener(() =>
+                UpdateEmailListScreen(mailBoxes.Find(box => box.mailBox == "User"))
+            );
             userButton.onClick.AddListener(() => ShowList());
         }
 
@@ -74,14 +77,16 @@ public class EmailController : MonoBehaviour
         if (companyTarget != null && companyTarget.TryGetComponent(out Button companyButton))
         {
             companyButton.onClick.RemoveAllListeners();
-            companyButton.onClick.AddListener(() => UpdateEmailListScreen(mailBoxes.Find(box => box.mailBox == "Company")));
+            companyButton.onClick.AddListener(() =>
+                UpdateEmailListScreen(mailBoxes.Find(box => box.mailBox == "Company"))
+            );
             companyButton.onClick.AddListener(() => ShowList());
         }
 
         UpdateEmailListScreen(currentBox);
     }
 
-    private void OcultBadge (string appName)
+    private void OcultBadge(string appName)
     {
         if (appName == "Email")
             ActionController.SendAction("HideNotificationBadge", "Email");
@@ -108,7 +113,10 @@ public class EmailController : MonoBehaviour
             return;
 
         foreach (MailBox box in mailBoxes)
-            SetUnreadBadge(transform.Find("ListScreen/"+box.mailBox), box.emails.Exists(email => !email.isRead));
+            SetUnreadBadge(
+                transform.Find("ListScreen/" + box.mailBox),
+                box.emails.Exists(email => !email.isRead)
+            );
     }
 
     private void RemoveEmail(EmailData email)
@@ -133,6 +141,8 @@ public class EmailController : MonoBehaviour
     private void UpdateEmailListScreen(MailBox box)
     {
         currentBox = box;
+        if (box != null && box.mailBox == "Company")
+            ActionController.SendAction(TutorialSignals.CompanyMailboxOpened, "Company");
 
         Transform listContainer = listScreen.transform.Find("ListContainer");
         if (listContainer.childCount > 0)
@@ -181,6 +191,7 @@ public class EmailController : MonoBehaviour
                 mailBox.newEmails = Math.Max(0, mailBox.newEmails - 1);
                 currentEmail.isRead = true;
                 DataController.SavingGame();
+                ActionController.SendAction(TutorialSignals.EmailRead, email.subject);
                 // Apaga a bolinha do item e, se for o ultimo nao lido, a da caixa.
                 UpdateEmailListScreen(mailBox);
             }
@@ -211,14 +222,23 @@ public class EmailController : MonoBehaviour
             else
                 attach.text = "Sem anexos";
         }
+        bool showActionButtons = currentBox != null && currentBox.mailBox == "Company";
         if (emailButtons != null)
-            emailButtons.gameObject.SetActive(currentBox != null && currentBox.mailBox == "Company");
+        {
+            emailButtons.gameObject.SetActive(showActionButtons);
+            if (showActionButtons)
+                ActionController.SendAction(TutorialSignals.EmailActionButtonsShown, email.subject);
+        }
 
         if (currentBox != null)
             transform.Find("MailScreen/Back").gameObject.SetActive(true);
 
         listScreen.SetActive(false);
         mailScreen.SetActive(true);
+
+        // Dica do companheiro ligada a este email (so na primeira vez em cada save).
+        if (!string.IsNullOrWhiteSpace(email.companionTip))
+            CompanionSignals.Show(email.companionTip);
     }
 
     private void ShowList()

@@ -3,40 +3,53 @@
     "timeToReceive": 2,
     "mailBox": "User",
     "sender": "rh@nationaltech.com",
-    "subject": "Bem-vindo à equipe - Orientações do Dia 1",
-    "body": "Olá! Seja bem-vindo à nossa equipe de segurança digital. Por favor, leia o manual anexado com os procedimentos do seu primeiro dia de trabalho.",
+    "companionTip": "email_boas_vindas",
+    "subject": "Bem-vindo à NationalTech - Orientações do Dia 1",
+    "body": "Olá e seja bem-vindo à equipe de Segurança Digital da NationalTech!\n\n<b>Seu trabalho:</b> cada e-mail da aba Empresa precisa da sua decisão: APROVAR ou BLOQUEAR. Os e-mails desta aba (Usuário) são só para você e não precisam de decisão.\n\n<b>Como analisar:</b>\n1. Abra o e-mail e ligue o Modo Inspetor: o botão da <b>lupa</b> na barra de tarefas ou a tecla Espaço.\n2. Clique no campo suspeito (remetente, assunto, corpo ou anexos) e depois na regra do Manual que ele quebra.\n3. Com o achado registrado, bloqueie. Se nenhuma regra for quebrada, aprove.\n\n<b>Regras de hoje:</b>\n- Spoofing: o domínio depois do @ deve ser exatamente nationaltech.com. Domínios parecidos não valem.\n- Malware: anexos .exe nunca são aceitos, mesmo de remetentes da empresa.\n\n<b>Atenção:</b> aprovar um golpe, bloquear um e-mail legítimo ou bloquear sem apontar a regra gera uma advertência. Três advertências no mesmo dia encerram o seu contrato.\n\nO guia do analista, com prints de cada ferramenta, chega em um e-mail separado. Em anexo: um exemplo de e-mail falso e as duas regras.\n\nRecursos Humanos - NationalTech",
     "attachments": [
       {
-        "documentType" : 2,
-        "name" : "manual_de_conduta",
-        "extension" : "pdf",
-        "linkedName" : "<link=\"OpenAttachment|1\">manual_de_conduta.pdf</link>",
-        "data" : {
-          "text" : "O manual de conduta não é esse aqui. Cuidado para não cair em novos golpes!!!\nCom Amor,\nRH"
-        }
-      },
-      {
         "documentType" : 1,
-        "name" : "exemplo_email_falso",
+        "name" : "email_falso",
         "extension" : "email",
-        "linkedName" : "<link=\"OpenAttachment|2\">exemplo_email_falso.email</link>",
+        "linkedName" : "<link=\"OpenAttachment|1\">email_falso.email</link>",
         "data" : {
           "timeToReceive": 30,
           "mailBox": "Company",
-          "sender": "financeiro@empresa.com.br",
+          "sender": "financeiro@nationaltech-compras.com",
           "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
           "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
           "attachments": []
         }
       },
       {
-        "documentType" : 3,
-        "name" : "arvore_boas_vindas",
-        "extension" : "png",
-        "linkedName" : "<link=\"OpenAttachment|3\">arvore_boas_vindas.png</link>",
-        "data" : {
-          "imagePath" : "arvore"
-        }
+        "documentType" : 0,
+        "name" : "regra_spoofing",
+        "extension" : "manual",
+        "linkedName" : "<link=\"OpenAttachment|2\">spoofing.manual</link>",
+        "data" : { "ruleId" : "rule-sender-domain" }
+      },
+      {
+        "documentType" : 0,
+        "name" : "regra_malware",
+        "extension" : "manual",
+        "linkedName" : "<link=\"OpenAttachment|3\">malware.manual</link>",
+        "data" : { "ruleId" : "rule-attachment-extension" }
+      }
+    ]
+  },
+  {
+    "timeToReceive": 3,
+    "mailBox": "User",
+    "sender": "rh@nationaltech.com",
+    "subject": "Guia do Analista",
+    "body": "Olá! Segue o guia do analista, com prints de cada ferramenta: e-mail, aprovar e bloquear, Modo Inspetor, evidências, Manual e chat. Use as setas para trocar de página e consulte sempre que tiver dúvida.\n\nRecursos Humanos - NationalTech",
+    "attachments": [
+      {
+        "documentType": 5,
+        "name": "guia",
+        "extension": "pdf",
+        "linkedName": "<link=\"OpenAttachment|1\">guia.pdf</link>",
+        "data": {}
       }
     ]
   },
@@ -45,48 +58,80 @@
     "mailBox": "Company",
     "sender": "suporte-ti@gmai1-seguranca.com",
     "subject": "Atualização de Senha Obrigatória",
-    "body": "Detectamos uma tentativa de login não autorizada na sua conta de rede. Clique no link abaixo e recadastre sua senha o quanto antes.",
+    "body": "Detectamos uma tentativa de login não autorizada na sua conta de rede. Por segurança, responda este e-mail informando sua senha atual para bloquearmos o invasor.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 20,
+    "mailBox": "User",
+    "sender": "redacao@pulsobinario.news",
+    "subject": "[Edição #412] Criptografia em xeque: o \"Dia Q\" está mais perto do que admitem?",
+    "body": "<b>PULSO BINÁRIO — RESUMO MATINAL</b>\n\n<b>1. A contagem regressiva silenciosa</b>\nEspecialistas em infraestrutura voltaram a alertar nesta semana sobre o avanço acelerado de processadores quânticos fora de laboratórios regulados. Caso o chamado <b>\"Dia Q\"</b> se confirme antes da migração global de protocolos, chaves bancárias, certificados governamentais e redes privadas podem se tornar legíveis em questão de minutos.\n\n<b>2. Corrida por defesas pós-quânticas</b>\nGrandes conglomerados de tecnologia disputam contratos emergenciais para blindar redes críticas. Entre os poucos nomes citados com arquitetura proprietária em fase avançada está a <b>NationalTech</b>, que fechou as portas de seu setor de pesquisa à imprensa desde o trimestre passado.\n\n<b>3. O elo mais fraco continua humano</b>\nEnquanto sistemas automáticos de filtragem perdem eficácia diante de ataques cada vez mais sofisticados, relatórios apontam um salto de 340% em invasões baseadas em engenharia social e falsificação de identidade.\n\n<i>Você recebe este boletim por ser assinante do Pulso Binário. Para cancelar a inscrição, acesse as configurações da sua conta.</i>",
     "attachments": []
   },
   {
     "timeToReceive": 30,
     "mailBox": "Company",
-    "sender": "financeiro@empresa.com.br",
+    "sender": "financeiro@nationaltech.co",
     "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
-    "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, acesse urgentemente o painel de cancelamento.",
+    "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, responda este e-mail com urgência para solicitar o cancelamento.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 50,
+    "mailBox": "User",
+    "sender": "notificacoes@bancocentral-digital.org",
+    "subject": "Aviso preventivo: instabilidade na validação de tokens e golpes recentes",
+    "body": "Olá,\n\nInformamos que, devido às atualizações emergenciais nos servidores de autenticação da rede nacional, alguns usuários podem enfrentar lentidão na validação de transações e acessos bancários ao longo desta semana.\n\nAproveitamos para reforçar um alerta importante: nas últimas 48 horas, identificamos um aumento expressivo de mensagens falsas tentando se passar por instituições financeiras e órgãos oficiais para coletar senhas e códigos de verificação.\n\n<b>Lembre-se:</b>\n- Nunca informe senhas ou códigos temporários por e-mail ou mensageiro.\n- Verifique sempre o domínio completo do remetente antes de abrir qualquer anexo.\n- Em caso de dúvida, desconfie de qualquer solicitação marcada como \"urgente\".\n\nAtenciosamente,\n<b>Central de Segurança ao Correntista</b>",
     "attachments": []
   },
   {
     "timeToReceive": 60,
     "mailBox": "Company",
-    "sender": "fornecedor@graficaexpressa.com.br",
+    "sender": "compras@nationaltech.com",
     "subject": "Nota Fiscal do Serviço de Impressão",
-    "body": "Prezado, segue em anexo a nota fiscal e o comprovante referente aos serviços de impressão prestados nesta semana para a empresa.",
+    "body": "Olá! Encaminho a nota fiscal que a gráfica mandou referente aos serviços de impressão desta semana. Pode conferir e arquivar?",
     "attachments": [
       {
-        "documentType" : 3,
-        "name" : "fatura_outubro_assinado",
+        "documentType" : 2,
+        "name" : "nota_fiscal_outubro",
         "extension" : "exe",
-        "linkedName" : "<link=\"OpenAttachment|1\">fatura_outubro_assinado.exe</link>",
-        "data" : {}
+        "linkedName" : "<link=\"OpenAttachment|1\">nota_fiscal_outubro.exe</link>",
+        "data" : { "text": "<b>Pré-visualização indisponível</b>\n\nO arquivo nota_fiscal_outubro.exe não pode ser exibido como documento.\n\nTipo: Aplicativo (.exe)\nTamanho: 1,2 MB\n\nConteúdo bruto:\nMZ..........@........\nThis program cannot be run in DOS mode.\n.text  .rdata  .data  .rsrc" }
       }
     ]
+  },
+  {
+    "timeToReceive": 75,
+    "mailBox": "User",
+    "sender": "noticias@controlequebrado.gg",
+    "subject": "Tivemos a ameaça do Dia Q antes de TGA 6 — Novo adiamento oficial!",
+    "body": "<b>PLANTÃO GAMER — CONTROLE QUEBRADO</b>\n\nPode tirar a folga do calendário de novo: a <b>Starock Games</b> publicou hoje cedo aquela nota de fundo colorido que todo mundo já conhece de cor anunciando mais um adiamento para <b>TGA 6</b>.\n\nSegundo o estúdio, o jogo precisa de <i>\"alguns meses extras de polimento para garantir o nível de qualidade que os fãs merecem\"</i>. A nova janela de lançamento agora está prevista para \"em breve, talvez antes ou depois do colapso da criptografia mundial\".\n\nNos fóruns, a comunidade já debate qual evento histórico vai acontecer primeiro:\n- O apocalipse digital do Dia Q;\n- A aposentadoria de quem jogou TGA 5 no lançamento;\n- O segundo trailer oficial de TGA 6.\n\nEnquanto isso, a Starock confirmou o lançamento de <b>TGA 5: Edição Remasterizada Pós-Quântica</b> — já em pré-venda!\n\n<i>Continue acompanhando o Controle Quebrado para mais atualizações (e mais adiamentos).</i>",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 90,
+    "mailBox": "User",
+    "sender": "ofertas@escudocripto.com.br",
+    "subject": "Quando o Dia Q chegar, seus dados vão sobreviver? Proteja-se hoje!",
+    "body": "<b>SEUS ARQUIVOS AINDA USAM CRIPTOGRAFIA ANTIGA?</b>\n\nTodos os dias, novos vazamentos mostram que ninguém está realmente seguro. Antivírus comuns já não dão conta e as grandes corporações só protegem os próprios servidores — deixando o cidadão comum exposto.\n\nConheça o <b>Cofre EscudoCripto™ Versão Doméstica</b>:\n- Blindagem offline para documentos e credenciais pessoais;\n- Alerta em tempo real contra clonagem de identidade;\n- Instalação em 1 clique, sem mensalidade nos primeiros 15 dias!\n\n<i>Não espere o apagão digital bater na sua porta. Garanta sua tranquilidade enquanto ainda há tempo.</i>\n\n(Mensagem promocional automatizada — não responda a este e-mail.)",
+    "attachments": []
   },
   {
     "hourToReceive": 10,
     "minuteToReceive": 55,
     "timeToReceive": 120,
     "mailBox": "Company",
-    "sender": "diretoria@empresa.com.br",
+    "sender": "diretoria@nationaltech.com",
     "subject": "Aviso Importante sobre Reunião Geral",
-    "body": "Prezado colaborador, devido a problemas operacionais no nosso servidor local, acesse a página externa <link=\"OpenURL|http://painel-virus.onion\">http://painel-verificacao-empresa.ru</link> para confirmar sua presença.",
+    "body": "Prezado colaborador, a reunião geral desta sexta-feira foi transferida para o auditório do 2º andar, às 15h. A pauta segue em anexo. A presença de todos é obrigatória.",
     "attachments": [
       {
         "documentType" : 2,
         "name" : "pauta_reuniao",
         "extension" : "pdf",
         "linkedName" : "<link=\"OpenAttachment|1\">pauta_reuniao.pdf</link>",
-        "data" : {}
+        "data" : { "text": "<align=center><b>NATIONALTECH</b>\nReunião Geral - Sexta-feira, 15h\nAuditório do 2º andar</align>\n\n<b>Pauta</b>\n1. Boas-vindas aos novos colaboradores\n2. Resultados do trimestre\n3. Mudança do auditório e novas salas de reunião\n4. Campanha interna de segurança da informação\n5. Perguntas e respostas\n\n<b>Duração prevista:</b> 1h30\n\nDiretoria Executiva\ndiretoria@nationaltech.com" }
       }
     ]
   }

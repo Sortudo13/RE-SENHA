@@ -40,6 +40,7 @@ public sealed class ManualRuleEvaluator
         ["DomainNotAllowed"] = new(null, EvaluateDomainNotAllowed),
         ["SenderDomain"] = new(InspectionFields.Sender, EvaluateSenderDomain),
         ["SubjectTerms"] = new(InspectionFields.Subject, EvaluateSubjectTerms),
+        ["SubjectReplyThread"] = new(InspectionFields.Subject, EvaluateSubjectReplyThread),
         ["BodyTerms"] = new(InspectionFields.Body, EvaluateBodyTerms),
         ["BodyLinkDomains"] = new(InspectionFields.Body, EvaluateBodyLinkDomains),
         ["AttachmentExtension"] = new(InspectionFields.Attachments, EvaluateAttachmentExtension),
@@ -281,6 +282,67 @@ public sealed class ManualRuleEvaluator
         }
 
         return null;
+    }
+
+    // Falsa resposta: assunto com prefixo de resposta/encaminhamento ("terms", ex.: "RE:") sem
+    // a conversa original entre as anteriores (IInspectionThreadSource). Devolve o prefixo.
+    private static string EvaluateSubjectReplyThread(
+        IInspectionFieldSource fields,
+        ManualRuleCheckData check
+    )
+    {
+        RequireValues(check.terms, check.type, "terms");
+        if (!fields.TryGetText(InspectionFields.Subject, out string subject))
+            return null;
+
+        string topic = StripReplyPrefixes(subject, check.terms, check.caseSensitive, out string prefix);
+        if (prefix == null)
+            return null;
+
+        IReadOnlyCollection<string> previous =
+            (fields as IInspectionThreadSource)?.PreviousSubjects ?? Array.Empty<string>();
+        bool found = previous.Any(
+            item => string.Equals(
+                StripReplyPrefixes(item, check.terms, check.caseSensitive, out _),
+                topic,
+                StringComparison.OrdinalIgnoreCase
+            )
+        );
+        return found ? null : prefix;
+    }
+
+    // "RE: ENC: Reserva" -> "Reserva". firstPrefix = primeiro prefixo encontrado (null se nenhum).
+    private static string StripReplyPrefixes(
+        string subject,
+        string[] prefixes,
+        bool caseSensitive,
+        out string firstPrefix
+    )
+    {
+        firstPrefix = null;
+        string value = subject?.Trim() ?? string.Empty;
+        StringComparison comparison = caseSensitive
+            ? StringComparison.Ordinal
+            : StringComparison.OrdinalIgnoreCase;
+
+        bool stripped = true;
+        while (stripped)
+        {
+            stripped = false;
+            foreach (string prefix in prefixes)
+            {
+                string term = prefix?.Trim();
+                if (string.IsNullOrEmpty(term) || !value.StartsWith(term, comparison))
+                    continue;
+
+                firstPrefix ??= term;
+                value = value[term.Length..].Trim();
+                stripped = true;
+                break;
+            }
+        }
+
+        return value;
     }
 
     private static string FindTerm(string value, string[] terms, bool caseSensitive)

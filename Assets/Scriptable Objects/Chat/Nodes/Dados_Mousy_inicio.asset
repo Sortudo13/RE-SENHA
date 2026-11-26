@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Dados_Mousy_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Parceiro, chegamos ao \xFAltimo expediente previsto no cronograma.
+    Ainda assim, mantenha seus crit\xE9rios: mensagens urgentes e pedidos incomuns
+    merecem verifica\xE7\xE3o, mesmo quando v\xEAm de contatos conhecidos."
+  typingDelay: 1.5
+  options:
+  - optionText: Entendido. Vou continuar verificando.
+    shortText: 
+    nextNodeId: respondeu
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: confirmou_cuidado
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: "Voc\xEA detectou alguma coisa?"
+    shortText: 
+    nextNodeId: questionou
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: questionou_alerta
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

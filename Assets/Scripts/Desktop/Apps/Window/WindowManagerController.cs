@@ -27,13 +27,20 @@ public class WindowManagerController : MonoBehaviour
     [SerializeField]
     private WindowController windowChat;
 
+    [SerializeField]
+    private WindowController windowGuide;
+
     private void Awake()
     {
+        // O contador e estatico e sobrevive a troca de cena; janelas destruidas junto com a cena
+        // (ex.: ResetDayAndReload) nao descontam. Cena nova comeca sem janelas.
+        activeWindowCount = 0;
         WindowsLayer = transform;
         ActionController.SyncSignal("AddActiveWindow", AddWindowCount);
         ActionController.SyncSignal("SubActiveWindow", SubWindowCount);
         ActionController.SyncSignal("DestroyWindows", DestroyWindows);
         ActionController.SyncSignal("DayChanged", DestroyWindows);
+        ActionController.SyncSignal("ShowWorkspace", ActivateDesktop);
 
         OpenTemplateSignals();
     }
@@ -74,6 +81,7 @@ public class WindowManagerController : MonoBehaviour
 
     public void SwapWorkspace()
     {
+        ActionController.SendAction(TutorialSignals.TaskbarUsed, "show_desktop");
         if (activeWindowCount > 0)
             SwapDesktop();
         else
@@ -95,6 +103,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal("SubActiveWindow", SubWindowCount);
         ActionController.UnsyncSignal("DestroyWindows", DestroyWindows);
         ActionController.UnsyncSignal("DayChanged", DestroyWindows);
+        ActionController.UnsyncSignal("ShowWorkspace", ActivateDesktop);
 
         CloseTemplateSignals();
     }
@@ -109,6 +118,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.SyncSignal<AttachmentContent>("InitPNG", InitPNG);
         ActionController.SyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.SyncSignal<AttachmentContent>("InitChat", InitChat);
+        ActionController.SyncSignal<AttachmentContent>("InitGuide", InitGuide);
     }
 
     private void CloseTemplateSignals()
@@ -120,6 +130,7 @@ public class WindowManagerController : MonoBehaviour
         ActionController.UnsyncSignal<AttachmentContent>("InitPNG", InitPNG);
         ActionController.UnsyncSignal<AttachmentContent>("InitRG", InitRG);
         ActionController.UnsyncSignal<AttachmentContent>("InitChat", InitChat);
+        ActionController.UnsyncSignal<AttachmentContent>("InitGuide", InitGuide);
     }
 
     private void OpenURL(string url)
@@ -144,6 +155,7 @@ public class WindowManagerController : MonoBehaviour
     private void InitPDF(AttachmentContent data)
     {
         GameObject window_PDF = Instantiate(windowPDF.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "PDF");
         if (data is PDFData pdfData)
             window_PDF.GetComponentInChildren<PDFController>().LoadDocument(pdfData.text);
     }
@@ -151,13 +163,39 @@ public class WindowManagerController : MonoBehaviour
     private void InitPNG(AttachmentContent data)
     {
         GameObject window_PNG = Instantiate(windowPNG.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "PNG");
         if (data is PNGData pngData)
             window_PNG.transform.Find("Área de Conteúdo/Image").GetComponentInChildren<Image>().sprite = pngData.GetImage();
+    }
+
+    private void InitGuide(AttachmentContent data)
+    {
+        if (windowGuide == null)
+        {
+            Debug.LogError("InitGuide: arraste o prefab Window Guide no campo windowGuide do WindowManagerController (cena Desktop).");
+            return;
+        }
+
+        // O guia e fixo: texto e prints ficam no proprio prefab, o anexo nao traz dados.
+        Instantiate(windowGuide.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "Guide");
     }
 
     private void InitRG(AttachmentContent data)
     {
         GameObject window_rg = Instantiate(windowRG.gameObject, transform);
+        ActionController.SendAction(TutorialSignals.DocumentOpened, "RG");
+        if (data is not RGData rgData)
+        {
+            Debug.LogWarning("InitRG: anexo sem dados de RG; o documento abre vazio.");
+            return;
+        }
+
+        RGController rg = window_rg.GetComponentInChildren<RGController>(true);
+        if (rg != null)
+            rg.Show(rgData);
+        else
+            Debug.LogError("InitRG: RGController nao encontrado no Window RG (adicionar na raiz do RG.prefab).");
     }
 
     private void InitChat(AttachmentContent data)

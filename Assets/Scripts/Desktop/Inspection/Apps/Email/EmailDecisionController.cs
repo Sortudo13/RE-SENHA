@@ -74,6 +74,8 @@ public sealed class EmailDecisionController : MonoBehaviour
         if (email == null)
             return;
 
+        ActionController.SendAction(TutorialSignals.DecisionMade, $"Email:{email.subject}");
+
         InspectionJudge.Judge(
             evaluation,
             blockEmail,

@@ -14,7 +14,9 @@ public sealed class InspectionModeController : MonoBehaviour
 
     private readonly SignalSubscriptions signals = new();
 
-    public bool IsActive { get; private set; }
+    // Static para outros scripts consultarem sem referencia (ex.: LinkController).
+    // O Awake zera ao carregar a cena.
+    public static bool IsActive { get; private set; }
 
     private void Awake()
     {
@@ -50,6 +52,8 @@ public sealed class InspectionModeController : MonoBehaviour
             inspectionOverlay.SetActive(active);
 
         ActionController.SendAction(InspectionSignals.ModeChanged, active);
+        if (active)
+            ActionController.SendAction(TutorialSignals.InspectionModeEntered, "inspection");
     }
 
     private void PublishState()

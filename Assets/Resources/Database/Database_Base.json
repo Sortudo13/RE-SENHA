@@ -4,7 +4,7 @@
       "id": "001",
       "matricula": "RH-1001",
       "nome": "Mariana Souza Costa",
-      "email": "rh@empresa.com.br",
+      "email": "rh@nationaltech.com",
       "departamento": "Recursos Humanos",
       "cargo": "Gerente de RH",
       "status": "Ativo",
@@ -13,15 +13,17 @@
         "dataExpedicao": "14/05/2016",
         "dataNascimento": "22/09/1988",
         "naturalidade": "São Paulo",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_1"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_9"
     },
     {
       "id": "002",
       "matricula": "TI-2045",
       "nome": "Lucas Pereira Santos",
-      "email": "suporte@empresa.com.br",
+      "email": "suporte@nationaltech.com",
       "departamento": "Tecnologia da Informação",
       "cargo": "Analista de Suporte e Infraestrutura",
       "status": "Ativo",
@@ -29,16 +31,18 @@
         "numero": "XX.221.905-8",
         "dataExpedicao": "03/11/2019",
         "dataNascimento": "10/04/1995",
-        "naturalidade": "Campinas",
-        "estadoEmissor": "SP"
+        "naturalidade": "Três Rios",
+        "estadoEmissor": "RJ",
+        "estadoEmissao": "Estado de Rio de Janeiro",
+        "digital": "Impressões Digitais/impressoes_digitais_2"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_2"
     },
     {
       "id": "003",
       "matricula": "FIN-3012",
       "nome": "Roberto Almeida Ramos",
-      "email": "financeiro@empresa.com.br",
+      "email": "financeiro@nationaltech.com",
       "departamento": "Financeiro",
       "cargo": "Coordenador Financeiro",
       "status": "Ativo",
@@ -47,15 +51,17 @@
         "dataExpedicao": "19/08/2012",
         "dataNascimento": "05/12/1982",
         "naturalidade": "Ribeirão Preto",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_3"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_3"
     },
     {
       "id": "004",
       "matricula": "DIR-0001",
       "nome": "Helena Vasconcelos Martins",
-      "email": "diretoria@empresa.com.br",
+      "email": "diretoria@nationaltech.com",
       "departamento": "Diretoria Geral",
       "cargo": "Diretora Executiva (CEO)",
       "status": "Ativo",
@@ -64,15 +70,17 @@
         "dataExpedicao": "09/02/2010",
         "dataNascimento": "30/01/1975",
         "naturalidade": "Santos",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_4"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_8"
     },
     {
       "id": "005",
       "matricula": "OP-4019",
       "nome": "Carlos Eduardo Dias",
-      "email": "carlos.dias@empresa.com.br",
+      "email": "carlos.dias@nationaltech.com",
       "departamento": "Operações",
       "cargo": "Supervisor de Logística",
       "status": "Férias",
@@ -81,15 +89,17 @@
         "dataExpedicao": "27/07/2021",
         "dataNascimento": "18/06/1998",
         "naturalidade": "Sorocaba",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_5"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_7"
     },
     {
       "id": "006",
       "matricula": "MKT-5102",
       "nome": "Beatriz Mendes Lima",
-      "email": "beatriz.mendes@empresa.com.br",
+      "email": "beatriz.mendes@nationaltech.com",
       "departamento": "Comunicação e Marketing",
       "cargo": "Designer Gráfica",
       "status": "Demitido",
@@ -98,15 +108,17 @@
         "dataExpedicao": "11/10/2017",
         "dataNascimento": "14/03/1993",
         "naturalidade": "Bauru",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_1"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_12"
     },
     {
       "id": "007",
       "matricula": "JUR-6020",
       "nome": "Fernando Nogueira Gomes",
-      "email": "juridico@empresa.com.br",
+      "email": "juridico@nationaltech.com",
       "departamento": "Jurídico e Compliance",
       "cargo": "Consultor Jurídico",
       "status": "Ativo",
@@ -115,9 +127,30 @@
         "dataExpedicao": "04/04/2014",
         "dataNascimento": "07/11/1985",
         "naturalidade": "Piracicaba",
-        "estadoEmissor": "SP"
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_2"
       },
-      "fotoUrl": ""
+      "foto": "NPCs/npc_1"
+    },
+    {
+      "id": "008",
+      "matricula": "CP-3117",
+      "nome": "Ryan Guimarães",
+      "email": "ryan.guimaraes@nationaltech.com",
+      "departamento": "Tecnologia da Informação",
+      "cargo": "Estagiário de Desenvolvimento",
+      "status": "Ativo",
+      "rg": {
+        "numero": "XX.634.207-5",
+        "dataExpedicao": "12/06/2018",
+        "dataNascimento": "13/01/2004",
+        "naturalidade": "Piracaia",
+        "estadoEmissor": "SP",
+        "estadoEmissao": "Estado de São Paulo",
+        "digital": "Impressões Digitais/impressoes_digitais_3"
+      },
+      "foto": "NPCs/npc_ryan"
     }
   ]
 }

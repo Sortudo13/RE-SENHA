@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed82a7ec75588953ea516dedb2722aae, type: 3}
+  m_Name: Odisseu_Observa
+  m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
+  conversationId: odisseu_observa_d1
+  npcName: Odisseu
+  npcAvatar: {fileID: -7856166980875032514, guid: cd282314efde98dc2a3ccf73ea39312b, type: 3}
+  nodes:
+  - {fileID: 11400000, guid: 6628ef3c5042134a0b7ad814f48732ab, type: 2}
+  - {fileID: 11400000, guid: 6348234711b1eb63b9f59478b45dd627, type: 2}
+  - {fileID: 11400000, guid: 808e1c4cd2526485fbebc51eb63c6d34, type: 2}
+  - {fileID: 11400000, guid: 6dadf2dcb02824867ba937453ade1ccb, type: 2}
+  - {fileID: 11400000, guid: 1be821456ffbaa55791bc6df125ef52e, type: 2}
+  startNodeId: inicio
+  blocksDayEnd: 0

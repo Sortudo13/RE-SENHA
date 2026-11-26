@@ -408,7 +408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6635313921489464714
 RectTransform:
   m_ObjectHideFlags: 0
@@ -806,7 +806,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.07499981, y: 0}
+  m_AnchoredPosition: {x: 0.07500076, y: 0}
   m_SizeDelta: {x: -4.35, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1515350824769982787
@@ -946,12 +946,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Body
   valueText: {fileID: 0}
@@ -1332,10 +1338,10 @@ RectTransform:
   - {fileID: 8181156015460463202}
   m_Father: {fileID: 4251691089253818157}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 166.75, y: -159.6115}
+  m_SizeDelta: {x: 280, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4103970107441195011
 CanvasRenderer:
@@ -1598,12 +1604,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Attachments
   valueText: {fileID: 0}
@@ -1641,8 +1653,8 @@ RectTransform:
   m_Father: {fileID: 6864401035284317692}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.000012874603, y: -0.000061035156}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.000011444092, y: -0.000061035156}
   m_SizeDelta: {x: 0, y: -0.000061035}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1097331830423803915
@@ -1820,12 +1832,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Sender
   valueText: {fileID: 0}
@@ -1843,6 +1861,7 @@ GameObject:
   - component: {fileID: 5352866177896970366}
   - component: {fileID: 7505474183629121407}
   - component: {fileID: 8048234973118742131}
+  - component: {fileID: 7885318517913681606}
   m_Layer: 5
   m_Name: Texto
   m_TagString: Untagged
@@ -1867,7 +1886,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.0006713867, y: -0.00034713745}
-  m_SizeDelta: {x: -146.27, y: 0}
+  m_SizeDelta: {x: -146.27, y: -94.103}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &7769422630276573506
 CanvasRenderer:
@@ -1963,7 +1982,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -116.952576, y: 0, z: 4.528201, w: -39.76831}
+  m_margin: {x: -116.952576, y: 0, z: 123.77531, w: -39.76831}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1995,6 +2014,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25eee0d4cf8b64e45bf7ebb39d05a63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LinkController
+--- !u!114 &7885318517913681606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955984519030127197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d271c5a20c912894594a4d55c7b8a5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorSwap
+  enterCursorType: 2
+  exitCursorType: 1
+  upCursorType: 2
+  downCursorType: 1
+  clickCursorType: 1
+  moveCursorType: 0
 --- !u!1 &4015124408145295297
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,7 +2202,7 @@ RectTransform:
   m_Father: {fileID: 6010807378742968331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.00024414, y: -5.074}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2224,7 +2261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7235996644049133420
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2572,8 +2609,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.09899902, y: 0.00012207031}
-  m_SizeDelta: {x: -2.976, y: 0}
+  m_AnchoredPosition: {x: -17.217, y: 0.00012207031}
+  m_SizeDelta: {x: 31.663, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4840145689568806133
 GameObject:
@@ -2608,7 +2645,7 @@ RectTransform:
   m_Father: {fileID: 8605099224962698824}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.084015846}
   m_SizeDelta: {x: 0, y: -1.188}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2783,7 +2820,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 26.140198, y: 8.755798, z: -1346.7598, w: -687.8759}
+  m_margin: {x: 26.140198, y: 8.755798, z: -1311.3157, w: -687.8759}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3185,7 +3222,7 @@ RectTransform:
   m_Father: {fileID: 3971462500749177419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: 10, y: -3.108}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3263,7 +3300,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 68.075, y: -992.74}
-  m_SizeDelta: {x: 0, y: 75.678}
+  m_SizeDelta: {x: 250.53, y: 75.678}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8322770081738736454
 CanvasRenderer:
@@ -3490,8 +3527,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6.36792, y: 2.8546143}
-  m_SizeDelta: {x: 10.558, y: -5.71}
+  m_AnchoredPosition: {x: -27.177979, y: 2.8546143}
+  m_SizeDelta: {x: 52.182, y: -5.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4945980502696802149
 CanvasRenderer:
@@ -3616,8 +3653,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00019073, y: -22.000732}
-  m_SizeDelta: {x: 0.00012207, y: 34}
+  m_AnchoredPosition: {x: -0.00019073, y: -33.189583}
+  m_SizeDelta: {x: 0.00012207, y: 0}
   m_Pivot: {x: 0, y: 0.98}
 --- !u!222 &8350685770485164358
 CanvasRenderer:
@@ -3733,10 +3770,10 @@ RectTransform:
   - {fileID: 2076410074741625664}
   m_Father: {fileID: 4251691089253818157}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 166.75, y: -69.611496}
+  m_SizeDelta: {x: 280, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7689913719021232507
 CanvasRenderer:
@@ -4694,7 +4731,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2143876896905123368}
   m_HandleRect: {fileID: 8662008913603847249}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4827,10 +4864,10 @@ RectTransform:
   - {fileID: 1479275322985423243}
   m_Father: {fileID: 4251691089253818157}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 166.75, y: -249.6115}
+  m_SizeDelta: {x: 280, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7538690173835585920
 CanvasRenderer:
@@ -5093,12 +5130,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectionFieldSelectable
   selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  selectedOutlineColor: {r: 0.45, g: 0.3, b: 0, a: 1}
+  selectedOutlineWidth: 3
   hoverColor: {r: 1, g: 0.93, b: 0.6, a: 1}
   rejectedColor: {r: 0.9, g: 0.25, b: 0.2, a: 1}
   acceptedColor: {r: 0.3, g: 0.8, b: 0.35, a: 1}
   foundColor: {r: 0.55, g: 0.85, b: 0.55, a: 0.6}
   flashBlinks: 2
   flashBlinkSeconds: 0.12
+  rejectedShakeDistance: 6
+  rejectedShakeSeconds: 0.3
+  acceptedPulseScale: 1.06
+  acceptedPulseSeconds: 0.25
   source: 
   field: Subject
   valueText: {fileID: 0}

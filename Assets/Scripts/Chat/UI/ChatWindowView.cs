@@ -191,7 +191,8 @@ public class ChatWindowView : MonoBehaviour
                 Debug.LogError("[ChatWindowView] ChoiceButton não possui TextMeshProUGUI.", btn);
                 continue;
             }
-            tmp.text = opt.optionText;
+            // Botao mostra o resumo; a mensagem enviada continua sendo o optionText completo.
+            tmp.text = opt.ButtonText;
 
             var b = btn.GetComponent<Button>();
             if (b == null)

@@ -202,10 +202,10 @@ public class DatabaseWindowController : MonoBehaviour
 
         // Preenche campos corporativos
         if (txtNome != null) txtNome.text = emp.nome;
-        if (txtMatricula != null) txtMatricula.text = $"Matrícula: {emp.matricula}";
-        if (txtCargo != null) txtCargo.text = $"Cargo: {emp.cargo}";
-        if (txtDepartamento != null) txtDepartamento.text = $"Departamento: {emp.departamento}";
-        if (txtEmail != null) txtEmail.text = $"E-mail: {emp.email}";
+        if (txtMatricula != null) txtMatricula.text = emp.matricula;
+        if (txtCargo != null) txtCargo.text = emp.cargo;
+        if (txtDepartamento != null) txtDepartamento.text = emp.departamento;
+        if (txtEmail != null) txtEmail.text = emp.email;
 
         if (txtStatus != null)
         {
@@ -216,23 +216,23 @@ public class DatabaseWindowController : MonoBehaviour
                 "Demitido" => "#FF3333",  // Vermelho
                 _ => "#FFFFFF"
             };
-            txtStatus.text = $"<color={corHex}>Status: {emp.status.ToUpper()}</color>";
+            txtStatus.text = $"<color={corHex}>{emp.status.ToUpper()}</color>";
         }
 
         // Preenche dados do RG
         if (emp.rg != null)
         {
-            if (txtRGNumero != null) txtRGNumero.text = $"RG: {emp.rg.numero}";
-            if (txtRGExpedicao != null) txtRGExpedicao.text = $"Expedição: {emp.rg.dataExpedicao}";
-            if (txtRGNascimento != null) txtRGNascimento.text = $"Nascimento: {emp.rg.dataNascimento}";
-            if (txtRGLocalidade != null) txtRGLocalidade.text = $"Emissão: {emp.rg.naturalidade} - {emp.rg.estadoEmissor}";
+            if (txtRGNumero != null) txtRGNumero.text = emp.rg.numero;
+            if (txtRGExpedicao != null) txtRGExpedicao.text = emp.rg.dataExpedicao;
+            if (txtRGNascimento != null) txtRGNascimento.text = emp.rg.dataNascimento;
+            if (txtRGLocalidade != null) txtRGLocalidade.text = $"{emp.rg.naturalidade} - {emp.rg.estadoEmissor}";
         }
         else
         {
-            if (txtRGNumero != null) txtRGNumero.text = "RG: Não cadastrado";
-            if (txtRGExpedicao != null) txtRGExpedicao.text = "Expedição: -";
-            if (txtRGNascimento != null) txtRGNascimento.text = "Nascimento: -";
-            if (txtRGLocalidade != null) txtRGLocalidade.text = "Emissão: -";
+            if (txtRGNumero != null) txtRGNumero.text = "Não cadastrado";
+            if (txtRGExpedicao != null) txtRGExpedicao.text = "-";
+            if (txtRGNascimento != null) txtRGNascimento.text = "-";
+            if (txtRGLocalidade != null) txtRGLocalidade.text = "-";
         }
 
         if (painelDetalhesConteudo != null && painelDetalhesConteudo.TryGetComponent(out RectTransform pRt))

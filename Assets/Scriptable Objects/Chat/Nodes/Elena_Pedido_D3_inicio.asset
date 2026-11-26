@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed185f3af42c400b553da6e7cb3b19, type: 3}
+  m_Name: Elena_Pedido_D3_inicio
+  m_EditorClassIdentifier: Assembly-CSharp::ChatNode
+  nodeId: inicio
+  npcMessage: "Oi, voc\xEA est\xE1 ocupado? Chegou um pedido para localizar uns arquivos
+    antigos ligados ao Dia Q. N\xE3o sei se posso abrir; o nome da pasta \xE9 meio
+    estranho."
+  typingDelay: 1.5
+  options:
+  - optionText: "N\xE3o abra ainda. Confirme com a Seguran\xE7a por um canal oficial."
+    shortText: "N\xE3o abra. Confirme com a Seguran\xE7a."
+    nextNodeId: prudente
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: orientou_confirmacao
+    emailTriggerId: 
+    emailDelay: 3
+  - optionText: Me manda o nome e eu vejo o procedimento.
+    shortText: 
+    nextNodeId: pergunta
+    outcome: 0
+    outcomeFeedback: 
+    securityScoreDelta: 0
+    feedbackTag: pediu_contexto
+    emailTriggerId: 
+    emailDelay: 3
+  nextNodeIdIfNoChoice: 
+  isEndNode: 0
+  scheduledDay: -1
+  scheduledHour: -1
+  scheduledMinute: -1
+  requiresAnswerToNodeId: 
+  emailTriggerId: 
+  emailDelay: 3

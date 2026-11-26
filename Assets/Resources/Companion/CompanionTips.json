@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "tips": [
+    {
+      "id": "manual_first_open",
+      "lines": [
+        { "pose": "happy", "anim": "jump", "text": "Opa! Esse é o Manual. Aqui ficam todas as regras que você precisa seguir." },
+        { "pose": "scared", "anim": "shake", "text": "Nossa... são muitas regras mesmo." },
+        { "pose": "angry", "text": "Mas nada de pular! Se aprovar algo fora das regras, quem leva a advertência é você." },
+        { "pose": "explain", "text": "Clique numa regra para ver os detalhes. Boa sorte!" }
+      ]
+    },
+    {
+      "id": "email_boas_vindas",
+      "lines": [
+        { "pose": "happy", "anim": "jump", "text": "Seu primeiro email! O RH mandou as orientações do dia." },
+        { "pose": "thinking", "text": "Hmm... esse anexo aí parece meio estranho, não acha?" },
+        { "pose": "scared", "anim": "shake", "text": "Sempre confira o remetente antes de confiar em qualquer coisa!" }
+      ]
+    },
+    {
+      "id": "tutorial_welcome",
+      "lines": [
+        { "pose": "happy", "anim": "jump", "text": "Bem-vindo à NationalTech! Sou o Mousy, seu assistente virtual de segurança." },
+        { "pose": "explain", "text": "Vou te mostrar o básico para você não fazer feio no primeiro dia." },
+        { "pose": "thinking", "text": "A regra de ouro aqui é: desconfie de tudo. Até de mim." }
+      ]
+    },
+    {
+      "id": "tutorial_open_email",
+      "lines": [
+        { "pose": "point", "text": "Comece abrindo o aplicativo de E-mail no seu desktop." },
+        { "pose": "explain", "text": "É ali que as tarefas do dia chegam. E os problemas também." }
+      ]
+    },
+    {
+      "id": "tutorial_read_email",
+      "lines": [
+        { "pose": "happy", "anim": "jump", "text": "Ótimo! Agora clique em um dos e-mails da lista para ler o conteúdo." },
+        { "pose": "scared", "anim": "shake", "text": "Cuidado com links e anexos. Eles podem esconder armadilhas." }
+      ]
+    },
+    {
+      "id": "tutorial_finished",
+      "lines": [
+        { "pose": "happy", "anim": "jump", "text": "Parabéns! Você aprendeu a mexer no básico do sistema." },
+        { "pose": "idle", "text": "Se precisar de ajuda, abra o Manual na barra de tarefas. Bom expediente!" }
+      ]
+    },
+    {
+      "id": "first_chat_open",
+      "lines": [
+        { "pose": "happy", "text": "Ah, o chat! É por aqui que você conversa comigo e com os colegas da empresa. Veja! Já te mandei uma mensagem para você testar." },
+        { "pose": "explain", "text": "As conversas aparecem na lista à esquerda. Clique em uma para ler e responder. Quando chegar uma mensagem nova, o ícone do Chat na área de trabalho vai ganhar uma bolinha vermelha." },
+        { "pose": "thinking", "text": "Só não vá clicar em links que te mandarem por aqui, combinado? A engenharia social adora um chat..." }
+      ]
+    },
+    {
+      "id": "first_inspection_mode",
+      "lines": [
+        { "pose": "explain", "text": "Você ativou o modo de inspeção. Use-o para verificar se os documentos estão autênticos." },
+        { "pose": "angry", "text": "Mas atenção: não saia por aí aprovando tudo sem checar. Cada erro conta." }
+      ]
+    },
+    {
+      "id": "first_decision_pending",
+      "lines": [
+        { "pose": "thinking", "text": "Você tem uma decisão pendente. Aprovar ou rejeitar exige cuidado." },
+        { "pose": "explain", "text": "Se tiver dúvida, consulte o Manual ou me pergunte. Estou aqui para isso." }
+      ]
+    },
+    {
+      "id": "first_document_open",
+      "lines": [
+        { "pose": "thinking", "text": "Um anexo aberto! Confira se os dados e o contexto combinam com o que foi pedido." },
+        { "pose": "scared", "anim": "shake", "text": "PDF, imagem e documento de identidade também podem ser adulterados. Nada de confiar só pela aparência!" }
+      ]
+    },
+    {
+      "id": "first_alert_received",
+      "lines": [
+        { "pose": "scared", "text": "Recebeu um alerta? Leia tudo com calma antes de agir." },
+        { "pose": "thinking", "text": "Se algo não fizer sentido, consulte o Manual. Eu também fico nervoso com janelas vermelhas!" }
+      ]
+    },
+    {
+      "id": "tutorial_company_mailbox",
+      "lines": [
+        { "pose": "explain", "text": "Essa é a caixa da Empresa, diferente da sua caixa de Usuário. Aqui, cada e-mail pede uma decisão: Aprovar ou Bloquear." },
+        { "pose": "scared", "anim": "shake", "text": "Atenção redobrada: aprovar algo errado pode render uma advertência. Eu já estou suando!" }
+      ]
+    },
+    {
+      "id": "tutorial_action_buttons",
+      "lines": [
+        { "pose": "point", "text": "Esses botões registram sua decisão: Aprovar aceita o e-mail; Bloquear o recusa. Em ambos os casos, ele sai da fila." },
+        { "pose": "scared", "anim": "shake", "text": "A escolha é definitiva e errar conta como advertência. Confira o Manual antes de clicar; minhas patinhas estão tremendo." }
+      ]
+    },
+    {
+      "id": "tutorial_first_error",
+      "lines": [
+        { "pose": "scared", "anim": "shake", "text": "Eita, essa decisão virou uma advertência! Você tem no máximo três erros; ao terceiro, é Game Over." },
+        { "pose": "thinking", "text": "Respire fundo e confira o Manual antes da próxima. Eu vou tentar não entrar em pânico." }
+      ]
+    },
+    {
+      "id": "tutorial_day_end",
+      "lines": [
+        { "pose": "explain", "text": "O expediente acabou! Avançar Dia só aparece depois de responder os e-mails já recebidos na caixa Company e terminar as conversas que bloqueiam o fechamento." },
+        { "pose": "idle", "text": "Ao avançar, começa o próximo dia com novas tarefas. E-mails da Empresa que ainda não chegaram são descartados no fim do expediente. Ufa!" }
+      ]
+    },
+    {
+      "id": "tutorial_pause_menu",
+      "lines": [
+        { "pose": "explain", "text": "Este é o menu do jogo! Reiniciar o Dia restaura o save do começo do dia e desfaz o que você fez desde então." },
+        { "pose": "scared", "anim": "shake", "text": "Sair para o Menu Principal leva à tela inicial sem apagar o save. Só cuidado: Reiniciar não tem botão de desfazer... e eu fico nervoso só de pensar!" },
+        { "pose": "thinking", "text": "Trocar usuário permite alternar entre diferentes perfis de jogador. Cuidado: suas ações e progresso não serão transferidos." }
+      ]
+    },
+    {
+      "id": "tutorial_taskbar",
+      "lines": [
+        { "pose": "point", "text": "Os ícones da barra de tarefas representam janelas abertas. Clique em um para trazê-la à frente — ou minimizá-la se já estiver ativa." },
+        { "pose": "happy", "anim": "jump", "text": "O botão no canto direito mostra a área de trabalho; clique de novo para voltar às janelas. Parece magia, mas é só bagunça organizada." }
+      ]
+    }
+  ]
+}

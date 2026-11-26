@@ -38,6 +38,15 @@ public class CreditsController : MonoBehaviour
     private void Awake()
     {
         _textTMP = creditsText.GetComponent<TextMeshProUGUI>();
+
+        // Garante que o objeto comece desativado, independentemente do estado da cena
+        //gameObject.SetActive(false);
+    }
+
+    // Método público para o MainMenuController chamar quando o jogador clicar em "Créditos"
+    public void ShowCredits()
+    {
+        gameObject.SetActive(true);
     }
 
     private void OnEnable()
@@ -65,7 +74,6 @@ public class CreditsController : MonoBehaviour
             return;
 
         _textTMP.ForceMeshUpdate();
-
         creditsText.anchoredPosition = new Vector2(0f, -startOffset);
 
         if (scrollRoutine != null)
@@ -89,47 +97,36 @@ public class CreditsController : MonoBehaviour
         }
 
         creditsText.anchoredPosition = new Vector2(0f, target - startOffset);
-
         yield return new WaitForSecondsRealtime(finalPause);
-
-        // Fim natural do scroll → usa o fade
         CloseCreditsWithFade();
     }
 
-    // Botão Voltar chama este método → volta instantaneamente
     public void CloseCredits()
     {
         if (_isClosing)
             return;
-
         _isClosing = true;
 
-        // Para o scroll imediatamente
         if (scrollRoutine != null)
         {
             StopCoroutine(scrollRoutine);
             scrollRoutine = null;
         }
 
-        // Garante que a tela não fique coberta por um fade residual
         if (fadeController != null)
             fadeController.ResetFade();
 
-        // Ativa o menu e desativa o Credits na hora
         if (mainMenuCanvas != null && !mainMenuCanvas.activeSelf)
             mainMenuCanvas.SetActive(true);
 
         gameObject.SetActive(false);
     }
 
-    // Fim do scroll → fade out → menu → fade in
     private void CloseCreditsWithFade()
     {
         if (_isClosing)
             return;
-
         _isClosing = true;
-
         StartCoroutine(FadeOutAndReturnToMenu());
     }
 

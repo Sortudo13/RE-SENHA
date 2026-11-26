@@ -146,6 +146,11 @@ public class TicketController : MonoBehaviour
         if (currentTicket == null)
             return;
 
+        string ticketId = string.IsNullOrWhiteSpace(currentTicket.id)
+            ? currentTicket.requester
+            : currentTicket.id;
+        ActionController.SendAction(TutorialSignals.DecisionMade, $"Ticket:{ticketId}");
+
         TMP_Dropdown dropdown = decisionField.GetComponentInChildren<TMP_Dropdown>(true);
         TicketDecision answer =
             dropdown.value == 0 ? TicketDecision.Approve : TicketDecision.Reject;
@@ -156,8 +161,7 @@ public class TicketController : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(currentTicket.reason))
             feedback += $"\n\nJustificativa: {currentTicket.reason}";
 
-        if (!correct)
-            DataController.CurrentErrorCount++;
+        DayProgressController.RegisterAnswer(correct);
 
         ActionController.SendAction("ShowFeedback", new FeedbackData(correct, feedback));
 
@@ -166,5 +170,8 @@ public class TicketController : MonoBehaviour
         currentTicket = null;
         HideTicketDetails();
         UpdateTicketSidebar();
+
+        if (!correct && DataController.CurrentErrorCount >= DataController.MaxErrors)
+            DayProgressController.CheckDayEnd();
     }
 }
