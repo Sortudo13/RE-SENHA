@@ -58,13 +58,14 @@ public class ChatConversation : ScriptableObject
 
         if (nodes == null || nodes.Count == 0)
             return;
-
+        #if UNITY_EDITOR
         UnityEditor.EditorApplication.delayCall += () =>
         {
             if (this == null)
                 return;
             ValidateReferences();
         };
+        #endif
     }
 
     private void ValidateReferences()
