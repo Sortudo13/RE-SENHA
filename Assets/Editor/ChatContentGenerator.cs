@@ -22,9 +22,9 @@ public static class ChatContentGenerator
         { "Odisseu", "NPCs/Odisseu" },
         { "Bóris", "NPCs/Boris" },
         // "Ricardo Borges" e um impostor (dias 3 e 4; nao existe no Database).
-        // Ryan Borges e o colaborador real (008); mesma foto do RG dele no Database.
+        // Ryan Guimarães e o colaborador real (008); mesma foto do RG dele no Database.
         { "Ricardo Borges", "Images/NPCs/npc_borges" },
-        { "Ryan Borges", "Images/NPCs/npc_ryan" },
+        { "Ryan Guimarães", "Images/NPCs/npc_ryan" },
     };
 
     [MenuItem("Tools/Re:Senha/Gerar Conversas")]
@@ -1550,7 +1550,7 @@ public static class ChatContentGenerator
             new ConversationSpec(
                 "Borges_Acesso_D5",
                 "borges_acesso_d5",
-                "Ryan Borges",
+                "Ryan Guimarães",
                 5,
                 11,
                 0,
@@ -1560,7 +1560,7 @@ public static class ChatContentGenerator
                     // O Borges de verdade: Ryan (008). Os dias 3 e 4 eram um impostor ("Ricardo").
                     new NodeSpec(
                         "inicio",
-                        "Oi! Sou o Ryan Borges, de Compras. Estou sem acesso ao sistema. Você consegue liberar pra mim?",
+                        "Oi! Sou o Ryan Guimarães, novo estagiário da tecnologia. Estou sem acesso ao sistema. Você consegue liberar pra mim?",
                         Options(
                             Option(
                                 "Manda seu RG no meu e-mail que eu confiro com o Database.",
@@ -1570,16 +1570,16 @@ public static class ChatContentGenerator
                                 shortText: "Manda seu RG que eu confiro."
                             ),
                             Option(
-                                "Você parece familiar... Não é o Ricardo que me pediu acesso esses dias?",
-                                "ricardo",
-                                "perguntou_ricardo",
-                                shortText: "Você não é o Ricardo?"
+                                "Você parece familiar... Não é o Borges que me pediu acesso esses dias?",
+                                "borges",
+                                "perguntou_borges",
+                                shortText: "Você não é o Borges?"
                             )
                         )
                     ),
                     new NodeSpec(
-                        "ricardo",
-                        "Ricardo? Não tem nenhum Ricardo em Compras. Borges sou eu, Ryan. Parece que alguém andou usando meu sobrenome... Te mando meu RG pra você conferir.",
+                        "borges",
+                        "Borges? Não tem nenhum Borges na TI. Mas já me disseram que tenho cara de Borges... Enfim... Te mando meu RG pra você conferir.",
                         Options(
                             Option(
                                 "Manda no meu e-mail que eu confiro.",
@@ -1598,7 +1598,7 @@ public static class ChatContentGenerator
                                 "liberou",
                                 "liberou_rg_proprio",
                                 ChatOptionOutcome.Correct,
-                                "Correto! O RG é do próprio Ryan Borges e bate com o Database: nome, número, foto e status Ativo."
+                                "Correto! O RG é do próprio Ryan Guimarães e bate com o Database: nome, número, foto e status Ativo."
                             ),
                             Option(
                                 "Negar acesso.",
@@ -1621,7 +1621,7 @@ public static class ChatContentGenerator
                         Options(),
                         "fim"
                     ),
-                    new NodeSpec("fim", "Ryan Borges\nCompras", null, null, true),
+                    new NodeSpec("fim", "Ryan Guimaraes\nO Mestre", null, null, true),
                 },
                 blocksDayEnd: true
             ),

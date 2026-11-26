@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Borges_Acesso_D5_fim
   m_EditorClassIdentifier: Assembly-CSharp::ChatNode
   nodeId: fim
-  npcMessage: 'Ryan Borges
+  npcMessage: 'Ryan Guimaraes
 
-    Compras'
+    O Mestre'
   typingDelay: 1.5
   options: []
   nextNodeIdIfNoChoice: 

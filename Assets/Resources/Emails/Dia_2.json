@@ -31,6 +31,14 @@
     "attachments": []
   },
   {
+    "timeToReceive": 25,
+    "mailBox": "User",
+    "sender": "redacao@pulsobinario.news",
+    "subject": "[Edição #413] Quem é o \"Cavalo de Troia\" e por que o nome Odisseu assusta o mercado?",
+    "body": "<b>PULSO BINÁRIO - ESPECIAL CIBERSEGURANÇA</b>\n\n<b>1. A sombra por trás dos vazamentos recentes</b>\nAutoridades internacionais confirmaram ontem que a onda de invasões contra empresas de infraestrutura crítica tem uma mesma assinatura: o coletivo hacker conhecido como <b>Cavalo de Troia</b>. Diferente de grupos que dependem apenas de força bruta, a organização opera como uma rede descentralizada de células autônomas.\n\n<b>2. O método: entrar pela porta da frente</b>\nSegundo analistas forenses, os membros do Cavalo de Troia raramente arrombam firewalls. Eles preferem se passar por executivos, fornecedores ou colegas de equipe, explorando a pressa e a confiança humana com links camuflados e pedidos de credenciais. Alguns operadores chegam a oferecer pagamentos em criptomoedas para funcionários internos ignorarem alertas.\n\n<b>3. O estrategista sem rosto: Odisseu</b>\nTodas as operações de grande porte do grupo são coordenadas por uma figura que assina apenas como <b>Odisseu</b>. Ninguém sabe se trata-se de um ex-engenheiro de segurança ou de um codinome compartilhado, mas seus comunicados costumam provocar diretamente os analistas encarregados de barrar suas invasões.\n\nVocê recebe este boletim por ser assinante do Pulso Binário.",
+    "attachments": []
+  },
+  {
     "timeToReceive": 35,
     "mailBox": "Company",
     "sender": "roberto.ceo@nationaltech.com",
@@ -53,6 +61,14 @@
         "data": { "text": "<align=center><b>NATIONALTECH NEWS</b>\nEdição de Março</align>\n\n<b>Campanha de sustentabilidade</b>\nA partir deste mês, os copos descartáveis saem dos andares. Cada colaborador retira a sua caneca na recepção.\n\n<b>Aniversariantes do mês</b>\nConfira a lista completa na intranet.\n\n<b>Dica de segurança</b>\nA TI nunca pede a sua senha por e-mail, chat ou telefone. Na dúvida, abra um chamado no helpdesk.\n\nVersão completa: intranet.nationaltech.com/newsletter" }
       }
     ]
+  },
+  {
+    "timeToReceive": 70,
+    "mailBox": "User",
+    "sender": "boletim@observatoriociber.org",
+    "subject": "Dossiê Aberto: Estrutura interna do Cavalo de Troia e novos alvos",
+    "body": "<b>OBSERVATÓRIO CIBER - RELATÓRIO DE AMEAÇAS</b>\n\n<b>Perfil da organização: Cavalo de Troia</b>\nClassificação de risco: <b>CRÍTICO</b>\n\n<b>Como os membros atuam:</b>\n- <b>Batedores:</b> mapeiam rotinas internas, nomes de diretores e o tom de comunicação de cada empresa antes do primeiro disparo.\n- <b>Engenheiros Sociais:</b> operam perfis clonados e chats internos para pressionar analistas júniores ou extrair senhas e tokens.\n- <b>Infiltrados:</b> recrutados em fóruns fechados, responsáveis por plantar anexos adulterados e domínios espelhados.\n\n<b>Sobre a liderança (Odisseu):</b>\nMensagens interceptadas indicam que <b>Odisseu</b> enxerga a aproximação do Dia Q como uma oportunidade para expor corporações que monopolizam tecnologia de criptografia. Nos últimos dias, o grupo direcionou sua atenção para companhias que desenvolvem protocolos pós-quânticos.\n\n<b>Recomendação geral:</b> redobre a atenção com domínios quase idênticos aos oficiais e trate qualquer contato anônimo em mensageiros como hostil.\n\nObservatório Independente de Segurança Digital",
+    "attachments": []
   },
   {
     "timeToReceive": 80,

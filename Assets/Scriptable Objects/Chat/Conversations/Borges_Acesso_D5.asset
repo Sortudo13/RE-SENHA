@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Borges_Acesso_D5
   m_EditorClassIdentifier: Assembly-CSharp::ChatConversation
   conversationId: borges_acesso_d5
-  npcName: Ryan Borges
+  npcName: "Ryan Guimar\xE3es"
   npcAvatar: {fileID: 21300000, guid: dcd437b68c0e7a348a13c6c3e0d6c145, type: 3}
   nodes:
   - {fileID: 11400000, guid: 7d816fa2b7c0f63428ce28550ddf99b6, type: 2}
-  - {fileID: 11400000, guid: 79ababb965c1aec4cad0c3cc03478abd, type: 2}
+  - {fileID: 11400000, guid: c476030da1578be41bf4b156923019d7, type: 2}
   - {fileID: 11400000, guid: 5f686604c35198d4fa55ce68d37a7595, type: 2}
   - {fileID: 11400000, guid: 0b8403f745b833a43ac14f9ba257dfe0, type: 2}
   - {fileID: 11400000, guid: cb3e6ebfa70c2944aabb5191b6147330, type: 2}

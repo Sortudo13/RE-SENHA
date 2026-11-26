@@ -20,8 +20,8 @@ MonoBehaviour:
     shortText: 
     nextNodeId: liberou
     outcome: 1
-    outcomeFeedback: "Correto! O RG \xE9 do pr\xF3prio Ryan Borges e bate com o Database:
-      nome, n\xFAmero, foto e status Ativo."
+    outcomeFeedback: "Correto! O RG \xE9 do pr\xF3prio Ryan Guimar\xE3es e bate com
+      o Database: nome, n\xFAmero, foto e status Ativo."
     securityScoreDelta: 0
     feedbackTag: liberou_rg_proprio
     emailTriggerId: 

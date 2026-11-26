@@ -62,11 +62,27 @@
     "attachments": []
   },
   {
+    "timeToReceive": 20,
+    "mailBox": "User",
+    "sender": "redacao@pulsobinario.news",
+    "subject": "[Edição #412] Criptografia em xeque: o \"Dia Q\" está mais perto do que admitem?",
+    "body": "<b>PULSO BINÁRIO — RESUMO MATINAL</b>\n\n<b>1. A contagem regressiva silenciosa</b>\nEspecialistas em infraestrutura voltaram a alertar nesta semana sobre o avanço acelerado de processadores quânticos fora de laboratórios regulados. Caso o chamado <b>\"Dia Q\"</b> se confirme antes da migração global de protocolos, chaves bancárias, certificados governamentais e redes privadas podem se tornar legíveis em questão de minutos.\n\n<b>2. Corrida por defesas pós-quânticas</b>\nGrandes conglomerados de tecnologia disputam contratos emergenciais para blindar redes críticas. Entre os poucos nomes citados com arquitetura proprietária em fase avançada está a <b>NationalTech</b>, que fechou as portas de seu setor de pesquisa à imprensa desde o trimestre passado.\n\n<b>3. O elo mais fraco continua humano</b>\nEnquanto sistemas automáticos de filtragem perdem eficácia diante de ataques cada vez mais sofisticados, relatórios apontam um salto de 340% em invasões baseadas em engenharia social e falsificação de identidade.\n\n<i>Você recebe este boletim por ser assinante do Pulso Binário. Para cancelar a inscrição, acesse as configurações da sua conta.</i>",
+    "attachments": []
+  },
+  {
     "timeToReceive": 30,
     "mailBox": "Company",
     "sender": "financeiro@nationaltech.co",
     "subject": "CONFIRMAÇÃO DE COMPRA DE IPHONE 15 PRO MAX - R$ 8.999,00",
     "body": "Sua compra corporativa foi aprovada e emitida com sucesso. Caso você não reconheça este pedido, responda este e-mail com urgência para solicitar o cancelamento.",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 50,
+    "mailBox": "User",
+    "sender": "notificacoes@bancocentral-digital.org",
+    "subject": "Aviso preventivo: instabilidade na validação de tokens e golpes recentes",
+    "body": "Olá,\n\nInformamos que, devido às atualizações emergenciais nos servidores de autenticação da rede nacional, alguns usuários podem enfrentar lentidão na validação de transações e acessos bancários ao longo desta semana.\n\nAproveitamos para reforçar um alerta importante: nas últimas 48 horas, identificamos um aumento expressivo de mensagens falsas tentando se passar por instituições financeiras e órgãos oficiais para coletar senhas e códigos de verificação.\n\n<b>Lembre-se:</b>\n- Nunca informe senhas ou códigos temporários por e-mail ou mensageiro.\n- Verifique sempre o domínio completo do remetente antes de abrir qualquer anexo.\n- Em caso de dúvida, desconfie de qualquer solicitação marcada como \"urgente\".\n\nAtenciosamente,\n<b>Central de Segurança ao Correntista</b>",
     "attachments": []
   },
   {
@@ -84,6 +100,22 @@
         "data" : { "text": "<b>Pré-visualização indisponível</b>\n\nO arquivo nota_fiscal_outubro.exe não pode ser exibido como documento.\n\nTipo: Aplicativo (.exe)\nTamanho: 1,2 MB\n\nConteúdo bruto:\nMZ..........@........\nThis program cannot be run in DOS mode.\n.text  .rdata  .data  .rsrc" }
       }
     ]
+  },
+  {
+    "timeToReceive": 75,
+    "mailBox": "User",
+    "sender": "noticias@controlequebrado.gg",
+    "subject": "Tivemos a ameaça do Dia Q antes de TGA 6 — Novo adiamento oficial!",
+    "body": "<b>PLANTÃO GAMER — CONTROLE QUEBRADO</b>\n\nPode tirar a folga do calendário de novo: a <b>Starock Games</b> publicou hoje cedo aquela nota de fundo colorido que todo mundo já conhece de cor anunciando mais um adiamento para <b>TGA 6</b>.\n\nSegundo o estúdio, o jogo precisa de <i>\"alguns meses extras de polimento para garantir o nível de qualidade que os fãs merecem\"</i>. A nova janela de lançamento agora está prevista para \"em breve, talvez antes ou depois do colapso da criptografia mundial\".\n\nNos fóruns, a comunidade já debate qual evento histórico vai acontecer primeiro:\n- O apocalipse digital do Dia Q;\n- A aposentadoria de quem jogou TGA 5 no lançamento;\n- O segundo trailer oficial de TGA 6.\n\nEnquanto isso, a Starock confirmou o lançamento de <b>TGA 5: Edição Remasterizada Pós-Quântica</b> — já em pré-venda!\n\n<i>Continue acompanhando o Controle Quebrado para mais atualizações (e mais adiamentos).</i>",
+    "attachments": []
+  },
+  {
+    "timeToReceive": 90,
+    "mailBox": "User",
+    "sender": "ofertas@escudocripto.com.br",
+    "subject": "Quando o Dia Q chegar, seus dados vão sobreviver? Proteja-se hoje!",
+    "body": "<b>SEUS ARQUIVOS AINDA USAM CRIPTOGRAFIA ANTIGA?</b>\n\nTodos os dias, novos vazamentos mostram que ninguém está realmente seguro. Antivírus comuns já não dão conta e as grandes corporações só protegem os próprios servidores — deixando o cidadão comum exposto.\n\nConheça o <b>Cofre EscudoCripto™ Versão Doméstica</b>:\n- Blindagem offline para documentos e credenciais pessoais;\n- Alerta em tempo real contra clonagem de identidade;\n- Instalação em 1 clique, sem mensalidade nos primeiros 15 dias!\n\n<i>Não espere o apagão digital bater na sua porta. Garanta sua tranquilidade enquanto ainda há tempo.</i>\n\n(Mensagem promocional automatizada — não responda a este e-mail.)",
+    "attachments": []
   },
   {
     "hourToReceive": 10,

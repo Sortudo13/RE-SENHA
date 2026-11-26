@@ -56,6 +56,14 @@
     ]
   },
   {
+    "timeToReceive": 55,
+    "mailBox": "User",
+    "sender": "redacao@pulsobinario.news",
+    "subject": "[Edição #416] Silêncio na NationalTech e picos anômalos na rede: ensaio para o Dia Q?",
+    "body": "<b>PULSO BINÁRIO - EDIÇÃO DE SEXTA-FEIRA</b>\n\n<b>1. Sinais estranhos na madrugada</b>\nOperadoras de telecomunicação registraram nesta madrugada uma série de picos curtos e sincronizados de quebra de certificados antigos em servidores de teste pela Europa e América do Sul. Nenhum banco caiu, mas pesquisadores de criptografia já tratam o episódio como um possível ensaio geral antes do <b>Dia Q</b>.\n\n<b>2. Portas fechadas na NationalTech</b>\nProcurada pela reportagem, a <b>NationalTech</b> cancelou todas as entrevistas agendadas para o mês e manteve silêncio absoluto sobre o andamento do seu protocolo pós-quântico. Fontes ligadas ao setor afirmam que a diretoria prepara uma \"Fase 2\" emergencial a partir da próxima semana, sob sigilo interno.\n\n<b>3. O que ninguém quer responder</b>\nSe as chaves atuais já estão sendo testadas no escuro, quanto tempo realmente falta? E quem está dentro das empresas segurando a linha até lá?\n\nVocê recebe este boletim por ser assinante do Pulso Binário.",
+    "attachments": []
+  },
+  {
     "timeToReceive": 65,
     "mailBox": "Company",
     "sender": "sistema@nationaltech.com",
@@ -117,6 +125,14 @@
         "data": { "text": "<b>Metas do Trimestre - Comercial</b>\n\nÁrea             Meta        Realizado\nVendas           R$ 1,2 mi   R$ 0,9 mi\nRenovações       85%         78%\nNovos clientes   40          31\nSatisfação (NPS) 70          74\n\nRevisem os números da sua área até sexta.\nDúvidas: comercial@nationaltech.com" }
       }
     ]
+  },
+  {
+    "timeToReceive": 118,
+    "mailBox": "User",
+    "sender": "boletim@observatoriociber.org",
+    "subject": "ALERTA EXTRAORDINÁRIO: Recado cifrado de Odisseu anuncia fim da fase de testes",
+    "body": "<b>OBSERVATÓRIO CIBER - BOLETIM DE ENCERRAMENTO DA SEMANA</b>\n\nHá menos de uma hora, um comunicado curto assinado por <b>Odisseu</b> surgiu simultaneamente em três fóruns restritos ligados ao coletivo <b>Cavalo de Troia</b>. Nossa equipe conseguiu decifrar o trecho principal:\n\n\"A primeira semana foi apenas reconhecimento. Testamos as portas, medimos os reflexos e agora conhecemos quem guarda a fechadura. Quando o relógio virar, não vamos mais bater antes de entrar.\"\n\n<b>Leitura do Observatório:</b>\nTudo indica que os ataques de phishing e anexos adulterados dos últimos dias foram apenas uma triagem para mapear o tempo de resposta de uma corporação específica do setor pós-quântico. Há suspeitas de que o grupo também já tenha contato ativo dentro da estrutura alvo.\n\nA verdadeira ofensiva ainda nem começou. Continuaremos monitorando durante o fim de semana.\n\nObservatório Independente de Segurança Digital",
+    "attachments": []
   },
   {
     "timeToReceive": 130,
